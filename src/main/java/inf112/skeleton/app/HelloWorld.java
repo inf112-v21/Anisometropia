@@ -18,6 +18,7 @@ public class HelloWorld implements ApplicationListener {
         font.setColor(Color.RED);
     }
 
+
     @Override
     public void dispose() {
         batch.dispose();
