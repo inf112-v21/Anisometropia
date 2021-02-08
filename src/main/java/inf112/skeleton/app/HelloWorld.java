@@ -31,6 +31,10 @@ public class HelloWorld implements ApplicationListener {
     static int mapSizeY= 5;
     static float cameraHeight = (float) 5; //Can have values 0-5, but has to be set to 5 to work Strange?
 
+    //Variables for displaying player.
+    private TiledMapTileLayer.Cell playerCell, playerDiedCell, playerWonCell;
+    private Vector2 playerPosition;
+
     public HelloWorld() {
     }
 
@@ -42,7 +46,7 @@ public class HelloWorld implements ApplicationListener {
 
         //Initializing map, and layer variables.
         map = new TmxMapLoader().load("assets/gameboard.tmx");
-        boardLayer = (TiledMapTileLayer) map.getLayers().get("assets/gameboard.tmx");
+        boardLayer = (TiledMapTileLayer) map.getLayers().get("Board");
         camera = new OrthographicCamera();
         camera.setToOrtho(false, mapSizeX, mapSizeY);
         camera.viewportHeight = cameraHeight;
@@ -50,6 +54,16 @@ public class HelloWorld implements ApplicationListener {
         renderer = new OrthogonalTiledMapRenderer(map, (float)(0.00333));
         renderer.setView(camera);
 
+        //Initializing player variables.
+        Texture playerTexture = new Texture("assets/player.png");
+        TextureRegion[][] playerSplit = new TextureRegion(playerTexture).split(300,300);
+        playerCell = new TiledMapTileLayer.Cell();
+        playerDiedCell = new TiledMapTileLayer.Cell();
+        playerWonCell = new TiledMapTileLayer.Cell();
+        playerCell.setTile(new StaticTiledMapTile(playerSplit[0][0]));
+        playerDiedCell.setTile(new StaticTiledMapTile(playerSplit[0][1]));
+        playerWonCell.setTile(new StaticTiledMapTile(playerSplit[0][2]));
+        playerPosition = new Vector2(0,0);
     }
 
     @Override
@@ -63,6 +77,9 @@ public class HelloWorld implements ApplicationListener {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         renderer.render();
+
+        playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
+        playerLayer.setCell(0,0, playerCell);
     }
 
     @Override
