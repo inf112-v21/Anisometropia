@@ -2,6 +2,7 @@ package inf112.skeleton.app;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.assets.loaders.TextureLoader;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL30;
@@ -18,7 +19,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 
-public class Board implements ApplicationListener {
+public class Board extends InputAdapter implements ApplicationListener{
     private SpriteBatch batch;
     private BitmapFont font;
 
@@ -64,6 +65,33 @@ public class Board implements ApplicationListener {
         playerDiedCell.setTile(new StaticTiledMapTile(playerSplit[0][1]));
         playerWonCell.setTile(new StaticTiledMapTile(playerSplit[0][2]));
         playerPosition = new Vector2(0,0);
+
+        //Allows for processing keyboard input.
+        Gdx.input.setInputProcessor(this);
+
+    }
+
+    //Changes position of player according to keypress, within the bounds of the board.
+    //TODO: clear cell before moving.
+    @Override
+    public boolean keyUp(int keycode) {
+        float x = playerPosition.x;
+        float y = playerPosition.y;
+
+        if(keycode == 19) {
+            playerPosition.set(x, Math.min(y+1, mapSizeY-1));
+        }
+        else if(keycode == 20) {
+            playerPosition.set(x, Math.max(y-1, 0));
+        }
+        else if(keycode == 21) {
+            playerPosition.set(Math.max(x-1, 0), y);
+        }
+        else if(keycode == 22) {
+            playerPosition.set(Math.min(x+1, mapSizeX-1), y);
+        }
+        playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, playerCell);
+        return true;
     }
 
     @Override
@@ -78,8 +106,9 @@ public class Board implements ApplicationListener {
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
         renderer.render();
 
+        //Displays player on board.
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
-        playerLayer.setCell(0,0, playerCell);
+        playerLayer.setCell((int) playerPosition.x,(int) playerPosition.y, playerCell);
     }
 
     @Override
