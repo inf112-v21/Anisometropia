@@ -24,7 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import java.awt.*;
 
 
-public class HelloWorld extends InputAdapter implements ApplicationListener  {
+public class Board extends InputAdapter implements ApplicationListener  {
     private SpriteBatch batch;
     private BitmapFont font;
 
@@ -45,7 +45,7 @@ public class HelloWorld extends InputAdapter implements ApplicationListener  {
     private int posX = 0;
     private int posY = 0;
 
-    public HelloWorld() {
+    public Board() {
     }
 
     @Override
