@@ -18,7 +18,7 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 
-public class HelloWorld implements ApplicationListener {
+public class Board implements ApplicationListener {
     private SpriteBatch batch;
     private BitmapFont font;
 
@@ -35,7 +35,7 @@ public class HelloWorld implements ApplicationListener {
     private TiledMapTileLayer.Cell playerCell, playerDiedCell, playerWonCell;
     private Vector2 playerPosition;
 
-    public HelloWorld() {
+    public Board() {
     }
 
     @Override
