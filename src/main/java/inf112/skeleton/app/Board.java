@@ -35,7 +35,7 @@ public class Board extends InputAdapter implements ApplicationListener  {
     private OrthographicCamera camera;
     private int mapSizeX = 5;
     private int mapSizeY= 5;
-    static float cameraHeight = (float) 5; //Can have values 0-5, but has to be set to 5 to work. Strange?
+    static float cameraHeight = (float) 5;
 
     //Variables below deals with the player
     private TiledMapTileLayer.Cell playerCell;
@@ -78,7 +78,6 @@ public class Board extends InputAdapter implements ApplicationListener  {
         playerDiedCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1]));
         playerPos = new Vector2(posX,posY);
 
-        //Register the input processor to enable pressing keys to move player.
         Gdx.input.setInputProcessor(this);
 
     }
