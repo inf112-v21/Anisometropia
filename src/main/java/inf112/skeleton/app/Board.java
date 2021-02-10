@@ -33,16 +33,17 @@ public class Board extends InputAdapter implements ApplicationListener  {
     private TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer; //remember to add more layers here if added to gameboard
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
-    static int mapSizeX = 5, mapSizeY= 5;
-    static float cameraHeight = 5f; //Can have values 0-5, but has to be set to 5 to work. Strange?
+    private int mapSizeX = 5;
+    private int mapSizeY= 5;
+    static float cameraHeight = (float) 5; //Can have values 0-5, but has to be set to 5 to work. Strange?
 
     //Variables below deals with the player
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerWonCell;
     private TiledMapTileLayer.Cell playerDiedCell;
-    private Vector2 playerPosition;
-    private int playerSpawnX = 0;
-    private int playerSpawnY = 0;
+    private Vector2 playerPos;
+    private int posX = 0;
+    private int posY = 0;
 
     public Board() {
     }
@@ -65,78 +66,74 @@ public class Board extends InputAdapter implements ApplicationListener  {
         camera.setToOrtho(false, mapSizeX, mapSizeY);
         camera.viewportHeight = cameraHeight;
         camera.update();
-        renderer = new OrthogonalTiledMapRenderer(map, 1 / 300f);
+        renderer = new OrthogonalTiledMapRenderer(map, (float)(0.00333));
         renderer.setView(camera);
 
         //Initializing player variables
         //But first, loading the player image from our assets folder and splitting it to three images.
-        TextureRegion[][] playerImages = TextureRegion.split(new Texture("assets/player.png"), 300, 300);
+        TextureRegion playerImages [][] = TextureRegion.split(new Texture("assets/player.png"), 300, 300);
         //Initializing player variables with their respective images (texture regions)
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));
         playerWonCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][2]));
         playerDiedCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1]));
-        playerPosition = new Vector2(playerSpawnX,playerSpawnY);
+        playerPos = new Vector2(posX,posY);
 
         //Register the input processor to enable pressing keys to move player.
         Gdx.input.setInputProcessor(this);
 
     }
 
-    public void update() {
-        if(checkWin()) {
-            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, playerWonCell);
-        } else if (checkLoss()) {
-            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, playerDiedCell);
+    @Override
+    public boolean keyUp(int keycode) {
+        if(keycode == Input.Keys.UP && posY <= 3) {
+            playerLayer.setCell(posX, posY, null); //important to clear the cell we are on before moving.
+            posY += 1;
         }
-        else {
-            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, playerCell);
+        if(keycode == Input.Keys.DOWN && posY > 0) {
+            playerLayer.setCell(posX, posY, null);
+            posY -= 1;
         }
+        if(keycode == Input.Keys.RIGHT && posX <= 3){
+            playerLayer.setCell(posX, posY, null);
+            posX += 1;
+        }
+        if (keycode == Input.Keys.LEFT && posX > 0) {
+            playerLayer.setCell(posX, posY, null);
+            posX -= 1;
+        }
+        return super.keyDown(keycode);
+    }
+
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+        font.dispose();
     }
 
     @Override
     public void render() {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        // to update game logic
-        update();
         //to display the gameboard
         renderer.render();
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        if(keycode == Input.Keys.UP && playerPosition.y <= 3) {
-            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null); //important to clear the cell we are on before moving.
-            playerPosition.y += 1;
+        //to display player 
+        if(checkWin()) {
+            playerLayer.setCell(posX,posY, playerWonCell);
+        } else if (checkLoss()) {
+            playerLayer.setCell(posX,posY, playerDiedCell);
         }
-        if(keycode == Input.Keys.DOWN && playerPosition.y > 0) {
-            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
-            playerPosition.y -= 1;
+        else {
+            playerLayer.setCell(posX,posY, playerCell);
         }
-        if(keycode == Input.Keys.RIGHT && playerPosition.x <= 3){
-            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
-            playerPosition.x += 1;
-        }
-        if (keycode == Input.Keys.LEFT && playerPosition.x > 0) {
-            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
-            playerPosition.x -= 1;
-        }
-        return super.keyDown(keycode);
     }
 
     public boolean checkWin() {
-        return flagLayer.getCell((int) playerPosition.x, (int) playerPosition.y) != null;
+        return flagLayer.getCell(posX,posY) != null;
     }
 
     public boolean checkLoss() {
-         return holeLayer.getCell((int) playerPosition.x, (int) playerPosition.y) != null;
-    }
-
-    @Override
-    public void dispose() {
-        batch.dispose();
-        font.dispose();
-        renderer.dispose();
+         return holeLayer.getCell(posX,posY) != null;
     }
 
     @Override
