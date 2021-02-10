@@ -33,9 +33,8 @@ public class Board extends InputAdapter implements ApplicationListener  {
     private TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer; //remember to add more layers here if added to gameboard
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
-    static int mapSizeX = 5;
-    static int mapSizeY= 5;
-    static float cameraHeight = (float) 5; //Can have values 0-5, but has to be set to 5 to work. Strange?
+    static int mapSizeX = 5, mapSizeY= 5;
+    static float cameraHeight = 5f; //Can have values 0-5, but has to be set to 5 to work. Strange?
 
     //Variables below deals with the player
     private TiledMapTileLayer.Cell playerCell;
@@ -66,7 +65,7 @@ public class Board extends InputAdapter implements ApplicationListener  {
         camera.setToOrtho(false, mapSizeX, mapSizeY);
         camera.viewportHeight = cameraHeight;
         camera.update();
-        renderer = new OrthogonalTiledMapRenderer(map, (float)(0.00333));
+        renderer = new OrthogonalTiledMapRenderer(map, 0.00333f);
         renderer.setView(camera);
 
         //Initializing player variables
@@ -81,6 +80,27 @@ public class Board extends InputAdapter implements ApplicationListener  {
         //Register the input processor to enable pressing keys to move player.
         Gdx.input.setInputProcessor(this);
 
+    }
+
+    public void update() {
+        if(checkWin()) {
+            playerLayer.setCell(posX,posY, playerWonCell);
+        } else if (checkLoss()) {
+            playerLayer.setCell(posX,posY, playerDiedCell);
+        }
+        else {
+            playerLayer.setCell(posX,posY, playerCell);
+        }
+    }
+
+    @Override
+    public void render() {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
+        // to update game logic
+        update();
+        //to display the gameboard
+        renderer.render();
     }
 
     @Override
@@ -104,36 +124,19 @@ public class Board extends InputAdapter implements ApplicationListener  {
         return super.keyDown(keycode);
     }
 
-
-    @Override
-    public void dispose() {
-        batch.dispose();
-        font.dispose();
-    }
-
-    @Override
-    public void render() {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL30.GL_COLOR_BUFFER_BIT);
-        //to display the gameboard
-        renderer.render();
-        //to display player 
-        if(checkWin()) {
-            playerLayer.setCell(posX,posY, playerWonCell);
-        } else if (checkLoss()) {
-            playerLayer.setCell(posX,posY, playerDiedCell);
-        }
-        else {
-            playerLayer.setCell(posX,posY, playerCell);
-        }
-    }
-
     public boolean checkWin() {
         return flagLayer.getCell(posX,posY) != null;
     }
 
     public boolean checkLoss() {
          return holeLayer.getCell(posX,posY) != null;
+    }
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+        font.dispose();
+        renderer.dispose();
     }
 
     @Override
