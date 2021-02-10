@@ -40,9 +40,9 @@ public class Board extends InputAdapter implements ApplicationListener  {
     private TiledMapTileLayer.Cell playerCell;
     private TiledMapTileLayer.Cell playerWonCell;
     private TiledMapTileLayer.Cell playerDiedCell;
-    private Vector2 playerPos;
-    private int posX = 0;
-    private int posY = 0;
+    private Vector2 playerPosition;
+    private int playerSpawnX = 0;
+    private int playerSpawnY = 0;
 
     public Board() {
     }
@@ -65,17 +65,17 @@ public class Board extends InputAdapter implements ApplicationListener  {
         camera.setToOrtho(false, mapSizeX, mapSizeY);
         camera.viewportHeight = cameraHeight;
         camera.update();
-        renderer = new OrthogonalTiledMapRenderer(map, 0.00333f);
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / 300f);
         renderer.setView(camera);
 
         //Initializing player variables
         //But first, loading the player image from our assets folder and splitting it to three images.
-        TextureRegion playerImages [][] = TextureRegion.split(new Texture("assets/player.png"), 300, 300);
+        TextureRegion[][] playerImages = TextureRegion.split(new Texture("assets/player.png"), 300, 300);
         //Initializing player variables with their respective images (texture regions)
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));
         playerWonCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][2]));
         playerDiedCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1]));
-        playerPos = new Vector2(posX,posY);
+        playerPosition = new Vector2(playerSpawnX,playerSpawnY);
 
         //Register the input processor to enable pressing keys to move player.
         Gdx.input.setInputProcessor(this);
@@ -84,12 +84,12 @@ public class Board extends InputAdapter implements ApplicationListener  {
 
     public void update() {
         if(checkWin()) {
-            playerLayer.setCell(posX,posY, playerWonCell);
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, playerWonCell);
         } else if (checkLoss()) {
-            playerLayer.setCell(posX,posY, playerDiedCell);
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, playerDiedCell);
         }
         else {
-            playerLayer.setCell(posX,posY, playerCell);
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, playerCell);
         }
     }
 
@@ -105,31 +105,31 @@ public class Board extends InputAdapter implements ApplicationListener  {
 
     @Override
     public boolean keyUp(int keycode) {
-        if(keycode == Input.Keys.UP && posY <= 3) {
-            playerLayer.setCell(posX, posY, null); //important to clear the cell we are on before moving.
-            posY += 1;
+        if(keycode == Input.Keys.UP && playerPosition.y <= 3) {
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null); //important to clear the cell we are on before moving.
+            playerPosition.y += 1;
         }
-        if(keycode == Input.Keys.DOWN && posY > 0) {
-            playerLayer.setCell(posX, posY, null);
-            posY -= 1;
+        if(keycode == Input.Keys.DOWN && playerPosition.y > 0) {
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
+            playerPosition.y -= 1;
         }
-        if(keycode == Input.Keys.RIGHT && posX <= 3){
-            playerLayer.setCell(posX, posY, null);
-            posX += 1;
+        if(keycode == Input.Keys.RIGHT && playerPosition.x <= 3){
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
+            playerPosition.x += 1;
         }
-        if (keycode == Input.Keys.LEFT && posX > 0) {
-            playerLayer.setCell(posX, posY, null);
-            posX -= 1;
+        if (keycode == Input.Keys.LEFT && playerPosition.x > 0) {
+            playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
+            playerPosition.x -= 1;
         }
         return super.keyDown(keycode);
     }
 
     public boolean checkWin() {
-        return flagLayer.getCell(posX,posY) != null;
+        return flagLayer.getCell((int) playerPosition.x, (int) playerPosition.y) != null;
     }
 
     public boolean checkLoss() {
-         return holeLayer.getCell(posX,posY) != null;
+         return holeLayer.getCell((int) playerPosition.x, (int) playerPosition.y) != null;
     }
 
     @Override
