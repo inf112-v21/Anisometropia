@@ -60,6 +60,28 @@ public class Board extends InputAdapter implements ApplicationListener  {
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flagLayer =  (TiledMapTileLayer) map.getLayers().get("Flag");
+        //Walls
+        //Pits
+        //gears : Clockwise gear
+        //        Counterclockwise gear
+        //The priority antenna
+        //Conveyor Belts: Green conveyor belt (moves 1 space)
+        //                rotating conveyor belt
+        //                rotating merge conveyor belt
+        //                rotating double merge conveyor belt
+        //
+        //                Blue conveyor belt (moves 2 spaces)
+        //                rotating conveyor belt
+        //                rotating merge conveyor belt
+        //                rotating double merge conveyor belt
+        //Crushers: Active crusher
+        //Lasers: 1, 2 & 3 laser-beams.
+        //Energy space
+        //Checkpoints
+        //Start Space
+
+
+
 
         //Initializing camera
         camera = new OrthographicCamera();
