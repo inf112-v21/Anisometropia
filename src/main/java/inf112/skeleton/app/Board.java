@@ -60,7 +60,7 @@ public class Board extends InputAdapter implements ApplicationListener  {
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flagLayer =  (TiledMapTileLayer) map.getLayers().get("Flag");
-        //Walls
+        //wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
         //Pits
         //gears : Clockwise gear
         //        Counterclockwise gear
