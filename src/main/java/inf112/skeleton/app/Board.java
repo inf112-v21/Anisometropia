@@ -1,14 +1,9 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -21,7 +16,6 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Board extends InputAdapter implements ApplicationListener  {
     private SpriteBatch batch;
-    private BitmapFont font;
 
     //Variables below deals with creating the map, and the different layers of the map.
     private TiledMap map;
@@ -30,22 +24,18 @@ public class Board extends InputAdapter implements ApplicationListener  {
     private OrthographicCamera camera;
     private int mapSizeX = 5;
     private int mapSizeY = 5;
-    static float cameraHeight = (float) 5; //Can have values 0-5, but has to be set to 5 to work. Strange?
+    static float cameraHeight = 5f; //Can have values 0-5, but has to be set to 5 to work. Strange?
 
-    //Variables below deals with the player
+    //Variables below deal with the player
     private TiledMapTileLayer.Cell playerCell, playerWonCell, playerDiedCell;
+
     private Vector2 playerPosition;
     private int playerSpawnX = 0;
     private int playerSpawnY = 0;
 
-    public Board() {
-    }
-
     @Override
     public void create() {
         batch = new SpriteBatch();
-        font = new BitmapFont();
-        font.setColor(Color.RED);
 
         //Initializing map, and layer variables.
         map = new TmxMapLoader().load("assets/gameboard.tmx");
@@ -53,35 +43,34 @@ public class Board extends InputAdapter implements ApplicationListener  {
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flagLayer =  (TiledMapTileLayer) map.getLayers().get("Flag");
-        //wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
-        //Pits
-        //gears : Clockwise gear
-        //        Counterclockwise gear
-        //The priority antenna
-        //Conveyor Belts: Green conveyor belt (moves 1 space)
-        //                rotating conveyor belt
-        //                rotating merge conveyor belt
-        //                rotating double merge conveyor belt
-        //
-        //                Blue conveyor belt (moves 2 spaces)
-        //                rotating conveyor belt
-        //                rotating merge conveyor belt
-        //                rotating double merge conveyor belt
-        //Crushers: Active crusher
-        //Lasers: 1, 2 & 3 laser-beams.
-        //Energy space
-        //Checkpoints
-        //Start Space
+        /*
+        wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
+        Pits
+        Gears:  - Clockwise gear
+                - Counterclockwise gear
+        Priority antenna
+        Conveyor Belts: - Green conveyor belt (moves 1 space)
+                        - rotating conveyor belt
+                        - rotating merge conveyor belt
+                        - rotating double merge conveyor belt
 
-
-
+                        - Blue conveyor belt (moves 2 spaces)
+                        - rotating conveyor belt
+                        - rotating merge conveyor belt
+                        - rotating double merge conveyor belt
+        Crushers: Active crusher
+        Lasers: 1, 2 & 3 laser-beams.
+        Energy space
+        Checkpoints
+        Start Space
+        */
 
         //Initializing camera
         camera = new OrthographicCamera();
         camera.setToOrtho(false, mapSizeX, mapSizeY);
         camera.viewportHeight = cameraHeight;
         camera.update();
-        renderer = new OrthogonalTiledMapRenderer(map, (float)(0.00333));
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / 300f);
         renderer.setView(camera);
 
         //Initializing player variables
@@ -95,7 +84,6 @@ public class Board extends InputAdapter implements ApplicationListener  {
 
         //Register the input processor to enable pressing keys to move player.
         Gdx.input.setInputProcessor(this);
-
     }
 
     @Override
@@ -123,7 +111,6 @@ public class Board extends InputAdapter implements ApplicationListener  {
     @Override
     public void dispose() {
         batch.dispose();
-        font.dispose();
     }
 
     @Override
