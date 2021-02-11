@@ -55,13 +55,22 @@ Vi ønsker å levere et produkt hvor det er mulig å spille roborally med multip
 
 **Brukerhistorier og akseptansekrav** 
 
-As a player, I want to have a clear visual representation of the board and pieces with a convenient and easy way to move them around the board. (1-3)
+As a player, I want to have a clear visual representation of the board and pieces.
+
+
+As a developer, I want to be able to conveniently move my piece around the board using my keyboard because this can come useful for testing purposes besides being a core mechanic of the game.
 
 As developers, we want to make it easy to see that the game-winning condition is met, because it is a key aspect of the game and there might be players who are still learning the rules and maybe will not notice that they have won the game. (4-5)
 
 Since it is a multiplayer game for 2-8 players, as a player I want to be able to play it with my friends using their own devices. (6)
 
+Acceptance criteria related to the MVP:
 
+1) A new window opens and the board must be visible when the game is ran, and it must persist on the screen and keep updating with every change being made (pressing buttons on the keyboard)
+2) Robot must be visible on the game board.
+3) When a keyboard input to move the robot has been detected, the robot should be removed from the previous location and placed in the new location. It must be impossible to move the robot outside the board by repeatedly going in the same direction.
+4) Robot can move to a tile with a flag. Game should detect this action and store it.
+5) Player wins the game when robot moves on a flag. Blue visual effect is to be displayed.
 # Annet 
 
 **Testing så langt**
