@@ -56,7 +56,15 @@ Kodebase og felles dokumenter er oppbevart på Github.
 Vi ønsker å levere et produkt hvor det er mulig å spille roborally med multiplayer over nett. Videre skal alle spillerene se brettet, sine egne kort, sin egen spiller og motstanderspillerene samt helsen på alle deltakere. Robotene på brettet skal flyttes i henhold til kortene slik som spilleren har tenkt og roboten skal flyttes i henhold til reglene. Helsen til roboten skal oppdateres i forhold til hvilket miljø den befinner seg i på brettet. En spiller vinner dersom den får roboten sin til det siste flagget.
 
 **Brukerhistorier og akseptansekrav** 
- Fyll in her Lazar :D 
+
+As a player, I want to have a clear visual representation of the board and pieces with a convenient and easy way to move them around the board. (1-3)
+
+
+As developers, we want to make it easy to see that the game-winning condition is met, because it is a key aspect of the game and there might be players who are still learning the rules and maybe will not notice that they have won the game. (4-5)
+
+
+Since it is a multiplayer game for 2-8 players, as a player I want to be able to play it with my friends using their own devices. (6)
+
 
 # Annet 
 
