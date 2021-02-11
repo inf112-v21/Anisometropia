@@ -7,9 +7,7 @@
 **Erfaring** 
 
 Medlemmene på laget har alle tidligere erfaring med programmering fra før og våres kunnskaper kommer hovedskalig fra høyere utdanning:
-Henriette tar bachelorgraden Kognitiv Vitenskap og har tatt kursene INF100, INF101, INF102 samt INF122.
-Bjørnar, Petter og Felix studerer alle datavitenskap og har tatt kursene INF100, INF101, INF102 samt INF122.
-Lazar studerer datasikkerhet og har tatt kursene INF100 og INF101.
+Lazar har tatt kursene INF100 og INF 101, mens Henriette, Bjørnar, Felix og Petter har alle tatt kursene INF100, INF101, INF102 og INF122.  
 
 **Roller i teamet**
 
@@ -59,9 +57,7 @@ Vi ønsker å levere et produkt hvor det er mulig å spille roborally med multip
 
 As a player, I want to have a clear visual representation of the board and pieces with a convenient and easy way to move them around the board. (1-3)
 
-
 As developers, we want to make it easy to see that the game-winning condition is met, because it is a key aspect of the game and there might be players who are still learning the rules and maybe will not notice that they have won the game. (4-5)
-
 
 Since it is a multiplayer game for 2-8 players, as a player I want to be able to play it with my friends using their own devices. (6)
 
