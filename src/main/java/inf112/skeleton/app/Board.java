@@ -19,12 +19,12 @@ public class Board extends InputAdapter implements ApplicationListener  {
 
     //Variables below deals with creating the map, and the different layers of the map.
     private TiledMap map;
-    private TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer; //remember to add more layers here if added to gameboard
+    private TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer, wallLayer; //remember to add more layers here if added to gameboard
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
-    private int mapSizeX = 5;
-    private int mapSizeY = 5;
-    static float cameraHeight = 5f; //Can have values 0-5, but has to be set to 5 to work. Strange?
+    private int mapSizeX = 12;
+    private int mapSizeY = 12;
+    static float cameraHeight = 12f; //Can have values 0-5, but has to be set to 5 to work. Strange?
 
     //Variables below deal with the player
     private TiledMapTileLayer.Cell playerCell, playerWonCell, playerDiedCell;
@@ -38,13 +38,13 @@ public class Board extends InputAdapter implements ApplicationListener  {
         batch = new SpriteBatch();
 
         //Initializing map, and layer variables.
-        map = new TmxMapLoader().load("assets/gameboard.tmx");
-        boardLayer = (TiledMapTileLayer) map.getLayers().get("assets/gameboard.tmx");
+        map = new TmxMapLoader().load("assets/gameboard2.tmx");
+        boardLayer = (TiledMapTileLayer) map.getLayers().get("assets/gameboard2.tmx");
         playerLayer = (TiledMapTileLayer) map.getLayers().get("Player");
         holeLayer = (TiledMapTileLayer) map.getLayers().get("Hole");
         flagLayer =  (TiledMapTileLayer) map.getLayers().get("Flag");
-        /*
         wallLayer = (TiledMapTileLayer) map.getLayers().get("Wall");
+        /*
         Pits
         Gears:  - Clockwise gear
                 - Counterclockwise gear
@@ -88,7 +88,7 @@ public class Board extends InputAdapter implements ApplicationListener  {
 
     @Override
     public boolean keyUp(int keycode) {
-        if(keycode == Input.Keys.UP && playerPosition.y <= 3) {
+        if(keycode == Input.Keys.UP && playerPosition.y <= (mapSizeY-2)) {
             playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null); //important to clear the cell we are on before moving.
             playerPosition.y += 1;
         }
@@ -96,7 +96,7 @@ public class Board extends InputAdapter implements ApplicationListener  {
             playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
             playerPosition.y -= 1;
         }
-        if(keycode == Input.Keys.RIGHT && playerPosition.x <= 3){
+        if(keycode == Input.Keys.RIGHT && playerPosition.x <= (mapSizeX-2)){
             playerLayer.setCell((int) playerPosition.x, (int) playerPosition.y, null);
             playerPosition.x += 1;
         }
