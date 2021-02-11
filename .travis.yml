@@ -1,3 +1,11 @@
-language: java
-sudo: false
-script: mvn clean verify
+{
+  "language": "java",
+  "os": [
+    "linux"
+  ],
+  "dist": "xenial",
+  "sudo": false,
+  "script": [
+    "mvn clean verify"
+  ]
+}
