@@ -82,7 +82,7 @@ Acceptance criteria related to MVPs:
 # Annet
 **Testing så langt**
 
-Til denne innleveringen så har vi skrevet kode til de 5 første MVP kravene, men ikke fullstendig implementert JUnit tester. Dette er fordi koden kan testes ved å kjøre programmet og å se hvordan det oppfører seg ettersom at de 5 første kravene omhandler GUI. Når vi kjører programmet så observerer vi at spillbrettet kommer opp på skjermen i ønsket format med spilleren på brettet, videre kan vi bevege spilleren rundt på brettet ved hjelp av piltastene og se at spillerikonet endrer seg i henhold til hvilket innhold det er i cellen den står på. Denne oppførselen stemmer overens med hva vi ønsket når vi implementerte koden bak den. Vi har 4 små JUnit-tester som sjekker at spiller kan bevege seg, men ikke bevege seg ut av spillbrettet.
+Til denne innleveringen så har vi skrevet kode til de 5 første MVP kravene, men ikke implementert JUnit tester. Dette er fordi koden kan testes ved å kjøre programmet og å se hvordan det oppfører seg ettersom at de 5 første kravene omhandler GUI. Når vi kjører programmet så observerer vi at spillbrettet kommer opp på skjermen i ønsket format med spilleren på brettet, videre kan vi bevege spilleren rundt på brettet ved hjelp av piltastene og se at spillerikonet endrer seg i henhold til hvilket innhold det er i cellen den står på. Denne oppførselen stemmer overens med hva vi ønsket når vi implementerte koden bak den.
 
 **Diskusjon**: Hva har fungert og hva har ikke fungert så langt i prossessen? 
 
