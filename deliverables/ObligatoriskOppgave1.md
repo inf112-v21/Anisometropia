@@ -66,15 +66,18 @@ MVP 4: As a player, I want the icon of the robot to change depending on where it
 
 MVP 5: As a developer, I want the robot to win by visiting a flag to be able to test that the robot can detect that it is on a cell containing a flag. 
 
+MVP 5+:  As a developer I want the game to terminate whenever a player loses or wins to be able to verify the win and loss conditions.
+
 
 Acceptance criteria related to MVPs:
 
-1) When the game is running a new window opens containing the visual representation of the game board. 
-2) Robot must be visible on the game board 
-3) - When the arrow keys are pressed the robot should move correspondingly: the robot should be removed from its previous location and be placed in a new location. 
-    - It must be impossible to move the robot outside the board by repeatedly going in the same direction.
-4) Robot can move to tiles containing objects, like holes and flags. The game should detect this action and change the visuals of the robot.
-5) The game is won when a robot is moved to a tile containing a flag. A blue visual effect is to be displayed, and the player is no longer moved by the controls.
+1)  When the game is running a new window opens containing the visual representation of the game board. 
+2)  Robot must be visible on the game board 
+3)   - When the arrow keys are pressed the robot should move correspondingly: the robot should be removed from its previous location and be placed in a new location. 
+     - It must be impossible to move the robot outside the board by repeatedly going in the same direction.
+4)  Robot can move to tiles containing objects, like holes and flags. The game should detect this action and change the visuals of the robot.
+5)  The game is won when a robot is moved to a tile containing a flag. A blue visual effect is to be displayed.
+5+) After winning or losing, the player is no longer moved by the controls.
 
 # Annet
 **Testing så langt**
