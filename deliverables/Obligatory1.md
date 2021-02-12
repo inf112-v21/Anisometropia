@@ -55,24 +55,28 @@ Vi ønsker å levere et produkt hvor det er mulig å spille roborally med multip
 
 **Brukerhistorier og akseptansekrav** 
 
-As a player, I want to have a clear visual representation of the board and pieces.
+MVP 1:
+As a player, I want to have a clear visual representation of the board to be able to orient myself.
+
+MVP 2: As a player, I want the board to contain my robot to be able to make decisions on where to move.
+
+MVP 3: As a developer, I want to conveniently move the robot using the keyboard to be able to test how the robot moves around the board.
+
+MVP 4: As a player, I want the icon of the robot to change depending on where it is positioned on the board to be able to get visual cues of the game status. 
+
+MVP 5: As a developer, I want the robot to win by visiting a flag to be able to test that the robot can detect that it is on a cell containing a flag. 
 
 
-As a developer, I want to be able to conveniently move my piece around the board using my keyboard because this can come useful for testing purposes besides being a core mechanic of the game.
+Acceptance criteria related to MVPs:
 
-As developers, we want to make it easy to see that the game-winning condition is met, because it is a key aspect of the game and there might be players who are still learning the rules and maybe will not notice that they have won the game. (4-5)
+1) When the game is running a new window opens containing the visual representation of the game board. 
+2) Robot must be visible on the game board 
+3) - When the arrow keys are pressed the robot should move correspondingly: the robot should be removed from its previous location and be placed in a new location. 
+    - It must be impossible to move the robot outside the board by repeatedly going in the same direction.
+4) Robot can move to tiles containing objects, like holes and flags. The game should detect this action and change the visuals of the robot.
+5) The game is won when a robot is moved to a tile containing a flag. A blue visual effect is to be displayed.
 
-Since it is a multiplayer game for 2-8 players, as a player I want to be able to play it with my friends using their own devices. (6)
-
-Acceptance criteria related to the MVP:
-
-1) A new window opens and the board must be visible when the game is ran, and it must persist on the screen and keep updating with every change being made (pressing buttons on the keyboard)
-2) Robot must be visible on the game board.
-3) When a keyboard input to move the robot has been detected, the robot should be removed from the previous location and placed in the new location. It must be impossible to move the robot outside the board by repeatedly going in the same direction.
-4) Robot can move to a tile with a flag. Game should detect this action and store it.
-5) Player wins the game when robot moves on a flag. Blue visual effect is to be displayed.
-# Annet 
-
+# Annet
 **Testing så langt**
 
 Til denne innleveringen så har vi skrevet kode til de 5 første MVP kravene, men ikke implementert noen JUnit tester. Dette er fordi koden kan testes ved å kjøre programmet og å se hvordan det oppfører seg ettersom at de 5 første kravene omhandler GUI. Når vi kjører programmet så observerer vi at spillbrettet kommer opp på skjermen i ønsket format med spilleren på brettet, videre kan vi bevege spilleren rundt på brettet ved hjelp av piltastene og se at spillerikonet endrer seg i henhold til hvilket innhold det er i cellen den står på. Denne oppførselen stemmer over ens med hva vi ønsket når vi implementerte koden bak den.
