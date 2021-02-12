@@ -74,12 +74,12 @@ Acceptance criteria related to MVPs:
 3) - When the arrow keys are pressed the robot should move correspondingly: the robot should be removed from its previous location and be placed in a new location. 
     - It must be impossible to move the robot outside the board by repeatedly going in the same direction.
 4) Robot can move to tiles containing objects, like holes and flags. The game should detect this action and change the visuals of the robot.
-5) The game is won when a robot is moved to a tile containing a flag. A blue visual effect is to be displayed.
+5) The game is won when a robot is moved to a tile containing a flag. A blue visual effect is to be displayed, and the player is no longer moved by the controls.
 
 # Annet
 **Testing så langt**
 
-Til denne innleveringen så har vi skrevet kode til de 5 første MVP kravene, men ikke implementert noen JUnit tester. Dette er fordi koden kan testes ved å kjøre programmet og å se hvordan det oppfører seg ettersom at de 5 første kravene omhandler GUI. Når vi kjører programmet så observerer vi at spillbrettet kommer opp på skjermen i ønsket format med spilleren på brettet, videre kan vi bevege spilleren rundt på brettet ved hjelp av piltastene og se at spillerikonet endrer seg i henhold til hvilket innhold det er i cellen den står på. Denne oppførselen stemmer over ens med hva vi ønsket når vi implementerte koden bak den.
+Til denne innleveringen så har vi skrevet kode til de 5 første MVP kravene, men ikke fullstendig implementert JUnit tester. Dette er fordi koden kan testes ved å kjøre programmet og å se hvordan det oppfører seg ettersom at de 5 første kravene omhandler GUI. Når vi kjører programmet så observerer vi at spillbrettet kommer opp på skjermen i ønsket format med spilleren på brettet, videre kan vi bevege spilleren rundt på brettet ved hjelp av piltastene og se at spillerikonet endrer seg i henhold til hvilket innhold det er i cellen den står på. Denne oppførselen stemmer overens med hva vi ønsket når vi implementerte koden bak den. Vi har 4 små JUnit-tester som sjekker at spiller kan bevege seg, men ikke bevege seg ut av spillbrettet.
 
 **Diskusjon**: Hva har fungert og hva har ikke fungert så langt i prossessen? 
 
