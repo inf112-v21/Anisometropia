@@ -9,7 +9,7 @@ public class Player {
     int x, y, spawnX, spawnY;
     int dmgTokens = 0;
     boolean powerDown = false;
-    int direction;
+    int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     TextureRegion[][] playerImages;
     TiledMapTileLayer.Cell playerCell, playerWonCell, playerDiedCell;
     TiledMapTileLayer.Cell currentCell;
@@ -65,6 +65,7 @@ public class Player {
         gameMap.setCell(spawnX, spawnY,"PlayerLayer", currentCell);
         this.x=spawnX;
         this.y=spawnY;
+        this.direction = 0;
     }
 
     public TiledMapTileLayer.Cell getCell() {
@@ -111,7 +112,6 @@ public class Player {
     }
 
     /**
-     * 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
      * @return direction player is facing
      */
     public int getDirection() { return direction; }

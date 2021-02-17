@@ -66,7 +66,11 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         // prints out message when the game ends (game won! / game lost!)
         if(GameLogic.gameOver) largeFont.draw(batch, GameLogic.gameMessage, 32, -96);
         // shows player controls
-        smallFont.draw(batch, "WASD:     move\nR:              respawn\nESCAPE:  exit", SCREEN_WIDTH / 2f, 64);
+        smallFont.draw(batch, "WASD:     move\n" +
+                                  "X:              rotate player clockwise\n" +
+                                  "C:              move player forwards\n" +
+                                  "R:              respawn\n" +
+                                  "ESCAPE:  exit", SCREEN_WIDTH / 2f, 64);
 
         batch.end();
     }
@@ -103,7 +107,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
                     gameLogic.getPlayer().rotate(1);
                     break;
                 case Input.Keys.C:
-                    gameLogic.getPlayer().moveByDirection(2);
+                    gameLogic.getPlayer().moveByDirection(1);
                     break;
             }
         }

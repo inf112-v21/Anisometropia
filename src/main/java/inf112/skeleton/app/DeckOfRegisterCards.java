@@ -20,31 +20,31 @@ public class DeckOfRegisterCards {
     public void generateDeck() {
         // Move 1
         for (int i = 0; i < 18; i++) {
-            deckOfCards.add(new RegisterCard("", 1, true));
+            deckOfCards.add(new RegisterCard("RegisterCardAssets/Move1", 1, true));
         }
         // Move 2
         for (int i = 0; i < 12; i++) {
-            deckOfCards.add(new RegisterCard("", 2, true));
+            deckOfCards.add(new RegisterCard("RegisterCardAssets/Move2", 2, true));
         }
         // Move 3
         for (int i = 0; i < 6; i++) {
-            deckOfCards.add(new RegisterCard("", 3, true));
+            deckOfCards.add(new RegisterCard("RegisterCardAssets/Move3", 3, true));
         }
         // Back up
         for (int i = 0; i < 6; i++) {
-            deckOfCards.add(new RegisterCard("", -1, true));
+            deckOfCards.add(new RegisterCard("RegisterCardAssets/BackUp", -1, true));
         }
         // Rotate left
         for (int i = 0; i < 18; i++) {
-            deckOfCards.add(new RegisterCard("", 1, false));
+            deckOfCards.add(new RegisterCard("RegisterCardAssets/RotateLeft", 1, false));
         }
         // Rotate right
         for (int i = 0; i < 18; i++) {
-            deckOfCards.add(new RegisterCard("", 3, false));
+            deckOfCards.add(new RegisterCard("RegisterCardAssets/RotateRight", 3, false));
         }
         // U-turn
         for (int i = 0; i < 6; i++) {
-            deckOfCards.add(new RegisterCard("", 2, false));
+            deckOfCards.add(new RegisterCard("RegisterCardAssets/UTurn", 2, false));
         }
 
     }
