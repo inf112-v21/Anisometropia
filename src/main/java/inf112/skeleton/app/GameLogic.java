@@ -13,9 +13,9 @@ public class GameLogic {
 
     public GameLogic(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
-        this.player = new Player(0, 0, gameScreen.getGameMap());
+        this.player = new Player(1, 1, gameScreen.getGameMap());
         this.tiledMap = gameScreen.getGameMap().getTiledMap();
-        gameScreen.getGameMap().setCell(0, 0, "PlayerLayer", player.getCell());
+        gameScreen.getGameMap().setCell(1, 1, "PlayerLayer", player.getCell());
     }
 
     public void update() {
