@@ -13,7 +13,7 @@ import static inf112.skeleton.app.GameScreen.PIXEL_SCALE_FOR_ASSETS;
 public class GameMap {
     TiledMap tiledMap;
     OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer, wallLayer;
+    TiledMapTileLayer boardLayer, playerLayer, holeLayer, flagLayer, wallLayer, conveyorBelts;
 
     public GameMap() {
         tiledMap = new TmxMapLoader().load("gameboard2.tmx");
@@ -23,6 +23,7 @@ public class GameMap {
         holeLayer = (TiledMapTileLayer) tiledMap.getLayers().get("HoleLayer");
         flagLayer = (TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer");
         wallLayer = (TiledMapTileLayer) tiledMap.getLayers().get("WallLayer");
+        conveyorBelts = (TiledMapTileLayer) tiledMap.getLayers().get("ConveyorBelts");
         /*
         Pits
         Gears:  - Clockwise gear
