@@ -9,6 +9,7 @@ public class Player {
     int x, y, spawnX, spawnY;
     int dmgTokens = 0;
     boolean powerDown = false;
+    int direction;
     TextureRegion[][] playerImages;
     TiledMapTileLayer.Cell playerCell, playerWonCell, playerDiedCell;
     TiledMapTileLayer.Cell currentCell;
@@ -17,6 +18,7 @@ public class Player {
     public Player(int x, int y, GameMap gameMap) {
         this.x = this.spawnX = x;
         this.y = this.spawnY = y;
+        this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
         playerImages  = TextureRegion.split(new Texture("player.png"), 300, 300);
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));
@@ -34,6 +36,14 @@ public class Player {
             gameMap.setCell(x, y, "PlayerLayer", null);
             gameMap.setCell(x += dx, y += dy,"PlayerLayer", currentCell);
         }
+    }
+
+    /**
+     * Moves player given amount of tiles in current facing direction.
+     * @param amountToMove denotes amount of tiles to move
+     */
+    public void moveByDirection(int amountToMove) {
+
     }
 
     public void respawn() {
@@ -85,4 +95,16 @@ public class Player {
     public int getY() {
         return y;
     }
+
+    /**
+     * 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
+     * @return direction player is facing
+     */
+    public int getDirection() { return direction; }
+
+    /**
+     * Rotates player 90 degrees clockwise given amount of times.
+     * @param amountToRotate denotes amount of times to rotate
+     */
+    public void rotate(int amountToRotate) { direction = (direction + amountToRotate) % 4; }
 }
