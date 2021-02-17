@@ -7,6 +7,8 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 
 public class Player {
     int x, y, spawnX, spawnY;
+    int dmgTokens = 0;
+    boolean powerDown = false;
     TextureRegion[][] playerImages;
     TiledMapTileLayer.Cell playerCell, playerWonCell, playerDiedCell;
     TiledMapTileLayer.Cell currentCell;
@@ -59,6 +61,22 @@ public class Player {
         gameMap.setCell(x, y, "PlayerLayer", playerDiedCell);
         currentCell = playerDiedCell;
     }
+
+    public void playerDamaged() {
+        this.dmgTokens += 1;
+    }
+
+    public void playerPowerDown() {
+        /*
+        Don't forget about the powerDown signal that needs to be given 1 turn in advance.
+        Signaling method also needs to be implemented for deciding to remain or leave the
+        powerDown state. We should probably implement this in GameLogic since it communicates
+        with user input and can keep track of turns.
+         */
+        this.dmgTokens = 0;
+        this.powerDown = true;
+    }
+
 
     public int getX() {
         return x;
