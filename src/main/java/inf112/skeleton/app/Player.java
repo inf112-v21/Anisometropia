@@ -43,7 +43,20 @@ public class Player {
      * @param amountToMove denotes amount of tiles to move
      */
     public void moveByDirection(int amountToMove) {
-
+        switch (getDirection()) {
+            case 0:
+                move(0, amountToMove);
+                break;
+            case 1:
+                move(amountToMove, 0);
+                break;
+            case 2:
+                move(0, -amountToMove);
+                break;
+            case 3:
+                move(-amountToMove, 0);
+                break;
+        }
     }
 
     public void respawn() {

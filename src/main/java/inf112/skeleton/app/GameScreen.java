@@ -102,6 +102,9 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
                 case Input.Keys.X:
                     gameLogic.getPlayer().rotate(1);
                     break;
+                case Input.Keys.C:
+                    gameLogic.getPlayer().moveByDirection(1);
+                    break;
             }
         }
         return false;
