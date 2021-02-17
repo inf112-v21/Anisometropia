@@ -1,7 +1,7 @@
 package inf112.skeleton.app;
 
 /**
- * Contains methods and variables that pertain to register cards
+ * Contains methods and variables that pertain to register cards.
  */
 public class RegisterCard {
     String pictureLocation; // File location of card graphics

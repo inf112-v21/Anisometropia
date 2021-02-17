@@ -41,6 +41,7 @@ public class Player {
     /**
      * Moves player given amount of tiles in current facing direction.
      * @param amountToMove denotes amount of tiles to move
+     * TODO: check whether player moves over deadly obstacle
      */
     public void moveByDirection(int amountToMove) {
         switch (getDirection()) {
