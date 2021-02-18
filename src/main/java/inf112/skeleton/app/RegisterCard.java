@@ -4,13 +4,13 @@ package inf112.skeleton.app;
  * Contains methods and variables that pertain to register cards.
  */
 public class RegisterCard {
-    String pictureLocation; // File location of card graphics
+    String graphicLocation; // File location of card graphics
     int amountToMoveOrRotate;
     boolean movementCard; // Denotes whether card affects movement or direction
     Player player;
 
-    public RegisterCard(String pictureLocation, int amountToMoveOrRotate, boolean movementCard) {
-        this.pictureLocation = pictureLocation;
+    public RegisterCard(String graphicLocation, int amountToMoveOrRotate, boolean movementCard) {
+        this.graphicLocation = graphicLocation;
         this.amountToMoveOrRotate = amountToMoveOrRotate;
         this.movementCard = movementCard;
     }

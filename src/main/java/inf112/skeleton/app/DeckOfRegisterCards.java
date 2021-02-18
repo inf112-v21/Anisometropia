@@ -56,4 +56,16 @@ public class DeckOfRegisterCards {
     public ArrayList<RegisterCard> getDeck() {
         return deckOfCards;
     }
+
+    /**
+     * Takes the first nine cards from deckOfCards and places them in new list nineCards.
+     * @return nineCards containing the nine register cards for a player to choose from.
+     */
+    public ArrayList<RegisterCard> dealNineCards() {
+        ArrayList<RegisterCard> nineCards = new ArrayList<>();
+        for (int i = 0; i < 9; i++) {
+            nineCards.add(deckOfCards.remove(0));
+        }
+        return nineCards;
+    }
 }
