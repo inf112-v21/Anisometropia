@@ -35,7 +35,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         smallFont.getData().setScale(1.5f);
         largeFont = new BitmapFont();
         largeFont.setColor(Color.BLACK);
-        largeFont.getData().setScale(7f);
+        largeFont.getData().setScale(5f);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.translate(GAMEBOARD_PLACEMENT_X, GAMEBOARD_PLACEMENT_Y);

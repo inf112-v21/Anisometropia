@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class PlayerQueue {
 
     ArrayList<Player> playerList;
-    int index;
+    int turnCounter;
 
     public PlayerQueue() {
         playerList = new ArrayList<>();
-        this.index = 0;
+        this.turnCounter = 0;
     }
 
     public ArrayList<Player> getPlayerQueue(){
@@ -17,16 +17,23 @@ public class PlayerQueue {
     }
 
     public void next() {
-        index++;
+        turnCounter++;
     }
 
     public void add(Player player){
         this.playerList.add(player);
     }
 
-
     public Player getCurrentPlayer(){
-        return playerList.get(index % playerList.size());
+        return playerList.get(turnCounter % playerList.size());
+    }
+
+    public int getCurrentPlayerNumber(){
+        if (turnCounter % playerList.size() == 0) {
+            return playerList.size();
+        } else {
+            return (turnCounter % playerList.size());
+        }
     }
 
 }

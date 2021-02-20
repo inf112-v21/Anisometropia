@@ -40,13 +40,13 @@ public class GameLogic {
 
             if(checkWin(player)){
                 player.playerWins();
-                gameMessage = "Game Won!";
+                gameMessage = "Player " + playerQueue.getCurrentPlayerNumber() + " won the game!";
                 gameOver = true;
             }
 
             if(checkLoss(player.getX(), player.getY())) {
                 player.playerDies();
-                gameMessage = "Game Lost!";
+                gameMessage = "Player "+ playerQueue.getCurrentPlayerNumber() + " lost the game!";
                 gameOver = true;
             }
         }
@@ -68,7 +68,7 @@ public class GameLogic {
 
     public void gameReset() {
         gameOver = false;
-        playerQueue.index = 0;
+        playerQueue.turnCounter = 0;
         for (Player player : playerQueue.getPlayerQueue()){
             player.playerAlive();
             player.respawn();
