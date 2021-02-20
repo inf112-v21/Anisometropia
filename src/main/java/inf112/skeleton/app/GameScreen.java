@@ -67,10 +67,10 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         if(GameLogic.gameOver) largeFont.draw(batch, GameLogic.gameMessage, 32, -96);
         // shows player controls
         smallFont.draw(batch, "WASD:     move\n" +
-                                  "X:              rotate player clockwise\n" +
-                                  "C:              move player forwards\n" +
-                                  "R:              respawn\n" +
-                                  "ESCAPE:  exit", SCREEN_WIDTH / 2f, 64);
+                "X:              rotate player clockwise\n" +
+                "C:              move player forwards\n" +
+                "R:              respawn\n" +
+                "ESCAPE:  exit", SCREEN_WIDTH / 2f, 64);
 
         batch.end();
     }
