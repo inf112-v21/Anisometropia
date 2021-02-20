@@ -16,7 +16,7 @@ public class PlayerTest {
         GameScreen gameScreen = new GameScreen();
         GameMap gameMap = gameScreen.getGameMap();
         GameLogic gameLogic = gameScreen.gameLogic;
-        Player player = gameLogic.getPlayer();
+        Player player = gameLogic.getCurrentPlayer();
     }
 
     // Test does not currently work. Setup is somehow wrong

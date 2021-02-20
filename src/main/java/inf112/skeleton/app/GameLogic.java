@@ -1,60 +1,78 @@
 package inf112.skeleton.app;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 public class GameLogic {
     GameScreen gameScreen;
     TiledMap tiledMap;
-    Player player;
+
+    PlayerQueue playerQueue;
+    Player player1;
+    Player player2;
+
+    final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
 
     public static boolean gameOver = false;
     public static String gameMessage;
 
     public GameLogic(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
-        this.player = new Player(1, 1, gameScreen.getGameMap());
         this.tiledMap = gameScreen.getGameMap().getTiledMap();
-        gameScreen.getGameMap().setCell(1, 1, "PlayerLayer", player.getCell());
+        player1 = new Player(1, 1, gameScreen.getGameMap());
+        player2 = new Player(7, 2, gameScreen.getGameMap());
+        playerQueue = new PlayerQueue();
+        playerQueue.add(player1);
+        gameScreen.getGameMap().setCell(player1.getX(), player1.getY(), "PlayerLayer", player1.getCell());
+        playerQueue.add(player2);
+        gameScreen.getGameMap().setCell(player2.getX(), player2.getY(), "PlayerLayer", player2.getCell());
+
     }
 
     public void update() {
 
+        for (Player player : playerQueue.getPlayerQueue()) {
+            if (((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y) != null){
+                int flagID = ((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y).getTile().getId();
+                registerFlag(flagID, player);
+            }
 
-        if (((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y) != null){
-            int flagID = ((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y).getTile().getId();
-            registerFlag(flagID, player);
+            if(checkWin(player)){
+                player.playerWins();
+                gameMessage = "Game Won!";
+                gameOver = true;
+            }
+
+            if(checkLoss(player.getX(), player.getY())) {
+                player.playerDies();
+                gameMessage = "Game Lost!";
+                gameOver = true;
+            }
         }
 
-        if(checkWin(player)){
-            player.playerWins();
-            gameMessage = "Game Won!";
-            gameOver = true;
-        }
 
-        if(checkLoss(player.getX(), player.getY())) {
-            player.playerDies();
-            gameMessage = "Game Lost!";
-            gameOver = true;
-        }
     }
 
     public void registerFlag (int flagID, Player player) {
         switch (flagID) {
-            case (55): player.flagsReached[0] = true;
+            case (FLAG_1_ID): player.flagsReached[0] = true;
             break;
-            case (63): if (player.flagsReached[0]) player.flagsReached[1] = true;
+            case (FLAG_2_ID): if (player.flagsReached[0]) player.flagsReached[1] = true;
             break;
-            case (71): if (player.flagsReached[1]) player.flagsReached[2] = true;
+            case (FLAG_3_ID): if (player.flagsReached[1]) player.flagsReached[2] = true;
             break;
-            case (79): if (player.flagsReached[2]) player.flagsReached[3] = true;
+            case (FLAG_4_ID): if (player.flagsReached[2]) player.flagsReached[3] = true;
             break;
         }}
 
     public void gameReset() {
         gameOver = false;
-        player.playerAlive();
-        player.respawn();
+        playerQueue.index = 0;
+        for (Player player : playerQueue.getPlayerQueue()){
+            player.playerAlive();
+            player.respawn();
+        }
     }
 
     public boolean checkWin(Player player) {
@@ -73,7 +91,7 @@ public class GameLogic {
         return ((TiledMapTileLayer) tiledMap.getLayers().get("HoleLayer")).getCell(x, y) != null;
     }*/
 
-    public Player getPlayer() {
-        return player;
+    public Player getCurrentPlayer() {
+        return playerQueue.getCurrentPlayer();
     }
 }
