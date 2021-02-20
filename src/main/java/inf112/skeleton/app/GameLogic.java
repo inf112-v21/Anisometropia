@@ -22,7 +22,6 @@ public class GameLogic {
 
 
         if (((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y) != null){
-            System.out.println(((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y).getTile().getId());
             int flagID = ((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y).getTile().getId();
             registerFlag(flagID, player);
         }
