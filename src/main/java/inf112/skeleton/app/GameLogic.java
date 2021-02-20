@@ -20,8 +20,8 @@ public class GameLogic {
     public GameLogic(GameScreen gameScreen) {
         this.gameScreen = gameScreen;
         this.tiledMap = gameScreen.getGameMap().getTiledMap();
-        player1 = new Player(1, 1, gameScreen.getGameMap());
-        player2 = new Player(7, 2, gameScreen.getGameMap());
+        player1 = new Player(1, 1, "Player 1", gameScreen.getGameMap());
+        player2 = new Player(7, 2, "Player 2", gameScreen.getGameMap());
         playerQueue = new PlayerQueue();
         playerQueue.add(player1);
         gameScreen.getGameMap().setCell(player1.getX(), player1.getY(), "PlayerLayer", player1.getCell());
@@ -40,13 +40,13 @@ public class GameLogic {
 
             if(checkWin(player)){
                 player.playerWins();
-                gameMessage = "Player " + playerQueue.getCurrentPlayerNumber() + " won the game!";
+                gameMessage = player.playerName + " won the game!";
                 gameOver = true;
             }
 
             if(checkLoss(player.getX(), player.getY())) {
                 player.playerDies();
-                gameMessage = "Player "+ playerQueue.getCurrentPlayerNumber() + " lost the game!";
+                gameMessage = player.playerName + " lost the game!";
                 gameOver = true;
             }
         }

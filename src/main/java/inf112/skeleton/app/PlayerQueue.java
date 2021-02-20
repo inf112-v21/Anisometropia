@@ -28,12 +28,4 @@ public class PlayerQueue {
         return playerList.get(turnCounter % playerList.size());
     }
 
-    public int getCurrentPlayerNumber(){
-        if (turnCounter % playerList.size() == 0) {
-            return playerList.size();
-        } else {
-            return (turnCounter % playerList.size());
-        }
-    }
-
 }

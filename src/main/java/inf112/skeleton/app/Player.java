@@ -12,15 +12,17 @@ public class Player {
     int dmgTokens = 0;
     boolean powerDown = false;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
+    String playerName;
     boolean[] flagsReached;
     TextureRegion[][] playerImages;
     TiledMapTileLayer.Cell playerCell, playerWonCell, playerDiedCell;
     TiledMapTileLayer.Cell currentCell;
     GameMap gameMap;
 
-    public Player(int x, int y, GameMap gameMap) {
+    public Player(int x, int y, String playerName, GameMap gameMap) {
         this.x = this.spawnX = x;
         this.y = this.spawnY = y;
+        this.playerName = playerName;
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
         flagsReached = new boolean[4];
