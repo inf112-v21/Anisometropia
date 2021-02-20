@@ -33,13 +33,6 @@ public class GameLogic {
             gameOver = true;
         }
 
-        /*
-        if (checkWin(player.getX(), player.getY())) {
-            player.playerWins();
-            gameMessage = "Game Won!";
-            gameOver = true;
-        }
-        */
         if(checkLoss(player.getX(), player.getY())) {
             player.playerDies();
             gameMessage = "Game Lost!";
