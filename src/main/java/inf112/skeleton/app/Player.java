@@ -9,8 +9,10 @@ import java.util.Arrays;
 
 public class Player {
     int x, y, spawnX, spawnY;
-    int dmgTokens = 0;
+    private int dmgTokens;
+    private int lifeTokens;
     boolean powerDown = false;
+    boolean playerGetsDamaged = false;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     String playerName;
     boolean[] flagsReached;
@@ -23,6 +25,8 @@ public class Player {
     public Player(int x, int y, String playerName, GameMap gameMap) {
         this.x = this.spawnX = x;
         this.y = this.spawnY = y;
+        dmgTokens = 0;
+        lifeTokens = 3;
         this.playerName = playerName;
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
@@ -98,23 +102,46 @@ public class Player {
     public void playerDies() {
         gameMap.setCell(x, y, "PlayerLayer", playerDiedCell);
         currentCell = playerDiedCell;
+        updateLifeTokens();
+        System.out.println(getLifeTokens()); //Går mot minus uendelig ¯\_(ツ)_/¯
     }
 
-    public void playerDamaged() {
-        this.dmgTokens += 1;
+    public void setLifeTokens(int tokens) {
+        this.lifeTokens = tokens;
     }
 
-    public void playerPowerDown() {
-        /*
-        Don't forget about the powerDown signal that needs to be given 1 turn in advance.
-        Signaling method also needs to be implemented for deciding to remain or leave the
-        powerDown state. We should probably implement this in GameLogic since it communicates
-        with user input and can keep track of turns.
-         */
-        this.dmgTokens = 0;
-        this.powerDown = true;
+    public int getLifeTokens() {
+        return lifeTokens;
     }
 
+    public void updateLifeTokens() {
+        setLifeTokens(getLifeTokens()-1);
+    }
+
+    public boolean playerNotAllowedToRespawn() {
+        return(getLifeTokens() == 0);
+    }
+
+    public void setDmgTokens(int tokens) {
+        this.dmgTokens = tokens;
+    }
+
+    public int getDmgTokens() {
+        return dmgTokens;
+    }
+
+    public void checkIfPlayerTooDamaged() {
+        if(getDmgTokens()==10)
+            playerDies();
+    }
+
+    public void updateDamageTokens() {
+        if (playerGetsDamaged)
+            setDmgTokens(getDmgTokens() + 1);
+        if (powerDown)  //If power down button pressed then this input will be received in game logic. Set player.powerDown to true if so to activate it and call this method.
+            setDmgTokens(0);
+        checkIfPlayerTooDamaged();
+    }
 
     public int getX() {
         return x;
