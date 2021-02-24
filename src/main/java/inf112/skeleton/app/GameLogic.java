@@ -26,10 +26,10 @@ public class GameLogic {
         playerQueue.add(player1);
         gameScreen.getGameMap().setCell(player1.getX(), player1.getY(), "PlayerLayer", player1.getCell());
 
-        // code below can be removed to only have one player
-        playerQueue.add(player2);
-        gameScreen.getGameMap().setCell(player2.getX(), player2.getY(), "PlayerLayer", player2.getCell());
-        // end
+//        // code below can be removed to only have one player
+//        playerQueue.add(player2);
+//        gameScreen.getGameMap().setCell(player2.getX(), player2.getY(), "PlayerLayer", player2.getCell());
+//        // end
     }
 
     public void update() {
@@ -72,7 +72,6 @@ public class GameLogic {
         gameOver = false;
         playerQueue.turnCounter = 0;
         for (Player player : playerQueue.getPlayerQueue()){
-            player.playerAlive();
             player.respawn();
         }
     }

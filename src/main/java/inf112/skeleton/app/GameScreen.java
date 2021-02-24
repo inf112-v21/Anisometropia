@@ -13,11 +13,11 @@ import org.lwjgl.opengl.GL20;
 
 public class GameScreen extends ApplicationAdapter implements InputProcessor {
     public static final int SCREEN_WIDTH = 1280;
-    public static final int SCREEN_HEIGHT = 720;
+    public static final int SCREEN_HEIGHT = 960;
     public static final int GAMEBOARD_PLACEMENT_X = -32;
     public static final int GAMEBOARD_PLACEMENT_Y = -320;
     public static final float ASSETS_IMAGE_SIZE = 300f;
-    public static final float PIXEL_SCALE_FOR_ASSETS = 32f;
+    public static final float PIXEL_SCALE_FOR_ASSETS = 64f;
 
     SpriteBatch batch;
     BitmapFont smallFont, largeFont;
@@ -109,11 +109,9 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
                     break;
                 case Input.Keys.X:
                     gameLogic.getCurrentPlayer().rotate(1);
-                    gameLogic.playerQueue.next();
                     break;
                 case Input.Keys.C:
                     gameLogic.getCurrentPlayer().moveByDirection(1);
-                    gameLogic.playerQueue.next();
                     break;
             }
         }
