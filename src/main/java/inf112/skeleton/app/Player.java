@@ -14,7 +14,7 @@ public class Player {
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     String playerName;
     boolean[] flagsReached;
-    boolean[] conveyorBeltReached;
+    boolean conveyorBeltReached = true;
     TextureRegion[][] playerImages;
     TiledMapTileLayer.Cell playerCell, playerWonCell, playerDiedCell;
     TiledMapTileLayer.Cell currentCell;
@@ -27,7 +27,6 @@ public class Player {
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
         flagsReached = new boolean[4];
-        conveyorBeltReached = new boolean[1];
         playerImages  = TextureRegion.split(new Texture("player.png"), 300, 300);
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));
         currentCell = playerCell;
