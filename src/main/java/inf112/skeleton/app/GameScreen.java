@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.Vector3;
 import org.lwjgl.opengl.GL20;
 
 public class GameScreen extends ApplicationAdapter implements InputProcessor {
-    public static final int SCREEN_WIDTH = 1280;
+    public static final int SCREEN_WIDTH = 1696;
     public static final int SCREEN_HEIGHT = 960;
     public static final int GAMEBOARD_PLACEMENT_X = -32;
-    public static final int GAMEBOARD_PLACEMENT_Y = -320;
+    public static final int GAMEBOARD_PLACEMENT_Y = -160;
     public static final float ASSETS_IMAGE_SIZE = 300f;
     public static final float PIXEL_SCALE_FOR_ASSETS = 64f;
 
@@ -23,7 +23,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
     BitmapFont smallFont, largeFont;
     OrthographicCamera camera;
 
-    GameMap gameMap;
+    GraphicalGameMap gameMap;
     GameLogic gameLogic;
     Player player;
 
@@ -34,15 +34,16 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         smallFont.setColor(Color.BLACK);
         smallFont.getData().setScale(1.5f);
         largeFont = new BitmapFont();
-        largeFont.setColor(Color.BLACK);
-        largeFont.getData().setScale(5f);
+        largeFont.setColor(Color.WHITE);
+        largeFont.getData().setScale(4f);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.translate(GAMEBOARD_PLACEMENT_X, GAMEBOARD_PLACEMENT_Y);
         camera.update();
 
-        gameMap = new GameMap();
-        gameLogic = new GameLogic(this);
+        gameMap = new GraphicalGameMap();
+        gameLogic = new GameLogic(gameMap);
         player = gameLogic.getCurrentPlayer();
 
         Gdx.input.setInputProcessor(this);
@@ -61,16 +62,15 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
         gameLogic.update();
         gameMap.render(camera, batch);
+
         batch.begin();
 
-        // prints out message when the game ends (game won! / game lost!)
-        if(GameLogic.gameOver) largeFont.draw(batch, GameLogic.gameMessage, 32, -96);
-        // shows player controls
+        if(GameLogic.gameOver) largeFont.draw(batch, GameLogic.gameMessage, 96, 512);
         smallFont.draw(batch, "WASD:     move\n" +
                 "X:              rotate player clockwise\n" +
                 "C:              move player forwards\n" +
                 "R:              respawn\n" +
-                "ESCAPE:  exit", SCREEN_WIDTH / 2f, 64);
+                "ESCAPE:  exit", 0, -16);
 
         batch.end();
     }
@@ -79,10 +79,6 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
     public void dispose() {
         gameMap.dispose();
         batch.dispose();
-    }
-
-    public GameMap getGameMap() {
-        return this.gameMap;
     }
 
     @Override

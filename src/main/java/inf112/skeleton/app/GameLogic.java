@@ -1,16 +1,10 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 public class GameLogic {
-    GameScreen gameScreen;
-    TiledMap tiledMap;
-
+    GameMap gameMap;
     PlayerQueue playerQueue;
-    Player player1;
-    Player player2;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
     final int conveyorBeltID_Down      = 50, conveyorBeltID_Right     = 52, conveyorBeltID_Up      = 49, conveyorBeltID_Left     = 51,
@@ -20,44 +14,46 @@ public class GameLogic {
     public static boolean gameOver = false;
     public static String gameMessage;
 
-    public GameLogic(GameScreen gameScreen) {
-        this.gameScreen = gameScreen;
-        this.tiledMap = gameScreen.getGameMap().getTiledMap();
-        player1 = new Player(2, 2, "Player 1", gameScreen.getGameMap());
-        player2 = new Player(7, 2, "Player 2", gameScreen.getGameMap());
-        playerQueue = new PlayerQueue();
-        playerQueue.add(player1);
-        gameScreen.getGameMap().setCell(player1.getX(), player1.getY(), "PlayerLayer", player1.getCell());
+    public GameLogic(GameMap gameMap) {
+        this.gameMap = gameMap;
+        this.playerQueue = new PlayerQueue();
 
-//        // code below can be removed to only have one player
-        playerQueue.add(player2);
-        gameScreen.getGameMap().setCell(player2.getX(), player2.getY(), "PlayerLayer", player2.getCell());
-//        // end
+        addPlayer(2,2, "Player 1");
+        addPlayer(7,2, "Player 2");
+    }
+
+    public void addPlayer(int spawnX, int spawnY, String name) {
+        playerQueue.add(new Player(spawnX, spawnY, name, gameMap));
+        gameMap.setPlayerPosition(spawnX, spawnY, playerQueue.getPlayerQueue().get(playerQueue.getPlayerQueue().size() - 1));
     }
 
     public void update() {
-
         for (Player player : playerQueue.getPlayerQueue()) {
-            if (((TiledMapTileLayer) tiledMap.getLayers().get("GameAssets")).getCell(player.x, player.y) != null){
-                int tileID = ((TiledMapTileLayer) tiledMap.getLayers().get("GameAssets")).getCell(player.x, player.y).getTile().getId();
+            if (gameMap.isThereFlagHere(player.x, player.y)){
+                int tileID = gameMap.getAssetLayerID(player.x, player.y);
                 registerFlag(tileID, player);
+                conveyorBelt(tileID, player);
+            }
+
+            if (gameMap.isThereConveyorOnThisPosition(player.x, player.y)){
+                int tileID = gameMap.getAssetLayerID(player.x, player.y);
                 conveyorBelt(tileID, player);
             }
 
             if(checkWin(player)){
                 player.playerWins();
+                gameMap.setPlayerPosition(player.x, player.y, player);
                 gameMessage = player.playerName + " won the game!";
                 gameOver = true;
             }
 
             if(checkLoss(player.getX(), player.getY())) {
                 player.playerDies();
+                gameMap.setPlayerPosition(player.x, player.y, player);
                 gameMessage = player.playerName + " lost the game!";
                 gameOver = true;
             }
         }
-
-
     }
 
     /*
@@ -145,20 +141,15 @@ public class GameLogic {
     }
 
     public boolean checkLoss(int x, int y) {
-        return ((TiledMapTileLayer) tiledMap.getLayers().get("HoleLayer")).getCell(x, y) != null;
+        return gameMap.isThereHoleOnThisPosition(x, y);
     }
-
-
-
-/*    public boolean checkWin(int x, int y) {
-        return ((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(x, y) != null;
-    }
-
-    public boolean checkLoss(int x, int y) {
-        return ((TiledMapTileLayer) tiledMap.getLayers().get("HoleLayer")).getCell(x, y) != null;
-    }*/
 
     public Player getCurrentPlayer() {
         return playerQueue.getCurrentPlayer();
     }
+
+    public PlayerQueue getPlayerQueue() {
+        return playerQueue;
+    }
+
 }
