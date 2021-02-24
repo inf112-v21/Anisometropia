@@ -26,7 +26,6 @@ public class Player {
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
         flagsReached = new boolean[4];
-        Arrays.fill(flagsReached, Boolean.FALSE);
         playerImages  = TextureRegion.split(new Texture("player.png"), 300, 300);
         playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));
         currentCell = playerCell;
@@ -74,10 +73,10 @@ public class Player {
     public void respawn() {
         Arrays.fill(flagsReached, Boolean.FALSE);
         gameMap.setCell(x, y, "PlayerLayer", null);
-        gameMap.setCell(spawnX, spawnY,"PlayerLayer", currentCell);
         this.x=spawnX;
         this.y=spawnY;
         this.direction = 0;
+        playerAlive();
     }
 
     public TiledMapTileLayer.Cell getCell() {

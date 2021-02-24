@@ -72,7 +72,6 @@ public class GameLogic {
         gameOver = false;
         playerQueue.turnCounter = 0;
         for (Player player : playerQueue.getPlayerQueue()){
-            player.playerAlive();
             player.respawn();
         }
     }
