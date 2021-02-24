@@ -19,34 +19,31 @@ public class DeckOfRegisterCards {
      */
     private void generateDeck() {
         // Move 1
-        for (int i = 0; i < 18; i++) {
-            deckOfCards.add(new RegisterCard("RegisterCardAssets/Move1", 1, true));
-        }
-        // Move 2
-        for (int i = 0; i < 12; i++) {
-            deckOfCards.add(new RegisterCard("RegisterCardAssets/Move2", 2, true));
-        }
-        // Move 3
-        for (int i = 0; i < 6; i++) {
-            deckOfCards.add(new RegisterCard("RegisterCardAssets/Move3", 3, true));
-        }
-        // Back up
-        for (int i = 0; i < 6; i++) {
-            deckOfCards.add(new RegisterCard("RegisterCardAssets/BackUp", -1, true));
-        }
-        // Rotate left
-        for (int i = 0; i < 18; i++) {
-            deckOfCards.add(new RegisterCard("RegisterCardAssets/RotateLeft", 1, false));
-        }
-        // Rotate right
-        for (int i = 0; i < 18; i++) {
-            deckOfCards.add(new RegisterCard("RegisterCardAssets/RotateRight", 3, false));
-        }
-        // U-turn
-        for (int i = 0; i < 6; i++) {
-            deckOfCards.add(new RegisterCard("RegisterCardAssets/UTurn", 2, false));
-        }
+        addCardsToDeck("RegisterCardAssets/Move1", 1, true, 18);
 
+        // Move 2
+        addCardsToDeck("RegisterCardAssets/Move2", 2, true, 12);
+
+        // Move 3
+        addCardsToDeck("RegisterCardAssets/Move3", 3, true, 6);
+
+        // Back up
+        addCardsToDeck("RegisterCardAssets/BackUp", -1, true, 6);
+
+        // Rotate left
+        addCardsToDeck("RegisterCardAssets/RotateLeft", 1, false, 18);
+
+        // Rotate right
+        addCardsToDeck("RegisterCardAssets/RotateRight", 3, false, 18);
+
+        // U-turn
+        addCardsToDeck("RegisterCardAssets/UTurn", 2, false, 6);
+    }
+
+    private void addCardsToDeck(String graphicLocation, int amountToMoveOrRotate, boolean movementCard, int numOfCards) {
+        for (int i = 0; i < numOfCards; i++) {
+            deckOfCards.add(new RegisterCard(graphicLocation, amountToMoveOrRotate, movementCard));
+        }
     }
 
     private void shuffleDeck() { Collections.shuffle(deckOfCards); }
@@ -63,6 +60,7 @@ public class DeckOfRegisterCards {
     /**
      * Removes the first nine cards from deckOfCards and places them in new list nineCards.
      * @return nineCards containing the nine register cards for a player to choose from.
+     * TODO: deal cards equal to damage tokens
      */
     public ArrayList<RegisterCard> dealNineCards() {
         ArrayList<RegisterCard> nineCards = new ArrayList<>();
