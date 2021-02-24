@@ -35,9 +35,9 @@ public class GameLogic {
     public void update() {
 
         for (Player player : playerQueue.getPlayerQueue()) {
-            if (((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y) != null){
-                int flagID = ((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(player.x, player.y).getTile().getId();
-                registerFlag(flagID, player);
+            if (((TiledMapTileLayer) tiledMap.getLayers().get("GameAssets")).getCell(player.x, player.y) != null){
+                int TileID = ((TiledMapTileLayer) tiledMap.getLayers().get("GameAssets")).getCell(player.x, player.y).getTile().getId();
+                registerFlag(TileID, player);
             }
 
             if(checkWin(player)){
@@ -83,6 +83,8 @@ public class GameLogic {
     public boolean checkLoss(int x, int y) {
         return ((TiledMapTileLayer) tiledMap.getLayers().get("HoleLayer")).getCell(x, y) != null;
     }
+
+
 
 /*    public boolean checkWin(int x, int y) {
         return ((TiledMapTileLayer) tiledMap.getLayers().get("FlagLayer")).getCell(x, y) != null;
