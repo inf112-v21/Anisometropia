@@ -102,7 +102,7 @@ public class Player {
         gameMap.setCell(x, y, "PlayerLayer", playerDiedCell);
         currentCell = playerDiedCell;
         updateLifeTokens();
-        System.out.println(getLifeTokens()); //Går mot minus uendelig ¯\_(ツ)_/¯
+
     }
 
     public void setLifeTokens(int tokens) {
@@ -114,11 +114,12 @@ public class Player {
     }
 
     public void updateLifeTokens() {
-        setLifeTokens(getLifeTokens()-1);
-    }
+            setLifeTokens(getLifeTokens()-1);
+            checkIfPlayerCanRespawn();
+        }
 
-    public boolean playerNotAllowedToRespawn() {
-        return(getLifeTokens() == 0);
+    public boolean checkIfPlayerCanRespawn() {
+        return (getLifeTokens() == 0);
     }
 
     public void setDmgTokens(int tokens) {
