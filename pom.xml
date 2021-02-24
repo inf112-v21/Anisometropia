@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>inf112.skeleton.app</groupId>
@@ -64,30 +64,30 @@
       <artifactId>kryonet</artifactId>
       <version>2.21</version>
     </dependency>
-      <dependency>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter</artifactId>
-          <version>RELEASE</version>
-          <scope>test</scope>
-      </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>RELEASE</version>
+      <scope>test</scope>
+    </dependency>
 
   </dependencies>
 
   <build>
     <!-- edited by Henriette -->
-   <resources>
-     <resource>
-       <directory>${basedir}/assets</directory>
-     </resource>
-   </resources>
-   <testResources>
-     <testResource>
-       <directory>${basedir}/assets</directory>
-     </testResource>
-   </testResources>
+    <resources>
+      <resource>
+        <directory>${basedir}/assets</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>${basedir}/assets</directory>
+      </testResource>
+    </testResources>
 
 
-   <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>

@@ -35,7 +35,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         smallFont.getData().setScale(1.5f);
         largeFont = new BitmapFont();
         largeFont.setColor(Color.BLACK);
-        largeFont.getData().setScale(7f);
+        largeFont.getData().setScale(5f);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.translate(GAMEBOARD_PLACEMENT_X, GAMEBOARD_PLACEMENT_Y);
@@ -43,7 +43,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
         gameMap = new GameMap();
         gameLogic = new GameLogic(this);
-        player = gameLogic.getPlayer();
+        player = gameLogic.getCurrentPlayer();
 
         Gdx.input.setInputProcessor(this);
     }
@@ -67,10 +67,10 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         if(GameLogic.gameOver) largeFont.draw(batch, GameLogic.gameMessage, 32, -96);
         // shows player controls
         smallFont.draw(batch, "WASD:     move\n" +
-                                  "X:              rotate player clockwise\n" +
-                                  "C:              move player forwards\n" +
-                                  "R:              respawn\n" +
-                                  "ESCAPE:  exit", SCREEN_WIDTH / 2f, 64);
+                "X:              rotate player clockwise\n" +
+                "C:              move player forwards\n" +
+                "R:              respawn\n" +
+                "ESCAPE:  exit", SCREEN_WIDTH / 2f, 64);
 
         batch.end();
     }
@@ -92,22 +92,28 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         if (!GameLogic.gameOver) {
             switch (keycode) {
                 case Input.Keys.UP: case Input.Keys.W:
-                    gameLogic.getPlayer().move(0, 1);
+                    gameLogic.getCurrentPlayer().move(0, 1);
+                    gameLogic.playerQueue.next();
                     break;
                 case Input.Keys.DOWN: case Input.Keys.S:
-                    gameLogic.getPlayer().move(0, -1);
+                    gameLogic.getCurrentPlayer().move(0, -1);
+                    gameLogic.playerQueue.next();
                     break;
                 case Input.Keys.LEFT: case Input.Keys.A:
-                    gameLogic.getPlayer().move(-1, 0);
+                    gameLogic.getCurrentPlayer().move(-1, 0);
+                    gameLogic.playerQueue.next();
                     break;
                 case Input.Keys.RIGHT: case Input.Keys.D:
-                    gameLogic.getPlayer().move(1, 0);
+                    gameLogic.getCurrentPlayer().move(1, 0);
+                    gameLogic.playerQueue.next();
                     break;
                 case Input.Keys.X:
-                    gameLogic.getPlayer().rotate(1);
+                    gameLogic.getCurrentPlayer().rotate(1);
+                    gameLogic.playerQueue.next();
                     break;
                 case Input.Keys.C:
-                    gameLogic.getPlayer().moveByDirection(1);
+                    gameLogic.getCurrentPlayer().moveByDirection(1);
+                    gameLogic.playerQueue.next();
                     break;
             }
         }

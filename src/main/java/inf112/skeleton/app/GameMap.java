@@ -53,6 +53,8 @@ public class GameMap {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+
+
         batch.end();
     }
 
