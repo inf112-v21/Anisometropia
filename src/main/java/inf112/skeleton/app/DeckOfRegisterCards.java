@@ -17,7 +17,7 @@ public class DeckOfRegisterCards {
     /**
      * Generates a full deck of register cards.
      */
-    public void generateDeck() {
+    private void generateDeck() {
         // Move 1
         for (int i = 0; i < 18; i++) {
             deckOfCards.add(new RegisterCard("RegisterCardAssets/Move1", 1, true));
@@ -49,8 +49,11 @@ public class DeckOfRegisterCards {
 
     }
 
-    public void shuffleDeck() {
-        Collections.shuffle(deckOfCards);
+    private void shuffleDeck() { Collections.shuffle(deckOfCards); }
+
+    public void reshuffleDeck() {
+        generateDeck();
+        shuffleDeck();
     }
 
     public ArrayList<RegisterCard> getDeck() {
@@ -58,7 +61,7 @@ public class DeckOfRegisterCards {
     }
 
     /**
-     * Takes the first nine cards from deckOfCards and places them in new list nineCards.
+     * Removes the first nine cards from deckOfCards and places them in new list nineCards.
      * @return nineCards containing the nine register cards for a player to choose from.
      */
     public ArrayList<RegisterCard> dealNineCards() {
