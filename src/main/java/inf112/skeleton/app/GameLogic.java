@@ -1,7 +1,5 @@
 package inf112.skeleton.app;
 
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-
 public class GameLogic {
     GameMap gameMap;
     PlayerQueue playerQueue;
@@ -13,6 +11,8 @@ public class GameLogic {
 
     public static boolean gameOver = false;
     public static String gameMessage;
+
+    boolean roundOver = true;
 
     public GameLogic(GameMap gameMap) {
         this.gameMap = gameMap;
@@ -28,32 +28,35 @@ public class GameLogic {
     }
 
     public void update() {
-        for (Player player : playerQueue.getPlayerQueue()) {
-            if (gameMap.isThereFlagHere(player.x, player.y)){
-                int tileID = gameMap.getAssetLayerID(player.x, player.y);
-                registerFlag(tileID, player);
-                conveyorBelt(tileID, player);
-            }
+        if (roundOver) {
+            roundOver = false;
+            for (Player player : playerQueue.getPlayerQueue()) {
+                if (gameMap.isThereFlagHere(player.x, player.y)){
+                    int tileID = gameMap.getAssetLayerID(player.x, player.y);
+                    registerFlag(tileID, player);
+                }
 
-            if (gameMap.isThereConveyorOnThisPosition(player.x, player.y)){
-                int tileID = gameMap.getAssetLayerID(player.x, player.y);
-                conveyorBelt(tileID, player);
-            }
+                if (gameMap.isThereConveyorOnThisPosition(player.x, player.y)){
+                    int tileID = gameMap.getAssetLayerID(player.x, player.y);
+                    conveyorBelt(tileID, player);
+                }
 
-            if(checkWin(player)){
-                player.playerWins();
-                gameMap.setPlayerPosition(player.x, player.y, player);
-                gameMessage = player.playerName + " won the game!";
-                gameOver = true;
-            }
+                if(checkWin(player)){
+                    player.playerWins();
+                    gameMap.setPlayerPosition(player.x, player.y, player);
+                    gameMessage = player.playerName + " won the game!";
+                    gameOver = true;
+                }
 
-            if(checkLoss(player.getX(), player.getY())) {
-                player.playerDies();
-                gameMap.setPlayerPosition(player.x, player.y, player);
-                gameMessage = player.playerName + " lost the game!";
-                gameOver = true;
+                if(checkLoss(player.getX(), player.getY())) {
+                    player.playerDies();
+                    gameMap.setPlayerPosition(player.x, player.y, player);
+                    gameMessage = player.playerName + " lost the game!";
+                    gameOver = true;
+                }
             }
         }
+
     }
 
     /*
@@ -79,40 +82,40 @@ public class GameLogic {
                 player.move(-1, 0);}
                 break;
 
-            case (conveyorBeltID_DownRight): if(player.conveyorBeltReached){
-                getCurrentPlayer().rotate(-1);}
-                //player.move(1,0);
-                break;
-            case (conveyorBeltID_RightUp): if(player.conveyorBeltReached){
-                getCurrentPlayer().rotate(-1);}
-                //player.move(0,1);
-                break;
-            case (conveyorBeltID_UpLeft): if(player.conveyorBeltReached){
-                getCurrentPlayer().rotate(-1);}
-                //player.move(-1,0);
-                break;
-            case (conveyorBeltID_LeftDown): if(player.conveyorBeltReached){
-                getCurrentPlayer().rotate(-1);}
-                //player.move(0,-1);
-                break;
-
-
-            case (conveyorBeltID_DownLeft): if(player.conveyorBeltReached){
-                getCurrentPlayer().rotate(1);}
-                //player.move(-1,0);
-                break;
-            case (conveyorBeltID_LeftUp): if(player.conveyorBeltReached){
-                getCurrentPlayer().rotate(1);}
-                //player.move(0,1);
-                break;
-            case (conveyorBeltID_UpRight): if(player.conveyorBeltReached){
-                getCurrentPlayer().rotate(1);}
-                //player.move(1,0);
-                break;
-            case (conveyorBeltID_RightDown): if(player.conveyorBeltReached){
-                getCurrentPlayer().rotate(1);}
-                //player.move(0,-1);
-                break;
+//            case (conveyorBeltID_DownRight): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(-1);}
+//                //player.move(1,0);
+//                break;
+//            case (conveyorBeltID_RightUp): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(-1);}
+//                //player.move(0,1);
+//                break;
+//            case (conveyorBeltID_UpLeft): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(-1);}
+//                //player.move(-1,0);
+//                break;
+//            case (conveyorBeltID_LeftDown): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(-1);}
+//                //player.move(0,-1);
+//                break;
+//
+//
+//            case (conveyorBeltID_DownLeft): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(1);}
+//                //player.move(-1,0);
+//                break;
+//            case (conveyorBeltID_LeftUp): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(1);}
+//                //player.move(0,1);
+//                break;
+//            case (conveyorBeltID_UpRight): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(1);}
+//                //player.move(1,0);
+//                break;
+//            case (conveyorBeltID_RightDown): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(1);}
+//                //player.move(0,-1);
+//                break;
         }
     }
 
@@ -152,4 +155,7 @@ public class GameLogic {
         return playerQueue;
     }
 
+    public void setRoundOverToTrue() {
+        roundOver = true;
+    }
 }
