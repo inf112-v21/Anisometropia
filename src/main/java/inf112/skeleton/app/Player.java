@@ -33,9 +33,7 @@ public class Player {
     }
 
     public void move(int dx, int dy) {
-        System.out.println("calling move with "+dx+" - "+dy);
         if (canMove(dx, dy)) {
-            System.out.println("player can move!");
             gameMap.setToNull(x, y);
             gameMap.setPlayerPosition(x += dx, y += dy, this);
         }
@@ -47,8 +45,6 @@ public class Player {
      * TODO: check whether player moves over deadly obstacle
      */
     public void moveByDirection(int amountToMove) {
-        System.out.println("move by direction called, with "+amountToMove+ " amount");
-        System.out.println("get direction= "+getDirection());
         switch (getDirection()) {
             case 0:
                 move(0, amountToMove);
