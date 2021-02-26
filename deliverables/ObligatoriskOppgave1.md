@@ -58,13 +58,17 @@ Vi ønsker å levere et produkt hvor det er mulig å spille roborally med multip
 MVP 1:
 As a player, I want to have a clear visual representation of the board to be able to orient myself.
 
-MVP 2: As a player, I want the board to contain my robot to be able to make decisions on where to move.
+MVP 2: 
+As a player, I want the board to contain my robot to be able to make decisions on where to move.
 
-MVP 3: As a developer, I want to conveniently move the robot using the keyboard to be able to test how the robot moves around the board.
+MVP 3:
+As a developer, I want to conveniently move the robot using the keyboard to be able to test how the robot moves around the board.
 
-MVP 4: As a player, I want the icon of the robot to change depending on where it is positioned on the board to be able to get visual cues of the game status. 
+MVP 4:
+As a player, I want the icon of the robot to change depending on where it is positioned on the board to be able to get visual cues of the game status. 
 
-MVP 5: As a developer, I want the robot to win by visiting a flag to be able to test that the robot can detect that it is on a cell containing a flag. 
+MVP 5: 
+As a developer, I want the robot to win by visiting a flag to be able to test that the robot can detect that it is on a cell containing a flag.
 
 MVP 5+:  As a developer I want the game to terminate whenever a player loses or wins to be able to verify the win and loss conditions.
 
