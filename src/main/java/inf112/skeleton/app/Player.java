@@ -61,14 +61,16 @@ public class Player {
     }
 
     public void respawn() {
-        Arrays.fill(flagsReached, Boolean.FALSE);
-        gameMap.setToNull(x, y);
-        this.x=spawnX;
-        this.y=spawnY;
-        this.direction = 0;
-        isVictorious = false;
-        playerAlive();
-        gameMap.setPlayerPosition(spawnX, spawnY,this);
+        if (checkIfPlayerCanRespawn()) {
+            Arrays.fill(flagsReached, Boolean.FALSE);
+            gameMap.setToNull(x, y);
+            this.x = spawnX;
+            this.y = spawnY;
+            this.direction = 0;
+            isVictorious = false;
+            playerAlive();
+            gameMap.setPlayerPosition(spawnX, spawnY, this);
+        }
     }
 
     public boolean isPlayerDead() {
@@ -103,10 +105,13 @@ public class Player {
     public void updateLifeTokens() {
             setLifeTokens(getLifeTokens()-1);
             checkIfPlayerCanRespawn();
-        }
+    }
 
     public boolean checkIfPlayerCanRespawn() {
-        return (getLifeTokens() == 0);
+        if (getLifeTokens() == 0) {
+            return false;
+        }
+        return true;
     }
 
     public void setDmgTokens(int tokens) {
