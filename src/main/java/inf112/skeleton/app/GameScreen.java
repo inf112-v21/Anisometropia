@@ -84,8 +84,6 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
         batch.begin();
 
-
-
         if(GameLogic.gameOver) largeFont.draw(batch, GameLogic.gameMessage, 96, 512);
         smallFont.draw(batch,"1. select a card by clicking on it\n" +
                                  "2. click again to execute card\n" +

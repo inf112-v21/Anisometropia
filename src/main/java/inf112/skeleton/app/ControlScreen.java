@@ -22,6 +22,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
 
     private final Texture damageToken;
     private final Texture powerDownButton;
+    private final Texture lifeToken;
 
     private final float cardWidth = 84, cardHeight = 96;
 
@@ -49,7 +50,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
-
+        lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
 
         drawThis = new DrawThis();
         writeThis = new WriteThis();
@@ -161,6 +162,10 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
         }
 
         batch.draw(powerDownButton, 730, 115, 200,200);
+
+        for (int i = 0; i<gameLogic.getCurrentPlayer().getLifeTokens(); i++){
+            batch.draw(lifeToken,860+(i*72), 152, 128,148);
+        }
 
         batch.draw(backUp, backUpX, backUpY, cardWidth, cardHeight);
         batch.draw(move1, move1X, move1Y, cardWidth, cardHeight);
