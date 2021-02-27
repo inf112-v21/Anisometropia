@@ -82,7 +82,7 @@ public class Player {
     }
 
     public boolean hasWon(){
-        return flagsReached[3];
+        return(flagsReached[3]);
     }
 
     public void playerAlive() {
@@ -104,7 +104,6 @@ public class Player {
 
     public void updateLifeTokens() {
             setLifeTokens(getLifeTokens()-1);
-            checkIfPlayerCanRespawn();
     }
 
     public boolean checkIfPlayerCanRespawn() {

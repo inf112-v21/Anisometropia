@@ -10,9 +10,7 @@ public class PlayerTest {
     GameLogic gameLogic = new GameLogic(simpleGameMap);
     Player player = gameLogic.getCurrentPlayer();//
 
-    //   TODO
-    //  @BeforeEach
-
+    //TODO @BeforeEach
 
     @Test
     public void testPlayer() {
@@ -40,6 +38,17 @@ public class PlayerTest {
         player.updateDamageTokens();
         assertEquals(player.getDmgTokens(), currentHealth);
     }
+    
+    @Test
+    public void checkIfPlayerDiesBecauseOfTooMuchDamage() {
+        player.setDmgTokens(9);
+        player.setLifeTokens(3);
+        int currentLife = player.getLifeTokens();
+        player.playerGetsDamaged = true;
+        player.updateDamageTokens();
+        assertEquals(player.getLifeTokens(),currentLife - 1);
+        assertEquals(player.isPlayerDead(), true);
+    }
 
     @Test
     public void doesPlayerRestoreHealthAfterPowerDown() {
@@ -50,7 +59,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void testDoesPlayerLoseOneLifeIfDead() {
+    public void testDoesPlayerLoseOneLifeTokenIfDead() {
         int currentLives = player.getLifeTokens();
         player.playerDies();
         assertEquals(player.getLifeTokens(), currentLives-1);
@@ -65,12 +74,10 @@ public class PlayerTest {
         assertEquals(player.checkIfPlayerCanRespawn(), true);
     }
 
+    @Test
+    public void rotatingNorthFacingPlayerOneUnitLeavesPlayerFacingEast() {
+        player.rotate(1);
 
-//    // Test does not currently work. Setup is somehow wrong
-//    @Test
-//    public void rotatingNorthFacingPlayerOneUnitLeavesPlayerFacingEast() {
-//        player.rotate(1);
-//
-//        assertEquals(1, player.getDirection());
-//    }
+        assertEquals(1, player.getDirection());
+    }
 }
