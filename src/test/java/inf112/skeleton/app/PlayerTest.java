@@ -6,9 +6,13 @@ import static org.junit.Assert.assertEquals;
 
 public class PlayerTest {
 
-    private GameMap gameMap;
-    private GameLogic gameLogic;
-    private Player player;
+    TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
+    GameLogic gameLogic = new GameLogic(simpleGameMap);
+    Player player = gameLogic.getCurrentPlayer();//
+
+    //   TODO
+    //  @BeforeEach
+
 
     @Test
     public void testPlayer() {
@@ -21,15 +25,47 @@ public class PlayerTest {
         assertEquals(player1,gameLogic.getCurrentPlayer());
     }
 
+    @Test
+    public void testDoesPlayerGetDamagedIfHurt() {
+        int currentHealth = player.getDmgTokens();
+        player.playerGetsDamaged = true;
+        player.updateDamageTokens();
+        assertEquals(player.getDmgTokens(), currentHealth + 1);
+    }
 
-//    @BeforeEach
-//    void setup() {
-//        GameScreen gameScreen = new GameScreen();
-//        GraphicalGameMap gameMap = gameScreen.getGameMap();
-//        GameLogic gameLogic = gameScreen.gameLogic;
-//        Player player = gameLogic.getCurrentPlayer();
-//    }
-//
+    @Test
+    public void dontUpdateDamageTokensIfPlayerNotHurt() {
+        int currentHealth = player.getDmgTokens();
+        player.playerGetsDamaged = false;
+        player.updateDamageTokens();
+        assertEquals(player.getDmgTokens(), currentHealth);
+    }
+
+    @Test
+    public void doesPlayerRestoreHealthAfterPowerDown() {
+        System.out.println(player.getDmgTokens());
+        player.powerDown = true;
+        player.updateDamageTokens();
+        assertEquals(player.getDmgTokens(),0);
+    }
+
+    @Test
+    public void testDoesPlayerLoseOneLifeIfDead() {
+        int currentLives = player.getLifeTokens();
+        player.playerDies();
+        assertEquals(player.getLifeTokens(), currentLives-1);
+    }
+
+    @Test
+    public void testCheckIfPlayerCanRespawn() {
+        player.setLifeTokens(0);
+        assertEquals(player.checkIfPlayerCanRespawn(), false);
+
+        player.setLifeTokens(1);
+        assertEquals(player.checkIfPlayerCanRespawn(), true);
+    }
+
+
 //    // Test does not currently work. Setup is somehow wrong
 //    @Test
 //    public void rotatingNorthFacingPlayerOneUnitLeavesPlayerFacingEast() {
