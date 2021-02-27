@@ -7,7 +7,6 @@ public class Player {
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     private int dmgTokens;
     private int lifeTokens;
-
     boolean powerDown = false;
     boolean playerGetsDamaged = false;
     boolean isDead = false;
