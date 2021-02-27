@@ -2,7 +2,8 @@ package inf112.skeleton.app;
 
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.Assert.*;
 
 public class PlayerTest {
 
@@ -47,12 +48,11 @@ public class PlayerTest {
         player.playerGetsDamaged = true;
         player.updateDamageTokens();
         assertEquals(player.getLifeTokens(),currentLife - 1);
-        assertEquals(player.isPlayerDead(), true);
+        assertTrue(player.isPlayerDead());
     }
 
     @Test
     public void doesPlayerRestoreHealthAfterPowerDown() {
-        System.out.println(player.getDmgTokens());
         player.powerDown = true;
         player.updateDamageTokens();
         assertEquals(player.getDmgTokens(),0);
@@ -68,16 +68,15 @@ public class PlayerTest {
     @Test
     public void testCheckIfPlayerCanRespawn() {
         player.setLifeTokens(0);
-        assertEquals(player.checkIfPlayerCanRespawn(), false);
+        assertFalse(player.checkIfPlayerCanRespawn());
 
         player.setLifeTokens(1);
-        assertEquals(player.checkIfPlayerCanRespawn(), true);
+        assertTrue(player.checkIfPlayerCanRespawn());
     }
 
     @Test
     public void rotatingNorthFacingPlayerOneUnitLeavesPlayerFacingEast() {
         player.rotate(1);
-
         assertEquals(1, player.getDirection());
     }
 }

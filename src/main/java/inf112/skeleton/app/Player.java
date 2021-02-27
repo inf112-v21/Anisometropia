@@ -107,9 +107,8 @@ public class Player {
     }
 
     public boolean checkIfPlayerCanRespawn() {
-        if (getLifeTokens() == 0) {
+        if (getLifeTokens() == 0)
             return false;
-        }
         return true;
     }
 
