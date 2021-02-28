@@ -25,6 +25,30 @@ public class PlayerTest {
     }
 
     @Test
+    public void testPlayerMoveXDirection() {
+        int dx = 3;
+        int currentXPos = player.getX();
+        player.move(3, 0);
+        int newXPos = player.getX();
+        assertEquals(newXPos, currentXPos + dx);
+    }
+
+    @Test
+    public void testPlayerMoveYDirection() {
+        int dy = 3;
+        int currentYPos = player.getY();
+        player.move(0, dy);
+        int newYPos = player.getY();
+        assertEquals(newYPos, currentYPos + dy);
+    }
+
+    @Test
+    public void rotatingNorthFacingPlayerOneUnitLeavesPlayerFacingEast() {
+        player.rotate(1);
+        assertEquals(1, player.getDirection());
+    }
+
+    @Test
     public void testDoesPlayerGetDamagedIfHurt() {
         int currentHealth = player.getDmgTokens();
         player.playerGetsDamaged = true;
@@ -74,9 +98,4 @@ public class PlayerTest {
         assertTrue(player.checkIfPlayerCanRespawn());
     }
 
-    @Test
-    public void rotatingNorthFacingPlayerOneUnitLeavesPlayerFacingEast() {
-        player.rotate(1);
-        assertEquals(1, player.getDirection());
-    }
 }
