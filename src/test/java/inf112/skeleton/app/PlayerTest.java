@@ -30,6 +30,7 @@ public class PlayerTest {
         int currentXPos = player.getX();
         player.move(3, 0);
         int newXPos = player.getX();
+        assertEquals(0, simpleGameMap.gridArray[player.getX()][currentXPos]);
         assertEquals(newXPos, currentXPos + dx);
     }
 
@@ -39,6 +40,7 @@ public class PlayerTest {
         int currentYPos = player.getY();
         player.move(0, dy);
         int newYPos = player.getY();
+        assertEquals(0, simpleGameMap.gridArray[player.getX()][currentYPos]);
         assertEquals(newYPos, currentYPos + dy);
     }
 
