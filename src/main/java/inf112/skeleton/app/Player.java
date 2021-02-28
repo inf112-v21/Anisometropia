@@ -2,7 +2,7 @@ package inf112.skeleton.app;
 
 import java.util.Arrays;
 
-public class Player {
+public class Player implements IPlayer {
     int x, y, spawnX, spawnY;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     private int dmgTokens;
@@ -81,7 +81,7 @@ public class Player {
         isVictorious = true;
     }
 
-    public boolean hasWon(){
+    public boolean hasWon() {
         return(flagsReached[3]);
     }
 
