@@ -27,8 +27,12 @@ public class Player implements IPlayer {
         flagsReached = new boolean[4];
     }
 
-    public boolean canMove(int dx, int dy) {
-        return (x+dx >= 0 && x+dx < gameMap.getWidth()) && (y+dy >= 0 && y+dy < gameMap.getHeight());
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public void move(int dx, int dy) {
@@ -38,11 +42,15 @@ public class Player implements IPlayer {
         }
     }
 
-    /**
-     * Moves player given amount of tiles in current facing direction.
-     * @param amountToMove denotes amount of tiles to move
-     * TODO: check whether player moves over deadly obstacle
-     */
+    public boolean canMove(int dx, int dy) {
+        return (x+dx >= 0 && x+dx < gameMap.getWidth()) && (y+dy >= 0 && y+dy < gameMap.getHeight());
+    }
+
+    public int getDirection() { return direction; }
+
+    public void rotate(int amountToRotate) { direction = (direction + amountToRotate) % 4; }
+
+     // TODO: check whether player moves over deadly obstacle
     public void moveByDirection(int amountToMove) {
         switch (getDirection()) {
             case 0:
@@ -60,40 +68,6 @@ public class Player implements IPlayer {
         }
     }
 
-    public void respawn() {
-        if (checkIfPlayerCanRespawn()) {
-            Arrays.fill(flagsReached, Boolean.FALSE);
-            gameMap.setToNull(x, y);
-            this.x = spawnX;
-            this.y = spawnY;
-            this.direction = 0;
-            isVictorious = false;
-            playerAlive();
-            gameMap.setPlayerPosition(spawnX, spawnY, this);
-        }
-    }
-
-    public boolean isPlayerDead() {
-        return isDead;
-    }
-
-    public void playerWins() {
-        isVictorious = true;
-    }
-
-    public boolean hasWon() {
-        return(flagsReached[3]);
-    }
-
-    public void playerAlive() {
-        isDead = false;
-    }
-
-    public void playerDies() {
-        isDead = true;
-        updateLifeTokens();
-    }
-
     public void setLifeTokens(int tokens) {
         this.lifeTokens = tokens;
     }
@@ -103,13 +77,27 @@ public class Player implements IPlayer {
     }
 
     public void updateLifeTokens() {
-            setLifeTokens(getLifeTokens()-1);
+        setLifeTokens(getLifeTokens()-1);
     }
 
     public boolean checkIfPlayerCanRespawn() {
         if (getLifeTokens() == 0)
             return false;
         return true;
+    }
+
+    public void respawn() {
+        if (checkIfPlayerCanRespawn()) {
+            Arrays.fill(flagsReached, Boolean.FALSE);
+            gameMap.setToNull(x, y);
+            setDmgTokens(0);
+            this.x = spawnX;
+            this.y = spawnY;
+            this.direction = 0;
+            isVictorious = false;
+            playerAlive();
+            gameMap.setPlayerPosition(spawnX, spawnY, this);
+        }
     }
 
     public void setDmgTokens(int tokens) {
@@ -133,22 +121,26 @@ public class Player implements IPlayer {
         checkIfPlayerTooDamaged();
     }
 
-    public int getX() {
-        return x;
+    public void playerAlive() {
+        isDead = false;
     }
 
-    public int getY() {
-        return y;
+    public void playerDies() {
+        isDead = true;
+        updateLifeTokens();
     }
 
-    /**
-     * @return direction player is facing
-     */
-    public int getDirection() { return direction; }
+    public boolean isPlayerDead() {
+        return isDead;
+    }
 
-    /**
-     * Rotates player 90 degrees clockwise given amount of times.
-     * @param amountToRotate denotes amount of times to rotate
-     */
-    public void rotate(int amountToRotate) { direction = (direction + amountToRotate) % 4; }
+    public void playerWins() {
+        isVictorious = true;
+    }
+
+    public boolean hasWon() {
+        return(flagsReached[3]);
+    }
+
+
 }
