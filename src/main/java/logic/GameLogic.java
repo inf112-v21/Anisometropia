@@ -77,19 +77,24 @@ public class GameLogic {
      * Executes chosen cards of all players, one card at a time, chronologically.
      */
     public void executeChosenCards() {
+//        for (int i = 0; i < 5; i++) {
+//            for (Player player : playerQueue.getPlayerQueue()) {
+//                float delayInSeconds = 0.3f;
+//                int k = i;
+//                Timer.schedule(new Timer.Task() {
+//                    @Override
+//                    public void run() {
+//                        System.out.println("running, k: " + k);
+//                        player.getChosenRegisterCards().get(k).executeRegister(player);
+//                    }
+//                }, delayInSeconds + i);
+//
+//                }
+//            }
+//        }
         for (int i = 0; i < 5; i++) {
             for (Player player : playerQueue.getPlayerQueue()) {
-                System.out.println("player " + player + " , and card: " + i );
-                float delayInSeconds = 0.5f;
-                int k = i;
-                System.out.println("k: " + k);
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        System.out.println("running!");
-                        player.getChosenRegisterCards().get(k).executeRegister(player);
-                    }
-                }, delayInSeconds + i);
+                player.getChosenRegisterCards().get(i).executeRegister(player);
             }
         }
     }

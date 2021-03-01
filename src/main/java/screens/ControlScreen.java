@@ -60,7 +60,7 @@ public class ControlScreen extends InputAdapter {
         // Prints out the coordinates of the position clicked
         if (Gdx.input.justTouched()) {
             Vector3 clickPosition = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-            System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
+//            System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
 
             if (!gameOver) {
                 // Stores and moves chosen cards.
