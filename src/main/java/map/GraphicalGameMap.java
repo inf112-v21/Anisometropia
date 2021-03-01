@@ -20,7 +20,7 @@ public class GraphicalGameMap extends GameMap {
     TiledMapTileLayer boardLayer, laserLayer, assetLayer, playerLayer;
 
     TextureRegion[][] playerImages;
-    TiledMapTileLayer.Cell playerCell, playerWonCell, playerDiedCell;
+    TiledMapTileLayer.Cell playerCellNorth, playerCellEast, playerCellSouth, playerCellWest, playerWonCell, playerDiedCell;
 
     Player player;
 
@@ -34,9 +34,13 @@ public class GraphicalGameMap extends GameMap {
         laserLayer = (TiledMapTileLayer) tiledMap.getLayers().get("LaserLayer");
 
         playerImages  = TextureRegion.split(new Texture("player.png"), 300, 300);
-        playerCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));
+        playerCellNorth = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][1]));
+        playerCellEast = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][2]));
+        playerCellSouth = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));
+        playerCellWest = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][0]));
         playerWonCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][2]));
         playerDiedCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1]));
+
 
         /*
         Pits
@@ -110,13 +114,26 @@ public class GraphicalGameMap extends GameMap {
     }
 
     public void setPlayerPosition(int x, int y, Player player) {
-        TiledMapTileLayer.Cell cellToBeDisplayed;
+        TiledMapTileLayer.Cell cellToBeDisplayed = playerCellNorth;
         if (player.isPlayerDead()) {
             cellToBeDisplayed = playerDiedCell;
         } else if (player.getVictorious()) {
             cellToBeDisplayed = playerWonCell;
         } else {
-            cellToBeDisplayed = playerCell;
+            switch (player.getDirection()) {
+                case (0):
+                    cellToBeDisplayed = playerCellNorth;
+                    break;
+                case (1):
+                    cellToBeDisplayed = playerCellEast;
+                    break;
+                case (2):
+                    cellToBeDisplayed = playerCellSouth;
+                    break;
+                case (3):
+                    cellToBeDisplayed = playerCellWest;
+                    break;
+            }
         }
         setCell(x,y, "PlayerLayer", cellToBeDisplayed);
     }
