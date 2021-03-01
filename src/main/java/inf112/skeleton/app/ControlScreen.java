@@ -14,14 +14,12 @@ import java.util.Collections;
 
 import static inf112.skeleton.app.GameLogic.gameOver;
 
-public class ControlScreen extends InputAdapter { // can extend InputAdapter if we only want some of the methods
+public class ControlScreen extends InputAdapter {
     DrawThis drawThis;
     WriteThis writeThis;
-
     GameLogic gameLogic;
 
     private final SpriteBatch batch;
-
     private final Texture damageToken;
     private final Texture powerDownButton;
     private final Texture lifeToken;
@@ -63,37 +61,14 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
             System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
 
             if (!gameOver) {
-
                 // Stores and moves chosen cards.
                 for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
-                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
-                        && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
-                        if (isCardChosen[i]) {
-                            isCardChosen[i] = false;
-                            cardY[i] += amountToMoveCard;
-                            cardX[i] = i*84;
-                            numCardsChosen--;
-                        }
-                        else {
-                            isCardChosen[i] = true;
-                            cardY[i] -= amountToMoveCard;
-                            cardX[i] = numCardsChosen*108;
-                            numCardsChosen++;
-                            chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i));
-                        }
+                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
+                        thisCardWasClicked(i);
                     }
                     if (numCardsChosen == 5) {
-                        gameLogic.getCurrentPlayer().setChosenRegisterCards(chosenCards);
-                        if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()) {
-                            gameLogic.executeChosenCards();
-                        }
-                        gameLogic.getPlayerQueue().next();
-                        gameLogic.setTurnOverToTrue();
-
-                        chosenCards = new ArrayList<>(Collections.nCopies(5,
-                                      new RegisterCard("", 0, true)));
-                        numCardsChosen = 0;
-                        initializeCards();
+                        finishTurn();
+                        newTurn();
                     }
                 }
             }
@@ -102,24 +77,65 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
+        batch.draw(powerDownButton, 730, 115, 200,200);
+
+        drawDamageTokensOfCurrentPlayer(batch);
+        drawLifeTokensOfCurrentPlayer(batch);
+        drawCardsOfCurrentPlayer(batch);
+
+        batch.end();
+    }
+
+    private void newTurn() {
+        chosenCards = new ArrayList<>(Collections.nCopies(5,
+                new RegisterCard("", 0, true)));
+        numCardsChosen = 0;
+        initializeCards();
+    }
+
+    private void finishTurn() {
+        gameLogic.getCurrentPlayer().setChosenRegisterCards(chosenCards);
+        if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()) {
+            gameLogic.executeChosenCards();
+        }
+        gameLogic.getPlayerQueue().next();
+        gameLogic.setTurnOverToTrue();
+    }
+
+    private void thisCardWasClicked(int i) {
+        if (isCardChosen[i]) {
+            isCardChosen[i] = false;
+            cardY[i] += amountToMoveCard;
+            cardX[i] = i*84;
+            numCardsChosen--;
+        }
+        else {
+            isCardChosen[i] = true;
+            cardY[i] -= amountToMoveCard;
+            cardX[i] = numCardsChosen*108;
+            numCardsChosen++;
+            chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i));
+        }
+    }
+
+    private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
         for (int i = 10; i > gameLogic.getCurrentPlayer().getDmgTokens(); i--) {
             batch.draw(damageToken, 620-(i*64), 96, 80, 80);
         }
+    }
 
-        batch.draw(powerDownButton, 730, 115, 200,200);
-
+    private void drawLifeTokensOfCurrentPlayer(SpriteBatch batch) {
         for (int i = 0; i < gameLogic.getCurrentPlayer().getLifeTokens(); i++){
             batch.draw(lifeToken,860+(i*72), 152, 128,148);
         }
+    }
 
-        // Draws textures of cards dealt to current player.
+    private void drawCardsOfCurrentPlayer(SpriteBatch batch) {
         for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
             RegisterCard registerCard = gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i);
             Texture cardTexture = new Texture(Gdx.files.internal(registerCard.getGraphicLocation()));
             batch.draw(cardTexture, cardX[i], cardY[i], cardWidth, cardHeight);
         }
-
-        batch.end();
     }
 
     /**
