@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import java.util.ArrayList;
+
 public class GameLogic {
     GameMap gameMap;
     PlayerQueue playerQueue;
@@ -66,6 +68,18 @@ public class GameLogic {
                 }
             }
         }
+    }
+
+    /**
+     * Executes chosen cards of all players, one card at a time, chronologically.
+     */
+    public void executeChosenCards() {
+        for (int i = 0; i < 5; i++) {
+            for (Player player : playerQueue.getPlayerQueue()) {
+                player.getChosenRegisterCards().get(i).executeRegister(player);
+            }
+        }
+
     }
 
     /*
@@ -212,6 +226,10 @@ public class GameLogic {
 
     public Player getCurrentPlayer() {
         return playerQueue.getCurrentPlayer();
+    }
+
+    public Player getLastPlayer() {
+        return playerQueue.getLastPlayer();
     }
 
     public PlayerQueue getPlayerQueue() {

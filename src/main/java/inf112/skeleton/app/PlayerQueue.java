@@ -28,4 +28,6 @@ public class PlayerQueue {
         return playerList.get(turnCounter % playerList.size());
     }
 
+    public Player getLastPlayer() { return playerList.get(playerList.size() - 1); }
+
 }

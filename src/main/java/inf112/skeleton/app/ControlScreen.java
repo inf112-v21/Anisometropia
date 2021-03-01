@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 import static inf112.skeleton.app.GameLogic.gameOver;
@@ -47,11 +46,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
         lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
 
-        for (int i = 0; i < 9; i++) {
-            cardY[i] = 174;
-            cardX[i] = i*84;
-            isCardChosen[i] = false;
-        }
+        initializeCards();
 
         drawThis = new DrawThis();
         writeThis = new WriteThis();
@@ -70,26 +65,35 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
             if (!gameOver) {
 
                 // Stores and moves chosen cards.
-                for (int i = 0; i < 9; i++) {
+                for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
                     if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
                         && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
                         if (isCardChosen[i]) {
                             isCardChosen[i] = false;
                             cardY[i] += amountToMoveCard;
+                            cardX[i] = i*84;
                             numCardsChosen--;
                         }
                         else {
                             isCardChosen[i] = true;
                             cardY[i] -= amountToMoveCard;
+                            cardX[i] = numCardsChosen*108;
                             numCardsChosen++;
                             chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i));
                         }
                     }
                     if (numCardsChosen == 5) {
                         gameLogic.getCurrentPlayer().setChosenRegisterCards(chosenCards);
+                        if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()) {
+                            gameLogic.executeChosenCards();
+                        }
+                        gameLogic.getPlayerQueue().next();
+                        gameLogic.setTurnOverToTrue();
+
                         chosenCards = new ArrayList<>(Collections.nCopies(5,
                                       new RegisterCard("", 0, true)));
                         numCardsChosen = 0;
+                        initializeCards();
                     }
                 }
 
@@ -132,6 +136,17 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
         }
 
         batch.end();
+    }
+
+    /**
+     * Sets initial values for dealt register cards.
+     */
+    private void initializeCards() {
+        for (int i = 0; i < 9; i++) {
+            cardX[i] = i*84;
+            cardY[i] = 174;
+            isCardChosen[i] = false;
+        }
     }
 
     public void dispose() {

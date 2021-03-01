@@ -6,20 +6,20 @@ package inf112.skeleton.app;
 public class RegisterCard {
     String graphicLocation; // File location of card graphics
     int amountToMoveOrRotate;
-    boolean movementCard; // Denotes whether card affects movement or direction
-    Player player;
+    boolean isMovementCard; // Denotes whether card affects movement or direction.
 
-    public RegisterCard(String graphicLocation, int amountToMoveOrRotate, boolean movementCard) {
+    public RegisterCard(String graphicLocation, int amountToMoveOrRotate, boolean isMovementCard) {
         this.graphicLocation = graphicLocation;
         this.amountToMoveOrRotate = amountToMoveOrRotate;
-        this.movementCard = movementCard;
+        this.isMovementCard = isMovementCard;
     }
 
     /**
      * Executes the action of the register card
+     * @param player is the player whose register card is executing.
      */
-    public void executeRegister() {
-        if(movementCard) { player.moveByDirection(amountToMoveOrRotate); }
+    public void executeRegister(Player player) {
+        if(isMovementCard) { player.moveByDirection(amountToMoveOrRotate); }
         else { player.rotate(amountToMoveOrRotate); }
     }
 

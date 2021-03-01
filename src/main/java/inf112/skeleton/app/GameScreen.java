@@ -106,32 +106,26 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
     public boolean keyDown(int keycode) {
         if(keycode == Input.Keys.ESCAPE) Gdx.app.exit();
         if(keycode == Input.Keys.R) gameLogic.gameReset();
-//        if (!GameLogic.gameOver) {
-//            switch (keycode) {
-//                case Input.Keys.UP: case Input.Keys.W:
-//                    gameLogic.getCurrentPlayer().move(0, 1);
-//                    gameLogic.playerQueue.next();
-//                    break;
-//                case Input.Keys.DOWN: case Input.Keys.S:
-//                    gameLogic.getCurrentPlayer().move(0, -1);
-//                    gameLogic.playerQueue.next();
-//                    break;
-//                case Input.Keys.LEFT: case Input.Keys.A:
-//                    gameLogic.getCurrentPlayer().move(-1, 0);
-//                    gameLogic.playerQueue.next();
-//                    break;
-//                case Input.Keys.RIGHT: case Input.Keys.D:
-//                    gameLogic.getCurrentPlayer().move(1, 0);
-//                    gameLogic.playerQueue.next();
-//                    break;
-//                case Input.Keys.X:
-//                    gameLogic.getCurrentPlayer().rotate(1);
-//                    break;
-//                case Input.Keys.C:
-//                    gameLogic.getCurrentPlayer().moveByDirection(1);
-//                    break;
-//            }
-//        }
+        if (!GameLogic.gameOver) {
+            switch (keycode) {
+                case Input.Keys.UP: case Input.Keys.W:
+                    gameLogic.getCurrentPlayer().move(0, 1);
+                    gameLogic.playerQueue.next();
+                    break;
+                case Input.Keys.DOWN: case Input.Keys.S:
+                    gameLogic.getCurrentPlayer().move(0, -1);
+                    gameLogic.playerQueue.next();
+                    break;
+                case Input.Keys.LEFT: case Input.Keys.A:
+                    gameLogic.getCurrentPlayer().move(-1, 0);
+                    gameLogic.playerQueue.next();
+                    break;
+                case Input.Keys.RIGHT: case Input.Keys.D:
+                    gameLogic.getCurrentPlayer().move(1, 0);
+                    gameLogic.playerQueue.next();
+                    break;
+            }
+        }
         return false;
     }
 

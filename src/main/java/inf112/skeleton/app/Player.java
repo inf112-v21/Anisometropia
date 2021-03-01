@@ -53,6 +53,7 @@ public class Player implements IPlayer {
 
     public int getDirection() { return direction; }
 
+    // TODO: rotate player model
     public void rotate(int amountToRotate) { direction = (direction + amountToRotate) % 4; }
 
      // TODO: check whether player moves over deadly obstacle
