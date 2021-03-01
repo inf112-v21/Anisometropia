@@ -14,7 +14,7 @@ public class Player implements IPlayer {
     boolean isDead = false;
     boolean isVictorious = false;
     boolean[] flagsReached;
-    boolean conveyorBeltReached = true;
+    boolean conveyorBeltReached;
     ArrayList<RegisterCard> dealtRegisterCards;
     ArrayList<RegisterCard> chosenRegisterCards;
     GameMap gameMap;
