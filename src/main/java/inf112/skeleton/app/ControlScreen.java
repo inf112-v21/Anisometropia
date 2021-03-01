@@ -73,7 +73,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                         move1Y += amountToMoveCard;
                         gameLogic.getCurrentPlayer().moveByDirection(1);
                         gameLogic.getPlayerQueue().next();
-                        gameLogic.setRoundOverToTrue();
+                        gameLogic.setTurnOverToTrue();
                     } else {
                         move1Chosen = true;
                         move1Y -= amountToMoveCard;
@@ -85,7 +85,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                         move2Y += amountToMoveCard;
                         gameLogic.getCurrentPlayer().moveByDirection(2);
                         gameLogic.getPlayerQueue().next();
-                        gameLogic.setRoundOverToTrue();
+                        gameLogic.setTurnOverToTrue();
                     } else {
                         move2Chosen = true;
                         move2Y -= amountToMoveCard;
@@ -97,7 +97,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                         move3Y += amountToMoveCard;
                         gameLogic.getCurrentPlayer().moveByDirection(3);
                         gameLogic.getPlayerQueue().next();
-                        gameLogic.setRoundOverToTrue();
+                        gameLogic.setTurnOverToTrue();
                     } else {
                         move3Chosen = true;
                         move3Y -= amountToMoveCard;
@@ -109,7 +109,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                         rotateRightY += amountToMoveCard;
                         gameLogic.getCurrentPlayer().rotate(1);
                         gameLogic.getPlayerQueue().next();
-                        gameLogic.setRoundOverToTrue();
+                        gameLogic.setTurnOverToTrue();
                     } else {
                         rotateRightChosen = true;
                         rotateRightY -= amountToMoveCard;
@@ -121,7 +121,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                         rotateLeftY += amountToMoveCard;
                         gameLogic.getCurrentPlayer().rotate(3);
                         gameLogic.getPlayerQueue().next();
-                        gameLogic.setRoundOverToTrue();
+                        gameLogic.setTurnOverToTrue();
                     } else {
                         rotateLeftChosen = true;
                         rotateLeftY -= amountToMoveCard;
@@ -133,7 +133,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                         backUpY += amountToMoveCard;
                         gameLogic.getCurrentPlayer().moveByDirection(-1);
                         gameLogic.getPlayerQueue().next();
-                        gameLogic.setRoundOverToTrue();
+                        gameLogic.setTurnOverToTrue();
                     } else {
                         backUpChosen = true;
                         backUpY -= amountToMoveCard;
@@ -145,7 +145,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                         uTurnY += amountToMoveCard;
                         gameLogic.getCurrentPlayer().rotate(2);
                         gameLogic.getPlayerQueue().next();
-                        gameLogic.setRoundOverToTrue();
+                        gameLogic.setTurnOverToTrue();
                     } else {
                         uTurnChosen = true;
                         uTurnY -= amountToMoveCard;
