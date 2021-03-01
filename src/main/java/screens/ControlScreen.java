@@ -1,18 +1,20 @@
-package inf112.skeleton.app;
+package screens;
 
 import blueprinting.DrawThis;
 import blueprinting.WriteThis;
+import cards.RegisterCard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import logic.GameLogic;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-import static inf112.skeleton.app.GameLogic.gameOver;
+import static logic.GameLogic.gameOver;
 
 public class ControlScreen extends InputAdapter {
     DrawThis drawThis;

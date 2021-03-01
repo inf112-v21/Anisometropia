@@ -1,6 +1,9 @@
-package inf112.skeleton.app;
+package logic;
 
-import java.util.ArrayList;
+import actor.Player;
+import cards.DeckOfRegisterCards;
+import logic.PlayerQueue;
+import map.GameMap;
 
 public class GameLogic {
     GameMap gameMap;
@@ -37,26 +40,26 @@ public class GameLogic {
         if (turnOver) {
             turnOver = false;
             for (Player player : playerQueue.getPlayerQueue()) {
-                if (gameMap.isThereFlagHere(player.x, player.y)){
-                    int tileID = gameMap.getAssetLayerID(player.x, player.y);
+                if (gameMap.isThereFlagHere(player.getX(), player.getY())){
+                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
                     registerFlag(tileID, player);
                 }
 
-                if (gameMap.isThereConveyorOnThisPosition(player.x, player.y)){
-                    int tileID = gameMap.getAssetLayerID(player.x, player.y);
+                if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())){
+                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
                     conveyorBelt(tileID, player);
                 }
 
                 if (checkWin(player)){
                     player.playerWins();
-                    gameMap.setPlayerPosition(player.x, player.y, player);
+                    gameMap.setPlayerPosition(player.getX(), player.getY(), player);
                     gameMessage = player.playerName + " won the game!";
                     gameOver = true;
                 }
 
                 if (checkLoss(player.getX(), player.getY())) {
                     player.playerDies();
-                    gameMap.setPlayerPosition(player.x, player.y, player);
+                    gameMap.setPlayerPosition(player.getX(), player.getY(), player);
                     gameMessage = player.playerName + " lost the game!";
                     gameOver = true;
                 }

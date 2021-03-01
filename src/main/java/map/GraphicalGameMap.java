@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package map;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,9 +9,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import actor.Player;
 
-import static inf112.skeleton.app.GameScreen.ASSETS_IMAGE_SIZE;
-import static inf112.skeleton.app.GameScreen.PIXEL_SCALE_FOR_ASSETS;
+import static screens.GameScreen.ASSETS_IMAGE_SIZE;
+import static screens.GameScreen.PIXEL_SCALE_FOR_ASSETS;
 
 public class GraphicalGameMap extends GameMap {
     TiledMap tiledMap;
@@ -112,7 +113,7 @@ public class GraphicalGameMap extends GameMap {
         TiledMapTileLayer.Cell cellToBeDisplayed;
         if (player.isPlayerDead()) {
             cellToBeDisplayed = playerDiedCell;
-        } else if (player.isVictorious) {
+        } else if (player.getVictorious()) {
             cellToBeDisplayed = playerWonCell;
         } else {
             cellToBeDisplayed = playerCell;

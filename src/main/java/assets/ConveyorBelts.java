@@ -1,6 +1,4 @@
-package GameAssets;
-
-import inf112.skeleton.app.Player;
+package assets;
 
 public class ConveyorBelts {
     final int conveyorBeltID_Down      = 50, conveyorBeltID_Right     = 52, conveyorBeltID_Up      = 49, conveyorBeltID_Left    = 51,

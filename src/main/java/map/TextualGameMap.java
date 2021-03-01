@@ -1,8 +1,10 @@
-package inf112.skeleton.app;
+package map;
+
+import actor.Player;
 
 import java.util.Arrays;
 
-public class TextualGameMap extends GameMap{
+public class TextualGameMap extends GameMap {
 
     int width;
     int height;

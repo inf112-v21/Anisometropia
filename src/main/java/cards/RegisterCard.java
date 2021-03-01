@@ -1,4 +1,6 @@
-package inf112.skeleton.app;
+package cards;
+
+import actor.Player;
 
 /**
  * Contains methods and variables that pertain to register cards.

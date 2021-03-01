@@ -1,6 +1,7 @@
-package inf112.skeleton.app;
+package cards;
 
-import java.lang.reflect.Array;
+import cards.RegisterCard;
+
 import java.util.ArrayList;
 import java.util.Collections;
 

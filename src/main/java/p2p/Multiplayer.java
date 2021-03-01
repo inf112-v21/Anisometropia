@@ -1,4 +1,4 @@
-package inf112.skeleton.app;
+package p2p;
 
 import com.esotericsoftware.kryonet.Server;
 

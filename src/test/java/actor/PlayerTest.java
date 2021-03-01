@@ -1,7 +1,9 @@
-package inf112.skeleton.app;
+package actor;
 
+import actor.Player;
+import logic.GameLogic;
+import map.TextualGameMap;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
@@ -30,7 +32,7 @@ public class PlayerTest {
         int currentXPos = player.getX();
         player.move(3, 0);
         int newXPos = player.getX();
-        assertEquals(0, simpleGameMap.gridArray[player.getX()][currentXPos]);
+        assertEquals(0, simpleGameMap.getValue(player.getX(), currentXPos));
         assertEquals(newXPos, currentXPos + dx);
     }
 
@@ -40,7 +42,7 @@ public class PlayerTest {
         int currentYPos = player.getY();
         player.move(0, dy);
         int newYPos = player.getY();
-        assertEquals(0, simpleGameMap.gridArray[player.getX()][currentYPos]);
+        assertEquals(0, simpleGameMap.getValue(player.getX(), currentYPos));
         assertEquals(newYPos, currentYPos + dy);
     }
 

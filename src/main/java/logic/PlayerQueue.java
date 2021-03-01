@@ -1,11 +1,13 @@
-package inf112.skeleton.app;
+package logic;
+
+import actor.Player;
 
 import java.util.ArrayList;
 
 public class PlayerQueue {
 
     ArrayList<Player> playerList;
-    int turnCounter;
+    public int turnCounter;
 
     public PlayerQueue() {
         playerList = new ArrayList<>();

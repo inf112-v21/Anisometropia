@@ -1,24 +1,26 @@
-package inf112.skeleton.app;
+package actor;
 
-import java.lang.reflect.Array;
+import cards.RegisterCard;
+import map.GameMap;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Player implements IPlayer {
     int x, y, spawnX, spawnY;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
-    private int dmgTokens;
-    private int lifeTokens;
-    boolean powerDown = false;
-    boolean playerGetsDamaged = false;
-    boolean isDead = false;
-    boolean isVictorious = false;
-    boolean[] flagsReached;
-    boolean conveyorBeltReached;
-    ArrayList<RegisterCard> dealtRegisterCards;
-    ArrayList<RegisterCard> chosenRegisterCards;
+    int dmgTokens;
+    int lifeTokens;
+    public boolean powerDown = false;
+    public boolean playerGetsDamaged = false;
+    public boolean isDead = false;
+    public boolean isVictorious = false;
+    public boolean[] flagsReached;
+    public boolean conveyorBeltReached;
+    public ArrayList<RegisterCard> dealtRegisterCards;
+    public ArrayList<RegisterCard> chosenRegisterCards;
     GameMap gameMap;
-    String playerName;
+    public String playerName;
 
     public Player(int x, int y, String playerName, GameMap gameMap) {
         this.x = this.spawnX = x;
@@ -87,9 +89,7 @@ public class Player implements IPlayer {
     }
 
     public boolean checkIfPlayerCanRespawn() {
-        if (getLifeTokens() == 0)
-            return false;
-        return true;
+        return getLifeTokens() != 0;
     }
 
     public void respawn() {
@@ -156,5 +156,8 @@ public class Player implements IPlayer {
         return(flagsReached[3]);
     }
 
+    public Boolean getVictorious() {
+        return isVictorious;
+    }
 
 }

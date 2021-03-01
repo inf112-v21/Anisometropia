@@ -1,5 +1,6 @@
-package inf112.skeleton.app;
+package screens;
 
+import actor.Player;
 import blueprinting.Blueprint;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -10,6 +11,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
+import logic.GameLogic;
+import map.GraphicalGameMap;
 import org.lwjgl.opengl.GL20;
 
 public class GameScreen extends ApplicationAdapter implements InputProcessor {
@@ -52,8 +55,6 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         controlCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         controlCamera.translate(-32, -32);
         controlCamera.update();
-
-
 
         gameMap = new GraphicalGameMap();
         gameLogic = new GameLogic(gameMap);
@@ -110,19 +111,19 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
             switch (keycode) {
                 case Input.Keys.UP: case Input.Keys.W:
                     gameLogic.getCurrentPlayer().move(0, 1);
-                    gameLogic.playerQueue.next();
+                    gameLogic.getPlayerQueue().next();
                     break;
                 case Input.Keys.DOWN: case Input.Keys.S:
                     gameLogic.getCurrentPlayer().move(0, -1);
-                    gameLogic.playerQueue.next();
+                    gameLogic.getPlayerQueue().next();
                     break;
                 case Input.Keys.LEFT: case Input.Keys.A:
                     gameLogic.getCurrentPlayer().move(-1, 0);
-                    gameLogic.playerQueue.next();
+                    gameLogic.getPlayerQueue().next();
                     break;
                 case Input.Keys.RIGHT: case Input.Keys.D:
                     gameLogic.getCurrentPlayer().move(1, 0);
-                    gameLogic.playerQueue.next();
+                    gameLogic.getPlayerQueue().next();
                     break;
             }
         }
