@@ -96,22 +96,6 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                         initializeCards();
                     }
                 }
-
-                /*
-                Brukes som mal en liten stund, vil fjernes snart.
-                if (clickPosition.x > move1X && clickPosition.x < move1X + cardWidth && clickPosition.y > move1Y && clickPosition.y < move1Y + cardHeight) {
-                    if (move1Chosen) {
-                        move1Chosen = false;
-                        move1Y += amountToMoveCard;
-                        gameLogic.getCurrentPlayer().moveByDirection(1);
-                        gameLogic.getPlayerQueue().next();
-                        gameLogic.setTurnOverToTrue();
-                    } else {
-                        move1Chosen = true;
-                        move1Y -= amountToMoveCard;
-                    }
-                }
-                */
             }
         }
 
