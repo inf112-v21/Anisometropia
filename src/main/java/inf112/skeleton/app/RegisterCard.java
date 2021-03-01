@@ -22,4 +22,6 @@ public class RegisterCard {
         if(movementCard) { player.moveByDirection(amountToMoveOrRotate); }
         else { player.rotate(amountToMoveOrRotate); }
     }
+
+    public String getGraphicLocation() { return graphicLocation; }
 }
