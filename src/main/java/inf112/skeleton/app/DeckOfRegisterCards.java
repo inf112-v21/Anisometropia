@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,7 +8,7 @@ import java.util.Collections;
  * Generates and maintains the full deck of register cards.
  */
 public class DeckOfRegisterCards {
-    private ArrayList<RegisterCard> deckOfCards;
+    private ArrayList<RegisterCard> deckOfCards = new ArrayList<>();
 
     public DeckOfRegisterCards() {
         reshuffleDeck();
@@ -18,25 +19,25 @@ public class DeckOfRegisterCards {
      */
     private void generateDeck() {
         // Move 1
-        addCardsToDeck("RegisterCardAssets/Move1", 1, true, 18);
+        addCardsToDeck("RegisterCardAssets/Move1.png", 1, true, 18);
 
         // Move 2
-        addCardsToDeck("RegisterCardAssets/Move2", 2, true, 12);
+        addCardsToDeck("RegisterCardAssets/Move2.png", 2, true, 12);
 
         // Move 3
-        addCardsToDeck("RegisterCardAssets/Move3", 3, true, 6);
+        addCardsToDeck("RegisterCardAssets/Move3.png", 3, true, 6);
 
         // Back up
-        addCardsToDeck("RegisterCardAssets/BackUp", -1, true, 6);
+        addCardsToDeck("RegisterCardAssets/BackUp.png", -1, true, 6);
 
         // Rotate left
-        addCardsToDeck("RegisterCardAssets/RotateLeft", 1, false, 18);
+        addCardsToDeck("RegisterCardAssets/RotateLeft.png", 1, false, 18);
 
         // Rotate right
-        addCardsToDeck("RegisterCardAssets/RotateRight", 3, false, 18);
+        addCardsToDeck("RegisterCardAssets/RotateRight.png", 3, false, 18);
 
         // U-turn
-        addCardsToDeck("RegisterCardAssets/UTurn", 2, false, 6);
+        addCardsToDeck("RegisterCardAssets/UTurn.png", 2, false, 6);
     }
 
     private void addCardsToDeck(String graphicLocation, int amountToMoveOrRotate, boolean movementCard, int numOfCards) {

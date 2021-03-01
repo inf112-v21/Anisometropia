@@ -1,5 +1,7 @@
 package inf112.skeleton.app;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Player implements IPlayer {
@@ -13,6 +15,8 @@ public class Player implements IPlayer {
     boolean isVictorious = false;
     boolean[] flagsReached;
     boolean conveyorBeltReached;
+    ArrayList<RegisterCard> dealtRegisterCards;
+    ArrayList<RegisterCard> chosenRegisterCards;
     GameMap gameMap;
     String playerName;
 
@@ -121,6 +125,14 @@ public class Player implements IPlayer {
             setDmgTokens(0);
         checkIfPlayerTooDamaged();
     }
+
+    public void setDealtRegisterCards(ArrayList<RegisterCard> dealtCards) { dealtRegisterCards = dealtCards; }
+
+    public void setChosenRegisterCards(ArrayList<RegisterCard> chosenCards) { chosenRegisterCards = chosenCards; }
+
+    public ArrayList<RegisterCard> getDealtRegisterCards() { return dealtRegisterCards; }
+
+    public ArrayList<RegisterCard> getChosenRegisterCards() { return chosenRegisterCards; }
 
     public void playerAlive() {
         isDead = false;

@@ -70,6 +70,8 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         Gdx.gl.glClearColor(0.7f,0.6f,0.4f,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        gameLogic.update();
+
         blueprint.render();
         controlScreen.render(controlCamera);
 
@@ -79,7 +81,6 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
             System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
         }
 
-        gameLogic.update();
         gameMap.render(camera, batch);
 
         batch.begin();
