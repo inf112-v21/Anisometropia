@@ -12,7 +12,7 @@ public class GameLogic {
     public static boolean gameOver = false;
     public static String gameMessage;
 
-    boolean roundOver = true;
+    boolean turnOver = true;
 
     public GameLogic(GameMap gameMap) {
         this.gameMap = gameMap;
@@ -28,8 +28,8 @@ public class GameLogic {
     }
 
     public void update() {
-        if (roundOver) {
-            roundOver = false;
+        if (turnOver) {
+            turnOver = false;
             for (Player player : playerQueue.getPlayerQueue()) {
                 if (gameMap.isThereFlagHere(player.x, player.y)){
                     int tileID = gameMap.getAssetLayerID(player.x, player.y);
@@ -155,7 +155,7 @@ public class GameLogic {
         return playerQueue;
     }
 
-    public void setRoundOverToTrue() {
-        roundOver = true;
+    public void setTurnOverToTrue() {
+        turnOver = true;
     }
 }

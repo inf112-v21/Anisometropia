@@ -10,8 +10,7 @@ public class DeckOfRegisterCards {
     private ArrayList<RegisterCard> deckOfCards;
 
     public DeckOfRegisterCards() {
-        generateDeck();
-        shuffleDeck();
+        reshuffleDeck();
     }
 
     /**
@@ -60,7 +59,7 @@ public class DeckOfRegisterCards {
     /**
      * Removes the first nine cards from deckOfCards and places them in new list nineCards.
      * @return nineCards containing the nine register cards for a player to choose from.
-     * TODO: deal cards equal to damage tokens
+     * TODO: deal cards relative to damage tokens
      */
     public ArrayList<RegisterCard> dealNineCards() {
         ArrayList<RegisterCard> nineCards = new ArrayList<>();
