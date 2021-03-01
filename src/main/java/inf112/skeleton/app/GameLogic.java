@@ -110,21 +110,19 @@ public class GameLogic {
 //in the same position for several rounds.
 
 //            case (yConveyorBeltID_DownRight): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);
-//
-//            }
+//                getCurrentPlayer().rotate(3);}
 //                //player.move(1,0);
 //                break;
 //            case (yConveyorBeltID_RightUp): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);}
+//                getCurrentPlayer().rotate(3);}
 //                //player.move(0,1);
 //                break;
 //            case (yConveyorBeltID_UpLeft): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);}
+//                getCurrentPlayer().rotate(3);}
 //                //player.move(-1,0);
 //                break;
 //            case (yConveyorBeltID_LeftDown): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);}
+//                getCurrentPlayer().rotate(3);}
 //                //player.move(0,-1);
 //                break;
 //
@@ -160,19 +158,19 @@ public class GameLogic {
                 break;
 
 //            case (bConveyorBeltID_DownRight): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);}
+//                getCurrentPlayer().rotate(3);}
 //                player.move(1,0);
 //                break;
 //            case (bConveyorBeltID_RightUp): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);}
+//                getCurrentPlayer().rotate(3);}
 //                player.move(0,1);
 //                break;
 //            case (bConveyorBeltID_UpLeft): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);}
+//                getCurrentPlayer().rotate(3);}
 //                player.move(-1,0);
 //                break;
 //            case (bConveyorBeltID_LeftDown): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);}
+//                getCurrentPlayer().rotate(3);}
 //                player.move(0,-1);
 //                break;
 //

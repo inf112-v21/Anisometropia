@@ -99,5 +99,13 @@ public class PlayerTest {
         player.setLifeTokens(1);
         assertTrue(player.checkIfPlayerCanRespawn());
     }
+    @Test
+    //tests if the player can move out of Bounds
+    public void testOutOfBounds(){
+        assertFalse(player.canMove(0,13));
+        assertFalse(player.canMove(0,-13));
+        assertFalse(player.canMove(13,0));
+        assertFalse(player.canMove(-13,0));
+    }
 
 }
