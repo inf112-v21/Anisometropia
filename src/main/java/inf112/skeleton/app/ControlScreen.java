@@ -22,7 +22,6 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
     GameLogic gameLogic;
 
     private final SpriteBatch batch;
-    private final Texture backUp, move1, move2, move3, rotateLeft, rotateRight, uTurn;
 
     private final Texture damageToken;
     private final Texture powerDownButton;
@@ -34,29 +33,15 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
 
     int[] cardX = new int[9];
     int[] cardY = new int[9];
-    float backUpX = 0, backUpY = 174;
-    float move1X = 84, move1Y = 174;
-    float move2X = 84*2, move2Y = 174;
-    float move3X = 84*3, move3Y = 174;
-    float rotateLeftX = 84*4, rotateLeftY = 174;
-    float rotateRightX = 84*5, rotateRightY = 174;
-    float uTurnX = 84*6, uTurnY = 174;
 
     ArrayList<RegisterCard> chosenCards = new ArrayList<>(Collections.nCopies(5,
             new RegisterCard("", 0, true)));
     int numCardsChosen = 0;
     boolean[] isCardChosen = new boolean[9];
-    boolean backUpChosen, move1Chosen, move2Chosen, move3Chosen, rotateLeftChosen, rotateRightChosen, uTurnChosen;
 
     public ControlScreen(GameLogic gameLogic) {
+
         batch = new SpriteBatch();
-        backUp = new Texture(Gdx.files.internal("RegisterCardAssets/BackUp.png"));
-        move1 = new Texture(Gdx.files.internal("RegisterCardAssets/Move1.png"));
-        move2 = new Texture(Gdx.files.internal("RegisterCardAssets/Move2.png"));
-        move3 = new Texture(Gdx.files.internal("RegisterCardAssets/Move3.png"));
-        rotateLeft = new Texture(Gdx.files.internal("RegisterCardAssets/RotateLeft.png"));
-        rotateRight = new Texture(Gdx.files.internal("RegisterCardAssets/RotateRight.png"));
-        uTurn = new Texture(Gdx.files.internal("RegisterCardAssets/UTurn.png"));
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
@@ -109,6 +94,7 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                 }
 
                 /*
+                Brukes som mal en liten stund, vil fjernes snart.
                 if (clickPosition.x > move1X && clickPosition.x < move1X + cardWidth && clickPosition.y > move1Y && clickPosition.y < move1Y + cardHeight) {
                     if (move1Chosen) {
                         move1Chosen = false;
@@ -119,78 +105,6 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
                     } else {
                         move1Chosen = true;
                         move1Y -= amountToMoveCard;
-                    }
-                }
-                if (clickPosition.x > move2X && clickPosition.x < move2X + cardWidth && clickPosition.y > move2Y && clickPosition.y < move2Y + cardHeight) {
-                    if (move2Chosen) {
-                        move2Chosen = false;
-                        move2Y += amountToMoveCard;
-                        gameLogic.getCurrentPlayer().moveByDirection(2);
-                        gameLogic.getPlayerQueue().next();
-                        gameLogic.setTurnOverToTrue();
-                    } else {
-                        move2Chosen = true;
-                        move2Y -= amountToMoveCard;
-                    }
-                }
-                if (clickPosition.x > move3X && clickPosition.x < move3X + cardWidth && clickPosition.y > move3Y && clickPosition.y < move3Y + cardHeight) {
-                    if (move3Chosen) {
-                        move3Chosen = false;
-                        move3Y += amountToMoveCard;
-                        gameLogic.getCurrentPlayer().moveByDirection(3);
-                        gameLogic.getPlayerQueue().next();
-                        gameLogic.setTurnOverToTrue();
-                    } else {
-                        move3Chosen = true;
-                        move3Y -= amountToMoveCard;
-                    }
-                }
-                if (clickPosition.x > rotateRightX && clickPosition.x < rotateRightX + cardWidth && clickPosition.y > rotateRightY && clickPosition.y < rotateRightY + cardHeight) {
-                    if (rotateRightChosen) {
-                        rotateRightChosen = false;
-                        rotateRightY += amountToMoveCard;
-                        gameLogic.getCurrentPlayer().rotate(1);
-                        gameLogic.getPlayerQueue().next();
-                        gameLogic.setTurnOverToTrue();
-                    } else {
-                        rotateRightChosen = true;
-                        rotateRightY -= amountToMoveCard;
-                    }
-                }
-                if (clickPosition.x > rotateLeftX && clickPosition.x < rotateLeftX + cardWidth && clickPosition.y > rotateLeftY && clickPosition.y < rotateLeftY + cardHeight) {
-                    if (rotateLeftChosen) {
-                        rotateLeftChosen = false;
-                        rotateLeftY += amountToMoveCard;
-                        gameLogic.getCurrentPlayer().rotate(3);
-                        gameLogic.getPlayerQueue().next();
-                        gameLogic.setTurnOverToTrue();
-                    } else {
-                        rotateLeftChosen = true;
-                        rotateLeftY -= amountToMoveCard;
-                    }
-                }
-                if (clickPosition.x > backUpX && clickPosition.x < backUpX + cardWidth && clickPosition.y > backUpY && clickPosition.y < backUpY + cardHeight) {
-                    if (backUpChosen) {
-                        backUpChosen = false;
-                        backUpY += amountToMoveCard;
-                        gameLogic.getCurrentPlayer().moveByDirection(-1);
-                        gameLogic.getPlayerQueue().next();
-                        gameLogic.setTurnOverToTrue();
-                    } else {
-                        backUpChosen = true;
-                        backUpY -= amountToMoveCard;
-                    }
-                }
-                if (clickPosition.x > uTurnX && clickPosition.x < uTurnX + cardWidth && clickPosition.y > uTurnY && clickPosition.y < uTurnY + cardHeight) {
-                    if (uTurnChosen) {
-                        uTurnChosen = false;
-                        uTurnY += amountToMoveCard;
-                        gameLogic.getCurrentPlayer().rotate(2);
-                        gameLogic.getPlayerQueue().next();
-                        gameLogic.setTurnOverToTrue();
-                    } else {
-                        uTurnChosen = true;
-                        uTurnY -= amountToMoveCard;
                     }
                 }
                 */
@@ -216,21 +130,11 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
             Texture cardTexture = new Texture(Gdx.files.internal(registerCard.getGraphicLocation()));
             batch.draw(cardTexture, cardX[i], cardY[i], cardWidth, cardHeight);
         }
-        /*
-        batch.draw(backUp, backUpX, backUpY, cardWidth, cardHeight);
-        batch.draw(move1, move1X, move1Y, cardWidth, cardHeight);
-        batch.draw(move2, move2X, move2Y, cardWidth, cardHeight);
-        batch.draw(move3, move3X, move3Y, cardWidth, cardHeight);
-        batch.draw(rotateLeft, rotateLeftX, rotateLeftY, cardWidth, cardHeight);
-        batch.draw(rotateRight, rotateRightX, rotateRightY, cardWidth, cardHeight);
-        batch.draw(uTurn, uTurnX, uTurnY, cardWidth, cardHeight);*/
+
         batch.end();
     }
 
     public void dispose() {
         batch.dispose();
-        backUp.dispose();
     }
-
-
 }
