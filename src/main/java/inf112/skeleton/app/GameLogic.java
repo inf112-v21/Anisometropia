@@ -86,19 +86,25 @@ public class GameLogic {
                 player.move(-1, 0);}
                 break;
 
-//            case (conveyorBeltID_DownRight): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);}
+//need to look at the previous move/round done by player. if old pos == new pos the player is to move in a direction and not rotate.
+//this only needs to be added to the yellow conveyorBelts, as the blue conveyorBelts does this in one operation and won't stand
+//in the same position for several rounds.
+
+//            case (yConveyorBeltID_DownRight): if(player.conveyorBeltReached){
+//                getCurrentPlayer().rotate(-1);
+//
+//            }
 //                //player.move(1,0);
 //                break;
-//            case (conveyorBeltID_RightUp): if(player.conveyorBeltReached){
+//            case (yConveyorBeltID_RightUp): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(-1);}
 //                //player.move(0,1);
 //                break;
-//            case (conveyorBeltID_UpLeft): if(player.conveyorBeltReached){
+//            case (yConveyorBeltID_UpLeft): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(-1);}
 //                //player.move(-1,0);
 //                break;
-//            case (conveyorBeltID_LeftDown): if(player.conveyorBeltReached){
+//            case (yConveyorBeltID_LeftDown): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(-1);}
 //                //player.move(0,-1);
 //                break;
