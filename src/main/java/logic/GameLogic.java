@@ -2,7 +2,7 @@ package logic;
 
 import actor.Player;
 import cards.DeckOfRegisterCards;
-import logic.PlayerQueue;
+import com.badlogic.gdx.utils.Timer;
 import map.GameMap;
 
 public class GameLogic {
@@ -25,7 +25,7 @@ public class GameLogic {
 
     public GameLogic(GameMap gameMap) {
         this.gameMap = gameMap;
-        this.playerQueue = new PlayerQueue();
+        playerQueue = new PlayerQueue();
 
         addPlayer(2,2, "Player 1");
         addPlayer(7,2, "Player 2");
@@ -79,10 +79,19 @@ public class GameLogic {
     public void executeChosenCards() {
         for (int i = 0; i < 5; i++) {
             for (Player player : playerQueue.getPlayerQueue()) {
-                player.getChosenRegisterCards().get(i).executeRegister(player);
+                System.out.println("player " + player + " , and card: " + i );
+                float delayInSeconds = 0.5f;
+                int k = i;
+                System.out.println("k: " + k);
+                Timer.schedule(new Timer.Task() {
+                    @Override
+                    public void run() {
+                        System.out.println("running!");
+                        player.getChosenRegisterCards().get(k).executeRegister(player);
+                    }
+                }, delayInSeconds + i);
             }
         }
-
     }
 
     /*
