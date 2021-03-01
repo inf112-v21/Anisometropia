@@ -36,6 +36,17 @@ public class ControlScreen extends InputAdapter { // can extend InputAdapter if 
     float rotateRightX = 84*5, rotateRightY = 174;
     float uTurnX = 84*6, uTurnY = 174;
 
+    float dealtCard1X = 0, dealtCard1Y = 174;
+    float dealtCard2X = 84, dealtCard2Y = 174;
+    float dealtCard3X = 84*2, dealtCard3Y = 174;
+    float dealtCard4X = 84*3, dealtCard4Y = 174;
+    float dealtCard5X = 84*4, dealtCard5Y = 174;
+    float dealtCard6X = 84*5, dealtCard6Y = 174;
+    float dealtCard7X = 84*6, dealtCard7Y = 174;
+    float dealtCard8X = 84*7, dealtCard8Y = 174;
+    float dealtCard9X = 84*8, dealtCard9Y = 174;
+
+    int numOfCardsChosen = 0;
     boolean backUpChosen, move1Chosen, move2Chosen, move3Chosen, rotateLeftChosen, rotateRightChosen, uTurnChosen;
 
     public ControlScreen(GameLogic gameLogic) {

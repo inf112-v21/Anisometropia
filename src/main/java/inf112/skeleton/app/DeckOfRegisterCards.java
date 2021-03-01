@@ -1,5 +1,6 @@
 package inf112.skeleton.app;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -7,7 +8,7 @@ import java.util.Collections;
  * Generates and maintains the full deck of register cards.
  */
 public class DeckOfRegisterCards {
-    private ArrayList<RegisterCard> deckOfCards;
+    private ArrayList<RegisterCard> deckOfCards = new ArrayList<>();
 
     public DeckOfRegisterCards() {
         reshuffleDeck();

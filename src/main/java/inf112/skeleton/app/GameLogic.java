@@ -41,22 +41,27 @@ public class GameLogic {
                     conveyorBelt(tileID, player);
                 }
 
-                if(checkWin(player)){
+                if (checkWin(player)){
                     player.playerWins();
                     gameMap.setPlayerPosition(player.x, player.y, player);
                     gameMessage = player.playerName + " won the game!";
                     gameOver = true;
                 }
 
-                if(checkLoss(player.getX(), player.getY())) {
+                if (checkLoss(player.getX(), player.getY())) {
                     player.playerDies();
                     gameMap.setPlayerPosition(player.x, player.y, player);
                     gameMessage = player.playerName + " lost the game!";
                     gameOver = true;
                 }
             }
+            if (playerQueue.getCurrentPlayer() == playerQueue.getPlayerQueue().get(0)) {
+                DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
+                for (Player player : playerQueue.getPlayerQueue()) {
+                    player.setDealtRegisterCards(deckOfRegisterCards.dealNineCards());
+                }
+            }
         }
-
     }
 
     /*
