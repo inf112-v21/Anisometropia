@@ -12,7 +12,7 @@ public class Player implements IPlayer {
     boolean isDead = false;
     boolean isVictorious = false;
     boolean[] flagsReached;
-    boolean conveyorBeltReached = true;
+    boolean conveyorBeltReached;
     GameMap gameMap;
     String playerName;
 

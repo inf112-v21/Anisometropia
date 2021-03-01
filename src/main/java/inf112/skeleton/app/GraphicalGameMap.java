@@ -92,10 +92,12 @@ public class GraphicalGameMap extends GameMap {
     public boolean isThereConveyorOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
-            return (tileID == 50) || (tileID == 52) || (tileID == 49)
-                    || (tileID == 51) || (tileID == 58) || (tileID == 57)
-                    || (tileID == 60) || (tileID == 59) || (tileID == 68)
-                    || (tileID == 67) || (tileID == 66) ||  tileID == 65;
+            return  (tileID == 49) || (tileID == 50) || (tileID == 51) || (tileID == 52) ||
+                    (tileID == 57) || (tileID == 58) || (tileID == 59) || (tileID == 60) ||
+                    (tileID == 65) || (tileID == 66) || (tileID == 67) || (tileID == 68) ||
+                    (tileID == 12) || (tileID == 13) || (tileID == 16) || (tileID == 17) ||
+                    (tileID == 18) || (tileID == 19) || (tileID == 20) || (tileID == 21) ||
+                    (tileID == 24) || (tileID == 25) || (tileID == 26) || (tileID == 27);
         }
         return false;
     }
