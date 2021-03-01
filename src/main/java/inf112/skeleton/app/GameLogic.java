@@ -91,9 +91,7 @@ public class GameLogic {
 //in the same position for several rounds.
 
 //            case (yConveyorBeltID_DownRight): if(player.conveyorBeltReached){
-//                getCurrentPlayer().rotate(-1);
-//
-//            }
+//                getCurrentPlayer().rotate(-1);}
 //                //player.move(1,0);
 //                break;
 //            case (yConveyorBeltID_RightUp): if(player.conveyorBeltReached){
