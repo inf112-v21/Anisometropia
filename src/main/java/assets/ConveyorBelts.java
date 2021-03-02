@@ -40,6 +40,7 @@ public class ConveyorBelts {
 //need to look at the previous move/round done by player. if old pos == new pos the player is to move in a direction and not rotate.
 //this only needs to be added to the yellow conveyorBelts, as the blue conveyorBelts does this in one operation and won't stand
 //in the same position for several rounds.
+//This has very low priority, as it rarely occurs.
 
 //            case (yConveyorBeltID_DownRight): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(3);}
