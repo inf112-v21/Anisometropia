@@ -63,9 +63,10 @@ public class ControlScreen extends InputAdapter {
 //            System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
 
             if (!gameOver) {
-                // Selects desired cards
+                // Selects card clicked on.
                 for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
-                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
+                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
+                            && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
                         thisCardWasClicked(i);
                     }
                     if (numCardsChosen == 5) {
@@ -107,6 +108,7 @@ public class ControlScreen extends InputAdapter {
     private void thisCardWasClicked(int i) {
         if (isCardChosen[i]) {
             isCardChosen[i] = false;
+            adjustPositionOfChosenCards(cardX[i]);
             cardY[i] += amountToMoveCard;
             cardX[i] = i*84;
             numCardsChosen--;
@@ -117,6 +119,19 @@ public class ControlScreen extends InputAdapter {
             cardX[i] = numCardsChosen*108;
             numCardsChosen++;
             chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i));
+        }
+    }
+
+    /**
+     * TODO: Currently only works correctly if cards are selected from right to left.
+     * Visually shifts cards that were to the right of the deselected card to the left.
+     * @param deselectedCardX X-coordinate of the deselected card.
+     */
+    private void adjustPositionOfChosenCards(int deselectedCardX) {
+        for (int i = 0; i < 9; i++) {
+            if (isCardChosen[i] && cardX[i] > deselectedCardX) {
+                cardX[i] -= 108;
+            }
         }
     }
 
