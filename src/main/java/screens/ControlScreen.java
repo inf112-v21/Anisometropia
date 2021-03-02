@@ -64,66 +64,21 @@ public class ControlScreen extends InputAdapter {
 
             if (!gameOver) {
                 // Selects card clicked on.
-//                for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
-//                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
-//                            && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
-//                        thisCardWasClicked(i);
-//                        System.out.println("this card was clicked, i: " + i);
-//                    }
-//                    if (numCardsChosen == 5) {
-//                        finishTurn();
-//                        newTurn();
-//                    }
-//                }
-                if (clickPosition.x > cardX[0] && clickPosition.x < cardX[0] + cardWidth
-                            && clickPosition.y > cardY[0] && clickPosition.y < cardY[0] + cardHeight) {
-                        thisCardWasClicked(0);
-                        System.out.println("this card was clicked 0");
+                for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
+                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
+                            && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
+                        thisCardWasClicked(i);
+                        System.out.println("this card was clicked, i: " + i);
                     }
-                if (clickPosition.x > cardX[1] && clickPosition.x < cardX[1] + cardWidth
-                        && clickPosition.y > cardY[1] && clickPosition.y < cardY[1] + cardHeight) {
-                    thisCardWasClicked(1);
-                    System.out.println("this card was clicked, 1");
-                }
-                if (clickPosition.x > cardX[2] && clickPosition.x < cardX[2] + cardWidth
-                        && clickPosition.y > cardY[2] && clickPosition.y < cardY[2] + cardHeight) {
-                    thisCardWasClicked(2);
-                    System.out.println("this card was clicked, 2");
-                }
-                if (clickPosition.x > cardX[3] && clickPosition.x < cardX[3] + cardWidth
-                        && clickPosition.y > cardY[3] && clickPosition.y < cardY[3] + cardHeight) {
-                    thisCardWasClicked(3);
-                    System.out.println("this card was clicked, 3");
-                }
-                if (clickPosition.x > cardX[4] && clickPosition.x < cardX[4] + cardWidth
-                        && clickPosition.y > cardY[4] && clickPosition.y < cardY[4] + cardHeight) {
-                    thisCardWasClicked(4);
-                    System.out.println("this card was clicked 4");
-                }
-                if (clickPosition.x > cardX[5] && clickPosition.x < cardX[5] + cardWidth
-                        && clickPosition.y > cardY[5] && clickPosition.y < cardY[5] + cardHeight) {
-                    thisCardWasClicked(5);
-                    System.out.println("this card was clicked 5");
-                }
-                if (clickPosition.x > cardX[6] && clickPosition.x < cardX[6] + cardWidth
-                        && clickPosition.y > cardY[6] && clickPosition.y < cardY[6] + cardHeight) {
-                    thisCardWasClicked(6);
-                    System.out.println("this card was clicked 6");
-                }
-                if (clickPosition.x > cardX[7] && clickPosition.x < cardX[7] + cardWidth
-                        && clickPosition.y > cardY[7] && clickPosition.y < cardY[7] + cardHeight) {
-                    thisCardWasClicked(7);
-                    System.out.println("this card was clicked 7");
-                }
-                if (clickPosition.x > cardX[8] && clickPosition.x < cardX[8] + cardWidth
-                        && clickPosition.y > cardY[8] && clickPosition.y < cardY[8] + cardHeight) {
-                    thisCardWasClicked(8);
-                    System.out.println("this card was clicked 8");
+                    if (numCardsChosen == 5) {
+                        finishTurn();
+                        newTurn();
+                    }
                 }
 
                 if (numCardsChosen == 5) {
-                        finishTurn();
-                        newTurn();
+                    finishTurn();
+                    newTurn();
                 }
 
             }

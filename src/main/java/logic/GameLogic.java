@@ -11,11 +11,11 @@ public class GameLogic {
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
     final int yConveyorBeltID_Down      = 50, yConveyorBeltID_Right     = 52, yConveyorBeltID_Up      = 49, yConveyorBeltID_Left     = 51,
-              yConveyorBeltID_DownRight = 58, yConveyorBeltID_RightUp   = 57, yConveyorBeltID_UpLeft  = 60, yConveyorBeltID_LeftDown = 59,
-              yConveyorBeltID_DownLeft  = 68, yConveyorBeltID_RightDown = 67, yConveyorBeltID_UpRight = 66, yConveyorBeltID_LeftUp   = 65,
-              bConveyorBeltID_Down      = 21, bConveyorBeltID_Right     = 14, bConveyorBeltID_Up      = 13, bConveyorBeltID_Left     = 22,
-              bConveyorBeltID_DownRight = 25, bConveyorBeltID_RightUp   = 26, bConveyorBeltID_UpRight = 19, bConveyorBeltID_LeftUp   = 27,
-              bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpDown  = 18, bConveyorBeltID_LeftDown = 17;
+            yConveyorBeltID_DownRight = 58, yConveyorBeltID_RightUp   = 57, yConveyorBeltID_UpLeft  = 60, yConveyorBeltID_LeftDown = 59,
+            yConveyorBeltID_DownLeft  = 68, yConveyorBeltID_RightDown = 67, yConveyorBeltID_UpRight = 66, yConveyorBeltID_LeftUp   = 65,
+            bConveyorBeltID_Down      = 21, bConveyorBeltID_Right     = 14, bConveyorBeltID_Up      = 13, bConveyorBeltID_Left     = 22,
+            bConveyorBeltID_DownRight = 25, bConveyorBeltID_RightUp   = 26, bConveyorBeltID_UpRight = 19, bConveyorBeltID_LeftUp   = 27,
+            bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpDown  = 18, bConveyorBeltID_LeftDown = 17;
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
 
     public static boolean gameOver = false;
@@ -105,10 +105,10 @@ public class GameLogic {
     }
 
     /*
-    * The yellow ConveyorBelt will move the player 1 tile at the end of the round.
-    * @return Moves and rotates the player on a conveyorBelt.
-    * TODO: Add a method for Blue ConveyorBelts and moving the methods in the gameAssets map.
-    * TODO: Make sure the game remember the previous move made on a yellow-corner-conveyorbelt such that if its stuck for another round it will move in one of the directions.
+     * The yellow ConveyorBelt will move the player 1 tile at the end of the round.
+     * @return Moves and rotates the player on a conveyorBelt.
+     * TODO: Add a method for Blue ConveyorBelts and moving the methods in the gameAssets map.
+     * TODO: Make sure the game remember the previous move made on a yellow-corner-conveyorbelt such that if its stuck for another round it will move in one of the directions.
      */
 
     public void conveyorBelt (int tileID, Player player){
@@ -219,13 +219,13 @@ public class GameLogic {
     public void registerFlag (int tileID, Player player) {
         switch (tileID) {
             case (FLAG_1_ID): player.flagsReached[0] = true;
-            break;
+                break;
             case (FLAG_2_ID): if (player.flagsReached[0]) player.flagsReached[1] = true;
-            break;
+                break;
             case (FLAG_3_ID): if (player.flagsReached[1]) player.flagsReached[2] = true;
-            break;
+                break;
             case (FLAG_4_ID): if (player.flagsReached[2]) player.flagsReached[3] = true;
-            break;
+                break;
         }}
 
     public void gameReset() {
