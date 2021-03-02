@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static logic.GameLogic.gameOver;
+import static logic.GameLogic.nowExecutingCards;
 
 public class ControlScreen extends InputAdapter {
     DrawThis drawThis;
@@ -63,12 +64,14 @@ public class ControlScreen extends InputAdapter {
 //            System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
 
             if (!gameOver) {
-                // Selects card clicked on.
-                for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
-                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
-                            && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
-                        thisCardWasClicked(i);
-                        System.out.println("this card was clicked, i: " + i);
+                if (!nowExecutingCards) {
+                    // Selects card clicked on.
+                    for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
+                        if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
+                                && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
+                            thisCardWasClicked(i);
+                            break;
+                        }
                     }
                     if (numCardsChosen == 5) {
                         finishTurn();

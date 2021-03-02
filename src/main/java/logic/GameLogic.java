@@ -15,9 +15,10 @@ public class GameLogic {
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
 
     public static boolean gameOver = false;
-    public static String gameMessage;
-
+    public static boolean nowExecutingCards = false;
     boolean turnOver = true;
+
+    public static String gameMessage;
 
     public GameLogic(GameMap gameMap) {
         this.gameMap = gameMap;
@@ -95,25 +96,20 @@ public class GameLogic {
      * Executes chosen cards of all players, one card at a time, chronologically.
      */
     public void executeChosenCards() {
-//        for (int i = 0; i < 5; i++) {
-//            for (Player player : playerQueue.getPlayerQueue()) {
-//                float delayInSeconds = 0.3f;
-//                int k = i;
-//                Timer.schedule(new Timer.Task() {
-//                    @Override
-//                    public void run() {
-//                        System.out.println("running, k: " + k);
-//                        player.getChosenRegisterCards().get(k).executeRegister(player);
-//                    }
-//                }, delayInSeconds + i);
-//
-//                }
-//            }
-//        }
+        nowExecutingCards = true;
         for (int i = 0; i < 5; i++) {
             for (Player player : playerQueue.getPlayerQueue()) {
-                player.getChosenRegisterCards().get(i).executeRegister(player);
-
+                if(!player.isDead) {
+                    float delayInSeconds = 0.3f;
+                    int internalCounter = i;
+                    Timer.schedule(new Timer.Task() {
+                        @Override
+                        public void run() {
+                            player.getChosenRegisterCards().get(internalCounter).executeRegister(player);
+                            if(player.equals(playerQueue.getLastPlayer()) && internalCounter == 4) nowExecutingCards = false;
+                        }
+                    }, delayInSeconds + i);
+                }
             }
         }
     }
