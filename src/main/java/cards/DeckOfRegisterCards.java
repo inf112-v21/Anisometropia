@@ -12,7 +12,7 @@ public class DeckOfRegisterCards {
     private ArrayList<RegisterCard> deckOfCards = new ArrayList<>();
 
     public DeckOfRegisterCards() {
-        reshuffleDeck();
+        initializeDeck();
     }
 
     /**
@@ -32,10 +32,10 @@ public class DeckOfRegisterCards {
         addCardsToDeck("RegisterCardAssets/BackUp.png", -1, true, 6);
 
         // Rotate left
-        addCardsToDeck("RegisterCardAssets/RotateLeft.png", 1, false, 18);
+        addCardsToDeck("RegisterCardAssets/RotateLeft.png", 3, false, 18);
 
         // Rotate right
-        addCardsToDeck("RegisterCardAssets/RotateRight.png", 3, false, 18);
+        addCardsToDeck("RegisterCardAssets/RotateRight.png", 1, false, 18);
 
         // U-turn
         addCardsToDeck("RegisterCardAssets/UTurn.png", 2, false, 6);
@@ -49,13 +49,9 @@ public class DeckOfRegisterCards {
 
     private void shuffleDeck() { Collections.shuffle(deckOfCards); }
 
-    public void reshuffleDeck() {
+    public void initializeDeck() {
         generateDeck();
         shuffleDeck();
-    }
-
-    public ArrayList<RegisterCard> getDeck() {
-        return deckOfCards;
     }
 
     /**
