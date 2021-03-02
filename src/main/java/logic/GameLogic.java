@@ -64,12 +64,17 @@ public class GameLogic {
                     gameOver = true;
                 }
             }
+            // Deal new register cards at the start of new round.
             if (playerQueue.getCurrentPlayer() == playerQueue.getPlayerQueue().get(0)) {
-                DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
-                for (Player player : playerQueue.getPlayerQueue()) {
-                    player.setDealtRegisterCards(deckOfRegisterCards.dealNineCards());
-                }
+                dealRegisterCards();
             }
+        }
+    }
+
+    private void dealRegisterCards() {
+        DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
+        for (Player player : playerQueue.getPlayerQueue()) {
+            player.setDealtRegisterCards(deckOfRegisterCards.dealNineCards());
         }
     }
 

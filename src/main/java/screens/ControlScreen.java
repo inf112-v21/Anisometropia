@@ -63,7 +63,7 @@ public class ControlScreen extends InputAdapter {
 //            System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
 
             if (!gameOver) {
-                // Stores and moves chosen cards.
+                // Selects desired cards
                 for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
                     if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
                         thisCardWasClicked(i);
