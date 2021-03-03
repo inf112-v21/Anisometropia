@@ -12,7 +12,7 @@ public class Multiplayer {
     private Socket sock;
     private DataInputStream dataInput;
     private DataOutputStream dataOutput;
-    private String buffer = "";
+    private String buffer = ""; // to store the received string
 
     /**
     Calling the constructor establishes the connection.
@@ -43,11 +43,22 @@ public class Multiplayer {
         dataOutput.close();
     }
 
+    /**
+     * @param msg Message to send as a string
+     * @throws IOException
+     */
     public void send(String msg) throws IOException {
         dataOutput.writeUTF(msg);
         dataOutput.flush();
     }
 
+    /**
+     * Actively listens for another machine to send a message.
+     * Only receives 1 message (string), to receive multiple messages,
+     * call again or create a loop.
+     * @return returns the received string
+     * @throws IOException
+     */
     public String receive() throws IOException {
         String temp;
         while (buffer == "") {
