@@ -172,6 +172,9 @@ public class ControlScreen extends InputAdapter {
     }
 
     public void dispose() {
+        damageToken.dispose();
+        powerDownButton.dispose();
+        lifeToken.dispose();
         batch.dispose();
     }
 }

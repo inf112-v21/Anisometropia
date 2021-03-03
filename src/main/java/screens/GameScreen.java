@@ -16,8 +16,8 @@ import map.GraphicalGameMap;
 import org.lwjgl.opengl.GL20;
 
 public class GameScreen extends ApplicationAdapter implements InputProcessor {
-    public static final int SCREEN_WIDTH = 1696;
-    public static final int SCREEN_HEIGHT = 960;
+    public static final int SCREEN_WIDTH = 1440;
+    public static final int SCREEN_HEIGHT = 832;
     public static final int GAMEBOARD_PLACEMENT_X = -32;
     public static final int GAMEBOARD_PLACEMENT_Y = -320;
     public static final float ASSETS_IMAGE_SIZE = 300f;
@@ -100,6 +100,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
     @Override
     public void dispose() {
         gameMap.dispose();
+        controlScreen.dispose();
         batch.dispose();
     }
 
