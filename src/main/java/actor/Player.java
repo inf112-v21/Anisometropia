@@ -58,22 +58,27 @@ public class Player implements IPlayer {
     public void rotate(int amountToRotate) { direction = (direction + amountToRotate) % 4; }
 
     public void moveByDirection(int amountToMove) {
+        if (amountToMove == -1) incrementalMovement((direction + 2) % 4);
         for (int i = 0; i < amountToMove; i++) {
-            switch(getDirection()) {
-                case 0:
-                    move(0, 1);
-                    break;
-                case 1:
-                    move(1, 0);
-                    break;
-                case 2:
-                    move(0, -1);
-                    break;
-                case 3:
-                    move(-1, 0);
-                    break;
-            }
+            incrementalMovement(direction);
             if (isPlayerDead()) break;
+        }
+    }
+
+    public void incrementalMovement(int desiredDirection){
+        switch(desiredDirection) {
+            case 0:
+                move(0, 1);
+                break;
+            case 1:
+                move(1, 0);
+                break;
+            case 2:
+                move(0, -1);
+                break;
+            case 3:
+                move(-1, 0);
+                break;
         }
     }
 

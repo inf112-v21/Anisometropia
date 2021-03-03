@@ -25,7 +25,7 @@ public class GameLogic {
         playerQueue = new PlayerQueue();
 
         addPlayer(2,2, "player1");
-        addPlayer(3, 2, "player2");
+       // addPlayer(3, 2, "player2");
 //        playerStartPos();
     }
 

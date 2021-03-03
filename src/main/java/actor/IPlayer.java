@@ -48,6 +48,12 @@ public interface IPlayer {
     void moveByDirection(int amountToMove);
 
     /**
+     * Moves player one tile in desired direction.
+     * @param desiredDirection direction faced by player
+     */
+    void incrementalMovement(int desiredDirection);
+
+    /**
      * Will set the amount of life tokens that a player has.
      * @param tokens
      */

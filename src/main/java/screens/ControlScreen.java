@@ -133,7 +133,6 @@ public class ControlScreen extends InputAdapter {
     }
 
     /**
-     * TODO: Currently only works correctly if cards are selected from right to left.
      * Visually shifts cards that were to the right of the deselected card to the left.
      * @param deselectedCardX X-coordinate of the deselected card.
      */
