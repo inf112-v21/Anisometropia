@@ -63,20 +63,19 @@ public class ControlScreen extends InputAdapter {
 //            System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
 
             if (!gameOver) {
-                    // Selects card clicked on.
-                    for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
-                        if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
-                                && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
-                            thisCardWasClicked(i);
-                            break;
-                        }
+                // Selects card clicked on.
+                for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
+                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
+                            && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
+                        thisCardWasClicked(i);
+                        break;
                     }
                 }
-
                 if (numCardsChosen == 5) {
-                    finishTurn();
+                    gameLogic.finishTurn(chosenCards);
                     newTurn();
                 }
+            }
         }
 
         batch.setProjectionMatrix(camera.combined);
@@ -96,15 +95,6 @@ public class ControlScreen extends InputAdapter {
                 new RegisterCard("", 0, true)));
         numCardsChosen = 0;
         initializeCards();
-    }
-
-    private void finishTurn() {
-        gameLogic.getCurrentPlayer().setChosenRegisterCards(chosenCards);
-        if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()) {
-            gameLogic.executeChosenCards();
-        }
-        gameLogic.getPlayerQueue().next();
-        gameLogic.setTurnOverToTrue();
     }
 
     private void thisCardWasClicked(int i) {

@@ -2,9 +2,12 @@ package logic;
 
 import actor.Player;
 import cards.DeckOfRegisterCards;
+import cards.RegisterCard;
 import com.badlogic.gdx.utils.Timer;
 import map.GameMap;
 import assets.ConveyorBelts;
+
+import java.util.ArrayList;
 
 
 public class GameLogic {
@@ -111,7 +114,12 @@ public class GameLogic {
         }
     }
 
-
+    public void finishTurn(ArrayList<RegisterCard> chosenCards) {
+        getCurrentPlayer().setChosenRegisterCards(chosenCards);
+        if (getCurrentPlayer() == getLastPlayer()) executeChosenCards();
+        getPlayerQueue().next();
+        setTurnOverToTrue();
+    }
 
     public void registerFlag (int tileID, Player player) {
         switch (tileID) {
