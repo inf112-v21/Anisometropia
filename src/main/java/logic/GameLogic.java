@@ -51,11 +51,16 @@ public class GameLogic {
     public void update() {
         if (turnOver) {
             turnOver = false;
-            for (Player player : playerQueue.getPlayerQueue()) {
-                if (gameMap.isThereFlagHere(player.getX(), player.getY())){
-                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
-                    registerFlag(tileID, player);
-                }
+            // Deal new register cards at the start of new round.
+            if (playerQueue.getCurrentPlayer() == playerQueue.getPlayerQueue().get(0)) {
+                dealRegisterCards();
+            }
+        }
+        for (Player player : playerQueue.getPlayerQueue()) {
+            if (gameMap.isThereFlagHere(player.getX(), player.getY())){
+                int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
+                registerFlag(tileID, player);
+            }
 
 //                if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())){
 //                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
@@ -64,23 +69,18 @@ public class GameLogic {
 //                    conveyorBelt(tileID, player);
 //                }
 
-                if (checkWin(player)){
-                    player.playerWins();
-                    gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-                    gameMessage = player.playerName + " won the game!";
-                    gameOver = true;
-                }
-
-                if (checkLoss(player.getX(), player.getY())) {
-                    player.playerDies();
-                    gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-                    gameMessage = player.playerName + " lost the game!";
-                    gameOver = true;
-                }
+            if (checkWin(player)){
+                player.playerWins();
+                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+                gameMessage = player.playerName + " won the game!";
+                gameOver = true;
             }
-            // Deal new register cards at the start of new round.
-            if (playerQueue.getCurrentPlayer() == playerQueue.getPlayerQueue().get(0)) {
-                dealRegisterCards();
+
+            if (checkLoss(player.getX(), player.getY())) {
+                player.playerDies();
+                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+                gameMessage = player.playerName + " lost the game!";
+                gameOver = true;
             }
         }
     }
