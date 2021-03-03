@@ -114,6 +114,10 @@ public class GameLogic {
         }
     }
 
+    /**
+     * Saves player's chosen cards and ends the turn.
+     * @param chosenCards
+     */
     public void finishTurn(ArrayList<RegisterCard> chosenCards) {
         getCurrentPlayer().setChosenRegisterCards(chosenCards);
         if (getCurrentPlayer() == getLastPlayer()) executeChosenCards();

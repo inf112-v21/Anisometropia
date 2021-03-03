@@ -30,13 +30,12 @@ public class ControlScreen extends InputAdapter {
 
     float amountToMoveCard = 174;
 
+    // Variables used to position dealt register cards.
     int[] cardX = new int[9];
     int[] cardY = new int[9];
-
-    ArrayList<RegisterCard> chosenCards = new ArrayList<>(Collections.nCopies(5,
-            new RegisterCard("", 0, true)));
-    int numCardsChosen = 0;
     boolean[] isCardChosen = new boolean[9];
+    ArrayList<RegisterCard> chosenCards;
+    int numCardsChosen;
 
     public ControlScreen(GameLogic gameLogic) {
 
@@ -63,7 +62,7 @@ public class ControlScreen extends InputAdapter {
 //            System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
 
             if (!gameOver) {
-                // Selects card clicked on.
+                // Relates mouse clicks to particular cards.
                 for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
                     if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
                             && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
@@ -73,7 +72,7 @@ public class ControlScreen extends InputAdapter {
                 }
                 if (numCardsChosen == 5) {
                     gameLogic.finishTurn(chosenCards);
-                    newTurn();
+                    initializeCards();
                 }
             }
         }
@@ -90,27 +89,24 @@ public class ControlScreen extends InputAdapter {
         batch.end();
     }
 
-    private void newTurn() {
-        chosenCards = new ArrayList<>(Collections.nCopies(5,
-                new RegisterCard("", 0, true)));
-        numCardsChosen = 0;
-        initializeCards();
-    }
-
-    private void thisCardWasClicked(int i) {
-        if (isCardChosen[i]) {
-            isCardChosen[i] = false;
-            adjustPositionOfChosenCards(cardX[i]);
-            cardY[i] += amountToMoveCard;
-            cardX[i] = i*84;
+    /**
+     * Moves clicked-on card to chosen section. If already in the chosen section, moves back to original position.
+     * @param cardIndex
+     */
+    private void thisCardWasClicked(int cardIndex) {
+        if (isCardChosen[cardIndex]) {
+            isCardChosen[cardIndex] = false;
+            adjustPositionOfChosenCards(cardX[cardIndex]);
+            cardY[cardIndex] += amountToMoveCard;
+            cardX[cardIndex] = cardIndex*84;
             numCardsChosen--;
         }
         else {
-            isCardChosen[i] = true;
-            cardY[i] -= amountToMoveCard;
-            cardX[i] = numCardsChosen*108;
+            isCardChosen[cardIndex] = true;
+            cardY[cardIndex] -= amountToMoveCard;
+            cardX[cardIndex] = numCardsChosen*108;
             numCardsChosen++;
-            chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i));
+            chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtRegisterCards().get(cardIndex));
         }
     }
 
@@ -147,7 +143,7 @@ public class ControlScreen extends InputAdapter {
     }
 
     /**
-     * Sets initial values for dealt register cards.
+     * Sets initial values for dealt and chosen register cards.
      */
     private void initializeCards() {
         for (int i = 0; i < 9; i++) {
@@ -155,6 +151,9 @@ public class ControlScreen extends InputAdapter {
             cardY[i] = 174;
             isCardChosen[i] = false;
         }
+        chosenCards = new ArrayList<>(Collections.nCopies(5,
+                      new RegisterCard("", 0, true)));
+        numCardsChosen = 0;
     }
 
     public void dispose() {
