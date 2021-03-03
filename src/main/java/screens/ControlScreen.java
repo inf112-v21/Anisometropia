@@ -71,10 +71,6 @@ public class ControlScreen extends InputAdapter {
                             break;
                         }
                     }
-                    if (numCardsChosen == 5) {
-                        finishTurn();
-                        newTurn();
-                    }
                 }
 
                 if (numCardsChosen == 5) {
