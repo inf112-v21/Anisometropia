@@ -10,32 +10,42 @@ public class ConveyorBelts {
               yConveyorBeltID_DownLeft  = 68, yConveyorBeltID_RightDown = 67, yConveyorBeltID_UpRight = 66, yConveyorBeltID_LeftUp   = 65,
               bConveyorBeltID_Down      = 21, bConveyorBeltID_Right     = 14, bConveyorBeltID_Up      = 13, bConveyorBeltID_Left     = 22,
               bConveyorBeltID_DownRight = 25, bConveyorBeltID_RightUp   = 26, bConveyorBeltID_UpRight = 19, bConveyorBeltID_LeftUp   = 27,
-              bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpDown  = 18, bConveyorBeltID_LeftDown = 17;
+              bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpLeft  = 18, bConveyorBeltID_LeftDown = 17;
 
 
+//    public void runConveyorBelt() {
+//        for (Player player : playerQueue.getPlayerQueue()) {
+//            if (checkLoss(player.getX(), player.getY())) {
+//                player.playerDies();
+//                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+//                gameMessage = player.playerName + " lost the game!";
+//                gameOver = true;
+//            }
+//        }
+//    }
 
 
-    /*
-     * The yellow ConveyorBelt will move the player 1 tile at the end of the round.
-     * @return Moves and rotates the player on a conveyorBelt.
-     * TODO: Add a method for Blue ConveyorBelts and moving the methods in the gameAssets map.
-     * TODO: Make sure the game remember the previous move made on a yellow-corner-conveyorbelt such that if its stuck for another round it will move in one of the directions.
-     */
-    public void conveyorBelt (int tileID, Player player){
-        switch (tileID){
+            /*
+             * The yellow ConveyorBelt will move the player 1 tile at the end of the round.
+             * @return Moves and rotates the player on a conveyorBelt.
+             * TODO: Add a method for Blue ConveyorBelts and moving the methods in the gameAssets map.
+             * TODO: Make sure the game remember the previous move made on a yellow-corner-conveyorbelt such that if its stuck for another round it will move in one of the directions.
+             */
+            public void conveyorBelt (int tileID, Player player){
+                switch (tileID){
 
-            case (yConveyorBeltID_Down): if (player.conveyorBeltReached) {
-                player.move(0,-1);}
-                break;
-            case (yConveyorBeltID_Up): if(player.conveyorBeltReached) {
-                player.move(0,1);}
-                break;
-            case (yConveyorBeltID_Right): if(player.conveyorBeltReached){
-                player.move(1, 0); }
-                break;
-            case (yConveyorBeltID_Left): if(player.conveyorBeltReached){
-                player.move(-1, 0);}
-                break;
+                    case (yConveyorBeltID_Down): if (player.conveyorBeltReached) {
+                        player.move(0,-1);}
+                        break;
+                    case (yConveyorBeltID_Up): if(player.conveyorBeltReached) {
+                        player.move(0,1);}
+                        break;
+                    case (yConveyorBeltID_Right): if(player.conveyorBeltReached){
+                        player.move(1, 0); }
+                        break;
+                    case (yConveyorBeltID_Left): if(player.conveyorBeltReached){
+                        player.move(-1, 0);}
+                        break;
 
 //need to look at the previous move/round done by player. if old pos == new pos the player is to move in a direction and not rotate.
 //this only needs to be added to the yellow conveyorBelts, as the blue conveyorBelts does this in one operation and won't stand
@@ -60,35 +70,35 @@ public class ConveyorBelts {
 //                break;
 //
 //
-//            case (conveyorBeltID_DownLeft): if(player.conveyorBeltReached){
+//            case (yConveyorBeltID_DownLeft): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(1);}
 //                //player.move(-1,0);
 //                break;
-//            case (conveyorBeltID_LeftUp): if(player.conveyorBeltReached){
+//            case (yConveyorBeltID_LeftUp): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(1);}
 //                //player.move(0,1);
 //                break;
-//            case (conveyorBeltID_UpRight): if(player.conveyorBeltReached){
+//            case (yConveyorBeltID_UpRight): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(1);}
 //                //player.move(1,0);
 //                break;
-//            case (conveyorBeltID_RightDown): if(player.conveyorBeltReached){
+//            case (yConveyorBeltID_RightDown): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(1);}
 //                //player.move(0,-1);
 //                break;
 
-            case (bConveyorBeltID_Down): if (player.conveyorBeltReached) {
-                player.move(0,-2);}
-                break;
-            case (bConveyorBeltID_Up): if(player.conveyorBeltReached) {
-                player.move(0,2);}
-                break;
-            case (bConveyorBeltID_Right): if(player.conveyorBeltReached){
-                player.move(2, 0);}
-                break;
-            case (bConveyorBeltID_Left): if(player.conveyorBeltReached){
-                player.move(-2, 0);}
-                break;
+                    case (bConveyorBeltID_Down): if (player.conveyorBeltReached) {
+                        player.move(0,-2);}
+                        break;
+                    case (bConveyorBeltID_Up): if(player.conveyorBeltReached) {
+                        player.move(0,2);}
+                        break;
+                    case (bConveyorBeltID_Right): if(player.conveyorBeltReached){
+                        player.move(2, 0);}
+                        break;
+                    case (bConveyorBeltID_Left): if(player.conveyorBeltReached){
+                        player.move(-2, 0);}
+                        break;
 
 //            case (bConveyorBeltID_DownRight): if(player.conveyorBeltReached){
 //                getCurrentPlayer().rotate(3);}
@@ -124,9 +134,7 @@ public class ConveyorBelts {
 //                getCurrentPlayer().rotate(1);}
 //                player.move(0,-1);
 //                break;
+//                }
+            }
         }
     }
-
-
-
-}

@@ -4,7 +4,7 @@ import actor.Player;
 import cards.DeckOfRegisterCards;
 import com.badlogic.gdx.utils.Timer;
 import map.GameMap;
-import assets.*;
+import assets.ConveyorBelts;
 
 
 public class GameLogic {
@@ -61,13 +61,6 @@ public class GameLogic {
                 registerFlag(tileID, player);
             }
 
-//                if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())){
-//                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
-//                    ConveyorBelts.class.getMethods();
-//
-//                    conveyorBelt(tileID, player);
-//                }
-
             if (checkWin(player)){
                 player.playerWins();
                 gameMap.setPlayerPosition(player.getX(), player.getY(), player);
@@ -107,8 +100,15 @@ public class GameLogic {
                 gameMessage = player.playerName + " lost the game!";
                 gameOver = true;
             }
+
+                if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())){
+                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
+                    conveyorBelt(tileID, player);
+                }
+
         }
     }
+
 
 
     public void registerFlag (int tileID, Player player) {
@@ -153,5 +153,9 @@ public class GameLogic {
 
     public void setTurnOverToTrue() {
         turnOver = true;
+    }
+
+    public ConveyorBelts conveyorBelt(int tileID, Player player) {
+         return conveyorBelt(tileID, player);
     }
 }
