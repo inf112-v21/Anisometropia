@@ -10,6 +10,7 @@ import assets.ConveyorBelts;
 public class GameLogic {
     GameMap gameMap;
     PlayerQueue playerQueue;
+    ConveyorBelts conveyorBelts;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
@@ -22,9 +23,10 @@ public class GameLogic {
     public GameLogic(GameMap gameMap) {
         this.gameMap = gameMap;
         playerQueue = new PlayerQueue();
+        conveyorBelts = new ConveyorBelts();
 
         addPlayer(2,2, "player1");
-       // addPlayer(3, 2, "player2");
+//        addPlayer(3, 2, "player2");
 //        playerStartPos();
     }
 
@@ -103,7 +105,7 @@ public class GameLogic {
 
                 if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())){
                     int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
-                    conveyorBelt(tileID, player);
+                    conveyorBelts.conveyorBelt(tileID, player);
                 }
 
         }
@@ -155,7 +157,4 @@ public class GameLogic {
         turnOver = true;
     }
 
-    public ConveyorBelts conveyorBelt(int tileID, Player player) {
-         return conveyorBelt(tileID, player);
-    }
 }

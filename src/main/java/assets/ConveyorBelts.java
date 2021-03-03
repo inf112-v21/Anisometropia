@@ -13,6 +13,10 @@ public class ConveyorBelts {
               bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpLeft  = 18, bConveyorBeltID_LeftDown = 17;
 
 
+    public ConveyorBelts() {
+
+    }
+
 //    public void runConveyorBelt() {
 //        for (Player player : playerQueue.getPlayerQueue()) {
 //            if (checkLoss(player.getX(), player.getY())) {
