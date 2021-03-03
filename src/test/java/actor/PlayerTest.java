@@ -16,17 +16,6 @@ public class PlayerTest {
     //TODO @BeforeEach
 
     @Test
-    public void testPlayer() {
-        TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
-        GameLogic gameLogic = new GameLogic(simpleGameMap);
-        Player player1 = gameLogic.getCurrentPlayer();
-        gameLogic.getPlayerQueue().next();
-        Player player2 = gameLogic.getCurrentPlayer();
-        gameLogic.getPlayerQueue().next();
-        assertEquals(player1,gameLogic.getCurrentPlayer());
-    }
-
-    @Test
     public void testPlayerMoveXDirection() {
         int dx = 3;
         int currentXPos = player.getX();
