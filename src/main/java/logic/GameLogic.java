@@ -75,12 +75,12 @@ public class GameLogic {
                 gameOver = true;
             }
 
-            if (checkLoss(player.getX(), player.getY())) {
-                player.playerDies();
-                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-                gameMessage = player.playerName + " lost the game!";
-                gameOver = true;
-            }
+//            if (checkLoss(player.getX(), player.getY())) {
+//                player.playerDies();
+//                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+//                gameMessage = player.playerName + " lost the game!";
+//                gameOver = true;
+//            }
         }
     }
 
@@ -100,6 +100,15 @@ public class GameLogic {
                 player.getChosenRegisterCards().get(i).executeRegister(player);
             }
         }
+        for (Player player : playerQueue.getPlayerQueue()) {
+            if (checkLoss(player.getX(), player.getY())) {
+                player.playerDies();
+                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+                gameMessage = player.playerName + " lost the game!";
+                gameOver = true;
+            }
+        }
+
     }
 
 
