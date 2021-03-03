@@ -12,7 +12,7 @@ public class Multiplayer {
     private Socket sock;
     private DataInputStream dataInput;
     private DataOutputStream dataOutput;
-    private String buffer = "";
+    private String buffer = ""; // to store the received string
 
     /**
     Calling the constructor establishes the connection.
