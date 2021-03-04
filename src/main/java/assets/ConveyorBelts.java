@@ -6,6 +6,7 @@ import actor.Player;
 import map.GraphicalGameMap;
 
 public class ConveyorBelts {
+
     GraphicalGameMap gameMap;
     Player player;
     IPlayer currentPlayer;
@@ -30,7 +31,7 @@ public class ConveyorBelts {
      * TODO: Add a method for Blue ConveyorBelts and moving the methods in the gameAssets map.
      * TODO: Make sure the game remember the previous move made on a yellow-corner-conveyorbelt such that if its stuck for another round it will move in one of the directions.
      */
-    private void conveyorBelt (int tileID, Player player){
+    private void conveyorBelt(int tileID, Player player){
         switch (tileID){
             case (yConveyorBeltID_Down): if (player.conveyorBeltReached) {
                 player.move(0,-1);}
