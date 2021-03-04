@@ -105,11 +105,7 @@ public class GameLogic {
                 gameMessage = player.playerName + " lost the game!";
                 gameOver = true;
             }
-
-                if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())){
-                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
-                    conveyorBelts.conveyorBelt(tileID, player);
-                }
+//            conveyorBelts.runConveyorBelt();
         }
     }
 
