@@ -4,6 +4,7 @@ import actor.Player;
 import logic.GameLogic;
 import map.TextualGameMap;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 
@@ -11,9 +12,7 @@ public class PlayerTest {
 
     TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
     GameLogic gameLogic = new GameLogic(simpleGameMap);
-    Player player = gameLogic.getCurrentPlayer();//
-
-    //TODO @BeforeEach
+    Player player = gameLogic.getCurrentPlayer();
 
     @Test
     public void testPlayerMoveXDirection() {
@@ -39,6 +38,96 @@ public class PlayerTest {
     public void rotatingNorthFacingPlayerOneUnitLeavesPlayerFacingEast() {
         player.rotate(1);
         assertEquals(1, player.getDirection());
+    }
+
+    @Test
+    public void rotatingNorthFacingPlayerTwoUnitsLeavesPlayerFacingSouth() {
+        player.rotate(2);
+        assertEquals(2, player.getDirection());
+    }
+
+    @Test
+    public void rotatingSouthFacingPlayerThreeUnitsLeavesPlayerFacingEast() {
+        player.direction = 2;
+
+        player.rotate(3);
+        assertEquals(1, player.getDirection());
+    }
+
+    @Test
+    public void movingPlayerNorthLeavesPlayerOneTileNorthOfStartingPosition(){
+        int currentXPos = player.getX();
+        int currentYPos = player.getY();
+        int directionToMove = 0;
+
+        player.moveByDirection(directionToMove);
+
+        assertEquals(player.getX(), currentXPos);
+        assertEquals(player.getY(), currentYPos + 1);
+    }
+
+    @Test
+    public void movingPlayerEastLeavesPlayerOneTileEastOfStartingPosition(){
+        int currentXPos = player.getX();
+        int currentYPos = player.getY();
+        int directionToMove = 1;
+
+        player.moveByDirection(directionToMove);
+
+        assertEquals(player.getX(), currentXPos + 1);
+        assertEquals(player.getY(), currentYPos);
+    }
+
+    @Test
+    public void movingPlayerSouthLeavesPlayerOneTileSouthOfStartingPosition(){
+        int currentXPos = player.getX();
+        int currentYPos = player.getY();
+        int directionToMove = 2;
+
+        player.moveByDirection(directionToMove);
+
+        assertEquals(player.getX(), currentXPos);
+        assertEquals(player.getY(), currentYPos - 1);
+    }
+
+    @Test
+    public void movingPlayerWestLeavesPlayerOneTileWestOfStartingPosition(){
+        int currentXPos = player.getX();
+        int currentYPos = player.getY();
+        int directionToMove = 3;
+
+        player.moveByDirection(directionToMove);
+
+        assertEquals(player.getX(), currentXPos - 1);
+        assertEquals(player.getY(), currentYPos);
+    }
+
+    @Test
+    public void movingNorthFacingPlayerForwardOneTile() {
+        int currentYPos = player.getY();
+        player.moveForward(1);
+        assertEquals(player.getY(), currentYPos + 1);
+    }
+
+    @Test
+    public void movingNorthFacingPlayerForwardTwoTiles() {
+        int currentYPos = player.getY();
+        player.moveForward(2);
+        assertEquals(player.getY(), currentYPos + 2);
+    }
+
+    @Test
+    public void movingNorthFacingPlayerForwardThreeTiles() {
+        int currentYPos = player.getY();
+        player.moveForward(3);
+        assertEquals(player.getY(), currentYPos + 3);
+    }
+
+    @Test
+    public void movingNorthFacingPlayerBackOneTile() {
+        int currentYPos = player.getY();
+        player.moveForward(-1);
+        assertEquals(player.getY(), currentYPos - 1);
     }
 
     @Test

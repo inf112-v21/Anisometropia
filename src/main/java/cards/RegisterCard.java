@@ -21,7 +21,7 @@ public class RegisterCard {
      * @param player is the player whose register card is executing.
      */
     public void executeRegister(Player player) {
-        if(isMovementCard) { player.moveByDirection(amountToMoveOrRotate); }
+        if(isMovementCard) { player.moveForward(amountToMoveOrRotate); }
         else { player.rotate(amountToMoveOrRotate); }
     }
 

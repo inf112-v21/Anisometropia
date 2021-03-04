@@ -91,7 +91,7 @@ public class ControlScreen extends InputAdapter {
 
     /**
      * Moves clicked-on card to chosen section. If already in the chosen section, moves back to original position.
-     * @param cardIndex
+     * @param cardIndex Index of dealt card as presented when dealt.
      */
     private void thisCardWasClicked(int cardIndex) {
         if (isCardChosen[cardIndex]) {
