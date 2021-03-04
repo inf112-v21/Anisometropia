@@ -26,6 +26,7 @@ public class GameLogic {
     public GameLogic(GameMap gameMap) {
         this.gameMap = gameMap;
         playerQueue = new PlayerQueue();
+        conveyorBelts = new ConveyorBelts();
 
         addPlayer(2,2, "player1");
 //        addPlayer(3, 2, "player2");
@@ -104,14 +105,10 @@ public class GameLogic {
                 gameMessage = player.playerName + " lost the game!";
                 gameOver = true;
             }
-        }
-    }
-
-    public void checkAssets(){
-        for (Player player: playerQueue.getPlayerQueue()){
             conveyorBelts.runConveyorBelt(player, gameMap);
         }
     }
+
 
     /**
      * Saves player's chosen cards and ends the turn.
