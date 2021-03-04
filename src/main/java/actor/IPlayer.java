@@ -45,13 +45,13 @@ public interface IPlayer {
      * @param amountToMove denotes amount of tiles to move
      * TODO: check whether player moves over deadly obstacle
      */
-    void moveByDirection(int amountToMove);
+    void moveForward(int amountToMove);
 
     /**
      * Moves player one tile in desired direction.
      * @param desiredDirection direction faced by player
      */
-    void incrementalMovement(int desiredDirection);
+    void moveByDirection(int desiredDirection);
 
     /**
      * Will set the amount of life tokens that a player has.
