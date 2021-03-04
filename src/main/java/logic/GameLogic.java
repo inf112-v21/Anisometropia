@@ -110,7 +110,6 @@ public class GameLogic {
                     int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
                     conveyorBelts.conveyorBelt(tileID, player);
                 }
-
         }
     }
 
