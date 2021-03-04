@@ -30,6 +30,11 @@ public class ConveyorBelts {
         }
     }
 
+    /*
+    public void runConveyorBelt(GameMap gameMap, Player player) {
+    }
+     */
+
     /**
      * The yellow ConveyorBelt will move the player 1 tile at the end of the round.
      * @return Moves and rotates the player on a conveyorBelt.
