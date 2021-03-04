@@ -18,6 +18,11 @@ public class ConveyorBelts {
               bConveyorBeltID_DownRight = 25, bConveyorBeltID_RightUp   = 26, bConveyorBeltID_UpRight = 19, bConveyorBeltID_LeftUp   = 27,
               bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpLeft  = 18, bConveyorBeltID_LeftDown = 17;
 
+
+    /**
+     * runConveyorBelt checks players current position
+     *
+     */
     public void runConveyorBelt() {
         if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())){
             int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
@@ -25,10 +30,9 @@ public class ConveyorBelts {
         }
     }
 
-    /*
+    /**
      * The yellow ConveyorBelt will move the player 1 tile at the end of the round.
      * @return Moves and rotates the player on a conveyorBelt.
-     * TODO: Add a method for Blue ConveyorBelts and moving the methods in the gameAssets map.
      * TODO: Make sure the game remember the previous move made on a yellow-corner-conveyorbelt such that if its stuck for another round it will move in one of the directions.
      */
     private void conveyorBelt(int tileID, Player player){
