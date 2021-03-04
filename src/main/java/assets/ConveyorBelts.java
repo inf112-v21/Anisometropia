@@ -14,127 +14,121 @@ public class ConveyorBelts {
 
 
     /**
-     * runConveyorBelt checks if a player stands on a conveyorBelt, if he does he returns the tileID
+     * runConveyorBelt checks if a player stands on a conveyorBelt and if he does he returns the tileID
      * and uses the tileID to figure out in what direction the player is to move.
      */
     public void runConveyorBelt(Player player, GameMap gameMap) {
             if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())) {
                 int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
                 conveyorBelt(tileID, player);
-                System.out.println("Fant conveyorbelt");
         }
     }
 
     /**
-     * The yellow ConveyorBelt will move the player 1 tile at the end of the round.
-     * @return Moves and rotates the player on a conveyorBelt.
+     * If the player has reached a conveyorBelt this method will find which case the tileID corresponds to
+     * and then move it in the given direction.
      */
-    public void conveyorBelt(int tileID, Player player){
+    private void conveyorBelt(int tileID, Player player){
         switch (tileID){
+//--------------- Yellow ConveyorBelts --------------
             case (yConveyorBeltID_Down): if (player.conveyorBeltReached) {
+                player.move(0,-1);}
+                break;
+            case (yConveyorBeltID_Up): if(player.conveyorBeltReached) {
+                player.move(0, 1);}
+                break;
+            case (yConveyorBeltID_Right): if(player.conveyorBeltReached) {
+                player.move(1, 0);}
+                break;
+            case (yConveyorBeltID_Left): if(player.conveyorBeltReached) {
+                player.move(-1, 0);}
+                break;
+
+            case (yConveyorBeltID_DownRight): if(player.conveyorBeltReached){
+                player.rotate(3);}
+                player.move(1,0);
+                break;
+            case (yConveyorBeltID_RightUp): if(player.conveyorBeltReached){
+                player.rotate(3);}
+                player.move(0,1);
+                break;
+            case (yConveyorBeltID_UpLeft): if(player.conveyorBeltReached){
+                player.rotate(3);}
+                player.move(-1,0);
+                break;
+            case (yConveyorBeltID_LeftDown): if(player.conveyorBeltReached){
+                player.rotate(3);}
                 player.move(0,-1);
                 break;
-            }
-            case (yConveyorBeltID_Up): if(player.conveyorBeltReached) {
-                player.move(0, 1);
-                break;
-            }
-            case (yConveyorBeltID_Right): if(player.conveyorBeltReached) {
-                player.move(1, 0);
-                break;
-            }
-            case (yConveyorBeltID_Left): if(player.conveyorBeltReached) {
-                player.move(-1, 0);
-                break;
-            }
 
-//need to look at the previous move/round done by player. if old pos == new pos the player is to move in a direction and not rotate.
-//this only needs to be added to the yellow conveyorBelts, as the blue conveyorBelts does this in one operation and won't stand
-//in the same position for several rounds.
-//This has a very low priority, as it rarely occurs.
+            case (yConveyorBeltID_DownLeft): if(player.conveyorBeltReached){
+                player.rotate(1);}
+                player.move(-1,0);
+                break;
+            case (yConveyorBeltID_LeftUp): if(player.conveyorBeltReached){
+                player.rotate(1);}
+                player.move(0,1);
+                break;
+            case (yConveyorBeltID_UpRight): if(player.conveyorBeltReached){
+                player.rotate(1);}
+                player.move(1,0);
+                break;
+            case (yConveyorBeltID_RightDown): if(player.conveyorBeltReached){
+                player.rotate(1);}
+                player.move(0,-1);
+                break;
 
-//            case (yConveyorBeltID_DownRight): if(player.conveyorBeltReached){
-//                player.rotate(3);}
-//                //player.move(1,0);
-//                break;
-//            case (yConveyorBeltID_RightUp): if(player.conveyorBeltReached){
-//                player.rotate(3);}
-//                //player.move(0,1);
-//                break;
-//            case (yConveyorBeltID_UpLeft): if(player.conveyorBeltReached){
-//                player.rotate(3);}
-//                //player.move(-1,0);
-//                break;
-//            case (yConveyorBeltID_LeftDown): if(player.conveyorBeltReached){
-//                player.rotate(3);}
-//                //player.move(0,-1);
-//                break;
-//
-//
-//            case (yConveyorBeltID_DownLeft): if(player.conveyorBeltReached){
-//                player.rotate(1);}
-//                //player.move(-1,0);
-//                break;
-//            case (yConveyorBeltID_LeftUp): if(player.conveyorBeltReached){
-//                player.rotate(1);}
-//                //player.move(0,1);
-//                break;
-//            case (yConveyorBeltID_UpRight): if(player.conveyorBeltReached){
-//                player.rotate(1);}
-//                //player.move(1,0);
-//                break;
-//            case (yConveyorBeltID_RightDown): if(player.conveyorBeltReached){
-//                player.rotate(1);}
-//                //player.move(0,-1);
-//                break;
-//
-//            case (bConveyorBeltID_Down): if (player.conveyorBeltReached) {
-//                player.move(0,-2);}
-//                break;
-//            case (bConveyorBeltID_Up): if(player.conveyorBeltReached) {
-//                player.move(0,2);}
-//                break;
-//            case (bConveyorBeltID_Right): if(player.conveyorBeltReached){
-//                player.move(2, 0);}
-//                break;
-//            case (bConveyorBeltID_Left): if(player.conveyorBeltReached){
-//                player.move(-2, 0);}
-//                break;
-//
-//            case (bConveyorBeltID_DownRight): if(player.conveyorBeltReached){
-//                player.rotate(3);
-//                player.move(1,0);}
-//                break;
-//            case (bConveyorBeltID_RightUp): if(player.conveyorBeltReached){
-//                player.rotate(3);
-//                player.move(0,1);}
-//                break;
-//            case (bConveyorBeltID_UpLeft): if(player.conveyorBeltReached){
-//                player.rotate(3);
-//                player.move(-1,0);}
-//                break;
-//            case (bConveyorBeltID_LeftDown): if(player.conveyorBeltReached){
-//                player.rotate(3);
-//                player.move(0,-1);}
-//                break;
-//
-//
-//            case (bConveyorBeltID_DownLeft): if(player.conveyorBeltReached){
-//                player.rotate(1);
-//                player.move(-1,0); }
-//                break;
-//            case (bConveyorBeltID_LeftUp): if(player.conveyorBeltReached){
-//                player.rotate(1);
-//                player.move(0,1); }
-//                break;
-//            case (bConveyorBeltID_UpRight): if(player.conveyorBeltReached){
-//                player.rotate(1);
-//                player.move(1,0); }
-//                break;
-//            case (bConveyorBeltID_RightDown): if(player.conveyorBeltReached){
-//                player.rotate(1);
-//                player.move(0,-1); }
-//                break;
+//-------------- Blue ConveyorBelts ---------------
+
+            case (bConveyorBeltID_Down): if (player.conveyorBeltReached) {
+                player.move(0,-2);}
+                break;
+            case (bConveyorBeltID_Up): if(player.conveyorBeltReached) {
+                player.move(0,2);}
+                break;
+            case (bConveyorBeltID_Right): if(player.conveyorBeltReached){
+                player.move(2, 0);}
+                break;
+            case (bConveyorBeltID_Left): if(player.conveyorBeltReached){
+                player.move(-2, 0);}
+                break;
+
+            case (bConveyorBeltID_DownRight): if(player.conveyorBeltReached){
+                player.rotate(3);
+                player.move(2,0);}
+                break;
+            case (bConveyorBeltID_RightUp): if(player.conveyorBeltReached){
+                player.rotate(3);
+                player.move(0,2);}
+                break;
+            case (bConveyorBeltID_UpLeft): if(player.conveyorBeltReached){
+                player.rotate(3);
+                player.move(-2,0);}
+                break;
+            case (bConveyorBeltID_LeftDown): if(player.conveyorBeltReached){
+                player.rotate(2);
+                player.move(0,-2);}
+                break;
+
+
+            case (bConveyorBeltID_DownLeft): if(player.conveyorBeltReached){
+                player.rotate(1);
+                player.move(-2,0); }
+                break;
+            case (bConveyorBeltID_LeftUp): if(player.conveyorBeltReached){
+                player.rotate(1);
+                player.move(0,2); }
+                break;
+            case (bConveyorBeltID_UpRight): if(player.conveyorBeltReached){
+                player.rotate(1);
+                player.move(2,0); }
+                break;
+            case (bConveyorBeltID_RightDown): if(player.conveyorBeltReached){
+                player.rotate(1);
+                player.move(0,-2); }
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + tileID);
         }
     }
 }
