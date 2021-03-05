@@ -24,7 +24,10 @@ Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to
 Foreløpig er begge spillere like på spillbrettet, men det vises hvem som er "current player"
 i tekst på skjermen (altså hvem man velger kort for og hvem som forflyttet seg for øyeblikket).
 
-Om man har spilt spillet over lengre tid, så kan det føre til at spillet kræsjer og låser seg.
+Om man har spilt spillet over lengre tid, så kan det føre til at spillet kræsjer og låser seg. 
+Vi har gjort forbedringer på dette punktet like før innlevering og har ikke merket at denne buggen oppstår igjen,
+men vi lar denne buggen stå forklart her likevel siden vi ikke har fått testet det godt nok i praksis 
+før innlevering. 
 
 Når man staret spillet så visualiseres det 10 damage tokens for hver spiller, dette er noe vi 
 kommer til å endre når vi legger inn objekter på brettet som kan skade robotene og gi de 
