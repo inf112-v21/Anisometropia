@@ -1,0 +1,330 @@
+<Project>
+  <Name>RoboRally</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Untitled</Name>
+    <Language>Java</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Main</Name>
+        <Access>Public</Access>
+        <Location left="226" top="25" />
+        <Size width="162" height="93" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GameScreen</Name>
+        <Access>Public</Access>
+        <Location left="472" top="65" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GameLogic</Name>
+        <Access>Public</Access>
+        <Location left="816" top="656" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ControlScreen</Name>
+        <Access>Public</Access>
+        <Location left="683" top="65" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GraphicalGameMap</Name>
+        <Access>Public</Access>
+        <Location left="226" top="371" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>TextualGameMap</Name>
+        <Access>Public</Access>
+        <Location left="30" top="371" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PlayerQueue</Name>
+        <Access>Public</Access>
+        <Location left="446" top="656" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Player</Name>
+        <Access>Public</Access>
+        <Location left="242" top="656" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Interface">
+        <Name>IPlayer</Name>
+        <Access>Public</Access>
+        <Location left="30" top="656" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+      </Entity>
+      <Entity type="Class">
+        <Name>GameMap</Name>
+        <Access>Public</Access>
+        <Location left="30" top="65" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Multiplayer</Name>
+        <Access>Public</Access>
+        <Location left="1344" top="65" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Client</Name>
+        <Access>Public</Access>
+        <Location left="1432" top="371" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Server</Name>
+        <Access>Public</Access>
+        <Location left="1246" top="371" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DeckOfRegisterCards</Name>
+        <Access>Public</Access>
+        <Location left="991" top="65" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>RegisterCard</Name>
+        <Access>Public</Access>
+        <Location left="991" top="371" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ConveyorBelts</Name>
+        <Access>Public</Access>
+        <Location left="472" top="371" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Laser</Name>
+        <Access>Public</Access>
+        <Location left="683" top="371" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Dependency" first="1" second="0">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>447</X>
+          <Y>189</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>313</X>
+          <Y>153</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="2" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>893</X>
+          <Y>622</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>722</X>
+          <Y>332</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="3" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>658</X>
+          <Y>153</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="4" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>312</X>
+          <Y>341</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>447</X>
+          <Y>243</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="2" second="6">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>791</X>
+          <Y>769</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>645</X>
+          <Y>769</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="6" second="7">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>419</X>
+          <Y>772</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>433</X>
+          <Y>772</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Realization" first="7" second="8">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>217</X>
+          <Y>771</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>217</X>
+          <Y>771</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="4" second="9">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>251</X>
+          <Y>346</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>112</X>
+          <Y>306</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="5" second="9">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>56</X>
+          <Y>346</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>56</X>
+          <Y>310</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="4" second="7">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="2" second="13">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>941</X>
+          <Y>631</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>966</X>
+          <Y>222</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="2" second="14">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1003</X>
+          <Y>772</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1071</X>
+          <Y>617</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="13" second="14">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1087</X>
+          <Y>306</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="12" second="10">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1375</X>
+          <Y>345</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1375</X>
+          <Y>313</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="11" second="10">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1482</X>
+          <Y>307</Y>
+        </BendPoint>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>
