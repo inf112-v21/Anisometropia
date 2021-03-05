@@ -4,7 +4,8 @@
 **Møtereferat:** Finnes på GitHub under wiki
 **Dokumentasjon om teknisk produktoppsett:** Finnes i README.md
 **Dokumentasjon om bugs:** Finnes i README.md
-**Bilde av klassediagram:** Finnes i deliverables-mappen
+**Bilde av klassediagram:** Finnes i deliverables under oppgave2
+**Bilde av project board:** Finnes i deliverables under oppgave2
 
 #### Roller i teamet
 *	_Lagleder_ (Henriette): Som lagleder er man nødt til å holde oversikt over hvilke arbeidsoppgaver som er gjennomført, og hvilke arbeidsoppgaver som trenger å gjennomføres før innlevering. Jeg gjør mitt beste for å tilrettelegge slik at alle er fornøyd og enige i de arbeidsoppgavene de blir tildelt og at arbeidsfordelingen er rettferdig. Videre så prøver jeg å holde god flyt i samtalen i møtene slik at vi får kommet oss igjennom de nødvendige punktene vi ønsker å snakke om. Jeg prøver og å sørge for at alle har en klar forståelse av hvilken arbeidsoppgaver de har.
