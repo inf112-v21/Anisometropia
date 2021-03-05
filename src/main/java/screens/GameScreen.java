@@ -1,7 +1,6 @@
 package screens;
 
 import actor.Player;
-import blueprinting.Blueprint;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -19,7 +18,7 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
     public static final int SCREEN_WIDTH = 1440;
     public static final int SCREEN_HEIGHT = 832;
     public static final int GAMEBOARD_PLACEMENT_X = -32;
-    public static final int GAMEBOARD_PLACEMENT_Y = -320;
+    public static final int GAMEBOARD_PLACEMENT_Y = -256;
     public static final float ASSETS_IMAGE_SIZE = 300f;
     public static final float PIXEL_SCALE_FOR_ASSETS = 48f;
 
@@ -33,8 +32,6 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
     Player player;
 
     ControlScreen controlScreen;
-    Blueprint blueprint;
-
 
     @Override
     public void create() {
@@ -60,7 +57,6 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         gameLogic = new GameLogic(gameMap);
         player = gameLogic.getCurrentPlayer();
 
-        blueprint = new Blueprint();
         controlScreen = new ControlScreen(gameLogic);
 
         Gdx.input.setInputProcessor(this);
@@ -73,7 +69,6 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
         gameLogic.update();
 
-        blueprint.render();
         controlScreen.render(controlCamera);
 
         // prints out the coordinates of the position clicked

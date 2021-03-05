@@ -19,6 +19,7 @@ public class GameLogic {
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
 
     public static boolean gameOver = false;
+    public static boolean cardExecutionInProgress = false;
     boolean turnOver = true;
 
     public static String gameMessage;
@@ -29,8 +30,9 @@ public class GameLogic {
         conveyorBelts = new ConveyorBelts();
 
         addPlayer(2,2, "player1");
-//        addPlayer(3, 2, "player2");
+        addPlayer(3, 2, "player2");
 //        playerStartPos();
+        dealRegisterCards();
     }
 
     public void addPlayer(int spawnX, int spawnY, String name) {
@@ -53,13 +55,17 @@ public class GameLogic {
 //    }
 
     public void update() {
-        if (turnOver) {
-            turnOver = false;
-            // Deal new register cards at the start of new round.
-            if (playerQueue.getCurrentPlayer() == playerQueue.getPlayerQueue().get(0)) {
-                dealRegisterCards();
-            }
+        for (Player player : getPlayerQueue().getPlayerQueue()) {
+            gameMap.setPlayerPosition(player.getX(), player.getY(), player);
         }
+
+//        if (turnOver) {
+//            turnOver = false;
+            // Deal new register cards at the start of new round.
+//            if (playerQueue.getCurrentPlayer() == playerQueue.getPlayerQueue().get(0)) {
+//                dealRegisterCards();
+//            }
+//        }
         for (Player player : playerQueue.getPlayerQueue()) {
             if (gameMap.isThereFlagHere(player.getX(), player.getY())){
                 int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
@@ -82,30 +88,10 @@ public class GameLogic {
         }
     }
 
-    private void dealRegisterCards() {
+    public void dealRegisterCards() {
         DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
         for (Player player : playerQueue.getPlayerQueue()) {
             player.setDealtRegisterCards(deckOfRegisterCards.dealNineCards());
-        }
-    }
-
-    /**
-     * Executes chosen cards of all players, one card at a time, chronologically.
-     */
-    public void executeChosenCards() {
-        for (int i = 0; i < 5; i++) {
-            for (Player player : playerQueue.getPlayerQueue()) {
-                player.getChosenRegisterCards().get(i).executeRegister(player);
-            }
-        }
-        for (Player player : playerQueue.getPlayerQueue()) {
-            if (checkLoss(player.getX(), player.getY())) {
-                player.playerDies();
-                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-                gameMessage = player.playerName + " lost the game!";
-                gameOver = true;
-            }
-            conveyorBelts.runConveyorBelt(player, gameMap);
         }
     }
 
@@ -116,9 +102,31 @@ public class GameLogic {
      */
     public void finishTurn(ArrayList<RegisterCard> chosenCards) {
         getCurrentPlayer().setChosenRegisterCards(chosenCards);
-        if (getCurrentPlayer() == getLastPlayer()) executeChosenCards();
-        getPlayerQueue().next();
-        setTurnOverToTrue();
+    }
+
+    /**
+     * Executes chosen cards of all players, one card at a time, chronologically.
+     */
+    public void startExecutionOfCards() {
+        for (int i = 0; i < 5; i++) {
+            for (Player player : playerQueue.getPlayerQueue()) {
+                player.getChosenRegisterCards().get(i).executeRegister(player);
+            }
+        }
+
+        endOfRoundCheck();
+    }
+
+    public void endOfRoundCheck() {
+        for (Player player : playerQueue.getPlayerQueue()) {
+            if (checkLoss(player.getX(), player.getY())) {
+                player.playerDies();
+                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+                gameMessage = player.playerName + " lost the game!";
+                gameOver = true;
+            }
+            conveyorBelts.runConveyorBelt(player, gameMap);
+        }
     }
 
     public void registerFlag (int tileID, Player player) {

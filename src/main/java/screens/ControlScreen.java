@@ -1,12 +1,12 @@
 package screens;
 
-import blueprinting.DrawThis;
-import blueprinting.WriteThis;
 import cards.RegisterCard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import logic.GameLogic;
@@ -15,10 +15,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import static logic.GameLogic.gameOver;
+import static logic.GameLogic.cardExecutionInProgress;
 
 public class ControlScreen extends InputAdapter {
-    DrawThis drawThis;
-    WriteThis writeThis;
     GameLogic gameLogic;
 
     private final SpriteBatch batch;
@@ -26,9 +25,9 @@ public class ControlScreen extends InputAdapter {
     private final Texture powerDownButton;
     private final Texture lifeToken;
 
-    private final float cardWidth = 84, cardHeight = 96;
+    private final float cardWidth = 64, cardHeight = 64;
 
-    float amountToMoveCard = 174;
+    float amountToMoveCard = 64;
 
     // Variables used to position dealt register cards.
     int[] cardX = new int[9];
@@ -36,19 +35,23 @@ public class ControlScreen extends InputAdapter {
     boolean[] isCardChosen = new boolean[9];
     ArrayList<RegisterCard> chosenCards;
     int numCardsChosen;
+    BitmapFont smallFont;
+    GameButton acceptButton, progressButton;
 
     public ControlScreen(GameLogic gameLogic) {
-
         batch = new SpriteBatch();
+
+        smallFont = new BitmapFont();
+        smallFont.setColor(Color.BLACK);
+        smallFont.getData().setScale(1.5f);
+        acceptButton = new GameButton(584, 0, 128, 128, false, new Texture(Gdx.files.internal("accept_card_selection_unavailable.png")));
+        progressButton = new GameButton(732, 0, 128, 128, false, new Texture(Gdx.files.internal("click_to_progress_unavailable.png")));
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
         lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
 
         initializeCards();
-
-        drawThis = new DrawThis();
-        writeThis = new WriteThis();
 
         this.gameLogic = gameLogic;
 
@@ -58,29 +61,41 @@ public class ControlScreen extends InputAdapter {
     public void render(OrthographicCamera camera) {
         // Prints out the coordinates of the position clicked
         if (Gdx.input.justTouched()) {
-            Vector3 clickPosition = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-//            System.out.println("(" + Math.round(clickPosition.x) + ", " + Math.round(clickPosition.y) + ")");
+            Vector3 click = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+//            System.out.println("(" + Math.round(click.x) + ", " + Math.round(click.y) + ")");
 
             if (!gameOver) {
-                // Relates mouse clicks to particular cards.
-                for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
-                    if (clickPosition.x > cardX[i] && clickPosition.x < cardX[i] + cardWidth
-                            && clickPosition.y > cardY[i] && clickPosition.y < cardY[i] + cardHeight) {
-                        thisCardWasClicked(i);
-                        break;
+                if (!cardExecutionInProgress) {
+                    // Relates mouse clicks to particular cards.
+                    for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
+                        if (click.x > cardX[i] && click.x < cardX[i] + cardWidth
+                                && click.y > cardY[i] && click.y < cardY[i] + cardHeight) {
+                            thisCardWasClicked(i);
+                            break;
+                        }
                     }
                 }
-                if (numCardsChosen == 5) {
-                    gameLogic.finishTurn(chosenCards);
-                    initializeCards();
-                }
             }
+            if(click.x > acceptButton.getX() && click.x < (acceptButton.getX() + acceptButton.getWidth()) && click.y > acceptButton.getY() && click.y < (acceptButton.getY() + acceptButton.getHeight())) {
+                acceptButtonHasBeenClicked();
+            }
+            if(click.x > progressButton.getX() && click.x < (progressButton.getX() + progressButton.getWidth()) && click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
+                progressButtonHasBeenClicked();
+            }
+
         }
+
+
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
 
-        batch.draw(powerDownButton, 730, 115, 200,200);
+        smallFont.draw(batch, "current: " + gameLogic.getCurrentPlayer().playerName, 0, 222);
+
+        batch.draw(acceptButton.getTexture(), acceptButton.getX(), acceptButton.getY(), acceptButton.getWidth(), acceptButton.getHeight());
+        batch.draw(progressButton.getTexture(), progressButton.getX(), progressButton.getY(), progressButton.getWidth(), progressButton.getHeight());
+
+        batch.draw(powerDownButton, 864, 46, 200,200);
 
         drawDamageTokensOfCurrentPlayer(batch);
         drawLifeTokensOfCurrentPlayer(batch);
@@ -98,15 +113,19 @@ public class ControlScreen extends InputAdapter {
             isCardChosen[cardIndex] = false;
             adjustPositionOfChosenCards(cardX[cardIndex]);
             cardY[cardIndex] += amountToMoveCard;
-            cardX[cardIndex] = cardIndex*84;
+            cardX[cardIndex] = cardIndex*64;
             numCardsChosen--;
         }
-        else {
+        else if (numCardsChosen < 5) {
             isCardChosen[cardIndex] = true;
             cardY[cardIndex] -= amountToMoveCard;
-            cardX[cardIndex] = numCardsChosen*108;
+            cardX[cardIndex] = numCardsChosen*64;
             numCardsChosen++;
             chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtRegisterCards().get(cardIndex));
+            if (numCardsChosen == 5) {
+                acceptButton.setActive(true);
+                acceptButton.setTexture(new Texture(Gdx.files.internal("accept_card_selection.png")));
+            }
         }
     }
 
@@ -117,20 +136,56 @@ public class ControlScreen extends InputAdapter {
     private void adjustPositionOfChosenCards(int deselectedCardX) {
         for (int i = 0; i < 9; i++) {
             if (isCardChosen[i] && cardX[i] > deselectedCardX) {
-                cardX[i] -= 108;
+                cardX[i] -= 64;
             }
         }
     }
 
-    private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
-        for (int i = 10; i > gameLogic.getCurrentPlayer().getDmgTokens(); i--) {
-            batch.draw(damageToken, 620-(i*64), 96, 80, 80);
+    /**
+     * Sets initial values for dealt and chosen register cards.
+     */
+    private void initializeCards() {
+        for (int i = 0; i < 9; i++) {
+            cardX[i] = i*64;
+            cardY[i] = 64;
+            isCardChosen[i] = false;
+        }
+        chosenCards = new ArrayList<>(Collections.nCopies(5,
+                      new RegisterCard("", 0, true)));
+        numCardsChosen = 0;
+    }
+
+    private void acceptButtonHasBeenClicked() {
+        if (acceptButton.isActive) {
+            acceptButton.setActive(false);
+            acceptButton.setTexture(new Texture(Gdx.files.internal("accept_card_selection_unavailable.png")));
+
+            gameLogic.finishTurn(chosenCards);
+            if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
+                progressButton.setActive(true);
+                progressButton.setTexture(new Texture(Gdx.files.internal("click_to_progress.png")));
+                System.out.println("accept clicked, current player last, card execution true, current player: " + gameLogic.getCurrentPlayer().playerName);
+                cardExecutionInProgress = true;
+            } else {
+                System.out.println("accept clicked, but current player NOT last, current player: " + gameLogic.getCurrentPlayer().playerName);
+                gameLogic.getPlayerQueue().next();
+//                gameLogic.setTurnOverToTrue();
+//                if (gameLogic.getPlayerQueue().getCurrentPlayer() == gameLogic.getPlayerQueue().getPlayerQueue().get(0)) {
+//                    gameLogic.dealRegisterCards();
+//                }
+            }
+            initializeCards();
         }
     }
 
-    private void drawLifeTokensOfCurrentPlayer(SpriteBatch batch) {
-        for (int i = 0; i < gameLogic.getCurrentPlayer().getLifeTokens(); i++){
-            batch.draw(lifeToken,860+(i*72), 152, 128,148);
+    private void progressButtonHasBeenClicked() {
+        if (progressButton.isActive) {
+            gameLogic.startExecutionOfCards();
+            progressButton.setActive(false);
+            progressButton.setTexture(new Texture(Gdx.files.internal("click_to_progress_unavailable.png")));
+            cardExecutionInProgress = false;
+            gameLogic.getPlayerQueue().next();
+            System.out.println("card execution FALSE, current player: " + gameLogic.getCurrentPlayer().playerName);
         }
     }
 
@@ -142,18 +197,16 @@ public class ControlScreen extends InputAdapter {
         }
     }
 
-    /**
-     * Sets initial values for dealt and chosen register cards.
-     */
-    private void initializeCards() {
-        for (int i = 0; i < 9; i++) {
-            cardX[i] = i*84;
-            cardY[i] = 174;
-            isCardChosen[i] = false;
+    private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
+        for (int i = 10; i > gameLogic.getCurrentPlayer().getDmgTokens(); i--) {
+            batch.draw(damageToken, 638-(i*64), 132, 80, 80);
         }
-        chosenCards = new ArrayList<>(Collections.nCopies(5,
-                      new RegisterCard("", 0, true)));
-        numCardsChosen = 0;
+    }
+
+    private void drawLifeTokensOfCurrentPlayer(SpriteBatch batch) {
+        for (int i = 0; i < gameLogic.getCurrentPlayer().getLifeTokens(); i++){
+            batch.draw(lifeToken,632+(i*72), 96, 128,148);
+        }
     }
 
     public void dispose() {
