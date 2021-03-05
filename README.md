@@ -1,7 +1,6 @@
 # INF112 Maven template 
 
-Man starter spillet ved å kjøre Main.java (ligger i "launcher"-package).
-
+Man starter spillet ved å kjøre Main.java (ligger i Anisometropia\src\main\java\launcher).
 
 ## Known bugs
 Spillet blir tregere og tregere desto flere runder som blir spilt og kan ta noen sekunder å lukke.
@@ -13,4 +12,5 @@ Dersom spiller1 og spiller2 står i samme rute (vil ikke være mulig senere i sp
 lagt til collision med andre players) og spiller1 flytter seg, mens spiller2 står stille
 vil ikke spiller2 vises før den flytter seg igjen.
 
-
+Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to progress" for
+å gå prosessere turen til spilleren.

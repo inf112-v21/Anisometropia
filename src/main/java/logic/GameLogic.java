@@ -19,7 +19,6 @@ public class GameLogic {
 
     public static boolean gameOver = false;
     public static boolean cardExecutionInProgress = false;
-    boolean turnOver = true;
 
     int currentCardExecutionNumber = 0;
 
@@ -30,9 +29,8 @@ public class GameLogic {
         playerQueue = new PlayerQueue();
         conveyorBelts = new ConveyorBelts();
 
-        addPlayer(2,2, "player1");
-        addPlayer(3, 2, "player2");
-        addPlayer(4, 2, "player3");
+        addPlayer(2,2, "player 1");
+        addPlayer(3, 2, "player 2");
 //        playerStartPos();
         dealRegisterCards();
     }
@@ -164,7 +162,8 @@ public class GameLogic {
                 break;
             case (FLAG_4_ID): if (player.flagsReached[2]) player.flagsReached[3] = true;
                 break;
-        }}
+        }
+    }
 
     public void gameReset() {
         gameOver = false;
@@ -194,10 +193,6 @@ public class GameLogic {
 
     public PlayerQueue getPlayerQueue() {
         return playerQueue;
-    }
-
-    public void setTurnOverToTrue() {
-        turnOver = true;
     }
 
 }

@@ -22,8 +22,6 @@ public class GraphicalGameMap extends GameMap {
     TextureRegion[][] playerImages;
     TiledMapTileLayer.Cell playerCellNorth, playerCellEast, playerCellSouth, playerCellWest, playerWonCell, playerDiedCell;
 
-    Player player;
-
     public GraphicalGameMap() {
         tiledMap = new TmxMapLoader().load("gameboard2.tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, PIXEL_SCALE_FOR_ASSETS  / ASSETS_IMAGE_SIZE);
