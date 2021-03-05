@@ -1,6 +1,8 @@
-# INF112 Maven template 
+# RoboRally by Anosometropia (prosjekt i INF112)
 
 Man starter spillet ved å kjøre Main.java (ligger i Anisometropia\src\main\java\launcher).
+
+
 
 ## Known bugs
 Spillet blir tregere og tregere desto flere runder som blir spilt og kan ta noen sekunder å lukke.
@@ -14,3 +16,6 @@ vil ikke spiller2 vises før den flytter seg igjen.
 
 Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to progress" for
 å gå prosessere turen til spilleren.
+
+Foreløpig er begge spillere like på spillbrettet, men det vises hvem som er "current player"
+i tekst på skjermen (altså hvem man velger kort for og hvem som forflyttet seg for øyeblikket).
