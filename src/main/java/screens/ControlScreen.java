@@ -1,5 +1,6 @@
 package screens;
 
+import actor.Player;
 import cards.RegisterCard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -101,6 +102,11 @@ public class ControlScreen extends InputAdapter {
         drawPowerDownButton(batch);
         drawDamageTokensOfCurrentPlayer(batch);
         drawLifeTokensOfCurrentPlayer(batch);
+
+        for (int i = 0; i < gameLogic.getPlayerQueue().getPlayerQueue().size(); i++) {
+            smallFont.draw(batch,gameLogic.getPlayerQueue().getPlayerQueue().get(i).playerName,1200, 620-(i*32));
+            if(gameLogic.getPlayerQueue().getPlayerQueue().get(i).equals(gameLogic.getCurrentPlayer())) smallFont.draw(batch,">>>",1130, 620-(i*32));
+        }
 
         if(GameLogic.gameOver) bigFont.draw(batch, GameLogic.gameMessage, 0, 56);
 
