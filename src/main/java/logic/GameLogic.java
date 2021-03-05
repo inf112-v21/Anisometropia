@@ -133,16 +133,16 @@ public class GameLogic {
 
     private void checkIfOnlyOnePlayerLeft() {
         int alivePlayers = 0;
+        Player winningPlayer = null;
         for (Player player : playerQueue.getPlayerQueue()) {
-            if(!player.isDead) alivePlayers++;
+            if(!player.isDead) {
+                winningPlayer = player;
+                alivePlayers++;
+            }
         }
         if (alivePlayers == 1) {
-            for (Player player : playerQueue.getPlayerQueue()) {
-                if(!player.isDead) {
-                    gameMessage = player.playerName + " won the game!";
-                    gameOver = true;
-                }
-            }
+            gameMessage = winningPlayer.playerName + " won the game!";
+            gameOver = true;
         }
     }
 
