@@ -1,10 +1,15 @@
 ## Anisometropia
 
 **Total møtevarighet:** 7,5 timer
-**Møtereferat:** Finnes på GitHub under wiki
+
+**Møtereferat:** Finnes på GitHub under wiki, direktelink her : https://github.com/inf112-v21/Anisometropia/wiki 
+
 **Dokumentasjon om teknisk produktoppsett:** Finnes i README.md
+
 **Dokumentasjon om bugs:** Finnes i README.md
+
 **Bilde av klassediagram:** Finnes i deliverables under oppgave2
+
 **Bilde av project board:** Finnes i deliverables under oppgave2
 
 #### Roller i teamet
