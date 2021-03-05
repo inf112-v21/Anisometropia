@@ -3,7 +3,6 @@ package logic;
 import actor.Player;
 import cards.DeckOfRegisterCards;
 import cards.RegisterCard;
-import com.badlogic.gdx.utils.Timer;
 import map.GameMap;
 import assets.ConveyorBelts;
 
@@ -22,6 +21,8 @@ public class GameLogic {
     public static boolean cardExecutionInProgress = false;
     boolean turnOver = true;
 
+    int currentCardExecutionNumber = 0;
+
     public static String gameMessage;
 
     public GameLogic(GameMap gameMap) {
@@ -31,6 +32,7 @@ public class GameLogic {
 
         addPlayer(2,2, "player1");
         addPlayer(3, 2, "player2");
+        addPlayer(4, 2, "player3");
 //        playerStartPos();
         dealRegisterCards();
     }
@@ -55,36 +57,16 @@ public class GameLogic {
 //    }
 
     public void update() {
-        for (Player player : getPlayerQueue().getPlayerQueue()) {
-            gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-        }
-
-//        if (turnOver) {
-//            turnOver = false;
-            // Deal new register cards at the start of new round.
-//            if (playerQueue.getCurrentPlayer() == playerQueue.getPlayerQueue().get(0)) {
-//                dealRegisterCards();
-//            }
-//        }
-        for (Player player : playerQueue.getPlayerQueue()) {
-            if (gameMap.isThereFlagHere(player.getX(), player.getY())){
-                int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
-                registerFlag(tileID, player);
-            }
-
-            if (checkWin(player)){
-                player.playerWins();
+        if (!gameOver) {
+            for (Player player : getPlayerQueue().getPlayerQueue()) {
                 gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-                gameMessage = player.playerName + " won the game!";
-                gameOver = true;
             }
-
-//            if (checkLoss(player.getX(), player.getY())) {
-//                player.playerDies();
-//                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-//                gameMessage = player.playerName + " lost the game!";
-//                gameOver = true;
-//            }
+            for (Player player : playerQueue.getPlayerQueue()) {
+                if (gameMap.isThereFlagHere(player.getX(), player.getY())) {
+                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
+                    registerFlag(tileID, player);
+                }
+            }
         }
     }
 
@@ -107,25 +89,68 @@ public class GameLogic {
     /**
      * Executes chosen cards of all players, one card at a time, chronologically.
      */
-    public void startExecutionOfCards() {
-        for (int i = 0; i < 5; i++) {
-            for (Player player : playerQueue.getPlayerQueue()) {
-                player.getChosenRegisterCards().get(i).executeRegister(player);
+    public void executeCard() {
+        if (!getCurrentPlayer().isDead) {
+            getCurrentPlayer().getChosenRegisterCards().get(currentCardExecutionNumber).executeRegister(getCurrentPlayer());
+        }
+        endOfTurnCheck();
+        if (getCurrentPlayer() == getLastPlayer()) {
+            if (currentCardExecutionNumber == 4) {
+                currentCardExecutionNumber = 0;
+                cardExecutionInProgress = false;
+                endOfRoundCheck();
+                dealRegisterCards();
+            } else {
+                currentCardExecutionNumber++;
             }
         }
+        playerQueue.next();
+    }
 
-        endOfRoundCheck();
+    public void endOfTurnCheck() {
+        for (Player player : playerQueue.getPlayerQueue()) {
+            if (checkLoss(player.getX(), player.getY())) {
+                if(!player.isDead) {
+                    player.playerDies();
+                    gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+                }
+            }
+            if (checkWin(player)) {
+                player.playerWins();
+                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+                gameMessage = player.playerName + " won the game!";
+                gameOver = true;
+            }
+        }
     }
 
     public void endOfRoundCheck() {
         for (Player player : playerQueue.getPlayerQueue()) {
-            if (checkLoss(player.getX(), player.getY())) {
-                player.playerDies();
-                gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-                gameMessage = player.playerName + " lost the game!";
-                gameOver = true;
-            }
             conveyorBelts.runConveyorBelt(player, gameMap);
+        }
+        endOfTurnCheck();
+        respawnPlayersIfPossible();
+        checkIfOnlyOnePlayerLeft();
+    }
+
+    private void checkIfOnlyOnePlayerLeft() {
+        int alivePlayers = 0;
+        for (Player player : playerQueue.getPlayerQueue()) {
+            if(!player.isDead) alivePlayers++;
+        }
+        if (alivePlayers == 1) {
+            for (Player player : playerQueue.getPlayerQueue()) {
+                if(!player.isDead) {
+                    gameMessage = player.playerName + " won the game!";
+                    gameOver = true;
+                }
+            }
+        }
+    }
+
+    private void respawnPlayersIfPossible() {
+        for (Player player : playerQueue.getPlayerQueue()) {
+            if(player.isDead) player.respawn();
         }
     }
 
@@ -146,6 +171,8 @@ public class GameLogic {
         playerQueue.turnCounter = 0;
         for (Player player : playerQueue.getPlayerQueue()){
             player.respawn();
+            player.setLifeTokens(3);
+            player.setDmgTokens(0);
         }
     }
 

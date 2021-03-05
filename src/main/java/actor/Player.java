@@ -100,7 +100,6 @@ public class Player implements IPlayer {
 
     public void respawn() {
         if (checkIfPlayerCanRespawn()) {
-            Arrays.fill(flagsReached, Boolean.FALSE);
             gameMap.setToNull(x, y);
             setDmgTokens(0);
             this.x = spawnX;

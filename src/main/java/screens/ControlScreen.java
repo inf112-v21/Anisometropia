@@ -35,7 +35,7 @@ public class ControlScreen extends InputAdapter {
     boolean[] isCardChosen = new boolean[9];
     ArrayList<RegisterCard> chosenCards;
     int numCardsChosen;
-    BitmapFont smallFont;
+    BitmapFont smallFont, bigFont;
     GameButton acceptButton, progressButton;
 
     public ControlScreen(GameLogic gameLogic) {
@@ -44,6 +44,9 @@ public class ControlScreen extends InputAdapter {
         smallFont = new BitmapFont();
         smallFont.setColor(Color.BLACK);
         smallFont.getData().setScale(1.5f);
+        bigFont = new BitmapFont();
+        bigFont.getData().setScale(5f);
+
         acceptButton = new GameButton(584, 0, 128, 128, false, new Texture(Gdx.files.internal("accept_card_selection_unavailable.png")));
         progressButton = new GameButton(732, 0, 128, 128, false, new Texture(Gdx.files.internal("click_to_progress_unavailable.png")));
 
@@ -68,38 +71,45 @@ public class ControlScreen extends InputAdapter {
                 if (!cardExecutionInProgress) {
                     // Relates mouse clicks to particular cards.
                     for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
-                        if (click.x > cardX[i] && click.x < cardX[i] + cardWidth
-                                && click.y > cardY[i] && click.y < cardY[i] + cardHeight) {
+                        if (click.x > cardX[i] && click.x < cardX[i] + cardWidth &&
+                            click.y > cardY[i] && click.y < cardY[i] + cardHeight) {
                             thisCardWasClicked(i);
                             break;
                         }
                     }
                 }
             }
-            if(click.x > acceptButton.getX() && click.x < (acceptButton.getX() + acceptButton.getWidth()) && click.y > acceptButton.getY() && click.y < (acceptButton.getY() + acceptButton.getHeight())) {
+            if(click.x > acceptButton.getX() && click.x < (acceptButton.getX() + acceptButton.getWidth()) &&
+               click.y > acceptButton.getY() && click.y < (acceptButton.getY() + acceptButton.getHeight())) {
                 acceptButtonHasBeenClicked();
             }
-            if(click.x > progressButton.getX() && click.x < (progressButton.getX() + progressButton.getWidth()) && click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
+            if(click.x > progressButton.getX() && click.x < (progressButton.getX() + progressButton.getWidth()) &&
+               click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
                 progressButtonHasBeenClicked();
             }
 
         }
 
-
-
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-
-        smallFont.draw(batch, "current: " + gameLogic.getCurrentPlayer().playerName, 0, 222);
 
         batch.draw(acceptButton.getTexture(), acceptButton.getX(), acceptButton.getY(), acceptButton.getWidth(), acceptButton.getHeight());
         batch.draw(progressButton.getTexture(), progressButton.getX(), progressButton.getY(), progressButton.getWidth(), progressButton.getHeight());
 
-        batch.draw(powerDownButton, 864, 46, 200,200);
-
+        if(!cardExecutionInProgress) drawCardsOfCurrentPlayer(batch);
+        drawCurrentPlayerName(batch);
+        drawPowerDownButton(batch);
         drawDamageTokensOfCurrentPlayer(batch);
         drawLifeTokensOfCurrentPlayer(batch);
-        drawCardsOfCurrentPlayer(batch);
+
+        if(GameLogic.gameOver) bigFont.draw(batch, GameLogic.gameMessage, 0, 56);
+
+        smallFont.draw(batch,"1. click cards to select/deselect\n" +
+                "2. after choosing 5, accept\n" +
+                "3. next player turn starts\n" +
+                "4. click to progress actions\n" +
+                "\n" +
+                "ESCAPE:  exit", 1100, 200);
 
         batch.end();
     }
@@ -164,15 +174,10 @@ public class ControlScreen extends InputAdapter {
             if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
                 progressButton.setActive(true);
                 progressButton.setTexture(new Texture(Gdx.files.internal("click_to_progress.png")));
-                System.out.println("accept clicked, current player last, card execution true, current player: " + gameLogic.getCurrentPlayer().playerName);
+                gameLogic.getPlayerQueue().next();
                 cardExecutionInProgress = true;
             } else {
-                System.out.println("accept clicked, but current player NOT last, current player: " + gameLogic.getCurrentPlayer().playerName);
                 gameLogic.getPlayerQueue().next();
-//                gameLogic.setTurnOverToTrue();
-//                if (gameLogic.getPlayerQueue().getCurrentPlayer() == gameLogic.getPlayerQueue().getPlayerQueue().get(0)) {
-//                    gameLogic.dealRegisterCards();
-//                }
             }
             initializeCards();
         }
@@ -180,12 +185,13 @@ public class ControlScreen extends InputAdapter {
 
     private void progressButtonHasBeenClicked() {
         if (progressButton.isActive) {
-            gameLogic.startExecutionOfCards();
-            progressButton.setActive(false);
-            progressButton.setTexture(new Texture(Gdx.files.internal("click_to_progress_unavailable.png")));
-            cardExecutionInProgress = false;
-            gameLogic.getPlayerQueue().next();
-            System.out.println("card execution FALSE, current player: " + gameLogic.getCurrentPlayer().playerName);
+
+            gameLogic.executeCard();
+
+            if (!cardExecutionInProgress) {
+                progressButton.setActive(false);
+                progressButton.setTexture(new Texture(Gdx.files.internal("click_to_progress_unavailable.png")));
+            }
         }
     }
 
@@ -197,22 +203,33 @@ public class ControlScreen extends InputAdapter {
         }
     }
 
+    private void drawPowerDownButton(SpriteBatch batch) {
+        batch.draw(powerDownButton, 850, -50, 200,200);
+    }
+
     private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
         for (int i = 10; i > gameLogic.getCurrentPlayer().getDmgTokens(); i--) {
-            batch.draw(damageToken, 638-(i*64), 132, 80, 80);
+            batch.draw(damageToken, 816-(i*64), 132, 80, 80);
         }
     }
 
     private void drawLifeTokensOfCurrentPlayer(SpriteBatch batch) {
         for (int i = 0; i < gameLogic.getCurrentPlayer().getLifeTokens(); i++){
-            batch.draw(lifeToken,632+(i*72), 96, 128,148);
+            batch.draw(lifeToken,812+(i*72), 96, 128,148);
         }
+    }
+
+    private void drawCurrentPlayerName(SpriteBatch batch) {
+        smallFont.draw(batch, "current player:\n" + gameLogic.getCurrentPlayer().playerName, 0, 200);
     }
 
     public void dispose() {
         damageToken.dispose();
         powerDownButton.dispose();
+        acceptButton.getTexture().dispose();
+        progressButton.getTexture().dispose();
         lifeToken.dispose();
         batch.dispose();
+        smallFont.dispose();
     }
 }

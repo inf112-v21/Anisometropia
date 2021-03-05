@@ -152,6 +152,7 @@ public class GraphicalGameMap extends GameMap {
 
     public void dispose() {
         tiledMap.dispose();
+        orthogonalTiledMapRenderer.dispose();
     }
 
 
