@@ -85,7 +85,7 @@ public class GameLogic {
     }
 
     /**
-     * Executes chosen cards of all players, one card at a time, chronologically.
+     * Executes chosen cards for players, one card at a time (and updates counter)
      */
     public void executeCard() {
         if (!getCurrentPlayer().isDead) {

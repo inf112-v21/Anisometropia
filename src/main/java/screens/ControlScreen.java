@@ -73,22 +73,21 @@ public class ControlScreen extends InputAdapter {
                     // Relates mouse clicks to particular cards.
                     for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
                         if (click.x > cardX[i] && click.x < cardX[i] + cardWidth &&
-                            click.y > cardY[i] && click.y < cardY[i] + cardHeight) {
+                                click.y > cardY[i] && click.y < cardY[i] + cardHeight) {
                             thisCardWasClicked(i);
                             break;
                         }
                     }
                 }
+                if (click.x > acceptButton.getX() && click.x < (acceptButton.getX() + acceptButton.getWidth()) &&
+                        click.y > acceptButton.getY() && click.y < (acceptButton.getY() + acceptButton.getHeight())) {
+                    acceptButtonHasBeenClicked();
+                }
+                if (click.x > progressButton.getX() && click.x < (progressButton.getX() + progressButton.getWidth()) &&
+                        click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
+                    progressButtonHasBeenClicked();
+                }
             }
-            if(click.x > acceptButton.getX() && click.x < (acceptButton.getX() + acceptButton.getWidth()) &&
-               click.y > acceptButton.getY() && click.y < (acceptButton.getY() + acceptButton.getHeight())) {
-                acceptButtonHasBeenClicked();
-            }
-            if(click.x > progressButton.getX() && click.x < (progressButton.getX() + progressButton.getWidth()) &&
-               click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
-                progressButtonHasBeenClicked();
-            }
-
         }
 
         batch.setProjectionMatrix(camera.combined);
