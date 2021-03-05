@@ -1,6 +1,5 @@
 package screens;
 
-import actor.Player;
 import cards.RegisterCard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -25,6 +24,7 @@ public class ControlScreen extends InputAdapter {
     private final Texture damageToken;
     private final Texture powerDownButton;
     private final Texture lifeToken;
+    private final ArrayList<Texture> registerCardTextures = new ArrayList<>();
 
     private final float cardWidth = 64, cardHeight = 64;
 
@@ -166,6 +166,7 @@ public class ControlScreen extends InputAdapter {
             cardY[i] = 64;
             isCardChosen[i] = false;
         }
+        registerCardTextures.clear();
         chosenCards = new ArrayList<>(Collections.nCopies(5,
                       new RegisterCard("", 0, true)));
         numCardsChosen = 0;
@@ -204,8 +205,8 @@ public class ControlScreen extends InputAdapter {
     private void drawCardsOfCurrentPlayer(SpriteBatch batch) {
         for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
             RegisterCard registerCard = gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i);
-            Texture cardTexture = new Texture(Gdx.files.internal(registerCard.getGraphicLocation()));
-            batch.draw(cardTexture, cardX[i], cardY[i], cardWidth, cardHeight);
+            registerCardTextures.add(new Texture(Gdx.files.internal(registerCard.getGraphicLocation())));
+            batch.draw(registerCardTextures.get(i), cardX[i], cardY[i], cardWidth, cardHeight);
         }
     }
 
@@ -237,5 +238,8 @@ public class ControlScreen extends InputAdapter {
         lifeToken.dispose();
         batch.dispose();
         smallFont.dispose();
+        for (Texture regCardTexture : registerCardTextures) {
+            regCardTexture.dispose();
+        }
     }
 }
