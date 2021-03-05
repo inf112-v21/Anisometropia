@@ -24,6 +24,8 @@ Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to
 Foreløpig er begge spillere like på spillbrettet, men det vises hvem som er "current player"
 i tekst på skjermen (altså hvem man velger kort for og hvem som forflyttet seg for øyeblikket).
 
+Om man har spilt spillet over lengre tid, så kan det føre til at spillet kræsjer og låser seg.
+
 Når man staret spillet så visualiseres det 10 damage tokens for hver spiller, dette er noe vi 
 kommer til å endre når vi legger inn objekter på brettet som kan skade robotene og gi de 
 damage tokens. For de skal strengt tatt starte med 0. De er her nå for å vise at damage tokens
