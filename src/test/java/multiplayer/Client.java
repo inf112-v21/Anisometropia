@@ -1,6 +1,9 @@
-package p2p;
+package multiplayer;
+
+import p2p.Multiplayer;
 
 import java.io.IOException;
+// See Server class for test documentation.
 
 public class Client {
     public static void main(String[] args) throws IOException {
