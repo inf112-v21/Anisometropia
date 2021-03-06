@@ -1,4 +1,6 @@
-# RoboRally by Anosometropia (prosjekt i INF112)
+![image info](assets/anisometropia.png)
+
+# RoboRally by Anisometropia (prosjekt i INF112)
 
 Man starter spillet ved å kjøre Main.java (ligger i Anisometropia\src\main\java\launcher).
 1. Hvordan spillet spilles står forklart på høyresiden når main kjøres.
