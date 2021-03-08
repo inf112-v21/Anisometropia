@@ -131,6 +131,10 @@ public class ControlScreen extends InputAdapter {
             cardY[cardIndex] += amountToMoveCard;
             cardX[cardIndex] = cardIndex*64;
             numCardsChosen--;
+            if (numCardsChosen == 4) {
+                acceptButton.setActive(false);
+                acceptButton.setTexture(new Texture(Gdx.files.internal("accept_card_selection_unavailable.png")));
+            }
         }
         else if (numCardsChosen < 5) {
             isCardChosen[cardIndex] = true;
