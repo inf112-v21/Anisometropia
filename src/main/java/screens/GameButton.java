@@ -1,6 +1,7 @@
 package screens;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class GameButton {
 
@@ -9,15 +10,15 @@ public class GameButton {
     int width;
     int height;
     boolean isActive;
-    Texture texture;
+    TextureRegion textureRegion;
 
-    public GameButton(int x, int y, int width, int height, boolean isActive, Texture texture) {
+    public GameButton(int x, int y, int width, int height, boolean isActive, TextureRegion textureRegion) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.isActive = isActive;
-        this.texture = texture;
+        this.textureRegion = textureRegion;
     }
 
     public int getX() {
@@ -60,11 +61,11 @@ public class GameButton {
         isActive = active;
     }
 
-    public Texture getTexture() {
-        return texture;
+    public TextureRegion getTexture() {
+        return textureRegion;
     }
 
-    public void setTexture(Texture texture) {
-        this.texture = texture;
+    public void setTexture(TextureRegion textureRegion) {
+        this.textureRegion = textureRegion;
     }
 }
