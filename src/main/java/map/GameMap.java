@@ -9,6 +9,10 @@ public abstract class GameMap {
 
     public abstract int getAssetLayerID(int x, int y);
 
+    public abstract int getLaserLayerID(int x, int y);
+
+    public abstract boolean isThereLaserBeamsOnThisPosition(int x, int y);
+
     public abstract boolean isThereHoleOnThisPosition(int x, int y);
 
     public abstract void setPlayerPosition(int x, int y, Player player);

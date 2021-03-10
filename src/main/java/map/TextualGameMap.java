@@ -24,6 +24,7 @@ public class TextualGameMap extends GameMap {
 
         this.gridArray[3][3] = 55; // Flag_1_ID
         this.gridArray[5][5] = 6;  // Hole
+        this.gridArray[2][2] = 38; // Lasers
 
     }
 
@@ -45,6 +46,11 @@ public class TextualGameMap extends GameMap {
 
     public int getAssetLayerID(int x, int y) {
         return this.gridArray[y][x]; // returns the general ID, not Flag ID... needs to be fixed
+    }
+
+    @Override
+    public int getLaserLayerID(int x, int y) {
+        return this.gridArray[y][x];
     }
 
     public boolean isThereHoleOnThisPosition(int x, int y){
@@ -70,6 +76,9 @@ public class TextualGameMap extends GameMap {
     public boolean isThereConveyorOnThisPosition(int x, int y) {
         return false;
     }
+
+    @Override
+    public boolean isThereLaserBeamsOnThisPosition(int x, int y) {return false; }
 
 
 }

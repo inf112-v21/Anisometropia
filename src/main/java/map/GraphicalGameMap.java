@@ -92,6 +92,16 @@ public class GraphicalGameMap extends GameMap {
         return false;
     }
 
+    public boolean isThereLaserBeamsOnThisPosition(int x, int y){
+        if (laserLayer.getCell(x, y) != null){
+            int tileID = getLaserLayerID(x,y);
+            return  (tileID == 38)  || (tileID == 46)  || (tileID == 39) ||
+                    (tileID == 101) || (tileID == 102) || (tileID == 100);
+        }
+
+        return false;
+    }
+
     public boolean isThereConveyorOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
@@ -109,6 +119,9 @@ public class GraphicalGameMap extends GameMap {
 
     public int getAssetLayerID(int x, int y) {
         return assetLayer.getCell(x, y).getTile().getId();
+    }
+    public int getLaserLayerID(int x, int y){
+        return laserLayer.getCell(x, y).getTile().getId();
     }
 
     public void setPlayerPosition(int x, int y, Player player) {

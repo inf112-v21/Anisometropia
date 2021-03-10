@@ -1,6 +1,7 @@
 package logic;
 
 import actor.Player;
+import assets.Laser;
 import cards.DeckOfRegisterCards;
 import cards.RegisterCard;
 import map.GameMap;
@@ -13,6 +14,7 @@ public class GameLogic {
     GameMap gameMap;
     PlayerQueue playerQueue;
     ConveyorBelts conveyorBelts;
+    Laser laser;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
@@ -28,6 +30,7 @@ public class GameLogic {
         this.gameMap = gameMap;
         playerQueue = new PlayerQueue();
         conveyorBelts = new ConveyorBelts();
+        laser = new Laser();
 
         addPlayer(2,2, "player 1");
         addPlayer(3, 2, "player 2");
@@ -124,7 +127,8 @@ public class GameLogic {
 
     public void endOfRoundCheck() {
         for (Player player : playerQueue.getPlayerQueue()) {
-            conveyorBelts.runConveyorBelt(player, gameMap);
+            conveyorBelts.isPlayerOnConveyorBelt(player, gameMap);
+            laser.isPlayerHitByLaserBeam(player, gameMap);
         }
         endOfTurnCheck();
         respawnPlayersIfPossible();

@@ -17,7 +17,7 @@ public class ConveyorBelts {
      * runConveyorBelt checks if a player stands on a conveyorBelt and if he does he returns the tileID
      * and uses the tileID to figure out in what direction the player is to move.
      */
-    public void runConveyorBelt(Player player, GameMap gameMap) {
+    public void isPlayerOnConveyorBelt(Player player, GameMap gameMap) {
             if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())) {
                 int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
                 conveyorBelt(tileID, player);
