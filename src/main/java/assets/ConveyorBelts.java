@@ -153,7 +153,7 @@ public class ConveyorBelts {
                     player.move(0, -2);}
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + tileID);
+                throw new IllegalStateException("Unexpected value for ConveyorClass: " + tileID);
         }
     }
 }

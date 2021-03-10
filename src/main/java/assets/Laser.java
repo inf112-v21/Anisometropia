@@ -57,7 +57,7 @@ public class Laser {
                 break;
 
             default:
-                throw new IllegalStateException("Unexpected value: " + tileID);
+                throw new IllegalStateException("Unexpected value for Laser Class: " + tileID);
         }
     }
 }
