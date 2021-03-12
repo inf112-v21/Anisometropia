@@ -117,6 +117,7 @@ public class GameLogic {
                 if(!player.isDead) {
                     player.playerDies();
                     gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+
                 }
             }
             if (checkWin(player)) {
