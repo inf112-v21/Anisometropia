@@ -114,6 +114,7 @@ public class GameLogic {
                 if(!player.isDead) {
                     player.playerDies();
                     gameMap.setPlayerPosition(player.getX(), player.getY(), player);
+
                 }
             }
             if (checkWin(player)) {
@@ -153,7 +154,6 @@ public class GameLogic {
     private void respawnPlayersIfPossible() {
         for (Player player : playerQueue.getPlayerQueue()) {
             if(player.isDead) player.respawn();
-
         }
     }
 
