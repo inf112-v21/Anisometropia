@@ -73,8 +73,8 @@ public class ControlScreen extends InputAdapter {
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
-        hostButton = new GameButton(900,1000, 128,128, false, hostButtonTexture);
-        joinButton = new GameButton(950, 1000,128,128,false, joinButtonTexture);
+        hostButton = new GameButton(1100,700, 50,50, false, hostButtonTexture);
+        joinButton = new GameButton(1200, 700,50,50,false, joinButtonTexture);
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
