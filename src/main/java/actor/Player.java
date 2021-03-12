@@ -25,7 +25,7 @@ public class Player implements IPlayer {
     public Player(int x, int y, String playerName, GameMap gameMap) {
         this.x = this.spawnX = x;
         this.y = this.spawnY = y;
-        dmgTokens = 0;
+        dmgTokens = 4;
         lifeTokens = 3;
         this.playerName = playerName;
         this.direction = 0; // Initially faces NORTH
@@ -125,6 +125,7 @@ public class Player implements IPlayer {
     }
 
     public void powerDownRobot() {
+        //TODO : the player should wait out one round if powered down.
         setDmgTokens(0);
     }
 

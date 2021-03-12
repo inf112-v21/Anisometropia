@@ -123,6 +123,10 @@ public class ControlScreen extends InputAdapter {
                         click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
                     progressButtonHasBeenClicked();
                 }
+                if (click.x > powerDownButton.getX() && click.x < (powerDownButton.getX() + powerDownButton.getWidth()) &&
+                        click.y > powerDownButton.getY() && click.y < (powerDownButton.getY() + powerDownButton.getHeight())) {
+                    gameLogic.getCurrentPlayer().powerDownRobot();
+                }
                 //TODO: add hostButton and joinButton
             }
         }
@@ -295,7 +299,7 @@ public class ControlScreen extends InputAdapter {
     public void dispose() {
         damageTokenPositionIndicator.dispose();
         damageToken.dispose();
-    //    powerDownButton.dispose();
+        powerDownButtonTexture.getTexture().dispose();
         joinButtonTexture.getTexture().dispose();
         hostButtonTexture.getTexture().dispose();
         acceptTexture.getTexture().dispose();
