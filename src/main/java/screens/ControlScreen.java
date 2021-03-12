@@ -65,7 +65,7 @@ public class ControlScreen extends InputAdapter {
         borderTextureUnavailable = gameButtonsSpriteSheet[2][0];
         borderTexture = gameButtonsSpriteSheet[2][1];
 
-        multiPlayerButtons = TextureRegion.split(new Texture("multiPlayerButtons.png"), 128,128);
+        multiPlayerButtons = TextureRegion.split(new Texture("multiPlayerButtons.png"), 400,400);
         hostButtonTexture = multiPlayerButtons[0][0];
         joinButtonTexture = multiPlayerButtons[0][1];
 
@@ -73,8 +73,12 @@ public class ControlScreen extends InputAdapter {
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
-        hostButton = new GameButton(1100,700, 50,50, false, hostButtonTexture);
-        joinButton = new GameButton(1200, 700,50,50,false, joinButtonTexture);
+        /**
+         * If the host button is pressed then this should call the MultiPlayer constructor and establish a connection.
+         * The join button is used for other players to connect to that server.
+         */
+        hostButton = new GameButton(1100,700, 85,85, false, hostButtonTexture);
+        joinButton = new GameButton(1200, 700,85,85,false, joinButtonTexture);
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
