@@ -153,6 +153,7 @@ public class GameLogic {
     private void respawnPlayersIfPossible() {
         for (Player player : playerQueue.getPlayerQueue()) {
             if(player.isDead) player.respawn();
+
         }
     }
 
