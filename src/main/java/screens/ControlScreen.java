@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
@@ -42,8 +43,8 @@ public class ControlScreen extends InputAdapter {
     int numCardsChosen;
     BitmapFont smallFont, bigFont;
 
-    TextureRegion[][] gameButtonsSpriteSheet;
-    TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable;
+    TextureRegion[][] gameButtonsSpriteSheet, multiPlayerButtons;
+    TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, hostButtonTexture, joinButtonTexture;
 
     GameButton acceptButton, progressButton, borderButton, hostButton, joinButton;
 
@@ -64,12 +65,16 @@ public class ControlScreen extends InputAdapter {
         borderTextureUnavailable = gameButtonsSpriteSheet[2][0];
         borderTexture = gameButtonsSpriteSheet[2][1];
 
+        multiPlayerButtons = TextureRegion.split(new Texture("multiPlayerButtons.png"), 128,128);
+        hostButtonTexture = multiPlayerButtons[0][0];
+        joinButtonTexture = multiPlayerButtons[0][1];
+
 
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
-  //      hostButton = new GameButton(850,150, 200,200, false, hostButtonTexture);
-    //    joinButton = new GameButton(850, 165,200,200,false, joinButton);
+        hostButton = new GameButton(900,1000, 128,128, false, hostButtonTexture);
+        joinButton = new GameButton(950, 1000,128,128,false, joinButtonTexture);
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
@@ -116,6 +121,8 @@ public class ControlScreen extends InputAdapter {
         batch.draw(acceptButton.getTexture(), acceptButton.getX(), acceptButton.getY(), acceptButton.getWidth(), acceptButton.getHeight());
         batch.draw(progressButton.getTexture(), progressButton.getX(), progressButton.getY(), progressButton.getWidth(), progressButton.getHeight());
         batch.draw(borderButton.getTexture(), borderButton.getX(), borderButton.getY(), borderButton.getWidth(), borderButton.getHeight());
+        batch.draw(hostButton.getTexture(),hostButton.getX(),hostButton.getY(),hostButton.getWidth(),hostButton.getHeight());
+        batch.draw(joinButton.getTexture(),joinButton.getX(),joinButton.getY(),joinButton.getWidth(),joinButton.getHeight());
 
         if(!cardExecutionInProgress) drawCardsOfCurrentPlayer(batch);
         drawCurrentPlayerName(batch);
