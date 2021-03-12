@@ -11,7 +11,6 @@ public class Player implements IPlayer {
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     int dmgTokens;
     int lifeTokens;
-    public boolean powerDown = false;
     public boolean playerGetsDamaged = false;
     public boolean isDead = false;
     public boolean isVictorious = false;
@@ -125,11 +124,13 @@ public class Player implements IPlayer {
             playerDies();
     }
 
+    public void powerDownRobot() {
+        setDmgTokens(0);
+    }
+
     public void updateDamageTokens() {
         if (playerGetsDamaged)
             setDmgTokens(getDmgTokens() + 1);
-        if (powerDown)  //If power down button pressed then this input will be received in game logic. Set player.powerDown to true if so to activate it and call this method.
-            setDmgTokens(0);
         checkIfPlayerTooDamaged();
     }
 
