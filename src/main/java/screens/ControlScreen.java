@@ -11,7 +11,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import logic.GameLogic;
+import p2p.Multiplayer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -43,7 +45,7 @@ public class ControlScreen extends InputAdapter {
     TextureRegion[][] gameButtonsSpriteSheet;
     TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable;
 
-    GameButton acceptButton, progressButton, borderButton;
+    GameButton acceptButton, progressButton, borderButton, hostButton, joinButton;
 
     public ControlScreen(GameLogic gameLogic) {
         batch = new SpriteBatch();
@@ -65,6 +67,8 @@ public class ControlScreen extends InputAdapter {
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
+  //      hostButton = new GameButton(850,150, 200,200, false, hostButtonTexture);
+    //    joinButton = new GameButton(850, 165,200,200,false, joinButton);
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
@@ -190,7 +194,7 @@ public class ControlScreen extends InputAdapter {
         }
         registerCardTextures.clear();
         chosenCards = new ArrayList<>(Collections.nCopies(5,
-                      new RegisterCard("", 0, true)));
+                      new RegisterCard("", 0, true, "0")));
         numCardsChosen = 0;
     }
 
@@ -222,6 +226,18 @@ public class ControlScreen extends InputAdapter {
                 progressButton.setActive(false);
                 progressButton.setTexture(progressTextureUnavailable);
             }
+        }
+    }
+
+    private void hostButtonHasBeenClicked() throws IOException {
+        if (hostButton.isActive) {
+            gameLogic.mp = new Multiplayer(Boolean.TRUE);
+        }
+    }
+
+    private void joinButtonHasBeenClicked() throws IOException {
+        if (joinButton.isActive) {
+            gameLogic.mp = new Multiplayer(Boolean.FALSE);
         }
     }
 

@@ -6,6 +6,7 @@ import cards.DeckOfRegisterCards;
 import cards.RegisterCard;
 import map.GameMap;
 import assets.ConveyorBelts;
+import p2p.Multiplayer;
 
 import java.util.ArrayList;
 
@@ -16,6 +17,7 @@ public class GameLogic {
     PlayerQueue playerQueue;
     ConveyorBelts conveyorBelts;
     Laser laser;
+    public Multiplayer mp;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;

@@ -20,30 +20,30 @@ public class DeckOfRegisterCards {
      */
     private void generateDeck() {
         // Move 1
-        addCardsToDeck("RegisterCardAssets/Move1.png", 1, true, 18);
+        addCardsToDeck("RegisterCardAssets/Move1.png", 1, true, 18, "1");
 
         // Move 2
-        addCardsToDeck("RegisterCardAssets/Move2.png", 2, true, 12);
+        addCardsToDeck("RegisterCardAssets/Move2.png", 2, true, 12, "2");
 
         // Move 3
-        addCardsToDeck("RegisterCardAssets/Move3.png", 3, true, 6);
+        addCardsToDeck("RegisterCardAssets/Move3.png", 3, true, 6,"3");
 
         // Back up
-        addCardsToDeck("RegisterCardAssets/BackUp.png", -1, true, 6);
+        addCardsToDeck("RegisterCardAssets/BackUp.png", -1, true, 6,"4");
 
         // Rotate left
-        addCardsToDeck("RegisterCardAssets/RotateLeft.png", 3, false, 18);
+        addCardsToDeck("RegisterCardAssets/RotateLeft.png", 3, false, 18,"5");
 
         // Rotate right
-        addCardsToDeck("RegisterCardAssets/RotateRight.png", 1, false, 18);
+        addCardsToDeck("RegisterCardAssets/RotateRight.png", 1, false, 18,"6");
 
         // U-turn
-        addCardsToDeck("RegisterCardAssets/UTurn.png", 2, false, 6);
+        addCardsToDeck("RegisterCardAssets/UTurn.png", 2, false, 6,"7");
     }
 
-    private void addCardsToDeck(String graphicLocation, int amountToMoveOrRotate, boolean movementCard, int numOfCards) {
+    private void addCardsToDeck(String graphicLocation, int amountToMoveOrRotate, boolean movementCard, int numOfCards, String cardId) {
         for (int i = 0; i < numOfCards; i++) {
-            deckOfCards.add(new RegisterCard(graphicLocation, amountToMoveOrRotate, movementCard));
+            deckOfCards.add(new RegisterCard(graphicLocation, amountToMoveOrRotate, movementCard, cardId));
         }
     }
 
