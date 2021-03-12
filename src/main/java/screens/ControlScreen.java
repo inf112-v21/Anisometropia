@@ -24,10 +24,12 @@ import static logic.GameLogic.cardExecutionInProgress;
 public class ControlScreen extends InputAdapter {
     GameLogic gameLogic;
 
+    //Variables used to draw objects on the map
     private final SpriteBatch batch;
     private final Texture damageToken;
     private final Texture powerDownButton;
     private final Texture lifeToken;
+    private final Texture damageTokenPositionIndicator;
     private final ArrayList<Texture> registerCardTextures = new ArrayList<>();
 
     private final float cardWidth = 64, cardHeight = 64;
@@ -43,6 +45,7 @@ public class ControlScreen extends InputAdapter {
     int numCardsChosen;
     BitmapFont smallFont, bigFont;
 
+    //Variables used to create buttons
     TextureRegion[][] gameButtonsSpriteSheet, multiPlayerButtons;
     TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, hostButtonTexture, joinButtonTexture;
 
@@ -83,6 +86,7 @@ public class ControlScreen extends InputAdapter {
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
         lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
+        damageTokenPositionIndicator = new Texture(Gdx.files.classpath("damageTokenPositionIndicator.png"));
 
         initializeCards();
 
@@ -116,6 +120,7 @@ public class ControlScreen extends InputAdapter {
                         click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
                     progressButtonHasBeenClicked();
                 }
+                //TODO: add hostButton and joinButton
             }
         }
 
@@ -131,7 +136,8 @@ public class ControlScreen extends InputAdapter {
         if(!cardExecutionInProgress) drawCardsOfCurrentPlayer(batch);
         drawCurrentPlayerName(batch);
         drawPowerDownButton(batch);
-        drawDamageTokensOfCurrentPlayer(batch);
+        //drawDamageTokensOfCurrentPlayer(batch);
+        drawDamageTokenPositionIndicators(batch);
         drawLifeTokensOfCurrentPlayer(batch);
 
         for (int i = 0; i < gameLogic.getPlayerQueue().getPlayerQueue().size(); i++) {
@@ -243,13 +249,13 @@ public class ControlScreen extends InputAdapter {
 
     private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
-            gameLogic.mp = new Multiplayer(Boolean.TRUE);
+      //      gameLogic.mp = new Multiplayer(Boolean.TRUE); Constructing a mp object wil crash the program.
         }
     }
 
     private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
-            gameLogic.mp = new Multiplayer(Boolean.FALSE);
+         //   gameLogic.mp = new Multiplayer(Boolean.FALSE); Constructing a mp object wil crash the program.
         }
     }
 
@@ -265,9 +271,15 @@ public class ControlScreen extends InputAdapter {
         batch.draw(powerDownButton, 850, -50, 200,200);
     }
 
-    private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
-        for (int i = 10; i > gameLogic.getCurrentPlayer().getDmgTokens(); i--) {
-            batch.draw(damageToken, 816-(i*64), 132, 80, 80);
+//    private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
+//        for (int i = 10; i > gameLogic.getCurrentPlayer().getDmgTokens(); i--) {
+//            batch.draw(damageToken, 816-(i*64), 132, 80, 80);
+//        }
+//    }
+
+    private void drawDamageTokenPositionIndicators(SpriteBatch batch) {
+        for (int i = 10; i > 0; i--) {
+            batch.draw(damageTokenPositionIndicator, 816-(i*64), 132, 80, 80);
         }
     }
 
