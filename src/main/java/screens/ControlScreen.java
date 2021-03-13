@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
@@ -73,8 +72,8 @@ public class ControlScreen extends InputAdapter {
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
-        hostButton = new GameButton(1100,700, 50,50, false, hostButtonTexture);
-        joinButton = new GameButton(1200, 700,50,50,false, joinButtonTexture);
+        hostButton = new GameButton(1100,700, 50,50, true, hostButtonTexture);
+        joinButton = new GameButton(1200, 700,50,50,true, joinButtonTexture);
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
@@ -87,7 +86,7 @@ public class ControlScreen extends InputAdapter {
         Gdx.input.setInputProcessor(this);
     }
 
-    public void render(OrthographicCamera camera) {
+    public void render(OrthographicCamera camera) throws IOException {
         // Prints out the coordinates of the position clicked
         if (Gdx.input.justTouched()) {
             Vector3 click = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
@@ -111,6 +110,15 @@ public class ControlScreen extends InputAdapter {
                 if (click.x > progressButton.getX() && click.x < (progressButton.getX() + progressButton.getWidth()) &&
                         click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
                     progressButtonHasBeenClicked();
+                }
+
+                if (click.x > joinButton.getX() && click.x < (joinButton.getX() + joinButton.getWidth()) &&
+                        click.y > joinButton.getY() && click.y < (joinButton.getY() + joinButton.getHeight())) {
+                    joinButtonHasBeenClicked();
+                }
+                if (click.x > hostButton.getX() && click.x < (hostButton.getX() + hostButton.getWidth()) &&
+                        click.y > hostButton.getY() && click.y < (hostButton.getY() + hostButton.getHeight())) {
+                    hostButtonHasBeenClicked();
                 }
             }
         }
@@ -240,12 +248,20 @@ public class ControlScreen extends InputAdapter {
     private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
             gameLogic.mp = new Multiplayer(Boolean.TRUE);
+            Thread mpThread = new Thread(gameLogic.mp);
+            mpThread.start();
+            hostButton.setActive(false);
+            joinButton.setActive(false);
         }
     }
 
     private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
             gameLogic.mp = new Multiplayer(Boolean.FALSE);
+            Thread mpThread = new Thread(gameLogic.mp);
+            mpThread.start();
+            hostButton.setActive(false);
+            joinButton.setActive(false);
         }
     }
 

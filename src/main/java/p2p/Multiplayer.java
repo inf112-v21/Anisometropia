@@ -6,30 +6,20 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Multiplayer {
+public class Multiplayer implements Runnable {
 
     private ServerSocket ss;
     private Socket sock;
     private DataInputStream dataInput;
     private DataOutputStream dataOutput;
     private String buffer = ""; // to store the received string
-
+    private Boolean hosting;
+    private Boolean connected = false;
     /**
-    Calling the constructor establishes the connection.
     @param host True if hosting, false if joining an already opened connection.
      */
     public Multiplayer(Boolean host) throws IOException {
-
-        if (host) {
-            ss = new ServerSocket(6969);
-            sock = ss.accept();
-        }
-        else {
-            sock = new Socket("localhost", 6969);
-        }
-        dataInput = new DataInputStream(sock.getInputStream());
-        dataOutput = new DataOutputStream(sock.getOutputStream());
-
+        hosting = host;
     }
 
     /**
@@ -67,5 +57,48 @@ public class Multiplayer {
         temp = buffer;
         buffer = "";
         return temp;
+    }
+
+    public Boolean isConnected() {
+        if (connected) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    @Override
+    public void run() {
+        if (hosting) {
+            try {
+                ss = new ServerSocket(6969);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                sock = ss.accept();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            try {
+                sock = new Socket("localhost", 6969);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            dataInput = new DataInputStream(sock.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            dataOutput = new DataOutputStream(sock.getOutputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        connected = true;
     }
 }

@@ -7,6 +7,7 @@ import cards.RegisterCard;
 import map.GameMap;
 import assets.ConveyorBelts;
 import p2p.Multiplayer;
+
 import java.util.ArrayList;
 
 
@@ -86,7 +87,12 @@ public class GameLogic {
      * @param chosenCards
      */
     public void finishTurn(ArrayList<RegisterCard> chosenCards) {
-        getCurrentPlayer().setChosenRegisterCards(chosenCards);
+        if (mp != null) {
+            getCurrentPlayer().setChosenRegisterCards(chosenCards);
+        }
+        else {
+            getCurrentPlayer().setChosenRegisterCards(chosenCards);
+        }
     }
 
     /**

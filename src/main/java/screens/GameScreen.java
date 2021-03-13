@@ -11,6 +11,8 @@ import logic.GameLogic;
 import map.GraphicalGameMap;
 import org.lwjgl.opengl.GL20;
 
+import java.io.IOException;
+
 public class GameScreen extends ApplicationAdapter implements InputProcessor {
     public static final int SCREEN_WIDTH = 1440;
     public static final int SCREEN_HEIGHT = 832;
@@ -59,7 +61,11 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
         gameLogic.update();
 
-        controlScreen.render(controlCamera);
+        try {
+            controlScreen.render(controlCamera);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         gameMap.render(camera, batch);
 

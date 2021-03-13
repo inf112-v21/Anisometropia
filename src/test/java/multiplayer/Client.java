@@ -7,11 +7,15 @@ import java.io.IOException;
 
 public class Client {
     public static void main(String[] args) throws IOException {
-        Multiplayer mp = new Multiplayer(Boolean.FALSE);
-        mp.send("client says hi");
-        String trick = mp.receive();
+        Multiplayer r1=new Multiplayer(Boolean.FALSE);
+        Thread t1 =new Thread(r1);
+        t1.start();
+        while (r1.isConnected() == false) {
+        }
+        r1.send("client says hi");
+        String trick = r1.receive();
         System.out.println(trick);
-        mp.send("you just said " + trick);
-        mp.disconnect();
+        r1.send("you just said " + trick);
+        r1.disconnect();
     }
 }
