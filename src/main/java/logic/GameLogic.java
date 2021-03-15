@@ -9,6 +9,7 @@ import map.GameMap;
 import assets.ConveyorBelts;
 import p2p.Multiplayer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -89,24 +90,32 @@ public class GameLogic {
      * Saves player's chosen cards and ends the turn.
      * @param chosenCards
      */
-    public void finishTurn(ArrayList<RegisterCard> chosenCards) {
-        DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
+    public void finishTurn(ArrayList<RegisterCard> chosenCards) throws IOException {
         if(mp != null) {
             getCurrentPlayer().setChosenRegisterCards(chosenCards);
-            String toSend = "";
-            for(int i = 0; i <= 6; i++) {
-                for(RegisterCard playerCard : getCurrentPlayer().getChosenRegisterCards()) {
-                    if(deckOfRegisterCards.uniqueCards.get(i).getGraphicLocation() == playerCard.getGraphicLocation()) {
-                        toSend = toSend + i;
-                    }
-                }
-            }
-            System.out.println(toSend);
-
+          //  sendCards();
+          //  receiveCards();
         }
         else {
             getCurrentPlayer().setChosenRegisterCards(chosenCards);
         }
+    }
+
+    public void sendCards() throws IOException {
+        DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
+        String toSend = "";
+        for(int i = 0; i <= 6; i++) {
+            for(RegisterCard playerCard : getCurrentPlayer().getChosenRegisterCards()) {
+                if(deckOfRegisterCards.uniqueCards.get(i).getGraphicLocation() == playerCard.getGraphicLocation()) {
+                    toSend += i;
+                    mp.send(toSend);
+                }
+            }
+        }
+    }
+
+    private void receiveCards() throws IOException {
+        mp.receive();
     }
 
     /**

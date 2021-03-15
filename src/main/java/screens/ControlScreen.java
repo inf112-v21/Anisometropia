@@ -231,7 +231,7 @@ public class ControlScreen extends InputAdapter {
         numCardsChosen = 0;
     }
 
-    private void acceptButtonHasBeenClicked() {
+    private void acceptButtonHasBeenClicked() throws IOException {
         if (acceptButton.isActive) {
             acceptButton.setActive(false);
             acceptButton.setTexture(acceptTextureUnavailable);
