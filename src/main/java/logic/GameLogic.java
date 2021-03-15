@@ -128,7 +128,7 @@ public class GameLogic {
             if (checkWin(player)) {
                 player.playerWins();
                 gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-                gameMessage = player.playerName + " won the game!";
+                gameMessage = player.playerName + " won by finding all the flags!";
                 gameOver = true;
             }
         }
@@ -154,7 +154,7 @@ public class GameLogic {
             }
         }
         if (alivePlayers == 1) {
-            gameMessage = winningPlayer.playerName + " won the game!";
+            gameMessage = winningPlayer.playerName + " is the only survivor!";
             gameOver = true;
         }
     }
