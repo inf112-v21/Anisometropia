@@ -159,8 +159,7 @@ public class PlayerTest {
 
     @Test
     public void doesPlayerRestoreHealthAfterPowerDown() {
-        player.powerDown = true;
-        player.updateDamageTokens();
+       player.powerDownRobot();
         assertEquals(player.getDmgTokens(),0);
     }
 
