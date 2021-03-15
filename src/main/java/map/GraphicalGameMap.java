@@ -1,5 +1,6 @@
 package map;
 
+import assets.Wall;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -115,7 +116,19 @@ public class GraphicalGameMap extends GameMap {
         return false;
     }
 
+    @Override
+    public boolean isThereWallOnThisPosition(int x, int y) {
+        if (assetLayer.getCell(x, y) != null) {
+            int tileID = getAssetLayerID(x, y);
 
+            return (tileID == 8) || (tileID == 16) || (tileID == 26) || (tileID == 32) ||
+                   (tileID == 23)|| (tileID == 29) || (tileID == 30) || (tileID == 31) ||
+                   (tileID == 37)|| (tileID == 45) || (tileID == 46) || (tileID == 38) ||
+                   (tileID == 87)|| (tileID == 94) || (tileID == 95) || (tileID == 93);
+        }
+
+        return false;
+    }
 
     public int getAssetLayerID(int x, int y) {
         return assetLayer.getCell(x, y).getTile().getId();

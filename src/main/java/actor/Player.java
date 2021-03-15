@@ -17,6 +17,7 @@ public class Player implements IPlayer {
     public boolean[] flagsReached;
     public boolean conveyorBeltReached = true;
     public boolean laserBeamReached = true;
+    public boolean wallHasBeenReached = true;
     public ArrayList<RegisterCard> dealtRegisterCards;
     public ArrayList<RegisterCard> chosenRegisterCards;
     GameMap gameMap;

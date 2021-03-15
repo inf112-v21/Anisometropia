@@ -2,6 +2,7 @@ package logic;
 
 import actor.Player;
 import assets.Laser;
+import assets.Wall;
 import cards.DeckOfRegisterCards;
 import cards.RegisterCard;
 import map.GameMap;
@@ -17,6 +18,7 @@ public class GameLogic {
     PlayerQueue playerQueue;
     ConveyorBelts conveyorBelts;
     Laser laser;
+    Wall wall;
     public Multiplayer mp;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
@@ -34,6 +36,7 @@ public class GameLogic {
         playerQueue = new PlayerQueue();
         conveyorBelts = new ConveyorBelts();
         laser = new Laser();
+        wall = new Wall();
 
         addPlayer(2,2, "player 1");
         addPlayer(3, 2, "player 2");
@@ -122,15 +125,17 @@ public class GameLogic {
                 if(!player.isDead) {
                     player.playerDies();
                     gameMap.setPlayerPosition(player.getX(), player.getY(), player);
-
                 }
             }
+
             if (checkWin(player)) {
                 player.playerWins();
                 gameMap.setPlayerPosition(player.getX(), player.getY(), player);
                 gameMessage = player.playerName + " won by finding all the flags!";
                 gameOver = true;
             }
+
+            wall.isPlayerOnWall(player, gameMap);
         }
     }
 
