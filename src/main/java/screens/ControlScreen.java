@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
@@ -23,10 +24,11 @@ import static logic.GameLogic.cardExecutionInProgress;
 public class ControlScreen extends InputAdapter {
     GameLogic gameLogic;
 
+    //Variables used to draw objects on the map
     private final SpriteBatch batch;
     private final Texture damageToken;
-    private final Texture powerDownButton;
     private final Texture lifeToken;
+    private final Texture damageTokenPositionIndicator;
     private final ArrayList<Texture> registerCardTextures = new ArrayList<>();
 
     private final float cardWidth = 64, cardHeight = 64;
@@ -42,10 +44,11 @@ public class ControlScreen extends InputAdapter {
     int numCardsChosen;
     BitmapFont smallFont, bigFont;
 
-    TextureRegion[][] gameButtonsSpriteSheet, multiPlayerButtons;
-    TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, hostButtonTexture, joinButtonTexture;
+    //Variables used to create buttons
+    TextureRegion[][] gameButtonsSpriteSheet, multiPlayerButtons, powerDownButtonRegion;
+    TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, hostButtonTexture, joinButtonTexture,powerDownButtonTexture;
 
-    GameButton acceptButton, progressButton, borderButton, hostButton, joinButton;
+    GameButton acceptButton, progressButton, borderButton, hostButton, joinButton, powerDownButton;
 
     public ControlScreen(GameLogic gameLogic) {
         batch = new SpriteBatch();
@@ -64,20 +67,29 @@ public class ControlScreen extends InputAdapter {
         borderTextureUnavailable = gameButtonsSpriteSheet[2][0];
         borderTexture = gameButtonsSpriteSheet[2][1];
 
-        multiPlayerButtons = TextureRegion.split(new Texture("multiPlayerButtons.png"), 128,128);
+        //Creating buttons needed to establish a connection to enable multiplayer
+        multiPlayerButtons = TextureRegion.split(new Texture("multiPlayerButtons.png"), 400,400);
         hostButtonTexture = multiPlayerButtons[0][0];
         joinButtonTexture = multiPlayerButtons[0][1];
 
+        //Creating power down button
+        powerDownButtonRegion = TextureRegion.split(new Texture("powerDown.png"),800,800);
+        powerDownButtonTexture = powerDownButtonRegion[0][0];
+        powerDownButton = new GameButton(850, -50, 200,200, false, powerDownButtonTexture);
 
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
-        hostButton = new GameButton(1100,700, 50,50, true, hostButtonTexture);
-        joinButton = new GameButton(1200, 700,50,50,true, joinButtonTexture);
+        /**
+         * If the host button is pressed then this should call the MultiPlayer constructor and establish a connection.
+         * The join button is used for other players to connect to that server.
+         */
+        hostButton = new GameButton(1100,700, 85,85, false, hostButtonTexture);
+        joinButton = new GameButton(1200, 700,85,85,false, joinButtonTexture);
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
-        powerDownButton = new Texture(Gdx.files.internal("powerDown.png"));
         lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
+        damageTokenPositionIndicator = new Texture(Gdx.files.classpath("damageTokenPositionIndicator.png"));
 
         initializeCards();
 
@@ -111,7 +123,10 @@ public class ControlScreen extends InputAdapter {
                         click.y > progressButton.getY() && click.y < (progressButton.getY() + progressButton.getHeight())) {
                     progressButtonHasBeenClicked();
                 }
-
+                if (click.x > powerDownButton.getX() && click.x < (powerDownButton.getX() + powerDownButton.getWidth()) &&
+                        click.y > powerDownButton.getY() && click.y < (powerDownButton.getY() + powerDownButton.getHeight())) {
+                    gameLogic.getCurrentPlayer().powerDownRobot();
+                }
                 if (click.x > joinButton.getX() && click.x < (joinButton.getX() + joinButton.getWidth()) &&
                         click.y > joinButton.getY() && click.y < (joinButton.getY() + joinButton.getHeight())) {
                     joinButtonHasBeenClicked();
@@ -131,10 +146,11 @@ public class ControlScreen extends InputAdapter {
         batch.draw(borderButton.getTexture(), borderButton.getX(), borderButton.getY(), borderButton.getWidth(), borderButton.getHeight());
         batch.draw(hostButton.getTexture(),hostButton.getX(),hostButton.getY(),hostButton.getWidth(),hostButton.getHeight());
         batch.draw(joinButton.getTexture(),joinButton.getX(),joinButton.getY(),joinButton.getWidth(),joinButton.getHeight());
+        batch.draw(powerDownButton.getTexture(), powerDownButton.getX(), powerDownButton.getY(),powerDownButton.getWidth(),powerDownButton.getHeight());
 
         if(!cardExecutionInProgress) drawCardsOfCurrentPlayer(batch);
         drawCurrentPlayerName(batch);
-        drawPowerDownButton(batch);
+        drawDamageTokenPositionIndicators(batch);
         drawDamageTokensOfCurrentPlayer(batch);
         drawLifeTokensOfCurrentPlayer(batch);
 
@@ -210,7 +226,7 @@ public class ControlScreen extends InputAdapter {
         }
         registerCardTextures.clear();
         chosenCards = new ArrayList<>(Collections.nCopies(5,
-                      new RegisterCard("", 0, true, "0")));
+                new RegisterCard("", 0, true, "0")));
         numCardsChosen = 0;
     }
 
@@ -273,13 +289,15 @@ public class ControlScreen extends InputAdapter {
         }
     }
 
-    private void drawPowerDownButton(SpriteBatch batch) {
-        batch.draw(powerDownButton, 850, -50, 200,200);
+    private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
+        for (int i = gameLogic.getCurrentPlayer().getDmgTokens(); i > 0; i--) {
+            batch.draw(damageToken, 816-(i*64), 132, 80, 80);
+        }
     }
 
-    private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
-        for (int i = 10; i > gameLogic.getCurrentPlayer().getDmgTokens(); i--) {
-            batch.draw(damageToken, 816-(i*64), 132, 80, 80);
+    private void drawDamageTokenPositionIndicators(SpriteBatch batch) {
+        for (int i = 10; i > 0; i--) {
+            batch.draw(damageTokenPositionIndicator, 816-(i*64), 132, 80, 80);
         }
     }
 
@@ -294,8 +312,11 @@ public class ControlScreen extends InputAdapter {
     }
 
     public void dispose() {
+        damageTokenPositionIndicator.dispose();
         damageToken.dispose();
-        powerDownButton.dispose();
+        powerDownButtonTexture.getTexture().dispose();
+        joinButtonTexture.getTexture().dispose();
+        hostButtonTexture.getTexture().dispose();
         acceptTexture.getTexture().dispose();
         acceptTextureUnavailable.getTexture().dispose();
         progressTexture.getTexture().dispose();
