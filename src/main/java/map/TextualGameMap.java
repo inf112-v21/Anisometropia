@@ -78,7 +78,14 @@ public class TextualGameMap extends GameMap {
     }
 
     @Override
-    public boolean isThereLaserBeamsOnThisPosition(int x, int y) {return false; }
+    public boolean isThereWallOnThisPosition(int x, int y) {
+        return false;
+    }
+
+    @Override
+    public boolean isThereLaserBeamsOnThisPosition(int x, int y) {
+        return false;
+    }
 
 
 }
