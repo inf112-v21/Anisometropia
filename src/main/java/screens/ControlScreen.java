@@ -80,12 +80,13 @@ public class ControlScreen extends InputAdapter {
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
+
         /**
          * If the host button is pressed then this should call the MultiPlayer constructor and establish a connection.
          * The join button is used for other players to connect to that server.
          */
-        hostButton = new GameButton(1100,700, 85,85, false, hostButtonTexture);
-        joinButton = new GameButton(1200, 700,85,85,false, joinButtonTexture);
+        hostButton = new GameButton(1100,700, 85,85, true, hostButtonTexture);
+        joinButton = new GameButton(1200, 700,85,85,true, joinButtonTexture);
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
@@ -226,7 +227,7 @@ public class ControlScreen extends InputAdapter {
         }
         registerCardTextures.clear();
         chosenCards = new ArrayList<>(Collections.nCopies(5,
-                new RegisterCard("", 0, true, "0")));
+                new RegisterCard("", 0, true)));
         numCardsChosen = 0;
     }
 

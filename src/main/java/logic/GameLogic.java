@@ -87,8 +87,19 @@ public class GameLogic {
      * @param chosenCards
      */
     public void finishTurn(ArrayList<RegisterCard> chosenCards) {
-        if (mp != null) {
+        DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
+        if(mp != null) {
             getCurrentPlayer().setChosenRegisterCards(chosenCards);
+            String toSend = "";
+            for(int i = 0; i <= 6; i++) {
+                for(RegisterCard playerCard : getCurrentPlayer().getChosenRegisterCards()) {
+                    if(deckOfRegisterCards.uniqueCards.get(i).getGraphicLocation() == playerCard.getGraphicLocation()) {
+                        toSend = toSend + i;
+                    }
+                }
+            }
+            System.out.println(toSend);
+
         }
         else {
             getCurrentPlayer().setChosenRegisterCards(chosenCards);

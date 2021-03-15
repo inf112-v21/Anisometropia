@@ -9,13 +9,11 @@ public class RegisterCard {
     String graphicLocation; // File location of card graphics
     int amountToMoveOrRotate;
     boolean isMovementCard; // Denotes whether card affects movement or direction.
-    String cardId;
 
-    public RegisterCard(String graphicLocation, int amountToMoveOrRotate, boolean isMovementCard, String cardId) {
+    public RegisterCard(String graphicLocation, int amountToMoveOrRotate, boolean isMovementCard) {
         this.graphicLocation = graphicLocation;
         this.amountToMoveOrRotate = amountToMoveOrRotate;
         this.isMovementCard = isMovementCard;
-        this.cardId = cardId;
     }
 
     /**
