@@ -7,13 +7,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import launcher.GameApplication;
 import logic.GameLogic;
+import map.GameMap;
 import map.GraphicalGameMap;
 import org.lwjgl.opengl.GL20;
 
 import java.io.IOException;
 
-public class GameScreen extends ApplicationAdapter implements InputProcessor {
+public class GameScreen extends AbstractScreen implements InputProcessor {
     public static final int SCREEN_WIDTH = 1440;
     public static final int SCREEN_HEIGHT = 832;
     public static final int GAMEBOARD_PLACEMENT_X = -32;
@@ -31,9 +33,35 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
 
     ControlScreen controlScreen;
 
-    @Override
-    public void create() {
-        batch = new SpriteBatch();
+    launcher.GameApplication gameApplication;
+
+//    @Override
+//    public void create() {
+//        batch = new SpriteBatch();
+//
+//        camera = new OrthographicCamera();
+//        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        camera.translate(GAMEBOARD_PLACEMENT_X, GAMEBOARD_PLACEMENT_Y);
+//        camera.update();
+//
+//        controlCamera = new OrthographicCamera();
+//        controlCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//        controlCamera.translate(-32, -32);
+//        controlCamera.update();
+//
+//        gameMap = new GraphicalGameMap();
+//        gameLogic = new GameLogic(gameMap);
+//        player = gameLogic.getCurrentPlayer();
+//
+//        controlScreen = new ControlScreen(gameLogic);
+//
+//        Gdx.input.setInputProcessor(this);
+//    }
+
+    public GameScreen(GameApplication gameApplication) {
+        super(gameApplication);
+        this.gameApplication = gameApplication;
+        batch = gameApplication.spriteBatch;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -55,11 +83,9 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
     }
 
     @Override
-    public void render() {
-        Gdx.gl.glClearColor(0.7f,0.6f,0.4f,1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        gameLogic.update();
+    public void render(float delta) {
+        super.render(delta);
+        update(delta);
 
         try {
             controlScreen.render(controlCamera);
@@ -75,10 +101,8 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
     }
 
     @Override
-    public void dispose() {
-        gameMap.dispose();
-        controlScreen.dispose();
-        batch.dispose();
+    public void update(float delta) {
+        gameLogic.update();
     }
 
     @Override
@@ -86,6 +110,37 @@ public class GameScreen extends ApplicationAdapter implements InputProcessor {
         if(keycode == Input.Keys.ESCAPE) Gdx.app.exit();
         if(keycode == Input.Keys.R) gameLogic.gameReset();
         return false;
+    }
+
+    @Override
+    public void dispose() {
+        gameMap.dispose();
+        controlScreen.dispose();
+    }
+
+    @Override
+    public void show() {
+
+    }
+
+    @Override
+    public void resize(int i, int i1) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
     }
 
     @Override
