@@ -1,20 +1,19 @@
 package logic;
 
 import actor.Player;
+import assets.ConveyorBelts;
 import assets.Laser;
 import assets.Wall;
 import cards.DeckOfRegisterCards;
 import cards.RegisterCard;
 import map.GameMap;
-import assets.ConveyorBelts;
 import p2p.Multiplayer;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class GameLogic {
-    // comment
+
     GameMap gameMap;
     PlayerQueue playerQueue;
     ConveyorBelts conveyorBelts;
@@ -32,22 +31,15 @@ public class GameLogic {
 
     public static String gameMessage;
 
-    public GameLogic(GameMap gameMap) {
+    public GameLogic(GameMap gameMap, PlayerQueue playerQueue) {
         this.gameMap = gameMap;
-        playerQueue = new PlayerQueue();
+        this.playerQueue = playerQueue;
         conveyorBelts = new ConveyorBelts();
         laser = new Laser();
         wall = new Wall();
 
-        addPlayer(2,2, "player 1");
-        addPlayer(3, 2, "player 2");
 //        playerStartPos();
         dealRegisterCards();
-    }
-
-    public void addPlayer(int spawnX, int spawnY, String name) {
-        playerQueue.add(new Player(spawnX, spawnY, name, gameMap));
-        gameMap.setPlayerPosition(spawnX, spawnY, playerQueue.getPlayerQueue().get(playerQueue.getPlayerQueue().size() - 1));
     }
 
 //    public void playerStartPos() {
@@ -84,7 +76,6 @@ public class GameLogic {
             player.setDealtRegisterCards(deckOfRegisterCards.dealNineCards());
         }
     }
-
 
     /**
      * Saves player's chosen cards and ends the turn.

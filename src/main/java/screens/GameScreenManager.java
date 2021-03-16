@@ -1,6 +1,8 @@
 package screens;
 
 import launcher.GameApplication;
+import logic.PlayerQueue;
+import map.GraphicalGameMap;
 
 import java.util.HashMap;
 
@@ -11,8 +13,7 @@ public class GameScreenManager {
         MENU,
         PLAY,
         LOCAL_SETUP,
-        ON_NET_SETUP,
-        CREDITS
+        ON_NET_SETUP
     }
 
     PlayScreen playScreen;
@@ -26,8 +27,6 @@ public class GameScreenManager {
     private void initializeGameScreens() {
         this.gameScreens = new HashMap<>();
         this.gameScreens.put(STATE.MENU, new MainMenuScreen(gameApplication));
-        playScreen = new PlayScreen(gameApplication);
-        this.gameScreens.put(STATE.PLAY, playScreen);
         this.gameScreens.put(STATE.LOCAL_SETUP, new LocalSetupScreen(gameApplication));
     }
 
@@ -35,14 +34,15 @@ public class GameScreenManager {
         gameApplication.setScreen(gameScreens.get(nextScreen));
     }
 
+    public void initPlayScreen(GraphicalGameMap gameMap, PlayerQueue playerQueue) {
+        playScreen = new PlayScreen(gameApplication, gameMap, playerQueue);
+        this.gameScreens.put(STATE.PLAY, playScreen);
+    }
+
     public void dispose() {
         for (AbstractScreen screen : gameScreens.values()) {
             if (screen != null) screen.dispose();
         }
-    }
-
-    public PlayScreen getGameScreen() {
-        return playScreen;
     }
 
 }

@@ -2,6 +2,7 @@ package actor;
 
 import actor.Player;
 import logic.GameLogic;
+import logic.PlayerQueue;
 import map.TextualGameMap;
 import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +12,7 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
     TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
-    GameLogic gameLogic = new GameLogic(simpleGameMap);
-    Player player = gameLogic.getCurrentPlayer();
+    Player player = new Player(1,1,"player", simpleGameMap);
 
     @Test
     public void testPlayerMoveXDirection() {

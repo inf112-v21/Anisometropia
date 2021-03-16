@@ -2,9 +2,7 @@ package actor;
 
 import cards.RegisterCard;
 import map.GameMap;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Player implements IPlayer {
     int x, y, spawnX, spawnY;

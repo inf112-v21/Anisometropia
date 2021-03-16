@@ -1,5 +1,6 @@
 package screens;
 
+import actor.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -11,7 +12,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import launcher.GameApplication;
-import map.GameMap;
+import logic.PlayerQueue;
+import map.GraphicalGameMap;
 
 public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
@@ -314,7 +316,14 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void startButtonClicked() {
-        // TODO: for player in playerQueue, add!
+        GraphicalGameMap gameMap = new GraphicalGameMap();
+        PlayerQueue playerQueue = new PlayerQueue();
+        int k = 2;
+        for (int i = 0; i < playersAdded; i++) {
+            playerQueue.add(new Player(k, 2, allStringBuilders[i].toString(), gameMap));
+            k++;
+        }
+        gameApplication.gameScreenManager.initPlayScreen(gameMap, playerQueue);
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);
     }
 
