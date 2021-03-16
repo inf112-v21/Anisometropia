@@ -2,6 +2,7 @@ package screens;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 
 public class GameButton {
 
@@ -19,6 +20,11 @@ public class GameButton {
         this.height = height;
         this.isActive = isActive;
         this.textureRegion = textureRegion;
+    }
+
+    public boolean isMouseOnButton(Vector3 mousePosition) {
+        return (mousePosition.x > x && mousePosition.x < (x + width) &&
+                mousePosition.y > y && mousePosition.y < (y + height));
     }
 
     public int getX() {

@@ -118,15 +118,16 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         TextureRegion currentRightArrowFrame = animRightArrow.getKeyFrame(elapsedTime, true);
         TextureRegion currentLeftArrowFrame = animLeftArrow.getKeyFrame(elapsedTime, true);
         TextureRegion currentBackgroundFrame = animBackground.getKeyFrame(elapsedTime, true);
-        Vector3 hover = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+
+        Vector3 mousePosition = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
         gameApplication.spriteBatch.begin();
 //        gameApplication.getSpriteBatch().draw(menuBackground, 0, 0); // single image, use if animated background too demanding
         gameApplication.getSpriteBatch().draw(currentBackgroundFrame,0, 0, 1440f, 832f);
 
-        ifHoveredDrawArrowsAroundPlayLocalButton(hover, currentRightArrowFrame, currentLeftArrowFrame);
-        ifHoveredDrawArrowsAroundPlayOnNetButton(hover, currentRightArrowFrame, currentLeftArrowFrame);
-        ifHoveredDrawArrowsAroundQuitButton(hover, currentRightArrowFrame, currentLeftArrowFrame);
+        ifHoveredDrawArrowsAroundPlayLocalButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
+        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
+        ifHoveredDrawArrowsAroundQuitButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
 
         gameApplication.getSpriteBatch().draw(playLocalBtn.getTexture(), playLocalBtn.getX(), playLocalBtn.getY(), playLocalBtn.getWidth(), playLocalBtn.getHeight());
         gameApplication.getSpriteBatch().draw(playOnNetBtn.getTexture(), playOnNetBtn.getX(), playOnNetBtn.getY(), playOnNetBtn.getWidth(), playOnNetBtn.getHeight());
@@ -136,40 +137,6 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         gameApplication.spriteBatch.end();
     }
 
-    private void ifHoveredDrawArrowsAroundPlayLocalButton(Vector3 hover,  TextureRegion currentRightArrowFrame, TextureRegion currentLeftArrowFrame) {
-        if (hover.x > playLocalBtn.getX() && hover.x < (playLocalBtn.getX() + playLocalBtn.getWidth()) &&
-                hover.y > playLocalBtn.getY() && hover.y < (playLocalBtn.getY() + playLocalBtn.getHeight())) {
-            playLocalBtn.setTexture(playLocalJumbled);
-            gameApplication.getSpriteBatch().draw(currentRightArrowFrame, playLocalBtn.getX()+arrowRightPadX, playLocalBtn.getY(), 128, 64);
-            gameApplication.getSpriteBatch().draw(currentLeftArrowFrame, playLocalBtn.getX()+ playLocalBtn.getWidth()+arrowLeftPadX, playLocalBtn.getY(), 128, 64);
-
-        }else{
-            playLocalBtn.setTexture(playLocal);
-        }
-    }
-
-    private void ifHoveredDrawArrowsAroundPlayOnNetButton(Vector3 hover, TextureRegion currentRightArrowFrame, TextureRegion currentLeftArrowFrame) {
-        if (hover.x > playOnNetBtn.getX() && hover.x < (playOnNetBtn.getX() + playOnNetBtn.getWidth()) &&
-                hover.y > playOnNetBtn.getY() && hover.y < (playOnNetBtn.getY() + playOnNetBtn.getHeight())) {
-            playOnNetBtn.setTexture(playOnNetJumbled);
-            gameApplication.getSpriteBatch().draw(currentRightArrowFrame, playOnNetBtn.getX()+arrowRightPadX, playOnNetBtn.getY(), 128, 64);
-            gameApplication.getSpriteBatch().draw(currentLeftArrowFrame, playOnNetBtn.getX()+ playOnNetBtn.getWidth()+arrowLeftPadX, playOnNetBtn.getY(), 128, 64);
-        }else{
-            playOnNetBtn.setTexture(playOnNet);
-        }
-    }
-
-    private void ifHoveredDrawArrowsAroundQuitButton(Vector3 hover, TextureRegion currentRightArrowFrame, TextureRegion currentLeftArrowFrame) {
-        if (hover.x > quitBtn.getX() && hover.x < (quitBtn.getX() + quitBtn.getWidth()) &&
-                hover.y > quitBtn.getY() && hover.y < (quitBtn.getY() + quitBtn.getHeight())) {
-            quitBtn.setTexture(quitJumbled);
-            gameApplication.getSpriteBatch().draw(currentRightArrowFrame, quitBtn.getX()+arrowRightPadX, quitBtn.getY(), 128, 64);
-            gameApplication.getSpriteBatch().draw(currentLeftArrowFrame, quitBtn.getX()+quitBtn.getWidth()+arrowLeftPadX, quitBtn.getY(), 128, 64);
-        }else{
-            quitBtn.setTexture(quit);
-        }
-    }
-
     @Override
     public void update(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
@@ -177,28 +144,14 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         }
 
         if (Gdx.input.justTouched()) {
-            Vector3 click = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-//            System.out.println("STANDARD: (" + Math.round(click.x) + ", " + Math.round(click.y) + ")");
+            Vector3 mousePosition = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+//            System.out.println("STANDARD: (" + Math.round(mousePosition.x) + ", " + Math.round(mousePosition.y) + ")");
 
-            if (click.x > playLocalBtn.getX() && click.x < (playLocalBtn.getX() + playLocalBtn.getWidth()) &&
-                    click.y > playLocalBtn.getY() && click.y < (playLocalBtn.getY() + playLocalBtn.getHeight())) {
-                playLocalButtonHasBeenClicked();
-            }
+            if (playLocalBtn.isMouseOnButton(mousePosition)) playLocalButtonHasBeenClicked();
+            if (playOnNetBtn.isMouseOnButton(mousePosition)) playOnNetButtonHasBeenClicked();
+            if (quitBtn.isMouseOnButton(mousePosition)) quitHasBeenClicked();
+            if (speaker.isMouseOnButton(mousePosition)) speakerButtonHasBeenClicked();
 
-            if (click.x > playOnNetBtn.getX() && click.x < (playOnNetBtn.getX() + playOnNetBtn.getWidth()) &&
-                    click.y > playOnNetBtn.getY() && click.y < (playOnNetBtn.getY() + playOnNetBtn.getHeight())) {
-                playOnNetButtonHasBeenClicked();
-            }
-
-            if (click.x > quitBtn.getX() && click.x < (quitBtn.getX() + quitBtn.getWidth()) &&
-                    click.y > quitBtn.getY() && click.y < (quitBtn.getY() + quitBtn.getHeight())) {
-                quitHasBeenClicked();
-            }
-
-            if (click.x > speaker.getX() && click.x < (speaker.getX() + speaker.getWidth()) &&
-                    click.y > speaker.getY() && click.y < (speaker.getY() + speaker.getHeight())) {
-                speakerButtonHasBeenClicked();
-            }
         }
     }
 
@@ -223,6 +176,36 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
             musicPlaying = true;
             menuMusic.play();
             speaker.setTexture(speakerOn);
+        }
+    }
+
+    private void ifHoveredDrawArrowsAroundPlayLocalButton(Vector3 hover,  TextureRegion currentRightArrowFrame, TextureRegion currentLeftArrowFrame) {
+        if(playLocalBtn.isMouseOnButton(hover)) {
+            playLocalBtn.setTexture(playLocalJumbled);
+            gameApplication.getSpriteBatch().draw(currentRightArrowFrame, playLocalBtn.getX()+arrowRightPadX, playLocalBtn.getY(), 128, 64);
+            gameApplication.getSpriteBatch().draw(currentLeftArrowFrame, playLocalBtn.getX()+ playLocalBtn.getWidth()+arrowLeftPadX, playLocalBtn.getY(), 128, 64);
+        }else{
+            playLocalBtn.setTexture(playLocal);
+        }
+    }
+
+    private void ifHoveredDrawArrowsAroundPlayOnNetButton(Vector3 hover, TextureRegion currentRightArrowFrame, TextureRegion currentLeftArrowFrame) {
+        if(playOnNetBtn.isMouseOnButton(hover)) {
+            playOnNetBtn.setTexture(playOnNetJumbled);
+            gameApplication.getSpriteBatch().draw(currentRightArrowFrame, playOnNetBtn.getX()+arrowRightPadX, playOnNetBtn.getY(), 128, 64);
+            gameApplication.getSpriteBatch().draw(currentLeftArrowFrame, playOnNetBtn.getX()+ playOnNetBtn.getWidth()+arrowLeftPadX, playOnNetBtn.getY(), 128, 64);
+        }else{
+            playOnNetBtn.setTexture(playOnNet);
+        }
+    }
+
+    private void ifHoveredDrawArrowsAroundQuitButton(Vector3 hover, TextureRegion currentRightArrowFrame, TextureRegion currentLeftArrowFrame) {
+        if (quitBtn.isMouseOnButton(hover)) {
+            quitBtn.setTexture(quitJumbled);
+            gameApplication.getSpriteBatch().draw(currentRightArrowFrame, quitBtn.getX()+arrowRightPadX, quitBtn.getY(), 128, 64);
+            gameApplication.getSpriteBatch().draw(currentLeftArrowFrame, quitBtn.getX()+quitBtn.getWidth()+arrowLeftPadX, quitBtn.getY(), 128, 64);
+        }else{
+            quitBtn.setTexture(quit);
         }
     }
 
@@ -297,5 +280,6 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
     public boolean scrolled(int i) {
         return false;
     }
+
 }
 

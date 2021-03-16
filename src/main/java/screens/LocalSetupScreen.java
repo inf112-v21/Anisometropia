@@ -162,10 +162,10 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
         if (Gdx.input.justTouched()) {
 //            System.out.println("Mouse position: (" + Math.round(mousePosition.x) + ", " + Math.round(mousePosition.y) + ")");
-            editNameIndexActive = indexOfButtonUnderMousePosition(editNameButtons, mousePosition, playersAdded);
+            editNameIndexActive = indexOfCurrentNameEditUnderMousePosition(editNameButtons, mousePosition, playersAdded);
 
-            if(isMouseOnButton(backBtn, mousePosition)) backButtonClicked();
-            if(isMouseOnButton(startBtn, mousePosition)) startButtonClicked();
+            if(backBtn.isMouseOnButton(mousePosition)) backButtonClicked();
+            if(startBtn.isMouseOnButton(mousePosition)) startButtonClicked();
 
             ifClickedSwitchPlayerOrAiStatus(mousePosition);
             ifClickedRemoveAddedPlayer(mousePosition);
@@ -173,14 +173,9 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         }
     }
 
-    private boolean isMouseOnButton(GameButton gameButton, Vector3 mousePosition) {
-        return (mousePosition.x > gameButton.getX() && mousePosition.x < (gameButton.getX() + gameButton.getWidth()) &&
-                mousePosition.y > gameButton.getY() && mousePosition.y < (gameButton.getY() + gameButton.getHeight()));
-    }
-
-    private int indexOfButtonUnderMousePosition(GameButton[] gameButton, Vector3 mousePosition, int totalToCheck) {
+    private int indexOfCurrentNameEditUnderMousePosition(GameButton[] gameButton, Vector3 mousePosition, int totalToCheck) {
         for (int i = 0; i < totalToCheck; i++) {
-            if (isMouseOnButton(gameButton[i], mousePosition)) {
+            if (gameButton[i].isMouseOnButton(mousePosition)) {
                 return i;
             }
         }
@@ -188,7 +183,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void ifClickedAddPlayer(Vector3 mousePosition) {
-        if(isMouseOnButton(addBtn, mousePosition)) {
+        if(addBtn.isMouseOnButton(mousePosition)) {
             if (playersAdded < maxPlayers) {
                 playersAdded++;
                 allStringBuilders[playersAdded -1].delete(0, allStringBuilders[playersAdded -1].length());
@@ -200,7 +195,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
     private void ifClickedRemoveAddedPlayer(Vector3 mousePosition) {
         for (int i = 0; i < playersAdded; i++) {
-            if(isMouseOnButton(removeButtons[i], mousePosition)) {
+            if(removeButtons[i].isMouseOnButton(mousePosition)) {
                 for (int j = i; j < playersAdded; j++) {
                     if(j != playersAdded - 1) {
                         allStringBuilders[j].delete(0, allStringBuilders[j].length());
@@ -218,7 +213,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
     private void ifClickedSwitchPlayerOrAiStatus(Vector3 mousePosition) {
         for (int i = 0; i < playersAdded; i++) {
-            if(isMouseOnButton(plOrAiButtons[i], mousePosition)) {
+            if(plOrAiButtons[i].isMouseOnButton(mousePosition)) {
                 if (isAi[i]) {
                     isAi[i] = false;
                     plOrAiButtons[i].setTexture(plSelected);
@@ -233,7 +228,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
     private void ifHoveredMakeRemoveButtonBlue(Vector3 mousePosition) {
         for (int i = 1; i < playersAdded; i++) {
-            if(isMouseOnButton(removeButtons[i], mousePosition)) {
+            if(removeButtons[i].isMouseOnButton(mousePosition)) {
                 removeButtons[i].setTexture(removeHovered);
             }else{
                 removeButtons[i].setTexture(remove);
@@ -243,7 +238,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
     private void ifHoveredMakeAiSelectorBlue(Vector3 mousePosition) {
         for (int i = 0; i < playersAdded; i++) {
-            if(isMouseOnButton(plOrAiButtons[i], mousePosition)) {
+            if(plOrAiButtons[i].isMouseOnButton(mousePosition)) {
                 if(isAi[i]){
                     plOrAiButtons[i].setTexture(aiSelectedHovered);
                 } else {
@@ -260,7 +255,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void ifHoveredMakeAddButtonBlue(Vector3 mousePosition) {
-        if (isMouseOnButton(addBtn, mousePosition)) {
+        if (addBtn.isMouseOnButton(mousePosition)) {
             addBtn.setTexture(addHovered);
         }else{
             addBtn.setTexture(add);
@@ -268,7 +263,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void ifHoveredMakeStartButtonBlueAndJumbled(Vector3 mousePosition) {
-        if (isMouseOnButton(startBtn, mousePosition)) {
+        if (startBtn.isMouseOnButton(mousePosition)) {
             startBtn.setTexture(startJumbled);
         }else{
             startBtn.setTexture(start);
@@ -276,7 +271,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void ifHoveredMakeBackButtonBlueAndJumbled(Vector3 mousePosition) {
-        if (isMouseOnButton(backBtn, mousePosition)) {
+        if (backBtn.isMouseOnButton(mousePosition)) {
             backBtn.setTexture(backJumbled);
         }else{
             backBtn.setTexture(back);
