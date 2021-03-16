@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL20;
 
 import java.io.IOException;
 
-public class GameScreen extends AbstractScreen implements InputProcessor {
+public class PlayScreen extends AbstractScreen implements InputProcessor {
     public static final int SCREEN_WIDTH = 1440;
     public static final int SCREEN_HEIGHT = 832;
     public static final int GAMEBOARD_PLACEMENT_X = -32;
@@ -35,30 +35,7 @@ public class GameScreen extends AbstractScreen implements InputProcessor {
 
     launcher.GameApplication gameApplication;
 
-//    @Override
-//    public void create() {
-//        batch = new SpriteBatch();
-//
-//        camera = new OrthographicCamera();
-//        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        camera.translate(GAMEBOARD_PLACEMENT_X, GAMEBOARD_PLACEMENT_Y);
-//        camera.update();
-//
-//        controlCamera = new OrthographicCamera();
-//        controlCamera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//        controlCamera.translate(-32, -32);
-//        controlCamera.update();
-//
-//        gameMap = new GraphicalGameMap();
-//        gameLogic = new GameLogic(gameMap);
-//        player = gameLogic.getCurrentPlayer();
-//
-//        controlScreen = new ControlScreen(gameLogic);
-//
-//        Gdx.input.setInputProcessor(this);
-//    }
-
-    public GameScreen(GameApplication gameApplication) {
+    public PlayScreen(GameApplication gameApplication) {
         super(gameApplication);
         this.gameApplication = gameApplication;
         batch = gameApplication.spriteBatch;

@@ -15,19 +15,19 @@ public class GameScreenManager {
         CREDITS
     }
 
-    GameScreen gameScreen;
+    PlayScreen playScreen;
 
     public GameScreenManager(GameApplication gameApplication) {
         this.gameApplication = gameApplication;
-        initializeGameScreen();
+        initializeGameScreens();
         setScreen(STATE.MENU);
     }
 
-    private void initializeGameScreen() {
+    private void initializeGameScreens() {
         this.gameScreens = new HashMap<>();
         this.gameScreens.put(STATE.MENU, new MainMenuScreen(gameApplication));
-        gameScreen = new GameScreen(gameApplication);
-        this.gameScreens.put(STATE.PLAY, gameScreen);
+        playScreen = new PlayScreen(gameApplication);
+        this.gameScreens.put(STATE.PLAY, playScreen);
         this.gameScreens.put(STATE.LOCAL_SETUP, new LocalSetupScreen(gameApplication));
     }
 
@@ -41,8 +41,8 @@ public class GameScreenManager {
         }
     }
 
-    public GameScreen getGameScreen() {
-        return gameScreen;
+    public PlayScreen getGameScreen() {
+        return playScreen;
     }
 
 }

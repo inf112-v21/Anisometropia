@@ -1,6 +1,5 @@
 package map;
 
-import assets.Wall;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,8 +11,8 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import actor.Player;
 
-import static screens.GameScreen.ASSETS_IMAGE_SIZE;
-import static screens.GameScreen.PIXEL_SCALE_FOR_ASSETS;
+import static screens.PlayScreen.ASSETS_IMAGE_SIZE;
+import static screens.PlayScreen.PIXEL_SCALE_FOR_ASSETS;
 
 public class GraphicalGameMap extends GameMap {
     TiledMap tiledMap;
