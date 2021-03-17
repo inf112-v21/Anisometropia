@@ -106,7 +106,8 @@ public class GameLogic {
     }
 
     private void receiveCards() throws IOException {
-        mp.receive();
+        String toReceive = mp.receive();
+
     }
 
     /**

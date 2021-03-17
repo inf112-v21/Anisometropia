@@ -20,8 +20,6 @@ public class Laser {
         switch (tileID) {
             case (laserBeamHorizontal):
             case (laserBeamVertical):
-            case (laserBeamCrossing):
-
                 if (player.laserBeamReached) {
                     player.playerGetsDamaged = true;
                     player.updateDamageTokens();
@@ -31,11 +29,20 @@ public class Laser {
 //Player is to be damaged and loose 2 health points.
             case (doubleLaserBeamHorizontal):
             case (doubleLaserBeamVertical):
+            case (laserBeamCrossing):
+                if(player.laserBeamReached){
+                    player.playerGetsDamaged = true;
+                    player.updateDamageTokens();
+                }
+                break;
+
             case (doubleLaserBeamCrossing):
                 if(player.laserBeamReached){
                     player.playerGetsDamaged = true;
                     player.updateDamageTokens();
                 }
+                break;
+
             default:
                 throw new IllegalStateException("Unexpected value for Laser Class: " + tileID);
         }

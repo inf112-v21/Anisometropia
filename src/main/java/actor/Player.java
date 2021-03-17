@@ -49,6 +49,14 @@ public class Player implements IPlayer {
 
     //TODO Check for walls.
     public boolean canMove(int dx, int dy) {
+        //  isDestinationWithinBounds
+        //      isThereWallOnCurrentPosition)
+        //           canDirectionOfMoveBePerformedOnThisTypeOfWall
+        //                 isThereWallOnDestinationPosition
+        //                      canDirectionOfMoveBePerformedOnThisTypeOfWall
+        //      isThereWallOnDestinationPosition
+        //          canDirectionOfMoveBePerformedOnThisTypeOfWall
+
         return (x+dx >= 0 && x+dx < gameMap.getWidth()) && (y+dy >= 0 && y+dy < gameMap.getHeight());
     }
 
