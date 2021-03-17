@@ -147,6 +147,10 @@ public class GameLogic {
                 gameOver = true;
             }
 
+            if(getCurrentPlayer().playerPoweredDown) {
+                getCurrentPlayer().playerPoweredDown = false;
+            }
+
             wall.isPlayerOnWall(player, gameMap);
         }
     }

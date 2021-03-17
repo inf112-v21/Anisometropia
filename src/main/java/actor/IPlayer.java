@@ -99,7 +99,7 @@ public interface IPlayer {
      * then this method will update the damage tokens of this player accordingly.
      * Also handles players that are too damaged to continue the game.
      */
-    void updateDamageTokens();
+    void updateDamageTokens(int amountOfDamage);
 
     /**
      * Checks if a player is too damaged to continue the game. If a player reaches 10 damage tokens

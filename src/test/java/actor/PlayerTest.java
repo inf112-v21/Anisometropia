@@ -133,26 +133,18 @@ public class PlayerTest {
     @Test
     public void testDoesPlayerGetDamagedIfHurt() {
         int currentHealth = player.getDmgTokens();
-        player.playerGetsDamaged = true;
-        player.updateDamageTokens();
+        player.updateDamageTokens(1);
         assertEquals(player.getDmgTokens(), currentHealth + 1);
     }
 
-    @Test
-    public void dontUpdateDamageTokensIfPlayerNotHurt() {
-        int currentHealth = player.getDmgTokens();
-        player.playerGetsDamaged = false;
-        player.updateDamageTokens();
-        assertEquals(player.getDmgTokens(), currentHealth);
-    }
+
     
     @Test
     public void checkIfPlayerDiesBecauseOfTooMuchDamage() {
         player.setDmgTokens(9);
         player.setLifeTokens(3);
         int currentLife = player.getLifeTokens();
-        player.playerGetsDamaged = true;
-        player.updateDamageTokens();
+        player.updateDamageTokens(1);
         assertEquals(player.getLifeTokens(),currentLife - 1);
         assertTrue(player.isPlayerDead());
     }

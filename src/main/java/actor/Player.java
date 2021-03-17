@@ -9,13 +9,13 @@ public class Player implements IPlayer {
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     int dmgTokens;
     int lifeTokens;
-    public boolean playerGetsDamaged = false;
     public boolean isDead = false;
     public boolean isVictorious = false;
     public boolean[] flagsReached;
     public boolean conveyorBeltReached = true;
     public boolean laserBeamReached = true;
     public boolean wallHasBeenReached = true;
+    public boolean playerPoweredDown = false;
     public ArrayList<RegisterCard> dealtRegisterCards;
     public ArrayList<RegisterCard> chosenRegisterCards;
     GameMap gameMap;
@@ -133,12 +133,12 @@ public class Player implements IPlayer {
 
     public void powerDownRobot() {
         //TODO : the player should wait out one round if powered down.
+        playerPoweredDown = true;
         setDmgTokens(0);
     }
 
-    public void updateDamageTokens() {
-        if (playerGetsDamaged)
-            setDmgTokens(getDmgTokens() + 1);
+    public void updateDamageTokens(int amountOfDamage) {
+        setDmgTokens(getDmgTokens() + amountOfDamage);
         checkIfPlayerTooDamaged();
     }
 

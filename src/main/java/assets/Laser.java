@@ -21,8 +21,7 @@ public class Laser {
             case (laserBeamHorizontal):
             case (laserBeamVertical):
                 if (player.laserBeamReached) {
-                    player.playerGetsDamaged = true;
-                    player.updateDamageTokens();
+                    player.updateDamageTokens(1);
                 }
                 break;
 
@@ -31,15 +30,13 @@ public class Laser {
             case (doubleLaserBeamVertical):
             case (laserBeamCrossing):
                 if(player.laserBeamReached){
-                    player.playerGetsDamaged = true;
-                    player.updateDamageTokens();
+                    player.updateDamageTokens(2);
                 }
                 break;
 
             case (doubleLaserBeamCrossing):
                 if(player.laserBeamReached){
-                    player.playerGetsDamaged = true;
-                    player.updateDamageTokens();
+                    player.updateDamageTokens(2);
                 }
                 break;
 
