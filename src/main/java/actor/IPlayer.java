@@ -1,5 +1,9 @@
 package actor;
 
+import cards.RegisterCard;
+
+import java.util.ArrayList;
+
 public interface IPlayer {
 
     /**
@@ -95,9 +99,9 @@ public interface IPlayer {
     int getDmgTokens();
 
     /**
-     * If a player is damaged or if a player chooses to power down,
-     * then this method will update the damage tokens of this player accordingly.
-     * Also handles players that are too damaged to continue the game.
+     * If a player is damaged then this method will update the damage tokens of this player accordingly.
+     * Also check if a player is too damaged to continue the game.
+     * @param amountOfDamage How many damage tokens this player earns from getting damaged.
      */
     void updateDamageTokens(int amountOfDamage);
 
@@ -106,6 +110,39 @@ public interface IPlayer {
      * then it should die.
      */
     void checkIfPlayerTooDamaged();
+
+
+    /**
+     * Will power down the robot. When a robot is powered down it´s damage tokens is reset but the
+     * robot is not allowed to make any moves for that round.
+     */
+    void powerDownRobot();
+
+    /**
+     * Will set the dealt register cards the player was given for one round.
+     * Different from round to round.
+     * @param dealtCards The register cards dealt
+     */
+    void setDealtRegisterCards(ArrayList<RegisterCard> dealtCards);
+
+    /**
+     * Will set the cards that the player chose from the dealt register cards for that round.
+     * @param chosenCards The chosen cards of a player
+     */
+    void setChosenRegisterCards(ArrayList<RegisterCard> chosenCards);
+
+    /**
+     *
+     * @return the dealt register cards of a player.
+     */
+    ArrayList<RegisterCard> getDealtRegisterCards();
+
+    /**
+     *
+     * @return the chosen register cards of a player.
+     */
+    ArrayList<RegisterCard> getChosenRegisterCards();
+
 
     /**
      * Sets Boolean isDead to false

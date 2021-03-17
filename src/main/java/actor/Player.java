@@ -131,16 +131,17 @@ public class Player implements IPlayer {
             playerDies();
     }
 
+    public void updateDamageTokens(int amountOfDamage) {
+        setDmgTokens(getDmgTokens() + amountOfDamage);
+        checkIfPlayerTooDamaged();
+    }
+
     public void powerDownRobot() {
         //TODO : the player should wait out one round if powered down.
         playerPoweredDown = true;
         setDmgTokens(0);
     }
 
-    public void updateDamageTokens(int amountOfDamage) {
-        setDmgTokens(getDmgTokens() + amountOfDamage);
-        checkIfPlayerTooDamaged();
-    }
 
     public void setDealtRegisterCards(ArrayList<RegisterCard> dealtCards) { dealtRegisterCards = dealtCards; }
 
@@ -171,8 +172,6 @@ public class Player implements IPlayer {
         return(flagsReached[3]);
     }
 
-    public Boolean getVictorious() {
-        return isVictorious;
-    }
+    public boolean getVictorious() { return isVictorious; }
 
 }
