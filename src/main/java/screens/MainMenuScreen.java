@@ -211,7 +211,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void show() {
-        if (musicPlaying) menuMusic.play();
+//        if (musicPlaying) menuMusic.play();
     }
 
     @Override
