@@ -25,7 +25,6 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     TextureRegion[][] localSetupRegionBy256, localSetupRegionBy128, localSetupRegionBy32, localSetupRegionBy64;
     TextureRegion selectMap, add, addHovered, remove, removeHovered, start, back, startJumbled, backJumbled;
     TextureRegion plSelected, plSelectedHovered, aiSelected, aiSelectedHovered, scrollLeft, scrollRight, moveUp, moveDown;
-    TextureRegion character1, character2, character3, character4;
     TextureRegion nameEditSquareActive, nameEditSquareInactive;
 
     GameButton startBtn, backBtn, addBtn;
@@ -318,10 +317,10 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     private void startButtonClicked() {
         GraphicalGameMap gameMap = new GraphicalGameMap();
         PlayerQueue playerQueue = new PlayerQueue();
-        int spawnIncrementerY = 2;
+        int spawnIncrementerX = 2;
         for (int i = 0; i < playersAdded; i++) {
-            playerQueue.add(new Player(spawnIncrementerY, 2, allStringBuilders[i].toString(), gameMap, i));
-            spawnIncrementerY++;
+            playerQueue.add(new Player(spawnIncrementerX, 2, allStringBuilders[i].toString(), gameMap, i));
+            spawnIncrementerX++;
         }
         gameApplication.gameScreenManager.initPlayScreen(gameMap, playerQueue);
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);
