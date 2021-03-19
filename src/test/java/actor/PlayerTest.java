@@ -12,7 +12,7 @@ import static org.junit.Assert.*;
 public class PlayerTest {
 
     TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
-    Player player = new Player(1,1,"player", simpleGameMap);
+    Player player = new Player(1,1,"player", simpleGameMap, 0);
 
     @Test
     public void testPlayerMoveXDirection() {

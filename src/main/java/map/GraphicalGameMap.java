@@ -1,5 +1,6 @@
 package map;
 
+import actor.Player;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +10,6 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import actor.Player;
 
 import static screens.PlayScreen.ASSETS_IMAGE_SIZE;
 import static screens.PlayScreen.PIXEL_SCALE_FOR_ASSETS;
@@ -20,7 +20,11 @@ public class GraphicalGameMap extends GameMap {
     TiledMapTileLayer boardLayer, laserLayer, assetLayer, playerLayer;
 
     TextureRegion[][] playerImages;
-    TiledMapTileLayer.Cell playerCellNorth, playerCellEast, playerCellSouth, playerCellWest, playerWonCell, playerDiedCell;
+    TiledMapTileLayer.Cell[]player1Cells = new TiledMapTileLayer.Cell[6];
+    TiledMapTileLayer.Cell[]player2Cells = new TiledMapTileLayer.Cell[6];
+    TiledMapTileLayer.Cell[]player3Cells = new TiledMapTileLayer.Cell[6];
+    TiledMapTileLayer.Cell[]player4Cells = new TiledMapTileLayer.Cell[6];
+    TiledMapTileLayer.Cell[][] playerCells = new TiledMapTileLayer.Cell[4][6];;
 
     public GraphicalGameMap() {
         tiledMap = new TmxMapLoader().load("gameboard2.tmx");
@@ -31,14 +35,42 @@ public class GraphicalGameMap extends GameMap {
         assetLayer = (TiledMapTileLayer) tiledMap.getLayers().get("AssetLayer");
         laserLayer = (TiledMapTileLayer) tiledMap.getLayers().get("LaserLayer");
 
-        playerImages  = TextureRegion.split(new Texture("player.png"), 300, 300);
-        playerCellNorth = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][1]));
-        playerCellEast = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][2]));
-        playerCellSouth = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));
-        playerCellWest = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][0]));
-        playerWonCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][2]));
-        playerDiedCell = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1]));
+        playerImages  = TextureRegion.split(new Texture("charactersSpriteSheet300.png"), 300, 300);
 
+        player1Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][1])); // north
+        player1Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1])); // east
+        player1Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));// south
+        player1Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][0])); // west
+        player1Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][0]));  // won
+        player1Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][1])); // died
+
+        player2Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][3])); // north
+        player2Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][3])); // east
+        player2Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][2]));// south
+        player2Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][2])); // west
+        player2Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][2]));  // won
+        player2Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][3])); // died
+
+        player3Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][1])); // north
+        player3Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][1]));  // east
+        player3Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][0])); // south
+        player3Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][0]));  // west
+        player3Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][0]));   // won
+        player3Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][1]));  // died
+
+        player4Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][3])); // north
+        player4Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][3]));  // east
+        player4Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][2])); // south
+        player4Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][2]));  // west
+        player4Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][2]));   // won
+        player4Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][3]));  // died
+
+
+
+        playerCells[0] = player1Cells;
+        playerCells[1] = player2Cells;
+        playerCells[2] = player3Cells;
+        playerCells[3] = player4Cells;
 
         /*
         Pits
@@ -137,24 +169,24 @@ public class GraphicalGameMap extends GameMap {
     }
 
     public void setPlayerPosition(int x, int y, Player player) {
-        TiledMapTileLayer.Cell cellToBeDisplayed = playerCellNorth;
+        TiledMapTileLayer.Cell cellToBeDisplayed = playerCells[player.getCharacterID()][0];
         if (player.isPlayerDead()) {
-            cellToBeDisplayed = playerDiedCell;
+            cellToBeDisplayed =  playerCells[player.getCharacterID()][5];
         } else if (player.getVictorious()) {
-            cellToBeDisplayed = playerWonCell;
+            cellToBeDisplayed =  playerCells[player.getCharacterID()][4];
         } else {
             switch (player.getDirection()) {
                 case (0):
-                    cellToBeDisplayed = playerCellNorth;
+                    cellToBeDisplayed =  playerCells[player.getCharacterID()][0];
                     break;
                 case (1):
-                    cellToBeDisplayed = playerCellEast;
+                    cellToBeDisplayed =  playerCells[player.getCharacterID()][1];
                     break;
                 case (2):
-                    cellToBeDisplayed = playerCellSouth;
+                    cellToBeDisplayed =  playerCells[player.getCharacterID()][2];
                     break;
                 case (3):
-                    cellToBeDisplayed = playerCellWest;
+                    cellToBeDisplayed =  playerCells[player.getCharacterID()][3];
                     break;
             }
         }

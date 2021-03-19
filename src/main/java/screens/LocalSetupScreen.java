@@ -24,7 +24,8 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     Texture localSetupTexture;
     TextureRegion[][] localSetupRegionBy256, localSetupRegionBy128, localSetupRegionBy32, localSetupRegionBy64;
     TextureRegion selectMap, add, addHovered, remove, removeHovered, start, back, startJumbled, backJumbled;
-    TextureRegion plSelected, plSelectedHovered, aiSelected, aiSelectedHovered, scrollLeft, face, scrollRight, moveUp, moveDown;
+    TextureRegion plSelected, plSelectedHovered, aiSelected, aiSelectedHovered, scrollLeft, scrollRight, moveUp, moveDown;
+    TextureRegion character1, character2, character3, character4;
     TextureRegion nameEditSquareActive, nameEditSquareInactive;
 
     GameButton startBtn, backBtn, addBtn;
@@ -37,6 +38,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     GameButton[] plOrAiButtons;
 
     TextureRegion[] numbers;
+    TextureRegion[] characters;
 
     BitmapFont font;
 
@@ -79,7 +81,6 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         scrollRight = localSetupRegionBy32[10][1];
         moveUp = localSetupRegionBy32[10][2];
         moveDown = localSetupRegionBy32[10][3];
-        face = localSetupRegionBy32[16][2];
         plSelected = localSetupRegionBy128[8][0];
         aiSelected = localSetupRegionBy128[8][1];
         plSelectedHovered = localSetupRegionBy128[7][0];
@@ -95,9 +96,13 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
         numbers = new TextureRegion[maxPlayers];
         for (int i = 0; i < maxPlayers; i++) {
-            numbers[i] = (localSetupRegionBy32[9][i]);
+            numbers[i] = localSetupRegionBy32[9][i];
         }
 
+        characters = new TextureRegion[4]; // TODO: should be "maxPlayers" instead of 4, change when all 8 characters are done!
+        for (int i = 0; i < maxPlayers; i++) {
+            characters[i] = localSetupRegionBy32[16][4+i];
+        }
 
         for (int i = 0; i < maxPlayers; i++) {
             editNameButtons[i] = new GameButton(colElemPos[1], rowElemPos[i], 256,32, false, nameEditSquareInactive);
@@ -280,8 +285,8 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
     public void showAddedPlayerRows(SpriteBatch batch, int index) {
         batch.draw(numbers[index], colElemPos[0], rowElemPos[index], numbers[index].getRegionWidth(), numbers[index].getRegionHeight());
+        batch.draw(characters[index], scrollLeftButtons[index].getX()+scrollLeftButtons[index].getWidth(), scrollLeftButtons[index].getY(), characters[index].getRegionHeight(), characters[index].getRegionHeight());
         batch.draw(scrollLeftButtons[index].getTexture(), scrollLeftButtons[index].getX(), scrollLeftButtons[index].getY(), scrollLeftButtons[index].getWidth(), scrollLeftButtons[index].getHeight());
-        batch.draw(face, scrollLeftButtons[index].getX()+scrollLeftButtons[index].getWidth(), scrollLeftButtons[index].getY(), face.getRegionHeight(), face.getRegionHeight());
         batch.draw(scrollRightButtons[index].getTexture(), scrollRightButtons[index].getX(), scrollRightButtons[index].getY(), scrollRightButtons[index].getWidth(), scrollRightButtons[index].getHeight());
         batch.draw(plOrAiButtons[index].getTexture(),scrollRightButtons[index].getX() + scrollRightButtons[index].getWidth()+2, scrollRightButtons[index].getY(), plSelected.getRegionWidth(), plSelected.getRegionHeight());
         batch.draw(moveUpButtons[index].getTexture(), moveUpButtons[index].getX(), moveUpButtons[index].getY(), moveUpButtons[index].getWidth(), moveUpButtons[index].getHeight());
@@ -313,10 +318,10 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     private void startButtonClicked() {
         GraphicalGameMap gameMap = new GraphicalGameMap();
         PlayerQueue playerQueue = new PlayerQueue();
-        int k = 2;
+        int spawnIncrementerY = 2;
         for (int i = 0; i < playersAdded; i++) {
-            playerQueue.add(new Player(k, 2, allStringBuilders[i].toString(), gameMap));
-            k++;
+            playerQueue.add(new Player(spawnIncrementerY, 2, allStringBuilders[i].toString(), gameMap, i));
+            spawnIncrementerY++;
         }
         gameApplication.gameScreenManager.initPlayScreen(gameMap, playerQueue);
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);

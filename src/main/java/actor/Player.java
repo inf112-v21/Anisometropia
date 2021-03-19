@@ -20,15 +20,17 @@ public class Player implements IPlayer {
     public ArrayList<RegisterCard> chosenRegisterCards;
     GameMap gameMap;
     public String playerName;
+    private int characterID;
 
-    public Player(int x, int y, String playerName, GameMap gameMap) {
+    public Player(int x, int y, String playerName, GameMap gameMap, int characterID) {
         this.x = this.spawnX = x;
         this.y = this.spawnY = y;
-        dmgTokens = 4;
-        lifeTokens = 3;
         this.playerName = playerName;
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
+        this.characterID = characterID;
+        dmgTokens = 4;
+        lifeTokens = 3;
         flagsReached = new boolean[4];
     }
 
@@ -174,4 +176,7 @@ public class Player implements IPlayer {
 
     public boolean getVictorious() { return isVictorious; }
 
+    public int getCharacterID() {
+        return characterID;
+    }
 }
