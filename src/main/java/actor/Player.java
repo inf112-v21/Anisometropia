@@ -20,7 +20,7 @@ public class Player implements IPlayer {
     public ArrayList<RegisterCard> chosenRegisterCards;
     GameMap gameMap;
     public String playerName;
-    private int characterID;
+    private final int characterID;
 
     public Player(int x, int y, String playerName, GameMap gameMap, int characterID) {
         this.x = this.spawnX = x;

@@ -22,7 +22,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
     Texture menuBackground;
     Texture mainMenuTexture;
     TextureRegion[][] mainMenuRegionBy256, mainMenuRegionBy128, mainMenuRegionBy64, mainMenuRegionBy32, menuBackGroundRegionBy1440;
-    TextureRegion playOnNet, playOnNetJumbled, playLocal, playLocalJumbled, quit, quitJumbled, speakerOn, speakerOff;
+    TextureRegion playOnNet, playOnNetJumbled, playLocal, playLocalJumbled, quit, quitJumbled, speakerOn, speakerOnBlue, speakerOff, speakerOffBlue;
     Texture menuBackgroundSpriteSheet;
     Animation<TextureRegion> animRightArrow, animLeftArrow, animBackground;
     int arrowRightPadX = -140;
@@ -74,6 +74,8 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         quitJumbled = mainMenuRegionBy128[4][1];
         speakerOn = mainMenuRegionBy32[17][0];
         speakerOff = mainMenuRegionBy32[17][1];
+        speakerOnBlue = mainMenuRegionBy32[18][0];
+        speakerOffBlue = mainMenuRegionBy32[18][1];
 
         playLocalBtn = new GameButton(462, 500, 512,64, true, playLocal);
         playOnNetBtn = new GameButton(462, 400, 512,64, true, playOnNet);
@@ -128,6 +130,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         ifHoveredDrawArrowsAroundPlayLocalButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
         ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
         ifHoveredDrawArrowsAroundQuitButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
+        ifHoveredMakeSpeakerButtonBlue(mousePosition);
 
         gameApplication.getSpriteBatch().draw(playLocalBtn.getTexture(), playLocalBtn.getX(), playLocalBtn.getY(), playLocalBtn.getWidth(), playLocalBtn.getHeight());
         gameApplication.getSpriteBatch().draw(playOnNetBtn.getTexture(), playOnNetBtn.getX(), playOnNetBtn.getY(), playOnNetBtn.getWidth(), playOnNetBtn.getHeight());
@@ -179,6 +182,16 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         }
     }
 
+    private void ifHoveredMakeSpeakerButtonBlue(Vector3 mousePosition) {
+        if (speaker.isMouseOnButton(mousePosition)) {
+            if (musicPlaying) speaker.setTexture(speakerOnBlue);
+            else speaker.setTexture(speakerOffBlue);
+        } else {
+            if (musicPlaying) speaker.setTexture(speakerOn);
+            else speaker.setTexture(speakerOff);
+        }
+    }
+
     private void ifHoveredDrawArrowsAroundPlayLocalButton(Vector3 hover,  TextureRegion currentRightArrowFrame, TextureRegion currentLeftArrowFrame) {
         if(playLocalBtn.isMouseOnButton(hover)) {
             playLocalBtn.setTexture(playLocalJumbled);
@@ -211,7 +224,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void show() {
-//        if (musicPlaying) menuMusic.play();
+//        if (musicPlaying) menuMusic.play(); // has been commented out while doing work on game
     }
 
     @Override
