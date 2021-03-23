@@ -79,7 +79,7 @@ public class GameLogic {
 
     /**
      * Saves player's chosen cards and ends the turn.
-     * @param chosenCards
+     * @param chosenCards cards player has chosen.
      */
     public void finishTurn(ArrayList<RegisterCard> chosenCards) throws IOException {
         if(mp != null) {
@@ -97,7 +97,7 @@ public class GameLogic {
         String toSend = "";
         for(int i = 0; i <= 6; i++) {
             for(RegisterCard playerCard : getCurrentPlayer().getChosenRegisterCards()) {
-                if(deckOfRegisterCards.uniqueCards.get(i).getGraphicLocation() == playerCard.getGraphicLocation()) {
+                if(deckOfRegisterCards.uniqueCards.get(i).getCardType() == playerCard.getCardType()) {
                     toSend += i;
                     mp.send(toSend);
                 }

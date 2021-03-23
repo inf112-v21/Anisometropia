@@ -29,6 +29,7 @@ public class ControlScreen extends InputAdapter {
     private final Texture lifeToken;
     private final Texture damageTokenPositionIndicator;
     private final ArrayList<Texture> registerCardTextures = new ArrayList<>();
+    private final ArrayList<Texture> dealtRegisterCardTextures = new ArrayList<>();
 
     private final float cardWidth = 64, cardHeight = 64;
 
@@ -80,9 +81,9 @@ public class ControlScreen extends InputAdapter {
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
 
-        /**
-         * If the host button is pressed then this should call the MultiPlayer constructor and establish a connection.
-         * The join button is used for other players to connect to that server.
+        /*
+          If the host button is pressed then this should call the MultiPlayer constructor and establish a connection.
+          The join button is used for other players to connect to that server.
          */
         hostButton = new GameButton(1100,700, 85,85, true, hostButtonTexture);
         joinButton = new GameButton(1200, 700,85,85,true, joinButtonTexture);
@@ -90,6 +91,14 @@ public class ControlScreen extends InputAdapter {
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
         damageTokenPositionIndicator = new Texture(Gdx.files.classpath("damageTokenPositionIndicator.png"));
+
+        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/Move1.png")));
+        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/Move2.png")));
+        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/Move3.png")));
+        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/BackUp.png")));
+        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/RotateLeft.png")));
+        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/RotateRight.png")));
+        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/UTurn.png")));
 
         initializeCards();
 
@@ -224,9 +233,9 @@ public class ControlScreen extends InputAdapter {
             cardY[i] = 64;
             isCardChosen[i] = false;
         }
-        registerCardTextures.clear();
+        dealtRegisterCardTextures.clear();
         chosenCards = new ArrayList<>(Collections.nCopies(5,
-                new RegisterCard("", 0, true)));
+                new RegisterCard(0, 0, true)));
         numCardsChosen = 0;
     }
 
@@ -284,8 +293,8 @@ public class ControlScreen extends InputAdapter {
     private void drawCardsOfCurrentPlayer(SpriteBatch batch) {
         for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
             RegisterCard registerCard = gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i);
-            registerCardTextures.add(new Texture(Gdx.files.internal(registerCard.getGraphicLocation())));
-            batch.draw(registerCardTextures.get(i), cardX[i], cardY[i], cardWidth, cardHeight);
+            dealtRegisterCardTextures.add(registerCardTextures.get(registerCard.getCardType()));
+            batch.draw(dealtRegisterCardTextures.get(i), cardX[i], cardY[i], cardWidth, cardHeight);
         }
     }
 
@@ -326,7 +335,7 @@ public class ControlScreen extends InputAdapter {
         lifeToken.dispose();
         batch.dispose();
         smallFont.dispose();
-        for (Texture regCardTexture : registerCardTextures) {
+        for (Texture regCardTexture : dealtRegisterCardTextures) {
             regCardTexture.dispose();
         }
     }

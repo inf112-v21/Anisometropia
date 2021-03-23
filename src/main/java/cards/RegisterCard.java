@@ -6,12 +6,13 @@ import actor.Player;
  * Contains methods and variables that pertain to register cards.
  */
 public class RegisterCard {
-    String graphicLocation; // File location of card graphics
+    //String graphicLocation; // File location of card graphics
+    int cardType;
     int amountToMoveOrRotate;
     boolean isMovementCard; // Denotes whether card affects movement or direction.
 
-    public RegisterCard(String graphicLocation, int amountToMoveOrRotate, boolean isMovementCard) {
-        this.graphicLocation = graphicLocation;
+    public RegisterCard(int cardType, int amountToMoveOrRotate, boolean isMovementCard) {
+        this.cardType = cardType;
         this.amountToMoveOrRotate = amountToMoveOrRotate;
         this.isMovementCard = isMovementCard;
     }
@@ -25,5 +26,5 @@ public class RegisterCard {
         else { player.rotate(amountToMoveOrRotate); }
     }
 
-    public String getGraphicLocation() { return graphicLocation; }
+    public int getCardType() { return cardType; }
 }
