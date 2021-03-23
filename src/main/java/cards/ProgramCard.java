@@ -3,25 +3,24 @@ package cards;
 import actor.Player;
 
 /**
- * Contains methods and variables that pertain to register cards.
+ * Contains methods and variables that pertain to program cards.
  */
-public class RegisterCard {
-    //String graphicLocation; // File location of card graphics
+public class ProgramCard {
     int cardType;
     int amountToMoveOrRotate;
     boolean isMovementCard; // Denotes whether card affects movement or direction.
 
-    public RegisterCard(int cardType, int amountToMoveOrRotate, boolean isMovementCard) {
+    public ProgramCard(int cardType, int amountToMoveOrRotate, boolean isMovementCard) {
         this.cardType = cardType;
         this.amountToMoveOrRotate = amountToMoveOrRotate;
         this.isMovementCard = isMovementCard;
     }
 
     /**
-     * Executes the action of the register card
-     * @param player is the player whose register card is executing.
+     * Executes the action of the program card
+     * @param player is the player whose program card is executing.
      */
-    public void executeRegister(Player player) {
+    public void executeProgram(Player player) {
         if(isMovementCard) { player.moveForward(amountToMoveOrRotate); }
         else { player.rotate(amountToMoveOrRotate); }
     }

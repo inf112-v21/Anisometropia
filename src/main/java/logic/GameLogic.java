@@ -4,8 +4,8 @@ import actor.Player;
 import assets.ConveyorBelts;
 import assets.Laser;
 import assets.Wall;
-import cards.DeckOfRegisterCards;
-import cards.RegisterCard;
+import cards.DeckOfProgramCards;
+import cards.ProgramCard;
 import map.GameMap;
 import p2p.Multiplayer;
 
@@ -39,7 +39,7 @@ public class GameLogic {
         wall = new Wall();
 
 //        playerStartPos();
-        dealRegisterCards();
+        dealProgramCards();
     }
 
 //    public void playerStartPos() {
@@ -70,10 +70,10 @@ public class GameLogic {
         }
     }
 
-    public void dealRegisterCards() {
-        DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
+    public void dealProgramCards() {
+        DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
         for (Player player : playerQueue.getPlayerQueue()) {
-            player.setDealtRegisterCards(deckOfRegisterCards.dealNineCards());
+            player.setDealtProgramCards(deckOfProgramCards.dealNineCards());
         }
     }
 
@@ -81,23 +81,23 @@ public class GameLogic {
      * Saves player's chosen cards and ends the turn.
      * @param chosenCards cards player has chosen.
      */
-    public void finishTurn(ArrayList<RegisterCard> chosenCards) throws IOException {
+    public void finishTurn(ArrayList<ProgramCard> chosenCards) throws IOException {
         if(mp != null) {
-            getCurrentPlayer().setChosenRegisterCards(chosenCards);
+            getCurrentPlayer().setChosenProgramCards(chosenCards);
           //  sendCards();
           //  receiveCards();
         }
         else {
-            getCurrentPlayer().setChosenRegisterCards(chosenCards);
+            getCurrentPlayer().setChosenProgramCards(chosenCards);
         }
     }
 
     public void sendCards() throws IOException {
-        DeckOfRegisterCards deckOfRegisterCards = new DeckOfRegisterCards();
+        DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
         String toSend = "";
         for(int i = 0; i <= 6; i++) {
-            for(RegisterCard playerCard : getCurrentPlayer().getChosenRegisterCards()) {
-                if(deckOfRegisterCards.uniqueCards.get(i).getCardType() == playerCard.getCardType()) {
+            for(ProgramCard playerCard : getCurrentPlayer().getChosenProgramCards()) {
+                if(deckOfProgramCards.uniqueCards.get(i).getCardType() == playerCard.getCardType()) {
                     toSend += i;
                     mp.send(toSend);
                 }
@@ -115,7 +115,7 @@ public class GameLogic {
      */
     public void executeCard() {
         if (!getCurrentPlayer().isDead) {
-            getCurrentPlayer().getChosenRegisterCards().get(currentCardExecutionNumber).executeRegister(getCurrentPlayer());
+            getCurrentPlayer().getChosenProgramCards().get(currentCardExecutionNumber).executeProgram(getCurrentPlayer());
         }
         endOfTurnCheck();
         if (getCurrentPlayer() == getLastPlayer()) {
@@ -123,7 +123,7 @@ public class GameLogic {
                 currentCardExecutionNumber = 0;
                 cardExecutionInProgress = false;
                 endOfRoundCheck();
-                dealRegisterCards();
+                dealProgramCards();
             } else {
                 currentCardExecutionNumber++;
             }

@@ -1,6 +1,6 @@
 package actor;
 
-import cards.RegisterCard;
+import cards.ProgramCard;
 
 import java.util.ArrayList;
 
@@ -47,7 +47,6 @@ public interface IPlayer {
     /**
      * Moves player given amount of tiles in current facing direction.
      * @param amountToMove denotes amount of tiles to move
-     * TODO: check whether player moves over deadly obstacle
      */
     void moveForward(int amountToMove);
 
@@ -119,29 +118,29 @@ public interface IPlayer {
     void powerDownRobot();
 
     /**
-     * Will set the dealt register cards the player was given for one round.
+     * Will set the dealt program cards the player was given for one round.
      * Different from round to round.
-     * @param dealtCards The register cards dealt
+     * @param dealtCards The program cards dealt
      */
-    void setDealtRegisterCards(ArrayList<RegisterCard> dealtCards);
+    void setDealtProgramCards(ArrayList<ProgramCard> dealtCards);
 
     /**
-     * Will set the cards that the player chose from the dealt register cards for that round.
+     * Will set the cards that the player chose from the dealt program cards for that round.
      * @param chosenCards The chosen cards of a player
      */
-    void setChosenRegisterCards(ArrayList<RegisterCard> chosenCards);
+    void setChosenProgramCards(ArrayList<ProgramCard> chosenCards);
 
     /**
      *
-     * @return the dealt register cards of a player.
+     * @return the dealt program cards of a player.
      */
-    ArrayList<RegisterCard> getDealtRegisterCards();
+    ArrayList<ProgramCard> getDealtProgramCards();
 
     /**
      *
-     * @return the chosen register cards of a player.
+     * @return the chosen program cards of a player.
      */
-    ArrayList<RegisterCard> getChosenRegisterCards();
+    ArrayList<ProgramCard> getChosenProgramCards();
 
 
     /**

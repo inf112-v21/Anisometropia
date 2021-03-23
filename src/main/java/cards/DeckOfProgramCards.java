@@ -4,18 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Generates and maintains the full deck of register cards.
+ * Generates and maintains the full deck of program cards.
  */
-public class DeckOfRegisterCards {
-    public final ArrayList<RegisterCard> deckOfCards = new ArrayList<>();
-    public final ArrayList<RegisterCard> uniqueCards = new ArrayList<>();
+public class DeckOfProgramCards {
+    public final ArrayList<ProgramCard> deckOfCards = new ArrayList<>();
+    public final ArrayList<ProgramCard> uniqueCards = new ArrayList<>();
 
-    public DeckOfRegisterCards() {
+    public DeckOfProgramCards() {
         initializeDeck();
     }
 
     /**
-     * Generates a full deck of register cards.
+     * Generates a full deck of program cards.
      */
     private void generateDeck() {
         // Move 1
@@ -41,17 +41,17 @@ public class DeckOfRegisterCards {
         addCardsToUnique(6, 2, false);
     }
 
-    private void addCardsToUnique(int cardIndex, int amountToMoveOrRotate, boolean movementCard) {
-        uniqueCards.add(new RegisterCard(cardIndex, amountToMoveOrRotate, movementCard));
+    private void addCardsToUnique(int cardType, int amountToMoveOrRotate, boolean movementCard) {
+        uniqueCards.add(new ProgramCard(cardType, amountToMoveOrRotate, movementCard));
     }
 
-    private void addCardsToDeck(int cardIndex, int amountToMoveOrRotate, boolean movementCard, int numOfCards) {
+    private void addCardsToDeck(int cardType, int amountToMoveOrRotate, boolean movementCard, int numOfCards) {
         for (int i = 0; i < numOfCards; i++) {
-            deckOfCards.add(new RegisterCard(cardIndex, amountToMoveOrRotate, movementCard));
+            deckOfCards.add(new ProgramCard(cardType, amountToMoveOrRotate, movementCard));
         }
     }
 
-    public ArrayList<RegisterCard> getDeckOfCards() {
+    public ArrayList<ProgramCard> getDeckOfCards() {
         return deckOfCards;
     }
 
@@ -64,11 +64,11 @@ public class DeckOfRegisterCards {
 
     /**
      * Removes the first nine cards from deckOfCards and places them in new list nineCards.
-     * @return nineCards containing the nine register cards for a player to choose from.
+     * @return nineCards containing the nine program cards for a player to choose from.
      * TODO: deal cards relative to damage tokens
      */
-    public ArrayList<RegisterCard> dealNineCards() {
-        ArrayList<RegisterCard> nineCards = new ArrayList<>();
+    public ArrayList<ProgramCard> dealNineCards() {
+        ArrayList<ProgramCard> nineCards = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             nineCards.add(deckOfCards.remove(0));
         }

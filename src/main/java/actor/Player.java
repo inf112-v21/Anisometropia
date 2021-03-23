@@ -1,6 +1,6 @@
 package actor;
 
-import cards.RegisterCard;
+import cards.ProgramCard;
 import map.GameMap;
 import java.util.ArrayList;
 
@@ -16,8 +16,8 @@ public class Player implements IPlayer {
     public boolean laserBeamReached = true;
     public boolean wallHasBeenReached = true;
     public boolean playerPoweredDown = false;
-    public ArrayList<RegisterCard> dealtRegisterCards;
-    public ArrayList<RegisterCard> chosenRegisterCards;
+    public ArrayList<ProgramCard> dealtProgramCards;
+    public ArrayList<ProgramCard> chosenProgramCards;
     GameMap gameMap;
     public String playerName;
     private final int characterID;
@@ -145,13 +145,13 @@ public class Player implements IPlayer {
     }
 
 
-    public void setDealtRegisterCards(ArrayList<RegisterCard> dealtCards) { dealtRegisterCards = dealtCards; }
+    public void setDealtProgramCards(ArrayList<ProgramCard> dealtCards) { dealtProgramCards = dealtCards; }
 
-    public void setChosenRegisterCards(ArrayList<RegisterCard> chosenCards) { chosenRegisterCards = chosenCards; }
+    public void setChosenProgramCards(ArrayList<ProgramCard> chosenCards) { chosenProgramCards = chosenCards; }
 
-    public ArrayList<RegisterCard> getDealtRegisterCards() { return dealtRegisterCards; }
+    public ArrayList<ProgramCard> getDealtProgramCards() { return dealtProgramCards; }
 
-    public ArrayList<RegisterCard> getChosenRegisterCards() { return chosenRegisterCards; }
+    public ArrayList<ProgramCard> getChosenProgramCards() { return chosenProgramCards; }
 
     public void playerAlive() {
         isDead = false;

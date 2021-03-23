@@ -1,6 +1,6 @@
 package screens;
 
-import cards.RegisterCard;
+import cards.ProgramCard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.Color;
@@ -28,19 +28,19 @@ public class ControlScreen extends InputAdapter {
     private final Texture damageToken;
     private final Texture lifeToken;
     private final Texture damageTokenPositionIndicator;
-    private final ArrayList<Texture> registerCardTextures = new ArrayList<>();
-    private final ArrayList<Texture> dealtRegisterCardTextures = new ArrayList<>();
+    private final ArrayList<Texture> programCardTextures = new ArrayList<>();
+    private final ArrayList<Texture> dealtProgramCardTextures = new ArrayList<>();
 
     private final float cardWidth = 64, cardHeight = 64;
 
     float amountToMoveCard = 64;
     int choiceDeckOffset = 128;
 
-    // Variables used to position dealt register cards.
+    // Variables used to position dealt program cards.
     int[] cardX = new int[9];
     int[] cardY = new int[9];
     boolean[] isCardChosen = new boolean[9];
-    ArrayList<RegisterCard> chosenCards;
+    ArrayList<ProgramCard> chosenCards;
     int numCardsChosen;
     BitmapFont smallFont, bigFont;
 
@@ -92,13 +92,13 @@ public class ControlScreen extends InputAdapter {
         lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
         damageTokenPositionIndicator = new Texture(Gdx.files.classpath("damageTokenPositionIndicator.png"));
 
-        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/Move1.png")));
-        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/Move2.png")));
-        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/Move3.png")));
-        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/BackUp.png")));
-        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/RotateLeft.png")));
-        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/RotateRight.png")));
-        registerCardTextures.add(new Texture(Gdx.files.internal("RegisterCardAssets/UTurn.png")));
+        programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/Move1.png")));
+        programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/Move2.png")));
+        programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/Move3.png")));
+        programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/BackUp.png")));
+        programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/RotateLeft.png")));
+        programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/RotateRight.png")));
+        programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/UTurn.png")));
 
         initializeCards();
 
@@ -116,7 +116,7 @@ public class ControlScreen extends InputAdapter {
             if (!gameOver) {
                 if (!cardExecutionInProgress) {
                     // Relates mouse clicks to particular cards.
-                    for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
+                    for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtProgramCards().size(); i++) {
                         if (click.x > cardX[i] && click.x < cardX[i] + cardWidth &&
                                 click.y > cardY[i] && click.y < cardY[i] + cardHeight) {
                             thisCardWasClicked(i);
@@ -203,7 +203,7 @@ public class ControlScreen extends InputAdapter {
             cardY[cardIndex] -= amountToMoveCard;
             cardX[cardIndex] = choiceDeckOffset+(numCardsChosen*64);
             numCardsChosen++;
-            chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtRegisterCards().get(cardIndex));
+            chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtProgramCards().get(cardIndex));
             if (numCardsChosen == 5) {
                 acceptButton.setActive(true);
                 acceptButton.setTexture(acceptTexture);
@@ -225,7 +225,7 @@ public class ControlScreen extends InputAdapter {
     }
 
     /**
-     * Sets initial values for dealt and chosen register cards.
+     * Sets initial values for dealt and chosen program cards.
      */
     private void initializeCards() {
         for (int i = 0; i < 9; i++) {
@@ -233,9 +233,9 @@ public class ControlScreen extends InputAdapter {
             cardY[i] = 64;
             isCardChosen[i] = false;
         }
-        dealtRegisterCardTextures.clear();
+        dealtProgramCardTextures.clear();
         chosenCards = new ArrayList<>(Collections.nCopies(5,
-                new RegisterCard(0, 0, true)));
+                new ProgramCard(0, 0, true)));
         numCardsChosen = 0;
     }
 
@@ -291,10 +291,10 @@ public class ControlScreen extends InputAdapter {
     }
 
     private void drawCardsOfCurrentPlayer(SpriteBatch batch) {
-        for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtRegisterCards().size(); i++) {
-            RegisterCard registerCard = gameLogic.getCurrentPlayer().getDealtRegisterCards().get(i);
-            dealtRegisterCardTextures.add(registerCardTextures.get(registerCard.getCardType()));
-            batch.draw(dealtRegisterCardTextures.get(i), cardX[i], cardY[i], cardWidth, cardHeight);
+        for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtProgramCards().size(); i++) {
+            ProgramCard programCard = gameLogic.getCurrentPlayer().getDealtProgramCards().get(i);
+            dealtProgramCardTextures.add(programCardTextures.get(programCard.getCardType()));
+            batch.draw(dealtProgramCardTextures.get(i), cardX[i], cardY[i], cardWidth, cardHeight);
         }
     }
 
@@ -335,8 +335,8 @@ public class ControlScreen extends InputAdapter {
         lifeToken.dispose();
         batch.dispose();
         smallFont.dispose();
-        for (Texture regCardTexture : dealtRegisterCardTextures) {
-            regCardTexture.dispose();
+        for (Texture progCardTexture : dealtProgramCardTextures) {
+            progCardTexture.dispose();
         }
     }
 }
