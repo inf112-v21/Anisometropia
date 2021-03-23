@@ -19,6 +19,7 @@ public class GameLogic {
     ConveyorBelts conveyorBelts;
     Laser laser;
     Wall wall;
+    DeckOfProgramCards deckOfProgramCards;
     public Multiplayer mp;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
@@ -37,6 +38,7 @@ public class GameLogic {
         conveyorBelts = new ConveyorBelts();
         laser = new Laser();
         wall = new Wall();
+        deckOfProgramCards = new DeckOfProgramCards();
 
 //        playerStartPos();
         dealProgramCards();
@@ -71,7 +73,7 @@ public class GameLogic {
     }
 
     public void dealProgramCards() {
-        DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
+        deckOfProgramCards.initializeDeck();
         for (Player player : playerQueue.getPlayerQueue()) {
             player.setDealtProgramCards(deckOfProgramCards.dealNineCards());
         }

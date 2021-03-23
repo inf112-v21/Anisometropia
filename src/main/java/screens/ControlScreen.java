@@ -335,8 +335,8 @@ public class ControlScreen extends InputAdapter {
         lifeToken.dispose();
         batch.dispose();
         smallFont.dispose();
-        for (Texture progCardTexture : dealtProgramCardTextures) {
-            progCardTexture.dispose();
+        for (Texture programCardTexture : dealtProgramCardTextures) {
+            programCardTexture.dispose();
         }
     }
 }
