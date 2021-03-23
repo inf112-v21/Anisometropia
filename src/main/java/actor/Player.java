@@ -3,6 +3,7 @@ package actor;
 import cards.ProgramCard;
 import map.GameMap;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Player implements IPlayer {
     int x, y, spawnX, spawnY;
@@ -18,6 +19,7 @@ public class Player implements IPlayer {
     public boolean playerPoweredDown = false;
     public ArrayList<ProgramCard> dealtProgramCards;
     public ArrayList<ProgramCard> chosenProgramCards;
+    public ArrayList<ProgramCard> lockedProgramCards;
     GameMap gameMap;
     public String playerName;
     private final int characterID;
@@ -29,9 +31,10 @@ public class Player implements IPlayer {
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
         this.characterID = characterID;
-        dmgTokens = 4;
+        dmgTokens = 0;
         lifeTokens = 3;
         flagsReached = new boolean[4];
+        lockedProgramCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));
     }
 
     public int getX() {
@@ -110,7 +113,7 @@ public class Player implements IPlayer {
     public void respawn() {
         if (checkIfPlayerCanRespawn()) {
             gameMap.setToNull(x, y);
-            setDmgTokens(0);
+            setDmgTokens(2);
             this.x = spawnX;
             this.y = spawnY;
             this.direction = 0;
@@ -144,10 +147,26 @@ public class Player implements IPlayer {
         setDmgTokens(0);
     }
 
+    public void lockCards() {
+        int numLockedCards = dmgTokens - 4;
+        if (numLockedCards > 0) {
+            for (int i = 4; i > 4-numLockedCards; i--) {
+                chosenProgramCards.set(i, lockedProgramCards.get(i));
+            }
+        }
+    }
 
     public void setDealtProgramCards(ArrayList<ProgramCard> dealtCards) { dealtProgramCards = dealtCards; }
 
-    public void setChosenProgramCards(ArrayList<ProgramCard> chosenCards) { chosenProgramCards = chosenCards; }
+    public void setChosenProgramCards(ArrayList<ProgramCard> chosenCards) {
+        if (chosenProgramCards != null) {
+            for (int i = 0; i < 5; i++) {
+                lockedProgramCards.set(i, chosenProgramCards.get(i));
+            }
+        }
+        chosenProgramCards = chosenCards;
+        lockCards();
+    }
 
     public ArrayList<ProgramCard> getDealtProgramCards() { return dealtProgramCards; }
 

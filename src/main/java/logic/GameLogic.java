@@ -39,9 +39,8 @@ public class GameLogic {
         laser = new Laser();
         wall = new Wall();
         deckOfProgramCards = new DeckOfProgramCards();
-
-//        playerStartPos();
         dealProgramCards();
+//        playerStartPos();
     }
 
 //    public void playerStartPos() {
@@ -75,7 +74,7 @@ public class GameLogic {
     public void dealProgramCards() {
         deckOfProgramCards.initializeDeck();
         for (Player player : playerQueue.getPlayerQueue()) {
-            player.setDealtProgramCards(deckOfProgramCards.dealNineCards());
+            player.setDealtProgramCards(deckOfProgramCards.dealCards(player));
         }
     }
 
@@ -83,7 +82,7 @@ public class GameLogic {
      * Saves player's chosen cards and ends the turn.
      * @param chosenCards cards player has chosen.
      */
-    public void finishTurn(ArrayList<ProgramCard> chosenCards) throws IOException {
+    public void finishCardSelectionTurn(ArrayList<ProgramCard> chosenCards) throws IOException {
         if(mp != null) {
             getCurrentPlayer().setChosenProgramCards(chosenCards);
           //  sendCards();
@@ -135,6 +134,9 @@ public class GameLogic {
 
     public void endOfTurnCheck() {
         for (Player player : playerQueue.getPlayerQueue()) {
+            conveyorBelts.isPlayerOnConveyorBelt(player, gameMap);
+            laser.isPlayerHitByLaserBeam(player, gameMap);
+
             if (checkLoss(player.getX(), player.getY())) {
                 if(!player.isDead) {
                     player.playerDies();
@@ -158,10 +160,6 @@ public class GameLogic {
     }
 
     public void endOfRoundCheck() {
-        for (Player player : playerQueue.getPlayerQueue()) {
-            conveyorBelts.isPlayerOnConveyorBelt(player, gameMap);
-            laser.isPlayerHitByLaserBeam(player, gameMap);
-        }
         endOfTurnCheck();
         respawnPlayersIfPossible();
         checkIfOnlyOnePlayerLeft();

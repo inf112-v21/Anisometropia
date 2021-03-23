@@ -1,5 +1,7 @@
 package cards;
 
+import actor.Player;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -63,15 +65,15 @@ public class DeckOfProgramCards {
     }
 
     /**
-     * Removes the first nine cards from deckOfCards and places them in new list nineCards.
-     * @return nineCards containing the nine program cards for a player to choose from.
-     * TODO: deal cards relative to damage tokens
+     * Removes the first cards from deckOfCards and places them in new list, cards.
+     * The number of cards removed depends on player's number of damage tokens.
+     * @return list containing the program cards for a player to choose from.
      */
-    public ArrayList<ProgramCard> dealNineCards() {
-        ArrayList<ProgramCard> nineCards = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            nineCards.add(deckOfCards.remove(0));
+    public ArrayList<ProgramCard> dealCards(Player player) {
+        ArrayList<ProgramCard> cards = new ArrayList<>();
+        for (int i = 0; i < 9-player.getDmgTokens(); i++) {
+            cards.add(deckOfCards.remove(0));
         }
-        return nineCards;
+        return cards;
     }
 }

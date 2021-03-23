@@ -14,8 +14,6 @@ public class Laser {
         }
     }
 
-
-
     public void getLaserBeam(int tileID, Player player){
         switch (tileID) {
             case (laserBeamHorizontal):

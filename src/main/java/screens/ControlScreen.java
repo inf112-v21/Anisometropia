@@ -186,25 +186,26 @@ public class ControlScreen extends InputAdapter {
      * @param cardIndex Index of dealt card as presented when dealt.
      */
     private void thisCardWasClicked(int cardIndex) {
+        int numCardsAllowed = Math.min(9-gameLogic.getCurrentPlayer().getDmgTokens(), 5);
         if (isCardChosen[cardIndex]) {
             isCardChosen[cardIndex] = false;
             adjustPositionOfChosenCards(cardX[cardIndex]);
             cardY[cardIndex] += amountToMoveCard;
             cardX[cardIndex] = (cardIndex*64);
             numCardsChosen--;
-            if (numCardsChosen == 4) {
+            if (numCardsChosen == numCardsAllowed-1) {
                 acceptButton.setActive(false);
                 acceptButton.setTexture(acceptTextureUnavailable);
                 borderButton.setTexture(borderTextureUnavailable);
             }
         }
-        else if (numCardsChosen < 5) {
+        else if (numCardsChosen < numCardsAllowed) {
             isCardChosen[cardIndex] = true;
             cardY[cardIndex] -= amountToMoveCard;
             cardX[cardIndex] = choiceDeckOffset+(numCardsChosen*64);
             numCardsChosen++;
             chosenCards.set(numCardsChosen - 1, gameLogic.getCurrentPlayer().getDealtProgramCards().get(cardIndex));
-            if (numCardsChosen == 5) {
+            if (numCardsChosen == numCardsAllowed) {
                 acceptButton.setActive(true);
                 acceptButton.setTexture(acceptTexture);
                 borderButton.setTexture(borderTexture);
@@ -234,8 +235,7 @@ public class ControlScreen extends InputAdapter {
             isCardChosen[i] = false;
         }
         dealtProgramCardTextures.clear();
-        chosenCards = new ArrayList<>(Collections.nCopies(5,
-                new ProgramCard(0, 0, true)));
+        chosenCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));
         numCardsChosen = 0;
     }
 
@@ -245,7 +245,7 @@ public class ControlScreen extends InputAdapter {
             acceptButton.setTexture(acceptTextureUnavailable);
             borderButton.setTexture(borderTextureUnavailable);
 
-            gameLogic.finishTurn(chosenCards);
+            gameLogic.finishCardSelectionTurn(chosenCards);
             if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
                 progressButton.setActive(true);
                 progressButton.setTexture(progressTexture);

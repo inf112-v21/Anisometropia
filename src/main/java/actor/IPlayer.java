@@ -118,6 +118,11 @@ public interface IPlayer {
     void powerDownRobot();
 
     /**
+     * Inserts locked cards into list of chosen cards.
+     */
+    void lockCards();
+
+    /**
      * Will set the dealt program cards the player was given for one round.
      * Different from round to round.
      * @param dealtCards The program cards dealt

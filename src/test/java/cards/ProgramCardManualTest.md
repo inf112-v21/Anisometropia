@@ -1,4 +1,4 @@
-### **Manuelle tester for RegisterCard.java**
+### **Manuelle tester for ProgramCard.java**
 Før hver test kjøres programmet på nytt.
 Dersom annet ikke står forutsettes det at programmet kjøres med én spiller.
 
