@@ -1,11 +1,14 @@
 package actor;
 
+import assets.Wall;
 import cards.ProgramCard;
 import map.GameMap;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Player implements IPlayer {
+    Wall wall;
+    GameMap gameMap;
     int x, y, spawnX, spawnY;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     int dmgTokens;
@@ -20,7 +23,6 @@ public class Player implements IPlayer {
     public ArrayList<ProgramCard> dealtProgramCards;
     public ArrayList<ProgramCard> chosenProgramCards;
     public ArrayList<ProgramCard> lockedProgramCards;
-    GameMap gameMap;
     public String playerName;
     private final int characterID;
 
@@ -61,6 +63,113 @@ public class Player implements IPlayer {
         //                      canDirectionOfMoveBePerformedOnThisTypeOfWall
         //      isThereWallOnDestinationPosition
         //          canDirectionOfMoveBePerformedOnThisTypeOfWall
+
+        // if wall.
+
+//        if ((this.getX()>=0 && this.getX() < gameMap.getWidth()) && (this.getY() >= 0 && this.getY() < gameMap.getHeight())){
+//            return true;
+//        }
+
+        if (gameMap.isThereWallOnThisPosition(this.getX()+dx,this.getY()+dy)) {
+            //get the wall (can use switch / case here aswell)
+            //return false;
+            int wallID = gameMap.getAssetLayerID(this.getX()+dx,this.getY()+dy);
+            switch (wallID){
+                case (Wall.wallLeft):
+                case (Wall.laserWallLeft):
+                case (Wall.doubleLaserWallLeft):
+                    if (dx == 1 && dy == 0) return false;
+                    break;
+
+                case (Wall.wallRight):
+                case (Wall.laserWallRight):
+                case (Wall.doubleLaserWallRight):
+                    if (dx == -1 && dy == 0) return false;
+                    break;
+
+                case (Wall.wallDown):
+                case (Wall.laserWallDown):
+                case (Wall.doubleLaserWallDown):
+                    if (dx == 0 && dy == 1) return false;
+                    break;
+
+                case(Wall.wallUp):
+                case(Wall.laserWallUp):
+                case(Wall.doubleLaserWallUp):
+                    if (dx == 0 && dy == -1) return false;
+                    break;
+
+                case (Wall.wallUpLeft):
+                    if ((dx == 0 && dy == -1) || (dx == 1 && dy == 0 )) return false;
+                    break;
+
+                case(Wall.wallUpRight):
+                    if ((dx == 0 && dy == -1) || (dx == -1 && dy == 0)) return false;
+                    break;
+
+                case(Wall.wallDownLeft):
+                    if ((dx == 0 && dy == 1) || (dx == 1 && dy == 0)) return false;
+                    break;
+
+                case(Wall.wallDownRight):
+                    if ((dx == 0 && dy == 1) || (dx == -1 && dy == 0)) return false;
+                    break;
+
+                default:
+                    throw new IllegalStateException("Unexpected wallID: " + wallID);
+            }
+        }
+
+
+        if (gameMap.isThereWallOnThisPosition(this.getX(),this.getY())){
+            int wallID = gameMap.getAssetLayerID(this.getX(),this.getY());
+            switch (wallID){
+                case (Wall.wallLeft):
+                case (Wall.laserWallLeft):
+                case (Wall.doubleLaserWallLeft):
+                    if (dx == -1 && dy == 0) return false;
+                    break;
+
+                case (Wall.wallRight):
+                case (Wall.laserWallRight):
+                case (Wall.doubleLaserWallRight):
+                    if (dx == 1 && dy == 0) return false;
+                    break;
+
+                case (Wall.wallDown):
+                case (Wall.laserWallDown):
+                case (Wall.doubleLaserWallDown):
+                    if (dx == 0 && dy == -1) return false;
+                    break;
+
+                case(Wall.wallUp):
+                case(Wall.laserWallUp):
+                case(Wall.doubleLaserWallUp):
+                    if (dx == 0 && dy == 1) return false;
+                    break;
+
+                case (Wall.wallDownRight):
+                    if ((dx == 0 && dy == -1) || (dx == 1 && dy == 0 )) return false;
+                    break;
+
+                case(Wall.wallDownLeft):
+                    if ((dx == 0 && dy == -1) || (dx == -1 && dy == 0)) return false;
+                    break;
+
+                case(Wall.wallUpRight):
+                    if ((dx == 0 && dy == 1) || (dx == 1 && dy == 0)) return false;
+                    break;
+
+                case(Wall.wallUpLeft):
+                    if ((dx == 0 && dy == 1) || (dx == -1 && dy == 0)) return false;
+                    break;
+
+
+                default:
+                    throw new IllegalStateException("Unexpected value: " + wallID);
+            }
+        }
+
 
         return (x+dx >= 0 && x+dx < gameMap.getWidth()) && (y+dy >= 0 && y+dy < gameMap.getHeight());
     }
