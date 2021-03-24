@@ -4,7 +4,7 @@ import actor.Player;
 import map.GameMap;
 
 public class ConveyorBelts {
-    final int yConveyorBeltID_Down      = 50, yConveyorBeltID_Right     = 52, yConveyorBeltID_Up      = 49, yConveyorBeltID_Left     = 51,
+    public static final int yConveyorBeltID_Down      = 50, yConveyorBeltID_Right     = 52, yConveyorBeltID_Up      = 49, yConveyorBeltID_Left     = 51,
               yConveyorBeltID_DownRight = 58, yConveyorBeltID_RightUp   = 57, yConveyorBeltID_UpLeft  = 60, yConveyorBeltID_LeftDown = 59,
               yConveyorBeltID_DownLeft  = 68, yConveyorBeltID_RightDown = 67, yConveyorBeltID_UpRight = 66, yConveyorBeltID_LeftUp   = 65,
               bConveyorBeltID_Down      = 21, bConveyorBeltID_Right     = 14, bConveyorBeltID_Up      = 13, bConveyorBeltID_Left     = 22,
@@ -16,9 +16,9 @@ public class ConveyorBelts {
      * and uses the tileID to figure out in what direction the player is to move.
      */
     public void isPlayerOnConveyorBelt(Player player, GameMap gameMap) {
-            if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())) {
-                int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
-                conveyorBelt(tileID, player);
+        if (gameMap.isThereConveyorOnThisPosition(player.getX(), player.getY())) {
+            int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
+            conveyorBelt(tileID, player);
         }
     }
 
@@ -104,7 +104,8 @@ public class ConveyorBelts {
             case (bConveyorBeltID_Right):
                 if (player.conveyorBeltReached) {
                     player.move(2, 0);}
-            break;
+                break;
+
             case (bConveyorBeltID_Left):
                 if (player.conveyorBeltReached) {
                     player.move(-2, 0);}
@@ -151,7 +152,8 @@ public class ConveyorBelts {
                     player.move(0, -2);}
                 break;
             default:
-                throw new IllegalStateException("Unexpected value for ConveyorClass: " + tileID);
+                throw new IllegalStateException("Unexpected value for ConveyorClass: " + tileID + "Posisjon x og y" + player.getX() + "  " + player.getY());
         }
+        //Unexpected value for ConveyorClass: tileID = 16 og Posisjon x = 6 og y =3
     }
 }
