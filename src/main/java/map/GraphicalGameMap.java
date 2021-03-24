@@ -39,33 +39,31 @@ public class GraphicalGameMap extends GameMap {
 
         player1Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][1])); // north
         player1Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1])); // east
-        player1Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0]));// south
+        player1Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][0])); // south
         player1Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][0])); // west
-        player1Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][0]));  // won
+        player1Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][0])); // won
         player1Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][1])); // died
 
         player2Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][3])); // north
         player2Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][3])); // east
-        player2Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][2]));// south
+        player2Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][2])); // south
         player2Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][2])); // west
-        player2Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][2]));  // won
+        player2Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][2])); // won
         player2Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[2][3])); // died
 
         player3Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][1])); // north
-        player3Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][1]));  // east
+        player3Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][1])); // east
         player3Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][0])); // south
-        player3Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][0]));  // west
-        player3Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][0]));   // won
-        player3Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][1]));  // died
+        player3Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][0])); // west
+        player3Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][0])); // won
+        player3Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][1])); // died
 
         player4Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][3])); // north
-        player4Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][3]));  // east
+        player4Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][3])); // east
         player4Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[3][2])); // south
-        player4Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][2]));  // west
-        player4Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][2]));   // won
-        player4Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][3]));  // died
-
-
+        player4Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[4][2])); // west
+        player4Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][2])); // won
+        player4Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][3])); // died
 
         playerCells[0] = player1Cells;
         playerCells[1] = player2Cells;

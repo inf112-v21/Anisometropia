@@ -128,7 +128,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         gameApplication.getSpriteBatch().draw(currentBackgroundFrame,0, 0, 1440f, 832f);
 
         ifHoveredDrawArrowsAroundPlayLocalButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
-        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
+//        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
         ifHoveredDrawArrowsAroundQuitButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
         ifHoveredMakeSpeakerButtonBlue(mousePosition);
 

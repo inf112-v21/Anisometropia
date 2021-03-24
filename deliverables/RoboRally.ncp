@@ -7,19 +7,18 @@
       <Entity type="Class">
         <Name>Main</Name>
         <Access>Public</Access>
-        <Location left="226" top="25" />
-        <Size width="162" height="94" />
-        <Collapsed>False</Collapsed>
-        <Member type="Method">public static void main(String[] args)</Member>
+        <Location left="30" top="25" />
+        <Size width="162" height="111" />
+        <Collapsed>True</Collapsed>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>GameScreen</Name>
+        <Name>PlayScreen</Name>
         <Access>Public</Access>
-        <Location left="472" top="65" />
+        <Location left="469" top="572" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">public void create()</Member>
+        <Member type="Constructor">public PlayScreen(GameApplication gameApplication, GraphicalGameMap gameMap, PlayerQueue playerQueue)</Member>
         <Member type="Method">public void render()</Member>
         <Member type="Method">public void dispose()</Member>
         <Modifier>None</Modifier>
@@ -27,10 +26,10 @@
       <Entity type="Class">
         <Name>GameLogic</Name>
         <Access>Public</Access>
-        <Location left="816" top="656" />
+        <Location left="727" top="738" />
         <Size width="162" height="298" />
         <Collapsed>False</Collapsed>
-        <Member type="Constructor">public GameLogic(GameMap gameMap)</Member>
+        <Member type="Constructor">public GameLogic(GameMap gameMap, PlayerQueue playerQueue)</Member>
         <Member type="Method">public void addPlayer(int spawnX, int spawnY, String name)</Member>
         <Member type="Method">public void update()</Member>
         <Member type="Method">public void dealRegisterCards()</Member>
@@ -41,15 +40,13 @@
         <Member type="Method">public void gameReset()</Member>
         <Member type="Method">public boolean checkWin(Player player)</Member>
         <Member type="Method">public boolean checkLoss(int x, int y)</Member>
-        <Member type="Method">public Player getCurrentPlayer()</Member>
-        <Member type="Method">public Player getLastPlayer()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>ControlScreen</Name>
         <Access>Public</Access>
-        <Location left="683" top="65" />
-        <Size width="162" height="216" />
+        <Location left="419" top="360" />
+        <Size width="162" height="155" />
         <Collapsed>False</Collapsed>
         <Member type="Method">public void create()</Member>
         <Member type="Method">public void render()</Member>
@@ -59,56 +56,44 @@
       <Entity type="Class">
         <Name>GraphicalGameMap</Name>
         <Access>Public</Access>
-        <Location left="226" top="371" />
-        <Size width="162" height="216" />
+        <Location left="242" top="453" />
+        <Size width="162" height="171" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public GraphicalGameMap()</Member>
-        <Member type="Method">public void setCell(int x, int y, String layer, TiledMapTileLayer.Cell cell)</Member>
         <Member type="Method">public boolean isThereFlagHere(int x, int y)</Member>
         <Member type="Method">public boolean isThereHoleOnThisPosition(int x, int y)</Member>
         <Member type="Method">public boolean isThereConveyorOnThisPosition(int x, int y)</Member>
-        <Member type="Method">public int getAssetLayerID(int x, int y)</Member>
-        <Member type="Method">public void setPlayerPosition(int x, int y, Player player)</Member>
-        <Member type="Method">public void setToNull(int x, int y)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>TextualGameMap</Name>
         <Access>Public</Access>
-        <Location left="30" top="371" />
-        <Size width="162" height="247" />
+        <Location left="30" top="451" />
+        <Size width="162" height="171" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public TextualGameMap(int width, int height)</Member>
         <Member type="Method">public void createGrid()</Member>
-        <Member type="Method">public void setPlayerPosition(int x, int y, Player player)</Member>
-        <Member type="Method">public void setValue(int y, int x, int value)</Member>
-        <Member type="Method">public int getValue(int y, int x)</Member>
         <Member type="Method">public boolean isThereFlagHere(int x, int y)</Member>
-        <Member type="Method">public int getAssetLayerID(int x, int y)</Member>
         <Member type="Method">public boolean isThereHoleOnThisPosition(int x, int y)</Member>
-        <Member type="Method">public void setToNull(int x, int y)</Member>
         <Member type="Method">public boolean isThereConveyorOnThisPosition(int x, int y)</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>PlayerQueue</Name>
         <Access>Public</Access>
-        <Location left="446" top="656" />
-        <Size width="162" height="216" />
+        <Location left="474" top="823" />
+        <Size width="162" height="144" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public PlayerQueue()</Member>
-        <Member type="Method">public ArrayList&lt;Player&gt; getPlayerQueue()</Member>
         <Member type="Method">public void next()</Member>
         <Member type="Method">public void add(Player player)</Member>
-        <Member type="Method">public Player getCurrentPlayer()</Member>
-        <Member type="Method">public Player getLastPlayer()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Player</Name>
         <Access>Public</Access>
         <Location left="242" top="656" />
-        <Size width="162" height="366" />
+        <Size width="162" height="311" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public Player(int x, int y, String playerName, GameMap gameMap)</Member>
         <Member type="Method">public void move(int dx, int dy)</Member>
@@ -116,14 +101,8 @@
         <Member type="Method">public void rotate(int amountToRotate)</Member>
         <Member type="Method">public void moveForward(int amountToMove)</Member>
         <Member type="Method">public void moveByDirection(int desiredDirection)</Member>
-        <Member type="Method">public void setLifeTokens(int tokens)</Member>
-        <Member type="Method">public int getLifeTokens()</Member>
         <Member type="Method">public boolean checkIfPlayerCanRespawn()</Member>
         <Member type="Method">public void respawn()</Member>
-        <Member type="Method">public void setDealtRegisterCards(ArrayList&lt;RegisterCard&gt; dealtCards)</Member>
-        <Member type="Method">public void setChosenRegisterCards(ArrayList&lt;RegisterCard&gt; chosenCards)</Member>
-        <Member type="Method">public ArrayList&lt;RegisterCard&gt; getDealtRegisterCards()</Member>
-        <Member type="Method">public ArrayList&lt;RegisterCard&gt; getChosenRegisterCards()</Member>
         <Member type="Method">public void playerAlive()</Member>
         <Member type="Method">public boolean isPlayerDead()</Member>
         <Member type="Method">public void playerWins()</Member>
@@ -133,15 +112,12 @@
         <Name>IPlayer</Name>
         <Access>Public</Access>
         <Location left="30" top="656" />
-        <Size width="162" height="349" />
+        <Size width="162" height="311" />
         <Collapsed>False</Collapsed>
-        <Member type="Method">int getX()</Member>
-        <Member type="Method">int getY()</Member>
         <Member type="Method">void move(int dx, int dy)</Member>
         <Member type="Method">boolean canMove(int dx, int dy)</Member>
         <Member type="Method">void rotate(int amountToRotate)</Member>
         <Member type="Method">void moveForward(int amountToMove)</Member>
-        <Member type="Method">void setLifeTokens(int tokens)</Member>
         <Member type="Method">void updateLifeTokens()</Member>
         <Member type="Method">boolean checkIfPlayerCanRespawn()</Member>
         <Member type="Method">void respawn()</Member>
@@ -155,54 +131,45 @@
       <Entity type="Class">
         <Name>GameMap</Name>
         <Access>Public</Access>
-        <Location left="30" top="65" />
+        <Location left="30" top="103" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">public abstract boolean isThereFlagHere(int x, int y)</Member>
         <Member type="Method">public abstract int getAssetLayerID(int x, int y)</Member>
         <Member type="Method">public abstract boolean isThereHoleOnThisPosition(int x, int y)</Member>
-        <Member type="Method">public abstract void setPlayerPosition(int x, int y, Player player)</Member>
-        <Member type="Method">public abstract int getWidth()</Member>
-        <Member type="Method">public abstract int getHeight()</Member>
-        <Member type="Method">public abstract void setToNull(int x, int y)</Member>
         <Member type="Method">public abstract boolean isThereConveyorOnThisPosition(int x, int y)</Member>
         <Modifier>Abstract</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Multiplayer</Name>
         <Access>Public</Access>
-        <Location left="1378" top="191" />
+        <Location left="1085" top="172" />
         <Size width="162" height="216" />
-        <Collapsed>True</Collapsed>
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public Multiplayer(Boolean host)</Member>
+        <Member type="Method">public void disconnect()</Member>
+        <Member type="Method">public void send()</Member>
+        <Member type="Method">public void receive()</Member>
+        <Member type="Method">public boolean isConnected()</Member>
+        <Member type="Method">public void run()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>DeckOfRegisterCards</Name>
+        <Name>DeckOfProgramCards</Name>
         <Access>Public</Access>
-        <Location left="991" top="65" />
+        <Location left="894" top="453" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Member type="Constructor">public DeckOfRegisterCards()</Member>
+        <Member type="Constructor">public DeckOfProgramCards()</Member>
         <Member type="Method">private void generateDeck()</Member>
         <Member type="Method">private void addCardsToDeck(String graphicLocation, int amountToMoveOrRotate, boolean movementCard, int numOfCards)</Member>
-        <Member type="Method">public ArrayList&lt;RegisterCard&gt; dealNineCards()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>RegisterCard</Name>
-        <Access>Public</Access>
-        <Location left="991" top="371" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Constructor">public RegisterCard(String graphicLocation, int amountToMoveOrRotate, boolean isMovementCard)</Member>
-        <Member type="Method">public void executeRegister(Player player)</Member>
-        <Member type="Method">public String getGraphicLocation()</Member>
+        <Member type="Method">public ArrayList&lt;ProgramCard&gt; dealNineCards()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>ConveyorBelts</Name>
         <Access>Public</Access>
-        <Location left="1246" top="656" />
+        <Location left="1250" top="843" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Member type="Method">public void runConveyorBelt(Player player, GameMap gameMap)</Member>
@@ -212,7 +179,7 @@
       <Entity type="Class">
         <Name>Laser</Name>
         <Access>Public</Access>
-        <Location left="1442" top="656" />
+        <Location left="1453" top="843" />
         <Size width="162" height="216" />
         <Collapsed>True</Collapsed>
         <Modifier>None</Modifier>
@@ -220,92 +187,148 @@
       <Entity type="Class">
         <Name>GameButton</Name>
         <Access>Public</Access>
-        <Location left="683" top="371" />
-        <Size width="162" height="216" />
+        <Location left="257" top="200" />
+        <Size width="162" height="131" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public GameButton(int x, int y, int width, int height, boolean isActive, Texture texture)</Member>
         <Member type="Method">public boolean isActive()</Member>
-        <Member type="Method">public void setActive(boolean active)</Member>
-        <Member type="Method">public Texture getTexture()</Member>
-        <Member type="Method">public void setTexture(Texture texture)</Member>
+        <Member type="Method">public boolean isMouseOnButton(Vector3 mousePosition)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ProgramCard</Name>
+        <Access>Public</Access>
+        <Location left="1100" top="467" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public ProgramCard(String graphicLocation, int amountToMoveOrRotate, boolean isMovementCard)</Member>
+        <Member type="Method">public void executeProgram()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>AbstractScreen</Name>
+        <Access>Public</Access>
+        <Location left="658" top="451" />
+        <Size width="162" height="137" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public AbstractScreen()</Member>
+        <Member type="Method">public void render()</Member>
+        <Member type="Method">public void dispose()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GameApplication</Name>
+        <Access>Public</Access>
+        <Location left="257" top="25" />
+        <Size width="162" height="137" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void create()</Member>
+        <Member type="Method">public void render()</Member>
+        <Member type="Method">public void dispose()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>GameScreenManager</Name>
+        <Access>Public</Access>
+        <Location left="469" top="25" />
+        <Size width="162" height="137" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public GameScreenManager(GameApplication gameApplication)</Member>
+        <Member type="Method">private void initializeGameScreens()</Member>
+        <Member type="Method">public void dispose()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>MainMenuScreen</Name>
+        <Access>Public</Access>
+        <Location left="658" top="50" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public MainMenuScreen(GameApplication gameApplication)</Member>
+        <Member type="Method">public void playLocalButtonHasBeenClicked()</Member>
+        <Member type="Method">public void playOnNetButtonHasBeenClicked()</Member>
+        <Member type="Method">public void quitHasBeenClicked()</Member>
+        <Member type="Method">public void speakerButtonHasBeenClicked()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>LocalSetupScreen</Name>
+        <Access>Public</Access>
+        <Location left="854" top="50" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Constructor">public LocalSetupScreen(GameApplication gameApplication)</Member>
+        <Member type="Method">public void backButtonClicked()</Member>
+        <Member type="Method">public void startButtonClicked()</Member>
+        <Member type="Method">public void ifClickedSwitchPlayerOrAiStatus()</Member>
+        <Member type="Method">public void ifClickedRemoveAddedPlayer()</Member>
+        <Member type="Method">public void ifClickedAddPlayer()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Wall</Name>
+        <Access>Public</Access>
+        <Location left="1637" top="843" />
+        <Size width="162" height="216" />
+        <Collapsed>True</Collapsed>
         <Modifier>None</Modifier>
       </Entity>
     </Entities>
     <Relationships>
-      <Relationship type="Dependency" first="1" second="0">
-        <Label>
-        </Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>447</X>
-          <Y>189</Y>
-        </BendPoint>
-        <BendPoint relativeToStartShape="False">
-          <X>313</X>
-          <Y>154</Y>
-        </BendPoint>
-      </Relationship>
       <Relationship type="Dependency" first="2" second="1">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>893</X>
-          <Y>622</Y>
+          <X>797</X>
+          <Y>710</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>520</X>
-          <Y>622</Y>
+          <X>662</X>
+          <Y>711</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="3" second="1">
-        <Label>
-        </Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>658</X>
-          <Y>153</Y>
+          <X>493</X>
+          <Y>545</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>542</X>
+          <Y>543</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="4" second="1">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
+        <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>312</X>
-          <Y>341</Y>
+          <X>429</X>
+          <Y>548</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>447</X>
-          <Y>243</Y>
+          <X>444</X>
+          <Y>581</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="2" second="6">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>791</X>
-          <Y>769</Y>
+          <X>702</X>
+          <Y>851</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>645</X>
-          <Y>769</Y>
+          <X>673</X>
+          <Y>936</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="6" second="7">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>419</X>
-          <Y>772</Y>
+          <X>447</X>
+          <Y>939</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>433</X>
@@ -328,12 +351,12 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>251</X>
-          <Y>346</Y>
+          <X>267</X>
+          <Y>428</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>112</X>
-          <Y>306</Y>
+          <Y>344</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Generalization" first="5" second="9">
@@ -341,68 +364,134 @@
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>56</X>
-          <Y>346</Y>
+          <Y>426</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>56</X>
-          <Y>310</Y>
+          <Y>348</Y>
         </BendPoint>
-      </Relationship>
-      <Relationship type="Dependency" first="4" second="7">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="2" second="11">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
+        <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>941</X>
-          <Y>631</Y>
+          <X>852</X>
+          <Y>713</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>966</X>
-          <Y>222</Y>
+          <X>959</X>
+          <Y>695</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="2" second="12">
         <Label>
         </Label>
         <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>1003</X>
-          <Y>772</Y>
-        </BendPoint>
+        <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="False">
-          <X>1071</X>
-          <Y>617</Y>
+          <X>1220</X>
+          <Y>1002</Y>
         </BendPoint>
       </Relationship>
-      <Relationship type="Dependency" first="11" second="12">
+      <Relationship type="Dependency" first="3" second="14">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>387</X>
+          <Y>412</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>328</X>
+          <Y>360</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="2" second="15">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>952</X>
+          <Y>950</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1187</X>
+          <Y>708</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="11" second="15">
         <Label>
         </Label>
         <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>1087</X>
-          <Y>306</Y>
+          <X>1003</X>
+          <Y>706</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1075</X>
+          <Y>586</Y>
         </BendPoint>
       </Relationship>
-      <Relationship type="Dependency" first="2" second="13">
+      <Relationship type="Dependency" first="17" second="18">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
-        <BendPoint relativeToStartShape="False">
-          <X>1216</X>
-          <Y>815</Y>
+        <BendPoint relativeToStartShape="True">
+          <X>447</X>
+          <Y>48</Y>
         </BendPoint>
       </Relationship>
-      <Relationship type="Dependency" first="3" second="15">
+      <Relationship type="Generalization" first="20" second="16">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>773</X>
+          <Y>413</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="19" second="16">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>700</X>
+          <Y>418</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="0" second="17">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="1" second="16">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>657</X>
+          <Y>632</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>741</X>
+          <Y>639</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="4" second="7">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>432</X>
+          <Y>607</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>432</X>
+          <Y>753</Y>
+        </BendPoint>
       </Relationship>
     </Relationships>
   </ProjectItem>
