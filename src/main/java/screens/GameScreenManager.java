@@ -1,5 +1,6 @@
 package screens;
 
+import actor.Player;
 import launcher.GameApplication;
 import logic.PlayerQueue;
 import map.GraphicalGameMap;
@@ -22,6 +23,15 @@ public class GameScreenManager {
         this.gameApplication = gameApplication;
         initializeGameScreens();
         setScreen(STATE.MENU);
+
+        // USE THIS FOR SKIPPING MENUS, AND IMMEDIATELY START A GAME WITH 2 PLAYERS
+        GraphicalGameMap gameMap = new GraphicalGameMap();
+        PlayerQueue playerQueue = new PlayerQueue();
+        playerQueue.add(new Player(2, 2, "PL1", gameMap, 0));
+        playerQueue.add(new Player(3, 2, "PL2", gameMap, 1));
+        initPlayScreen(gameMap, playerQueue);
+        setScreen(GameScreenManager.STATE.PLAY);
+        // END
     }
 
     private void initializeGameScreens() {
