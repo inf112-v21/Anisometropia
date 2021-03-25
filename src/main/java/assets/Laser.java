@@ -21,7 +21,7 @@ public class Laser {
                 player.updateDamageTokens(1);
                 break;
 
-//Player is to be damaged and loose 2 health points.
+            //Player is to be damaged and lose 2 health points.
             case (doubleLaserBeamHorizontal):
             case (doubleLaserBeamVertical):
             case (laserBeamCrossing):
