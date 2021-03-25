@@ -136,7 +136,7 @@ public class GraphicalGameMap extends GameMap {
         return false;
     }
 
-    public boolean isThereConveyorOnThisPosition(int x, int y) {
+    public boolean isThereYellowConveyorOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
             return  (tileID == ConveyorBelts.yConveyorBeltID_Down) || (tileID == ConveyorBelts.yConveyorBeltID_Left) ||
@@ -144,19 +144,27 @@ public class GraphicalGameMap extends GameMap {
                     (tileID == ConveyorBelts.yConveyorBeltID_DownLeft) || (tileID == ConveyorBelts.yConveyorBeltID_DownRight) ||
                     (tileID == ConveyorBelts.yConveyorBeltID_LeftDown) || (tileID == ConveyorBelts.yConveyorBeltID_LeftUp) ||
                     (tileID == ConveyorBelts.yConveyorBeltID_RightDown) || (tileID == ConveyorBelts.yConveyorBeltID_RightUp) ||
-                    (tileID == ConveyorBelts.yConveyorBeltID_UpLeft) || (tileID == ConveyorBelts.yConveyorBeltID_UpRight) ||
+                    (tileID == ConveyorBelts.yConveyorBeltID_UpLeft) || (tileID == ConveyorBelts.yConveyorBeltID_UpRight);
+        }
+        return false;
+    }
 
-                    (tileID == ConveyorBelts.bConveyorBeltID_Down) || (tileID == ConveyorBelts.bConveyorBeltID_Left) ||
+    @Override
+    public boolean isThereBlueConveyorOnThisPosition(int x, int y) {
+        if (assetLayer.getCell(x,y) != null){
+            int tileID =getAssetLayerID(x, y);
+            return  (tileID == ConveyorBelts.bConveyorBeltID_Down) || (tileID == ConveyorBelts.bConveyorBeltID_Left) ||
                     (tileID == ConveyorBelts.bConveyorBeltID_Up)   || (tileID == ConveyorBelts.bConveyorBeltID_Right)||
                     (tileID == ConveyorBelts.bConveyorBeltID_DownLeft) || (tileID == ConveyorBelts.bConveyorBeltID_DownRight) ||
                     (tileID == ConveyorBelts.bConveyorBeltID_LeftDown) || (tileID == ConveyorBelts.bConveyorBeltID_LeftUp) ||
                     (tileID == ConveyorBelts.bConveyorBeltID_RightDown) || (tileID == ConveyorBelts.bConveyorBeltID_RightUp) ||
                     (tileID == ConveyorBelts.bConveyorBeltID_UpLeft) || (tileID == ConveyorBelts.bConveyorBeltID_UpRight);
-
-
         }
         return false;
     }
+
+
+
 
     @Override
     public boolean isThereWallOnThisPosition(int x, int y) {

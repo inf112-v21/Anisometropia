@@ -73,7 +73,12 @@ public class TextualGameMap extends GameMap {
     }
 
     @Override
-    public boolean isThereConveyorOnThisPosition(int x, int y) {
+    public boolean isThereYellowConveyorOnThisPosition(int x, int y) {
+        return false;
+    }
+
+    @Override
+    public boolean isThereBlueConveyorOnThisPosition(int x, int y) {
         return false;
     }
 
