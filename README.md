@@ -4,7 +4,9 @@
 
 ## Hvordan å kjøre spillet:
 
-JRE (Java Runtime Environment) må være installert.
+JDK (Java Development Kit) må være installert, evt. JRE (Java Runtime Environment). Kan lastes ned her:
+
+https://www.oracle.com/java/technologies/javase-jdk16-downloads.html
 
 Last ned RoboRallyVersion3.jar fra (ligger i "Assets"-listen):
 
