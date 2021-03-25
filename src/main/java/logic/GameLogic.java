@@ -137,7 +137,7 @@ public class GameLogic {
         if (!getCurrentPlayer().isDead) {
             getCurrentPlayer().getChosenProgramCards().get(currentCardExecutionNumber).executeProgram(getCurrentPlayer());
         }
-        endOfTurnCheck();
+//        endOfTurnCheck();
         if (getCurrentPlayer() == getLastPlayer()) {
             if (currentCardExecutionNumber == 4) {
                 currentCardExecutionNumber = 0;
@@ -146,6 +146,7 @@ public class GameLogic {
                 dealProgramCards();
             } else {
                 currentCardExecutionNumber++;
+                endOfTurnCheck();
             }
         }
         playerQueue.next();

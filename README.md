@@ -19,8 +19,3 @@ vil ikke spiller2 vises før den har flytter seg igjen.
 
 Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to progress" for
 å prosessere turen til spilleren.
-
-Når man staret spillet så visualiseres det 10 damage tokens for hver spiller, dette er noe vi 
-kommer til å endre når vi legger inn objekter på brettet som kan skade robotene og gi de 
-damage tokens. For de skal strengt tatt starte med 0. De er her nå for å vise at damage tokens
-skal bli en viktig funksjonalitet i spillet senere. 
