@@ -1,5 +1,6 @@
 package screens;
 
+import actor.Player;
 import cards.ProgramCard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
@@ -292,11 +293,19 @@ public class ControlScreen extends InputAdapter {
         }
     }
 
-    private void drawCardsOfCurrentPlayer(SpriteBatch batch) {
-        for (int i = 0; i < gameLogic.getCurrentPlayer().getDealtProgramCards().size(); i++) {
+    public void drawCardsOfCurrentPlayer(SpriteBatch batch) {
+        Player currentPlayer = gameLogic.getCurrentPlayer();
+        for (int i = 0; i < currentPlayer.getDealtProgramCards().size(); i++) {
             ProgramCard programCard = gameLogic.getCurrentPlayer().getDealtProgramCards().get(i);
             dealtProgramCardTextures.add(programCardTextures.get(programCard.getCardType()));
             batch.draw(dealtProgramCardTextures.get(i), cardX[i], cardY[i], cardWidth, cardHeight);
+        }
+        if (currentPlayer.getDmgTokens() >= 5) {
+            for (int i = 4; i >= 9 - currentPlayer.getDmgTokens(); i--) {
+                ProgramCard lockedCard = currentPlayer.getChosenProgramCards().get(i);
+                batch.draw(programCardTextures.get(
+                        lockedCard.getCardType()), choiceDeckOffset+(i*64), 0, cardWidth, cardHeight);
+            }
         }
     }
 

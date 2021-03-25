@@ -220,6 +220,7 @@ public class GameLogic {
     public void gameReset() {
         gameOver = false;
         playerQueue.turnCounter = 0;
+        deckOfProgramCards.initializeDeck();
         for (Player player : playerQueue.getPlayerQueue()){
             player.respawn();
             player.setLifeTokens(3);
