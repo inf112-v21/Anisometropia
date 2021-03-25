@@ -60,6 +60,8 @@ public class DeckOfProgramCards {
     private void shuffleDeck() { Collections.shuffle(deckOfCards); }
 
     public void initializeDeck() {
+        deckOfCards.clear();
+        uniqueCards.clear();
         generateDeck();
         shuffleDeck();
     }
