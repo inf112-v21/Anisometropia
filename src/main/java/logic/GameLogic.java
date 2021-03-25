@@ -231,6 +231,7 @@ public class GameLogic {
     }
 
     public boolean checkLoss(int x, int y) {
+        // TODO player can not jump over a hole.
         return gameMap.isThereHoleOnThisPosition(x, y);
     }
 
