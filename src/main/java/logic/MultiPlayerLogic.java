@@ -13,6 +13,8 @@ public class MultiPlayerLogic {
     public Multiplayer mp;
     public boolean firstTurn;
 
+    public MultiPlayerLogic() { }
+
     /**
      * Checks if a multiplayer object has been created, if so, then there is a connection.
      * @return True or False

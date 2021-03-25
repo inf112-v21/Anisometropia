@@ -295,10 +295,15 @@ public class ControlScreen extends InputAdapter {
         }
     }
 
+    /**
+     * Draws all cards dealt to the current player.
+     * Cards locked to the register are displayed and fixed to the register.
+     * @param batch
+     */
     public void drawCardsOfCurrentPlayer(SpriteBatch batch) {
         Player currentPlayer = gameLogic.getCurrentPlayer();
         for (int i = 0; i < currentPlayer.getDealtProgramCards().size(); i++) {
-            ProgramCard programCard = gameLogic.getCurrentPlayer().getDealtProgramCards().get(i);
+            ProgramCard programCard = currentPlayer.getDealtProgramCards().get(i);
             dealtProgramCardTextures.add(programCardTextures.get(programCard.getCardType()));
             batch.draw(dealtProgramCardTextures.get(i), cardX[i], cardY[i], cardWidth, cardHeight);
         }

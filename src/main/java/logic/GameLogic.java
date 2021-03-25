@@ -33,6 +33,7 @@ public class GameLogic {
     public static String gameMessage;
 
     public GameLogic(GameMap gameMap, PlayerQueue playerQueue) {
+        multiPlayerLogic = new MultiPlayerLogic();
         this.gameMap = gameMap;
         this.playerQueue = playerQueue;
         conveyorBelts = new ConveyorBelts();
@@ -100,7 +101,7 @@ public class GameLogic {
         if (!getCurrentPlayer().isDead) {
             getCurrentPlayer().getChosenProgramCards().get(currentCardExecutionNumber).executeProgram(getCurrentPlayer());
         }
-//        endOfTurnCheck();
+
         if (getCurrentPlayer() == getLastPlayer()) {
             if (currentCardExecutionNumber == 4) {
                 currentCardExecutionNumber = 0;
@@ -196,7 +197,6 @@ public class GameLogic {
     }
 
     public boolean checkLoss(int x, int y) {
-        // TODO player can not jump over a hole.
         return gameMap.isThereHoleOnThisPosition(x, y);
     }
 
