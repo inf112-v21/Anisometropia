@@ -18,16 +18,37 @@ public class PlayerQueue {
         return playerList;
     }
 
-    public void next() {turnCounter++;}
+    public void next() {
+        turnCounter++;
+        if (getCurrentPlayer().isPoweredDown) next();
+    }
 
     public void add(Player player){
         this.playerList.add(player);
     }
 
-    public Player getCurrentPlayer(){
-        return playerList.get(turnCounter % playerList.size());
+    public Player getCurrentPlayer() { return playerList.get(turnCounter % playerList.size()); }
+
+    public Player getLastPlayer() {
+        System.out.println(getLastPlayerHelper(1).playerName);
+        return getLastPlayerHelper(1);
     }
 
-    public Player getLastPlayer() { return playerList.get(playerList.size() - 1); }
-
+    /**
+     * Recursively looks for the last player in playerList which is not powered down.
+     * @param recursionNumber denotes how far back in playerList we are.
+     * @return last player in playerList which is not powered down.
+     */
+    public Player getLastPlayerHelper(int recursionNumber) {
+        int queueIndex = playerList.size() - recursionNumber;
+        if (queueIndex == 0) {
+            return playerList.get(0);
+        }
+        else if (playerList.get(queueIndex).isPoweredDown) {
+            return getLastPlayerHelper(++recursionNumber);
+        }
+        else {
+            return playerList.get(queueIndex);
+        }
+    }
 }

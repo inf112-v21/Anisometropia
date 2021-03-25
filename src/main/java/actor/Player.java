@@ -16,7 +16,8 @@ public class Player implements IPlayer {
     public boolean isDead = false;
     public boolean isVictorious = false;
     public boolean[] flagsReached;
-    public boolean playerPoweredDown = false;
+    public boolean isPoweredDown = false;
+    public boolean hasAnnouncedPowerDown = false;
     public ArrayList<ProgramCard> dealtProgramCards;
     public ArrayList<ProgramCard> chosenProgramCards;
     public ArrayList<ProgramCard> lockedProgramCards;
@@ -30,7 +31,7 @@ public class Player implements IPlayer {
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
         this.characterID = characterID;
-        dmgTokens = 0;
+        dmgTokens = 4;
         lifeTokens = 3;
         flagsReached = new boolean[4];
         lockedProgramCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));
@@ -141,7 +142,7 @@ public class Player implements IPlayer {
     }
 
     public void checkIfPlayerTooDamaged() {
-        if(getDmgTokens()==10)
+        if (getDmgTokens()==10)
             playerDies();
     }
 
@@ -150,9 +151,13 @@ public class Player implements IPlayer {
         checkIfPlayerTooDamaged();
     }
 
+    public void announcePowerDown() {
+        hasAnnouncedPowerDown = true;
+    }
+
+    //TODO: the player should wait out one round if powered down.
     public void powerDownRobot() {
-        //TODO : the player should wait out one round if powered down.
-        playerPoweredDown = true;
+        isPoweredDown = true;
         setDmgTokens(0);
     }
 

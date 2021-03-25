@@ -137,7 +137,7 @@ public class ControlScreen extends InputAdapter {
                 }
                 if (click.x > powerDownButton.getX() && click.x < (powerDownButton.getX() + powerDownButton.getWidth()) &&
                         click.y > powerDownButton.getY() && click.y < (powerDownButton.getY() + powerDownButton.getHeight())) {
-                    gameLogic.getCurrentPlayer().powerDownRobot();
+                    powerDownButtonHasBeenClicked();
                 }
                 if (click.x > joinButton.getX() && click.x < (joinButton.getX() + joinButton.getWidth()) &&
                         click.y > joinButton.getY() && click.y < (joinButton.getY() + joinButton.getHeight())) {
@@ -274,6 +274,10 @@ public class ControlScreen extends InputAdapter {
         }
     }
 
+    private void powerDownButtonHasBeenClicked() {
+        gameLogic.getCurrentPlayer().announcePowerDown();
+    }
+
     private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
             multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
@@ -298,7 +302,7 @@ public class ControlScreen extends InputAdapter {
     /**
      * Draws all cards dealt to the current player.
      * Cards locked to the register are displayed and fixed to the register.
-     * @param batch
+     * @param batch batch
      */
     public void drawCardsOfCurrentPlayer(SpriteBatch batch) {
         Player currentPlayer = gameLogic.getCurrentPlayer();
@@ -310,8 +314,8 @@ public class ControlScreen extends InputAdapter {
         if (currentPlayer.getDmgTokens() >= 5) {
             for (int i = 4; i >= 9 - currentPlayer.getDmgTokens(); i--) {
                 ProgramCard lockedCard = currentPlayer.getChosenProgramCards().get(i);
-                batch.draw(programCardTextures.get(
-                        lockedCard.getCardType()), choiceDeckOffset+(i*64), 0, cardWidth, cardHeight);
+                batch.draw(programCardTextures.get(lockedCard.getCardType()),
+                        choiceDeckOffset+(i*64), 0, cardWidth, cardHeight);
             }
         }
     }

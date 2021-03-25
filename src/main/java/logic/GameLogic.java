@@ -133,17 +133,14 @@ public class GameLogic {
                 gameMessage = player.playerName + " won by finding all the flags!";
                 gameOver = true;
             }
-
-            if(getCurrentPlayer().playerPoweredDown) {
-                getCurrentPlayer().playerPoweredDown = false;
-            }
         }
     }
 
     public void endOfRoundCheck() {
         endOfTurnCheck();
-        respawnPlayersIfPossible();
         checkIfOnlyOnePlayerLeft();
+        initiateAnnouncedPowerDowns();
+        respawnPlayersIfPossible();
     }
 
     private void checkIfOnlyOnePlayerLeft() {
@@ -161,9 +158,22 @@ public class GameLogic {
         }
     }
 
+    private void initiateAnnouncedPowerDowns() {
+        for (Player player : playerQueue.getPlayerQueue()) {
+            player.isPoweredDown = false;
+            if (player.hasAnnouncedPowerDown) {
+                player.hasAnnouncedPowerDown = false;
+                player.powerDownRobot();
+            }
+        }
+    }
+
     private void respawnPlayersIfPossible() {
         for (Player player : playerQueue.getPlayerQueue()) {
-            if(player.isDead) player.respawn();
+            if(player.isDead) {
+                player.respawn();
+                player.isPoweredDown = false;
+            }
         }
     }
 
