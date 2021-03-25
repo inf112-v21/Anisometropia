@@ -83,27 +83,6 @@ public class GraphicalGameMap extends GameMap {
         playerCells[2] = player3Cells;
         playerCells[3] = player4Cells;
 
-        /*
-        Pits
-        Gears:  - Clockwise gear
-                - Counterclockwise gear
-        Priority antenna
-        Conveyor Belts: - Green conveyor belt (moves 1 space)
-                        - rotating conveyor belt
-                        - rotating merge conveyor belt
-                        - rotating double merge conveyor belt
-
-                        - Blue conveyor belt (moves 2 spaces)
-                        - rotating conveyor belt
-                        - rotating merge conveyor belt
-                        - rotating double merge conveyor belt
-        Crushers: Active crusher
-        Lasers: 1, 2 & 3 laser-beams.
-        Energy space
-        Checkpoints
-        Start Space
-        */
-
         wall = new Wall(this);
         findSpawnPositions();
     }
