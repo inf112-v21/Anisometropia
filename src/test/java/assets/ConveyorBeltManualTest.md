@@ -25,4 +25,4 @@ Testene gjøres med 2 eller flere spillere, da bevegelsen er rundebasert.
   er et blått conveyorBelt. Hvis dette stemmer så skal spilleren flyttes nok en gang.
   \
   Blåe ConveyorBelt skal dytte spilleren 1 tiles. \
-  Blåe ConveyorBelt med sving, skal roteres og flytte spiller 1 tiles.\
+  Blåe ConveyorBelt med sving, skal roteres og flytte spiller 1 tiles.
