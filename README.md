@@ -2,14 +2,54 @@
 
 # RoboRally by Anisometropia (prosjekt i INF112)
 
-Man starter spillet ved å kjøre Main.java (ligger i Anisometropia\src\main\java\launcher).
-1. Hvordan spillet spilles står forklart på høyresiden når main kjøres.
-2. ESCAPE vil avslutte spillet
-3. R restarter og setter spillerene tilbake til startposisjon.
+## Hvordan å kjøre spillet:
+
+JRE (Java Runtime Environment) må være installert.
+
+Last ned RoboRallyVersion3.jar fra (ligger i "Assets"-listen):
+https://github.com/inf112-v21/Anisometropia/releases/tag/v3.1
+
+## Windows
+Her kan man være heldig, og få til å kjøre spillet ved å bare dobbeltklikke på .jar-filen.
+
+Fungerer ikke det, kan man åpne et terminal-vindu, naviger til mappen hvor .jar-filen er, og kjøre:
+
+java -jar RoboRallyVersion3.jar
+
+Fungerer ikke dette, må man legge til Java som PATH, følg bruksanvisning:
+
+https://java.com/en/download/help/path.html
+
+Naviger så til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
+java -jar RoboRallyVersion3.jar
+
+## Linux
+Kjør kommandoer:
+sudo apt update
+sudo apt install default-jre
+
+Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
+java -jar RoboRallyVersion3.jar
+
+
+## OS X
+Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
+java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 
 
 
-## Known bugs
+## Hvordan å spille spillet:
+1. Når man kjører spillet, velg "PLAY LOCAL" ("PLAY ON NET" er enda ikke fullstendig implementert).
+
+2. Velg så antall spillere, og klikk "START".
+
+3. Hvordan spillet spilles står forklart på høyresiden.
+
+4. R restarter og setter spillerene tilbake til startposisjon.
+
+
+
+## Kjente feil (bugs)
 Dersom spiller1 og spiller2 står i samme rute (vil ikke være mulig senere i spillet når vi får 
 lagt til collision med andre players) og spiller1 flytter seg, mens spiller2 står stille
 vil ikke spiller2 vises før den har flytter seg igjen.
