@@ -24,6 +24,7 @@ public class GameLogic {
     public Boolean firstTurn = true;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
+    final int Hole = 91, Hole1 = 92, Hole2 = 6;
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
 
     public static boolean gameOver = false;
