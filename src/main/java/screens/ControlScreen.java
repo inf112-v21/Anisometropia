@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import logic.GameLogic;
 import p2p.Multiplayer;
+import logic.MultiPlayerLogic;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import static logic.GameLogic.gameOver;
 
 public class ControlScreen extends InputAdapter {
     GameLogic gameLogic;
+    MultiPlayerLogic multiPlayerLogic;
 
     //Variables used to draw objects on the map
     private final SpriteBatch batch;
@@ -273,8 +275,8 @@ public class ControlScreen extends InputAdapter {
 
     private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
-            gameLogic.mp = new Multiplayer(Boolean.TRUE);
-            Thread mpThread = new Thread(gameLogic.mp);
+            multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
+            Thread mpThread = new Thread(multiPlayerLogic.mp);
             mpThread.start();
             hostButton.setActive(false);
             joinButton.setActive(false);
@@ -283,9 +285,9 @@ public class ControlScreen extends InputAdapter {
 
     private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
-            gameLogic.firstTurn = false;
-            gameLogic.mp = new Multiplayer(Boolean.FALSE);
-            Thread mpThread = new Thread(gameLogic.mp);
+            multiPlayerLogic.firstTurn = false;
+            multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE);
+            Thread mpThread = new Thread(multiPlayerLogic.mp);
             mpThread.start();
             hostButton.setActive(false);
             joinButton.setActive(false);

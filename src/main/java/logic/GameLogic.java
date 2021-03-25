@@ -7,21 +7,20 @@ import assets.Wall;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import map.GameMap;
-import p2p.Multiplayer;
+import logic.MultiPlayerLogic;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameLogic {
 
+    MultiPlayerLogic multiPlayerLogic;
     GameMap gameMap;
     PlayerQueue playerQueue;
     ConveyorBelts conveyorBelts;
     Laser laser;
     Wall wall;
     DeckOfProgramCards deckOfProgramCards;
-    public Multiplayer mp;
-    public Boolean firstTurn = true;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
@@ -83,50 +82,15 @@ public class GameLogic {
      * @param chosenCards cards player has chosen.
      */
     public void finishCardSelectionTurn(ArrayList<ProgramCard> chosenCards) throws IOException {
-        if(mp != null) {
-            if (firstTurn == false) {
-                receiveCards();
-            }
+        if(multiPlayerLogic.isConnected()) {
             getCurrentPlayer().setChosenProgramCards(chosenCards);
-            System.out.println(getPlayerQueue().turnCounter);
-            sendCards();
-
-            // for(Player player : playerQueue.getPlayerQueue()
+            multiPlayerLogic.runMultiPlayer();
         }
-        else {
+
+        else  {
             getCurrentPlayer().setChosenProgramCards(chosenCards);
             System.out.println(getPlayerQueue().turnCounter);
         }
-    }
-
-    public void sendCards() throws IOException {
-        firstTurn = false;
-        DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
-        String toSend = "";
-        for(int i = 0; i <= 6; i++) {
-            for(ProgramCard playerCard : getCurrentPlayer().getChosenProgramCards()) {
-                if(deckOfProgramCards.uniqueCards.get(i).getCardType() == playerCard.getCardType()) {
-                    System.out.println(deckOfProgramCards.uniqueCards.get(i).amountToMoveOrRotate);
-                    toSend += playerCard.getCardType();
-                }
-            }
-        }
-        System.out.println("I am sending " + toSend);
-        mp.send(toSend);
-    }
-
-    private void receiveCards() throws IOException {
-        DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
-        String toReceive = mp.receive();
-        ArrayList<ProgramCard> chosenCards = new ArrayList<>();
-        for (int i = 0; i < toReceive.length(); i++) {
-            int cardID = Character.getNumericValue(toReceive.charAt(i));
-            System.out.println(cardID);
-            chosenCards.add(deckOfProgramCards.uniqueCards.get(cardID));
-        }
-        getCurrentPlayer().setChosenProgramCards(chosenCards);
-        System.out.println("I am receiving " + chosenCards);
-        getPlayerQueue().next();
     }
 
     /**

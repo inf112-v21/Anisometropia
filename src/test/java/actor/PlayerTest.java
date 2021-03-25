@@ -172,7 +172,7 @@ public class PlayerTest {
     }
     @Test
     //tests if the player can move out of Bounds
-    public void testOutOfBounds(){
+    public void testOutOfBounds() {
         assertFalse(player.canMove(0,13));
         assertFalse(player.canMove(0,-13));
         assertFalse(player.canMove(13,0));
