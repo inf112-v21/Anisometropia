@@ -7,7 +7,7 @@ import actor.Player;
  */
 public class ProgramCard {
     int cardType;
-    int amountToMoveOrRotate;
+    public int amountToMoveOrRotate;
     boolean isMovementCard; // Denotes whether card affects movement or direction.
 
     public ProgramCard(int cardType, int amountToMoveOrRotate, boolean isMovementCard) {

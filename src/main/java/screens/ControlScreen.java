@@ -245,7 +245,8 @@ public class ControlScreen extends InputAdapter {
             acceptButton.setTexture(acceptTextureUnavailable);
             borderButton.setTexture(borderTextureUnavailable);
 
-            gameLogic.finishCardSelectionTurn(chosenCards);
+             gameLogic.finishCardSelectionTurn(chosenCards);
+
             if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
                 progressButton.setActive(true);
                 progressButton.setTexture(progressTexture);
@@ -282,6 +283,7 @@ public class ControlScreen extends InputAdapter {
 
     private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
+            gameLogic.firstTurn = false;
             gameLogic.mp = new Multiplayer(Boolean.FALSE);
             Thread mpThread = new Thread(gameLogic.mp);
             mpThread.start();

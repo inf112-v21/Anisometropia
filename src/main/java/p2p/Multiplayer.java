@@ -13,7 +13,7 @@ public class Multiplayer implements Runnable {
     private DataInputStream dataInput;
     private DataOutputStream dataOutput;
     private String buffer = ""; // to store the received string
-    private Boolean hosting;
+    public Boolean hosting;
     private Boolean connected = false;
     /**
     @param host True if hosting, false if joining an already opened connection.
