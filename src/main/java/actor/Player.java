@@ -56,23 +56,7 @@ public class Player implements IPlayer {
 
     //TODO Check for walls.
     public boolean canMove(int dx, int dy) {
-        //  isDestinationWithinBounds
-        //      isThereWallOnCurrentPosition)
-        //           canDirectionOfMoveBePerformedOnThisTypeOfWall
-        //                 isThereWallOnDestinationPosition
-        //                      canDirectionOfMoveBePerformedOnThisTypeOfWall
-        //      isThereWallOnDestinationPosition
-        //          canDirectionOfMoveBePerformedOnThisTypeOfWall
-
-        // if wall.
-
-//        if ((this.getX()>=0 && this.getX() < gameMap.getWidth()) && (this.getY() >= 0 && this.getY() < gameMap.getHeight())){
-//            return true;
-//        }
-
         if (gameMap.isThereWallOnThisPosition(this.getX()+dx,this.getY()+dy)) {
-            //get the wall (can use switch / case here aswell)
-            //return false;
             int wallID = gameMap.getAssetLayerID(this.getX()+dx,this.getY()+dy);
             switch (wallID){
                 case (Wall.wallLeft):
@@ -119,7 +103,6 @@ public class Player implements IPlayer {
                     throw new IllegalStateException("Unexpected wallID: " + wallID);
             }
         }
-
 
         if (gameMap.isThereWallOnThisPosition(this.getX(),this.getY())){
             int wallID = gameMap.getAssetLayerID(this.getX(),this.getY());
@@ -169,8 +152,6 @@ public class Player implements IPlayer {
                     throw new IllegalStateException("Unexpected value: " + wallID);
             }
         }
-
-
         return (x+dx >= 0 && x+dx < gameMap.getWidth()) && (y+dy >= 0 && y+dy < gameMap.getHeight());
     }
 

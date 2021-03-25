@@ -97,9 +97,7 @@ public class ConveyorBelts {
         }
     }
 
-//-------------- Blue ConveyorBelts ---------------
-
-
+    //-------------- Blue ConveyorBelts ---------------
     /**
      * @param bConveyorID ID to a given tile
      * @param player Moves player in a given location
@@ -113,11 +111,9 @@ public class ConveyorBelts {
             case (bConveyorBeltID_Up):
                 player.move(0, 1);
                 break;
-
             case (bConveyorBeltID_Right):
                 player.move(1, 0);
                 break;
-
             case (bConveyorBeltID_Left):
                 player.move(-1, 0);
                 break;
@@ -135,7 +131,7 @@ public class ConveyorBelts {
                 player.move(-1, 0);
                 break;
             case (bConveyorBeltID_LeftDown):
-                player.rotate(2);
+                player.rotate(3);
                 player.move(0, -1);
                 break;
             case (bConveyorBeltID_DownLeft):
