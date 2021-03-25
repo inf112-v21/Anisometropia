@@ -74,7 +74,6 @@ public class GameLogic {
 
         else  {
             getCurrentPlayer().setChosenProgramCards(chosenCards);
-            System.out.println(getPlayerQueue().turnCounter);
         }
     }
 

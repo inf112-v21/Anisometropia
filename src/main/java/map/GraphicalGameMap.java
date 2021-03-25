@@ -244,41 +244,32 @@ public class GraphicalGameMap extends GameMap {
     }
 
     public void findSpawnPositions() {
-        System.out.println("spawn positions looker started");
         for (int width = 0; width < getWidth(); width++) {
             for (int height = 0; height < getHeight(); height++) {
                 if (assetLayer.getCell(width, height) != null) {
                     if (getAssetLayerID(width, height) == (StartPosID_1)) {
                         spawnPos[0] = new Point(width, height);
-                        System.out.println("1 found!");
                     }
                     if (getAssetLayerID(width, height) == (StartPosID_2)) {
                         spawnPos[1] = new Point(width, height);
-                        System.out.println("2 found!");
                     }
                     if (getAssetLayerID(width, height) == (StartPosID_3)) {
                         spawnPos[2] = new Point(width, height);
-                        System.out.println("3 found!");
                     }
                     if (getAssetLayerID(width, height) == (StartPosID_4)) {
                         spawnPos[3] = new Point(width, height);
-                        System.out.println("4 found!");
                     }
                     if (getAssetLayerID(width, height) == (StartPosID_5)) {
                         spawnPos[4] = new Point(width, height);
-                        System.out.println("5 found!");
                     }
                     if (getAssetLayerID(width, height) == (StartPosID_6)) {
                         spawnPos[5] = new Point(width, height);
-                        System.out.println("6 found!");
                     }
                     if (getAssetLayerID(width, height) == (StartPosID_7)) {
                         spawnPos[6] = new Point(width, height);
-                        System.out.println("7 found!");
                     }
                     if (getAssetLayerID(width, height) == (StartPosID_8)) {
                         spawnPos[7] = new Point(width, height);
-                        System.out.println("8 found!");
                     }
                 }
             }
