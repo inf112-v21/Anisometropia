@@ -120,7 +120,7 @@ public class GraphicalGameMap extends GameMap {
     public boolean isThereHoleOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
-            return (tileID == 91) || (tileID == 92);
+            return (tileID == 91) || (tileID == 92) || (tileID == 6);
         }
         return false;
     }
