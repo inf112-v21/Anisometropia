@@ -39,22 +39,7 @@ public class GameLogic {
         laser = new Laser();
         deckOfProgramCards = new DeckOfProgramCards();
         dealProgramCards();
-//        playerStartPos();
     }
-
-//    public void playerStartPos() {
-//        for (int height = 0; height < gameMap.getHeight(); height++) {
-//            for (int width = 0; width < gameMap.getWidth(); width++) {
-//                if (gameMap.getAssetLayerID(height, width) == (startPosID_3)) {
-//                    int height3 = height;
-//                    int width3 = width;
-//                    addPlayer(height3,width3,"player3");
-//                }
-//                if (gameMap.getAssetLayerID(height, width) == (startPosID_4) ) {
-//                    addPlayer(height, width, "Player4"); }
-//            }
-//        }
-//    }
 
     public void update() {
         if (!gameOver) {
