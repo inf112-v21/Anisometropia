@@ -25,3 +25,10 @@ _Test at tilbakelegging av valgte kort (fra høyre) oppdaterer rekkefølgen for 
 - Trykk på nytt, i en vilkårlig rekkefølge, på de valgte kortene.
 - Bekreft visuelt at resterende valgte kort skyves til venstre slik at rekkefølgen vedlikeholdes.
 
+\
+_Test at låste kort vises i riktig posisjon i registeret:_
+- Naviger spilleren til en laser og ta minst fem skade.
+- Noter hvilke kort som ble brukt runden minst fem total skade ble oppnådd.
+- Bekreft visuelt ved start av ny runde at riktige kort fra forrige runde vises låst i registeret,
+  i riktig rekkefølge og posisjon.
+
