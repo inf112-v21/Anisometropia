@@ -10,36 +10,37 @@ Last ned RoboRallyVersion3.jar fra (ligger i "Assets"-listen):
 
 https://github.com/inf112-v21/Anisometropia/releases/tag/v3.1
 
-## Windows
+#### _Windows_
 Her kan man være heldig, og få til å kjøre spillet ved å bare dobbeltklikke på .jar-filen.
 
 Fungerer ikke det, kan man åpne et terminal-vindu, naviger til mappen hvor .jar-filen er, og kjøre:
-
+```
 java -jar RoboRallyVersion3.jar
-
+```
 Fungerer ikke dette, må man legge til Java som PATH, følg bruksanvisning:
 
 https://java.com/en/download/help/path.html
 
 Naviger så til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
-
+```
 java -jar RoboRallyVersion3.jar
-
-## Linux
+```
+#### _Linux_
 Kjør kommandoer:
+```
 sudo apt update
 sudo apt install default-jre
-
+```
 Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
-
+```
 java -jar RoboRallyVersion3.jar
+```
 
-
-## OS X
+#### _OS X_
 Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
-
+```
 java -XstartOnFirstThread -jar RoboRallyVersion3.jar
-
+```
 
 ## Hvordan å spille spillet:
 1. Når man kjører spillet, velg "PLAY LOCAL" ("PLAY ON NET" er enda ikke fullstendig implementert).
