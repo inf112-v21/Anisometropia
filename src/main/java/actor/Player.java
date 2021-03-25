@@ -16,9 +16,6 @@ public class Player implements IPlayer {
     public boolean isDead = false;
     public boolean isVictorious = false;
     public boolean[] flagsReached;
-    public boolean conveyorBeltReached = true;
-    public boolean laserBeamReached = true;
-    public boolean wallHasBeenReached = true;
     public boolean playerPoweredDown = false;
     public ArrayList<ProgramCard> dealtProgramCards;
     public ArrayList<ProgramCard> chosenProgramCards;
@@ -56,103 +53,25 @@ public class Player implements IPlayer {
 
     //TODO Check for walls.
     public boolean canMove(int dx, int dy) {
-        if (gameMap.isThereWallOnThisPosition(this.getX()+dx,this.getY()+dy)) {
-            int wallID = gameMap.getAssetLayerID(this.getX()+dx,this.getY()+dy);
-            switch (wallID){
-                case (Wall.wallLeft):
-                case (Wall.laserWallLeft):
-                case (Wall.doubleLaserWallLeft):
-                    if (dx == 1 && dy == 0) return false;
-                    break;
-
-                case (Wall.wallRight):
-                case (Wall.laserWallRight):
-                case (Wall.doubleLaserWallRight):
-                    if (dx == -1 && dy == 0) return false;
-                    break;
-
-                case (Wall.wallDown):
-                case (Wall.laserWallDown):
-                case (Wall.doubleLaserWallDown):
-                    if (dx == 0 && dy == 1) return false;
-                    break;
-
-                case(Wall.wallUp):
-                case(Wall.laserWallUp):
-                case(Wall.doubleLaserWallUp):
-                    if (dx == 0 && dy == -1) return false;
-                    break;
-
-                case (Wall.wallUpLeft):
-                    if ((dx == 0 && dy == -1) || (dx == 1 && dy == 0 )) return false;
-                    break;
-
-                case(Wall.wallUpRight):
-                    if ((dx == 0 && dy == -1) || (dx == -1 && dy == 0)) return false;
-                    break;
-
-                case(Wall.wallDownLeft):
-                    if ((dx == 0 && dy == 1) || (dx == 1 && dy == 0)) return false;
-                    break;
-
-                case(Wall.wallDownRight):
-                    if ((dx == 0 && dy == 1) || (dx == -1 && dy == 0)) return false;
-                    break;
-
-                default:
-                    throw new IllegalStateException("Unexpected wallID: " + wallID);
+        boolean wallOutOfPositionBlocked = false;
+        boolean wallIntoPositionBlocked = false;
+        if (gameMap.isThereWallOnThisPosition(this.getX(), this.getY())) {
+            if (!gameMap.getWall().checkOutOfWall(this.getX(), this.getY(), dx, dy)) {
+                wallOutOfPositionBlocked = true;
             }
         }
 
-        if (gameMap.isThereWallOnThisPosition(this.getX(),this.getY())){
-            int wallID = gameMap.getAssetLayerID(this.getX(),this.getY());
-            switch (wallID){
-                case (Wall.wallLeft):
-                case (Wall.laserWallLeft):
-                case (Wall.doubleLaserWallLeft):
-                    if (dx == -1 && dy == 0) return false;
-                    break;
-
-                case (Wall.wallRight):
-                case (Wall.laserWallRight):
-                case (Wall.doubleLaserWallRight):
-                    if (dx == 1 && dy == 0) return false;
-                    break;
-
-                case (Wall.wallDown):
-                case (Wall.laserWallDown):
-                case (Wall.doubleLaserWallDown):
-                    if (dx == 0 && dy == -1) return false;
-                    break;
-
-                case(Wall.wallUp):
-                case(Wall.laserWallUp):
-                case(Wall.doubleLaserWallUp):
-                    if (dx == 0 && dy == 1) return false;
-                    break;
-
-                case (Wall.wallDownRight):
-                    if ((dx == 0 && dy == -1) || (dx == 1 && dy == 0 )) return false;
-                    break;
-
-                case(Wall.wallDownLeft):
-                    if ((dx == 0 && dy == -1) || (dx == -1 && dy == 0)) return false;
-                    break;
-
-                case(Wall.wallUpRight):
-                    if ((dx == 0 && dy == 1) || (dx == 1 && dy == 0)) return false;
-                    break;
-
-                case(Wall.wallUpLeft):
-                    if ((dx == 0 && dy == 1) || (dx == -1 && dy == 0)) return false;
-                    break;
-
-
-                default:
-                    throw new IllegalStateException("Unexpected value: " + wallID);
+        if (gameMap.isThereWallOnThisPosition(this.getX() + dx, this.getY() + dy)) {
+            if (!gameMap.getWall().checkIntoWall(this.getX(), this.getY(), dx, dy)) {
+                wallIntoPositionBlocked = true;
             }
         }
-        return (x+dx >= 0 && x+dx < gameMap.getWidth()) && (y+dy >= 0 && y+dy < gameMap.getHeight());
+        if(wallIntoPositionBlocked || wallOutOfPositionBlocked){
+            return false;
+        }
+        return (x + dx >= 0 && x + dx < gameMap.getWidth()) && (y + dy >= 0 && y + dy < gameMap.getHeight());
+
+
     }
 
     public int getDirection() { return direction; }

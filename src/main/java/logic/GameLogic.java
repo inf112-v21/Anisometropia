@@ -38,7 +38,6 @@ public class GameLogic {
         this.playerQueue = playerQueue;
         conveyorBelts = new ConveyorBelts();
         laser = new Laser();
-        wall = new Wall();
         deckOfProgramCards = new DeckOfProgramCards();
         dealProgramCards();
 //        playerStartPos();
@@ -233,6 +232,7 @@ public class GameLogic {
     }
 
     public boolean checkLoss(int x, int y) {
+        // TODO player can not jump over a hole.
         return gameMap.isThereHoleOnThisPosition(x, y);
     }
 

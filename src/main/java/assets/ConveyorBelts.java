@@ -5,8 +5,8 @@ import map.GameMap;
 
 public class ConveyorBelts {
     public static final int yConveyorBeltID_Down      = 50, yConveyorBeltID_Right     = 52, yConveyorBeltID_Up      = 49, yConveyorBeltID_Left     = 51,
-            yConveyorBeltID_DownRight = 58, yConveyorBeltID_RightUp   = 57, yConveyorBeltID_UpLeft  = 60, yConveyorBeltID_LeftDown = 59,
-            yConveyorBeltID_DownLeft  = 68, yConveyorBeltID_RightDown = 67, yConveyorBeltID_UpRight = 66, yConveyorBeltID_LeftUp   = 65,
+            yConveyorBeltID_DownRight = 40, yConveyorBeltID_RightUp   = 42, yConveyorBeltID_UpLeft  = 34, yConveyorBeltID_LeftDown = 33,
+            yConveyorBeltID_DownLeft  = 44, yConveyorBeltID_RightDown = 36, yConveyorBeltID_UpRight = 35, yConveyorBeltID_LeftUp   = 43,
             bConveyorBeltID_Down      = 21, bConveyorBeltID_Right     = 14, bConveyorBeltID_Up      = 13, bConveyorBeltID_Left     = 22,
             bConveyorBeltID_DownRight = 25, bConveyorBeltID_RightUp   = 26, bConveyorBeltID_UpRight = 19, bConveyorBeltID_LeftUp   = 27,
             bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpLeft  = 18, bConveyorBeltID_LeftDown = 17;

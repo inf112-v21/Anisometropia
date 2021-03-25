@@ -29,6 +29,8 @@ public class GraphicalGameMap extends GameMap {
     TiledMapTileLayer.Cell[]player4Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[][] playerCells = new TiledMapTileLayer.Cell[4][6];
 
+    Wall wall;
+
     public GraphicalGameMap() {
         tiledMap = new TmxMapLoader().load("gameboard2.tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, PIXEL_SCALE_FOR_ASSETS  / ASSETS_IMAGE_SIZE);
@@ -93,6 +95,9 @@ public class GraphicalGameMap extends GameMap {
         Checkpoints
         Start Space
         */
+
+        wall = new Wall(this);
+        // just testing
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
@@ -163,9 +168,6 @@ public class GraphicalGameMap extends GameMap {
         return false;
     }
 
-
-
-
     @Override
     public boolean isThereWallOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
@@ -183,9 +185,15 @@ public class GraphicalGameMap extends GameMap {
         return false;
     }
 
+    @Override
+    public Wall getWall() {
+        return wall;
+    }
+
     public int getAssetLayerID(int x, int y) {
         return assetLayer.getCell(x, y).getTile().getId();
     }
+
     public int getLaserLayerID(int x, int y){
         return laserLayer.getCell(x, y).getTile().getId();
     }
@@ -226,6 +234,8 @@ public class GraphicalGameMap extends GameMap {
     public void setToNull(int x, int y) {
         ((TiledMapTileLayer) tiledMap.getLayers().get("PlayerLayer")).setCell(x, y, null);
     }
+
+
 
     public void dispose() {
         tiledMap.dispose();

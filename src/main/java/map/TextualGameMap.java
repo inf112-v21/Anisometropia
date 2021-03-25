@@ -1,6 +1,7 @@
 package map;
 
 import actor.Player;
+import assets.Wall;
 
 import java.util.Arrays;
 
@@ -92,6 +93,10 @@ public class TextualGameMap extends GameMap {
         return false;
     }
 
+    public Wall getWall() {
+        Wall wall = null;
+        return wall;
+    }
 
 }
 
