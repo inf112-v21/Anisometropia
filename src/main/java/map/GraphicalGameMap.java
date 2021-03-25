@@ -97,6 +97,7 @@ public class GraphicalGameMap extends GameMap {
         */
 
         wall = new Wall(this);
+        // just testing
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
