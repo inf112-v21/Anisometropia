@@ -18,24 +18,18 @@ public class Laser {
         switch (tileID) {
             case (laserBeamHorizontal):
             case (laserBeamVertical):
-                if (player.laserBeamReached) {
-                    player.updateDamageTokens(1);
-                }
+                player.updateDamageTokens(1);
                 break;
 
 //Player is to be damaged and loose 2 health points.
             case (doubleLaserBeamHorizontal):
             case (doubleLaserBeamVertical):
             case (laserBeamCrossing):
-                if(player.laserBeamReached){
-                    player.updateDamageTokens(2);
-                }
+                player.updateDamageTokens(2);
                 break;
 
             case (doubleLaserBeamCrossing):
-                if(player.laserBeamReached){
-                    player.updateDamageTokens(4);
-                }
+                player.updateDamageTokens(4);
                 break;
 
             default:
