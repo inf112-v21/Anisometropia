@@ -10,9 +10,6 @@ Man starter spillet ved å kjøre Main.java (ligger i Anisometropia\src\main\jav
 
 
 ## Known bugs
-Spillet blir tregere desto flere runder som spilles. Det kan ta flere sekunder å lukke spillet etter
-å ha krysset fanen eller trykket ESC.
-
 Dersom spiller1 og spiller2 står i samme rute (vil ikke være mulig senere i spillet når vi får 
 lagt til collision med andre players) og spiller1 flytter seg, mens spiller2 står stille
 vil ikke spiller2 vises før den har flytter seg igjen.
