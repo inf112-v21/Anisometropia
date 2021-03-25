@@ -312,6 +312,7 @@ public class ControlScreen extends InputAdapter {
                 ProgramCard lockedCard = currentPlayer.getChosenProgramCards().get(i);
                 batch.draw(programCardTextures.get(
                         lockedCard.getCardType()), choiceDeckOffset+(i*64), 0, cardWidth, cardHeight);
+                batch.draw(damageToken,choiceDeckOffset+12+(i*64), -24, 40,40); // to indicate that the card is locked
             }
         }
     }
