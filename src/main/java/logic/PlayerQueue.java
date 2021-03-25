@@ -18,9 +18,7 @@ public class PlayerQueue {
         return playerList;
     }
 
-    public void next() {
-        turnCounter++;
-    }
+    public void next() {turnCounter++;}
 
     public void add(Player player){
         this.playerList.add(player);
