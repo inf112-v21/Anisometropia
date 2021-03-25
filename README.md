@@ -19,3 +19,5 @@ vil ikke spiller2 vises før den har flytter seg igjen.
 
 Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to progress" for
 å prosessere turen til spilleren.
+
+Dersom den siste spilleren i rekkefølgen har utført 'power down' en runde medfører dette at andre spillere gjentar samme trekk neste runde uten å få muligheten til å velge nye kort. Spilleren som var i 'power down' foregående runde får derimot velge nye kort som forventet.
