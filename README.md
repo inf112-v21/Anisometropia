@@ -7,6 +7,7 @@
 JRE (Java Runtime Environment) må være installert.
 
 Last ned RoboRallyVersion3.jar fra (ligger i "Assets"-listen):
+
 https://github.com/inf112-v21/Anisometropia/releases/tag/v3.1
 
 ## Windows
@@ -21,6 +22,7 @@ Fungerer ikke dette, må man legge til Java som PATH, følg bruksanvisning:
 https://java.com/en/download/help/path.html
 
 Naviger så til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
+
 java -jar RoboRallyVersion3.jar
 
 ## Linux
@@ -29,13 +31,14 @@ sudo apt update
 sudo apt install default-jre
 
 Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
+
 java -jar RoboRallyVersion3.jar
 
 
 ## OS X
 Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
-java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 
+java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 
 
 ## Hvordan å spille spillet:
@@ -46,7 +49,6 @@ java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 3. Hvordan spillet spilles står forklart på høyresiden.
 
 4. R restarter og setter spillerene tilbake til startposisjon.
-
 
 
 ## Kjente feil (bugs)
