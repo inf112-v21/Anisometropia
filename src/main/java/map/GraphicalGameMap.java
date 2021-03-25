@@ -14,6 +14,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 
+import java.awt.*;
+
 import static screens.PlayScreen.ASSETS_IMAGE_SIZE;
 import static screens.PlayScreen.PIXEL_SCALE_FOR_ASSETS;
 
@@ -21,6 +23,12 @@ public class GraphicalGameMap extends GameMap {
     TiledMap tiledMap;
     OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     TiledMapTileLayer boardLayer, laserLayer, assetLayer, playerLayer;
+
+    final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
+    int pl1spawnX, pl1spawnY, pl2spawnX,pl2spawnY, pl3spawnX, pl3spawnY, pl4spawnX, pl4spawnY, pl5spawnX, pl5spawnY, pl6spawnX, pl6spawnY, pl7spawnX, pl7spawnY;
+
+    int[][] spawnPositions = new int[8][2];
+    Point[] spawnPos = new Point[8];
 
     TextureRegion[][] playerImages;
     TiledMapTileLayer.Cell[]player1Cells = new TiledMapTileLayer.Cell[6];
@@ -97,7 +105,7 @@ public class GraphicalGameMap extends GameMap {
         */
 
         wall = new Wall(this);
-        // just testing
+        findSpawnPositions();
     }
 
     public void render(OrthographicCamera camera, SpriteBatch batch) {
@@ -235,7 +243,42 @@ public class GraphicalGameMap extends GameMap {
         ((TiledMapTileLayer) tiledMap.getLayers().get("PlayerLayer")).setCell(x, y, null);
     }
 
+    public void findSpawnPositions() {
+        for (int width = 0; width < getWidth(); width++) {
+            for (int height = 0; height < getHeight(); height++) {
+                if (assetLayer.getCell(width, height) != null) {
+                    if (getAssetLayerID(width, height) == (StartPosID_1)) {
+                        spawnPos[0] = new Point(width, height);
+                    }
+                    if (getAssetLayerID(width, height) == (StartPosID_2)) {
+                        spawnPos[1] = new Point(width, height);
+                    }
+                    if (getAssetLayerID(width, height) == (StartPosID_3)) {
+                        spawnPos[2] = new Point(width, height);
+                    }
+                    if (getAssetLayerID(width, height) == (StartPosID_4)) {
+                        spawnPos[3] = new Point(width, height);
+                    }
+                    if (getAssetLayerID(width, height) == (StartPosID_5)) {
+                        spawnPos[4] = new Point(width, height);
+                    }
+                    if (getAssetLayerID(width, height) == (StartPosID_6)) {
+                        spawnPos[5] = new Point(width, height);
+                    }
+                    if (getAssetLayerID(width, height) == (StartPosID_7)) {
+                        spawnPos[6] = new Point(width, height);
+                    }
+                    if (getAssetLayerID(width, height) == (StartPosID_8)) {
+                        spawnPos[7] = new Point(width, height);
+                    }
+                }
+            }
+        }
+    }
 
+    public Point getSpawnPoint(int playerIndex) {
+        return spawnPos[playerIndex];
+    }
 
     public void dispose() {
         tiledMap.dispose();
