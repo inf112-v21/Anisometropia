@@ -60,7 +60,7 @@ public class Wall {
                     break;
 
                 default:
-                    throw new IllegalStateException("Unexpected wallID: " + wallID);
+                    throw new IllegalStateException("Unexpected wallID: " +wallID+ " x: " +x+ " y: " +y);
             }
         }
         return true;
@@ -113,7 +113,7 @@ public class Wall {
 
 
                 default:
-                    throw new IllegalStateException("Unexpected value: " + wallID);
+                    throw new IllegalStateException("Unexpected wallID: " +wallID+ " x: " +x+ " y: " +y);
             }
         }
         return true;

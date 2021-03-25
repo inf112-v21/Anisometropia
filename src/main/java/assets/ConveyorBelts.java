@@ -4,7 +4,8 @@ import actor.Player;
 import map.GameMap;
 
 public class ConveyorBelts {
-    public static final int yConveyorBeltID_Down      = 50, yConveyorBeltID_Right     = 52, yConveyorBeltID_Up      = 49, yConveyorBeltID_Left     = 51,
+    public static final int
+            yConveyorBeltID_Down      = 50, yConveyorBeltID_Right     = 52, yConveyorBeltID_Up      = 49, yConveyorBeltID_Left     = 51,
             yConveyorBeltID_DownRight = 40, yConveyorBeltID_RightUp   = 42, yConveyorBeltID_UpLeft  = 34, yConveyorBeltID_LeftDown = 33,
             yConveyorBeltID_DownLeft  = 44, yConveyorBeltID_RightDown = 36, yConveyorBeltID_UpRight = 35, yConveyorBeltID_LeftUp   = 43,
             bConveyorBeltID_Down      = 21, bConveyorBeltID_Right     = 14, bConveyorBeltID_Up      = 13, bConveyorBeltID_Left     = 22,
@@ -93,7 +94,7 @@ public class ConveyorBelts {
                 player.move(0, -1);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value for ConveyorClass: " + yConveyorID + " i posisjon x: " + player.getX() + " y: " + player.getY());
+                throw new IllegalStateException("Unexpected yConveyorID: " + yConveyorID + " x: " + player.getX() + " y: " + player.getY());
         }
     }
 
@@ -151,7 +152,7 @@ public class ConveyorBelts {
                 player.move(0, -1);
                 break;
             default:
-                throw new IllegalStateException("Unexpected value for ConveyorClass: " + bConveyorID + "i posisjon x: " + player.getX() + "y: " + player.getY());
+                throw new IllegalStateException("Unexpected bConveyorID: " + bConveyorID + " x: " + player.getX() + " y: " + player.getY());
         }
     }
 }

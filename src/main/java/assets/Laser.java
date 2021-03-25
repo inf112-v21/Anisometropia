@@ -4,18 +4,19 @@ import actor.Player;
 import map.GameMap;
 
 public class Laser {
-    public static final int laserBeamHorizontal = 39, laserBeamVertical = 47, laserBeamCrossing =40,
-                            doubleLaserBeamHorizontal = 102, doubleLaserBeamVertical = 103, doubleLaserBeamCrossing = 101;
+    public static final int
+            laserBeamHorizontal = 39, laserBeamVertical = 47, laserBeamCrossing =40,
+            doubleLaserBeamHorizontal = 102, doubleLaserBeamVertical = 103, doubleLaserBeamCrossing = 101;
 
     public void isPlayerHitByLaserBeam(Player player, GameMap gameMap){
         if (gameMap.isThereLaserBeamsOnThisPosition(player.getX(), player.getY())) {
-            int tileID = gameMap.getLaserLayerID(player.getX(), player.getY());
-            getLaserBeam(tileID, player);
+            int laserID = gameMap.getLaserLayerID(player.getX(), player.getY());
+            getLaserBeam(laserID, player);
         }
     }
 
-    public void getLaserBeam(int tileID, Player player){
-        switch (tileID) {
+    public void getLaserBeam(int laserID, Player player){
+        switch (laserID) {
             case (laserBeamHorizontal):
             case (laserBeamVertical):
                 player.updateDamageTokens(1);
@@ -33,7 +34,7 @@ public class Laser {
                 break;
 
             default:
-                throw new IllegalStateException("Unexpected value for Laser Class: " + tileID);
+                throw new IllegalStateException("Unexpected LaserID: " +laserID+ " x: " +player.getX()+ " y: " +player.getY());
         }
     }
 }
