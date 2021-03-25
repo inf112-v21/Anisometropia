@@ -1,6 +1,9 @@
 package map;
 
 import actor.Player;
+import assets.ConveyorBelts;
+import assets.Wall;
+import assets.Laser;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,7 +27,7 @@ public class GraphicalGameMap extends GameMap {
     TiledMapTileLayer.Cell[]player2Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player3Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player4Cells = new TiledMapTileLayer.Cell[6];
-    TiledMapTileLayer.Cell[][] playerCells = new TiledMapTileLayer.Cell[4][6];;
+    TiledMapTileLayer.Cell[][] playerCells = new TiledMapTileLayer.Cell[4][6];
 
     public GraphicalGameMap() {
         tiledMap = new TmxMapLoader().load("gameboard2.tmx");
@@ -125,35 +128,56 @@ public class GraphicalGameMap extends GameMap {
     public boolean isThereLaserBeamsOnThisPosition(int x, int y){
         if (laserLayer.getCell(x, y) != null){
             int tileID = getLaserLayerID(x,y);
-            return  (tileID == 38)  || (tileID == 46)  || (tileID == 39) ||
-                    (tileID == 101) || (tileID == 102) || (tileID == 100);
+            return  (tileID == Laser.laserBeamHorizontal )     || (tileID == Laser.laserBeamVertical)      ||
+                    (tileID == Laser.doubleLaserBeamHorizontal)|| (tileID == Laser.doubleLaserBeamVertical)||
+                    (tileID == Laser.laserBeamCrossing)        || (tileID == Laser.doubleLaserBeamCrossing);
         }
 
         return false;
     }
 
-    public boolean isThereConveyorOnThisPosition(int x, int y) {
+    public boolean isThereYellowConveyorOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
-            return  (tileID == 49) || (tileID == 50) || (tileID == 51) || (tileID == 52) ||
-                    (tileID == 57) || (tileID == 58) || (tileID == 59) || (tileID == 60) ||
-                    (tileID == 65) || (tileID == 66) || (tileID == 67) || (tileID == 68) ||
-                    (tileID == 12) || (tileID == 13) || (tileID == 16) || (tileID == 17) ||
-                    (tileID == 18) || (tileID == 19) || (tileID == 20) || (tileID == 21) ||
-                    (tileID == 24) || (tileID == 25) || (tileID == 26) || (tileID == 27);
+            return  (tileID == ConveyorBelts.yConveyorBeltID_Down) || (tileID == ConveyorBelts.yConveyorBeltID_Left) ||
+                    (tileID == ConveyorBelts.yConveyorBeltID_Up)   || (tileID == ConveyorBelts.yConveyorBeltID_Right)||
+                    (tileID == ConveyorBelts.yConveyorBeltID_DownLeft) || (tileID == ConveyorBelts.yConveyorBeltID_DownRight) ||
+                    (tileID == ConveyorBelts.yConveyorBeltID_LeftDown) || (tileID == ConveyorBelts.yConveyorBeltID_LeftUp) ||
+                    (tileID == ConveyorBelts.yConveyorBeltID_RightDown) || (tileID == ConveyorBelts.yConveyorBeltID_RightUp) ||
+                    (tileID == ConveyorBelts.yConveyorBeltID_UpLeft) || (tileID == ConveyorBelts.yConveyorBeltID_UpRight);
         }
         return false;
     }
+
+    @Override
+    public boolean isThereBlueConveyorOnThisPosition(int x, int y) {
+        if (assetLayer.getCell(x,y) != null){
+            int tileID =getAssetLayerID(x, y);
+            return  (tileID == ConveyorBelts.bConveyorBeltID_Down) || (tileID == ConveyorBelts.bConveyorBeltID_Left) ||
+                    (tileID == ConveyorBelts.bConveyorBeltID_Up)   || (tileID == ConveyorBelts.bConveyorBeltID_Right)||
+                    (tileID == ConveyorBelts.bConveyorBeltID_DownLeft) || (tileID == ConveyorBelts.bConveyorBeltID_DownRight) ||
+                    (tileID == ConveyorBelts.bConveyorBeltID_LeftDown) || (tileID == ConveyorBelts.bConveyorBeltID_LeftUp) ||
+                    (tileID == ConveyorBelts.bConveyorBeltID_RightDown) || (tileID == ConveyorBelts.bConveyorBeltID_RightUp) ||
+                    (tileID == ConveyorBelts.bConveyorBeltID_UpLeft) || (tileID == ConveyorBelts.bConveyorBeltID_UpRight);
+        }
+        return false;
+    }
+
+
+
 
     @Override
     public boolean isThereWallOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
 
-            return (tileID == 8) || (tileID == 16) || (tileID == 26) || (tileID == 32) ||
-                   (tileID == 23)|| (tileID == 29) || (tileID == 30) || (tileID == 31) ||
-                   (tileID == 37)|| (tileID == 45) || (tileID == 46) || (tileID == 38) ||
-                   (tileID == 87)|| (tileID == 94) || (tileID == 95) || (tileID == 93);
+            return  (tileID == Wall.wallDown)  || (tileID == Wall.laserWallDown)  || (tileID == Wall.doubleLaserWallDown)  ||
+                    (tileID == Wall.wallUp)    || (tileID == Wall.laserWallUp)    || (tileID == Wall.doubleLaserWallUp)    ||
+                    (tileID == Wall.wallLeft)  || (tileID == Wall.laserWallLeft)  || (tileID == Wall.doubleLaserWallLeft)  ||
+                    (tileID == Wall.wallRight) || (tileID == Wall.laserWallRight) || (tileID == Wall.doubleLaserWallRight) ||
+
+                    (tileID == Wall.wallUpLeft)   || (tileID == Wall.wallUpRight) ||
+                    (tileID == Wall.wallDownLeft) || (tileID == Wall.wallDownRight);
         }
 
         return false;

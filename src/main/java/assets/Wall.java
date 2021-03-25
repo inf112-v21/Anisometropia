@@ -25,86 +25,21 @@ public class Wall {
      *   en spiller i retningen North, South, West og East?
      */
 
-    final int   wallDownRight       =  8,  wallUpRight       = 16, wallUpLeft          = 26, wallDownLeft       = 32,
-                wallRight           = 23,  wallDown          = 29, wallLeft            = 30, wallUp             = 31,
-                laserWallDown       = 37,  laserWallUp       = 45, laserWallRight      = 46, laserWallLeft      = 38,
-                doubleLaserWallDown = 87,  doubleLaserWallUp = 94, doubleLaserWallRight= 95, doubleLaserWallLeft= 93;
-
-    public void isPlayerOnWall(Player player, GameMap gameMap) {
-        if (gameMap.isThereWallOnThisPosition(player.getX(), player.getY())) {
-            int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
-       //     canPlayerWalkPastWall(tileID, player);
-            System.out.println("player is on a wall");
-        }
-    }
-
-    public boolean canPlayerWalkPastWall (int tileID, int dx, int dy, boolean standingOnTile, Player player ){ // Player player
-        switch (tileID) {
-            case (wallDownRight):
-                if (player.wallHasBeenReached){
-                    player.canMove(1,0);
-                    player.canMove(0,-1);
-                }
-                break;
-
-            case (wallUpRight):
-                if (standingOnTile) {
-                    if (dx == 1 && dy == 0) return false;
-                    else if (dx == -1 && dy == 0) return true;
-                    else if (dx == 0 && dy == 1) return false;
-                    else if (dx == 0 && dy == -1) return true;
-                }else{
-
-
-
-                    }
-                //check if moveForward collides with a wall. if True check where the wall is.
-                //if playing is moving right into a wall tile and the wall is on the right side in that tile
-                //the move is legal.
-
-
-                break;
-
-            case(wallDownLeft):
-                if(player.wallHasBeenReached){
-                }
-                break;
-
-            case(wallUpLeft):
-                if (player.wallHasBeenReached){
-                }
-                break;
-
-            case(wallRight):
-            case(laserWallRight):
-            case(doubleLaserWallRight):
-                if (player.wallHasBeenReached){
-                }
-                break;
-
-            case(wallUp):
-            case(laserWallUp):
-            case(doubleLaserWallUp):
-                if (player.wallHasBeenReached){
-                }
-                break;
-
-            case(wallDown):
-            case(laserWallDown):
-            case(doubleLaserWallDown):
-                if (player.wallHasBeenReached){
-                }
-                break;
-
-            case(wallLeft):
-            case(laserWallLeft):
-            case(doubleLaserWallLeft):
-                if (player.wallHasBeenReached){
-                }
-                break;
-
-        }
-        return true;
-    }
+    public static final int wallDownRight       =  8;
+    public static final int wallUpRight       = 16;
+    public static final int wallUpLeft          = 26;
+    public static final int wallDownLeft       = 32;
+    public static final int wallRight = 23;
+    public static final int wallDown          = 29;
+    public static final int wallLeft            = 30;
+    public static final int wallUp             = 31;
+    public static final int laserWallDown       = 37;
+    public static final int laserWallUp       = 45;
+    public static final int laserWallRight      = 46;
+    public static final int laserWallLeft      = 38;
+    public static final int doubleLaserWallDown = 87;
+    public static final int doubleLaserWallUp = 94;
+    public static final int doubleLaserWallRight= 95;
+    public static final int doubleLaserWallLeft= 93;
 
 }

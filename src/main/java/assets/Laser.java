@@ -4,7 +4,7 @@ import actor.Player;
 import map.GameMap;
 
 public class Laser {
-    final int  laserBeamHorizontal = 38, laserBeamVertical = 46, laserBeamCrossing =39,
+    public static final int  laserBeamHorizontal = 38, laserBeamVertical = 46, laserBeamCrossing =39,
                 doubleLaserBeamHorizontal = 101, doubleLaserBeamVertical = 102, doubleLaserBeamCrossing = 100;
 
     public void isPlayerHitByLaserBeam(Player player, GameMap gameMap){
@@ -34,7 +34,7 @@ public class Laser {
 
             case (doubleLaserBeamCrossing):
                 if(player.laserBeamReached){
-                    player.updateDamageTokens(2);
+                    player.updateDamageTokens(4);
                 }
                 break;
 
