@@ -2,6 +2,7 @@ package map;
 
 
 import actor.Player;
+import assets.Wall;
 
 public abstract class GameMap {
 
@@ -28,4 +29,6 @@ public abstract class GameMap {
     public abstract boolean isThereBlueConveyorOnThisPosition(int x, int y);
 
     public abstract boolean isThereWallOnThisPosition(int x, int y);
+
+    public abstract Wall getWall();
 }
