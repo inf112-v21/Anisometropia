@@ -54,6 +54,7 @@ public class Player implements IPlayer {
 
     //TODO Check for walls.
     public boolean canMove(int dx, int dy) {
+        if(isPlayerDead()) return false;
         boolean wallOutOfPositionBlocked = false;
         boolean wallIntoPositionBlocked = false;
         if (gameMap.isThereWallOnThisPosition(this.getX(), this.getY())) {
@@ -71,8 +72,6 @@ public class Player implements IPlayer {
             return false;
         }
         return (x + dx >= 0 && x + dx < gameMap.getWidth()) && (y + dy >= 0 && y + dy < gameMap.getHeight());
-
-
     }
 
     public int getDirection() { return direction; }
