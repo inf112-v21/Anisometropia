@@ -2,20 +2,20 @@
 
 # RoboRally by Anisometropia (prosjekt i INF112)
 
-## Hvordan å kjøre spillet:
+## Hvordan kjøre spillet:
 
 JDK (Java Development Kit) må være installert, evt. JRE (Java Runtime Environment). Kan lastes ned her:
 
 https://www.oracle.com/java/technologies/javase-jdk16-downloads.html
 
-Last ned RoboRallyVersion3.jar fra (ligger i "Assets"-listen):
+Last ned RoboRallyVersion3.jar fra:
 
-https://github.com/inf112-v21/Anisometropia/releases/tag/v3.1
+https://github.com/inf112-v21/Anisometropia/releases/tag/v3.1 (ligger i "Assets"-listen)
 
 #### _Windows_
 Her kan man være heldig, og få til å kjøre spillet ved å bare dobbeltklikke på .jar-filen.
 
-Fungerer ikke det, kan man åpne et terminal-vindu, naviger til mappen hvor .jar-filen er, og kjøre:
+Fungerer ikke det, kan man åpne et terminal-vindu, navigere til mappen hvor .jar-filen er, og kjøre:
 ```
 java -jar RoboRallyVersion3.jar
 ```
@@ -31,27 +31,27 @@ java -jar RoboRallyVersion3.jar
 Kjør kommandoer:
 ```
 sudo apt update
-sudo apt install default-jre
+sudo apt install default-jdk
 ```
 Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
 ```
 java -jar RoboRallyVersion3.jar
 ```
 
-#### _OS X_
+#### _macOS_
 Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
 ```
 java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 ```
 
-## Hvordan å spille spillet:
+## Hvordan spille spillet:
 1. Når man kjører spillet, velg "PLAY LOCAL" ("PLAY ON NET" er enda ikke fullstendig implementert).
 
 2. Velg så antall spillere, og klikk "START".
 
 3. Hvordan spillet spilles står forklart på høyresiden.
 
-4. R restarter og setter spillerene tilbake til startposisjon.
+4. R restarter og setter spillerne tilbake til startposisjon.
 
 
 ## Kjente feil (bugs)

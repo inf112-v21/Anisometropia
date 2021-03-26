@@ -25,18 +25,19 @@ public class GameScreenManager {
         setScreen(STATE.MENU);
 
         // USE THIS FOR SKIPPING MENUS, AND IMMEDIATELY START A GAME WITH 2 PLAYERS
-        GraphicalGameMap gameMap = new GraphicalGameMap();
-        PlayerQueue playerQueue = new PlayerQueue();
-        playerQueue.add(new Player((int) gameMap.getSpawnPoint(0).getX(), (int) gameMap.getSpawnPoint(0).getY(), "PL1", gameMap, 0));
-        playerQueue.add(new Player((int) gameMap.getSpawnPoint(1).getX(), (int) gameMap.getSpawnPoint(1).getY(), "PL2", gameMap, 1));
-        initPlayScreen(gameMap, playerQueue);
-        setScreen(GameScreenManager.STATE.PLAY);
-        // END
+//        GraphicalGameMap gameMap = new GraphicalGameMap();
+//        PlayerQueue playerQueue = new PlayerQueue();
+//        playerQueue.add(new Player((int) gameMap.getSpawnPoint(0).getX(), (int) gameMap.getSpawnPoint(0).getY(), "PL1", gameMap, 0));
+//        playerQueue.add(new Player((int) gameMap.getSpawnPoint(1).getX(), (int) gameMap.getSpawnPoint(1).getY(), "PL2", gameMap, 1));
+//        initPlayScreen(gameMap, playerQueue);
+//        setScreen(GameScreenManager.STATE.PLAY);
+        // *** END *** USE THIS FOR SKIPPING MENUS *** END ***
     }
 
     private void initializeGameScreens() {
         this.gameScreens = new HashMap<>();
         this.gameScreens.put(STATE.MENU, new MainMenuScreen(gameApplication));
+        this.gameScreens.put(STATE.ON_NET_SETUP, new OnNetSetupScreen(gameApplication));
         this.gameScreens.put(STATE.LOCAL_SETUP, new LocalSetupScreen(gameApplication));
     }
 
