@@ -47,7 +47,7 @@ java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 ## Hvordan spille spillet:
 1. Når man kjører spillet, velg "PLAY LOCAL" ("PLAY ON NET" er enda ikke fullstendig implementert).
 
-2. Velg så antall spillere, og klikk "START".
+2. Velg så antall spillere, gi de navn ved å trykke på navnboksen (står "name" i boks for første spilleren), og klikk "START".
 
 3. Hvordan spillet spilles står forklart på høyresiden.
 
