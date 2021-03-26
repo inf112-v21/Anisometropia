@@ -1,13 +1,11 @@
 package actor;
 
-import assets.Wall;
 import cards.ProgramCard;
 import map.GameMap;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Player implements IPlayer {
-    Wall wall;
     GameMap gameMap;
     int x, y, spawnX, spawnY;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
