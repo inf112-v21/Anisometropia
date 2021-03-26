@@ -3,7 +3,6 @@ package logic;
 import actor.Player;
 import assets.ConveyorBelts;
 import assets.Laser;
-import assets.Wall;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import map.GameMap;
@@ -18,7 +17,6 @@ public class GameLogic {
     PlayerQueue playerQueue;
     ConveyorBelts conveyorBelts;
     Laser laser;
-    Wall wall;
     DeckOfProgramCards deckOfProgramCards;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
@@ -26,6 +24,7 @@ public class GameLogic {
 
     public static boolean gameOver = false;
     public static boolean cardExecutionInProgress = false;
+    public boolean lastPlayerPoweredDown = false;
 
     int currentCardExecutionNumber = 0;
 
@@ -85,16 +84,23 @@ public class GameLogic {
             getCurrentPlayer().getChosenProgramCards().get(currentCardExecutionNumber).executeProgram(getCurrentPlayer());
         }
 
+        boolean roundEnding = false;
         if (getCurrentPlayer() == getLastPlayer()) {
             if (currentCardExecutionNumber == 4) {
                 currentCardExecutionNumber = 0;
                 cardExecutionInProgress = false;
+                roundEnding = true;
                 endOfRoundCheck();
                 dealProgramCards();
             } else {
                 currentCardExecutionNumber++;
                 endOfTurnCheck();
             }
+        }
+        // Ensures the first player's turn is not skipped if the last player powered down last round.
+        if (roundEnding && lastPlayerPoweredDown && !playerQueue.getLastPlayerInQueue().isPoweredDown) {
+            playerQueue.next();
+            lastPlayerPoweredDown = false;
         }
         playerQueue.next();
     }
@@ -147,6 +153,7 @@ public class GameLogic {
             player.isPoweredDown = false;
             if (player.hasAnnouncedPowerDown) {
                 player.hasAnnouncedPowerDown = false;
+                if (player == playerQueue.getLastPlayerInQueue()) lastPlayerPoweredDown = true;
                 player.powerDownRobot();
             }
         }

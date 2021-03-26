@@ -248,7 +248,7 @@ public class ControlScreen extends InputAdapter {
             acceptButton.setTexture(acceptTextureUnavailable);
             borderButton.setTexture(borderTextureUnavailable);
 
-             gameLogic.finishCardSelectionTurn(chosenCards);
+            gameLogic.finishCardSelectionTurn(chosenCards);
 
             if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
                 progressButton.setActive(true);

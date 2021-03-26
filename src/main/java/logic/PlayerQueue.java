@@ -29,6 +29,16 @@ public class PlayerQueue {
 
     public Player getCurrentPlayer() { return playerList.get(turnCounter % playerList.size()); }
 
+    /**
+     * @return player in the last position of playerList
+     */
+    public Player getLastPlayerInQueue() {
+        return playerList.get(playerList.size() - 1);
+    }
+
+    /**
+     * @return last player in playerList which is not powered down.
+     */
     public Player getLastPlayer() {
         return getLastPlayerHelper(1);
     }
