@@ -126,6 +126,12 @@ public class ControlScreen extends InputAdapter {
                             break;
                         }
                     }
+                    // Allows players with five locked cards to accept their register.
+                    if (gameLogic.getCurrentPlayer().getDmgTokens() == 9) {
+                        acceptButton.setActive(true);
+                        acceptButton.setTexture(acceptTexture);
+                        borderButton.setTexture(borderTexture);
+                    }
                 }
                 if (click.x > acceptButton.getX() && click.x < (acceptButton.getX() + acceptButton.getWidth()) &&
                         click.y > acceptButton.getY() && click.y < (acceptButton.getY() + acceptButton.getHeight())) {

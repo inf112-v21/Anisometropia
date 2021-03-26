@@ -50,7 +50,6 @@ public class Player implements IPlayer {
         }
     }
 
-    //TODO Check for walls.
     public boolean canMove(int dx, int dy) {
         if(isPlayerDead()) return false;
         boolean wallOutOfPositionBlocked = false;
