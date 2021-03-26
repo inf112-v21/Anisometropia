@@ -122,9 +122,9 @@ public class GameLogic {
 
     public void endOfRoundCheck() {
         endOfTurnCheck();
-        checkIfOnlyOnePlayerLeft();
         initiateAnnouncedPowerDowns();
         respawnPlayersIfPossible();
+        checkIfOnlyOnePlayerLeft();
     }
 
     private void checkIfOnlyOnePlayerLeft() {
