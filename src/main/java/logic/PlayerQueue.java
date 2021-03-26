@@ -30,7 +30,6 @@ public class PlayerQueue {
     public Player getCurrentPlayer() { return playerList.get(turnCounter % playerList.size()); }
 
     public Player getLastPlayer() {
-        System.out.println(getLastPlayerHelper(1).playerName);
         return getLastPlayerHelper(1);
     }
 

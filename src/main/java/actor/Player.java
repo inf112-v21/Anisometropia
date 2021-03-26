@@ -31,7 +31,7 @@ public class Player implements IPlayer {
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
         this.characterID = characterID;
-        dmgTokens = 4;
+        dmgTokens = 0;
         lifeTokens = 3;
         flagsReached = new boolean[4];
         lockedProgramCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));

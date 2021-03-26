@@ -128,7 +128,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         gameApplication.getSpriteBatch().draw(currentBackgroundFrame,0, 0, 1440f, 832f);
 
         ifHoveredDrawArrowsAroundPlayLocalButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
-//        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
+//        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame); // multiplayer not yet implemented
         ifHoveredDrawArrowsAroundQuitButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
         ifHoveredMakeSpeakerButtonBlue(mousePosition);
 
@@ -151,7 +151,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
 //            System.out.println("STANDARD: (" + Math.round(mousePosition.x) + ", " + Math.round(mousePosition.y) + ")");
 
             if (playLocalBtn.isMouseOnButton(mousePosition)) playLocalButtonHasBeenClicked();
-            if (playOnNetBtn.isMouseOnButton(mousePosition)) playOnNetButtonHasBeenClicked();
+//            if (playOnNetBtn.isMouseOnButton(mousePosition)) playOnNetButtonHasBeenClicked(); // multiplayer not yet implemented
             if (quitBtn.isMouseOnButton(mousePosition)) quitHasBeenClicked();
             if (speaker.isMouseOnButton(mousePosition)) speakerButtonHasBeenClicked();
 
@@ -163,7 +163,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void playOnNetButtonHasBeenClicked() {
-
+        gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.ON_NET_SETUP);
     }
 
     private void quitHasBeenClicked() {
@@ -224,7 +224,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void show() {
-//        if (musicPlaying) menuMusic.play(); // has been commented out while doing work on game
+        if (musicPlaying) menuMusic.play(); // commented out while doing work on game (easier to debug)
     }
 
     @Override
