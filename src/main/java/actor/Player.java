@@ -138,12 +138,12 @@ public class Player implements IPlayer {
     }
 
     public void checkIfPlayerTooDamaged() {
-        if (getDmgTokens()==10)
+        if (getDmgTokens()>=10)
             playerDies();
     }
 
     public void updateDamageTokens(int amountOfDamage) {
-        setDmgTokens(getDmgTokens() + amountOfDamage);
+        setDmgTokens(Math.min((getDmgTokens() + amountOfDamage), 10));
         checkIfPlayerTooDamaged();
     }
 
