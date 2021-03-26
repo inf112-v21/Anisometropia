@@ -12,7 +12,7 @@
 
 **Oversikt over brukerhistorier, akseptansekriterier og arbeidsoppgaver:** Finnes på prosjektet sitt project board på GitHub
 
-#### Roller i teamet
+### Roller i teamet
 _Vi inkluderer også i denne innleveringen det hvert medlem skrev om sin eget ansvarsområde fra forrige levering._
 *	_Lagleder_ (Henriette): Som lagleder er man nødt til å holde oversikt over hvilke arbeidsoppgaver som er gjennomført, og hvilke arbeidsoppgaver som trenger å gjennomføres før innlevering. Jeg gjør mitt beste for å tilrettelegge slik at alle er fornøyd og enige i de arbeidsoppgavene de blir tildelt og at arbeidsfordelingen er rettferdig. Videre så prøver jeg å holde god flyt i samtalen i møtene slik at vi får kommet oss igjennom de nødvendige punktene vi ønsker å snakke om. Jeg prøver og å sørge for at alle har en klar forståelse av hvilken arbeidsoppgaver de har.
 *	_Testansvarlig_ (Lazar): To ensure that we are writing sensible code, I make sure that we have proper tests where necessary  for all the new code that we implement into our project. Upon checking test results I take notes about the ones that failed and communicate with the group (or specific people responsible for that piece of code) why test(s) could be failing and how the issue can be resolved.
@@ -22,7 +22,7 @@ _Vi inkluderer også i denne innleveringen det hvert medlem skrev om sin eget an
 
 Det har heller ikke vært noe behov denne gangen å oppdatere rollene i teamet ettersom at alle er fornøyde med de rollene og ansvarsområdene de har blitt tildelt. Som forrige gang så føler vi at de rollene vi har dekker flere viktige områder av prosjektet som har behov for ekstra organisering og oppmerksomhet, som nettopp brukerhistorier, testing og kodeverifikasjon.  Gruppen er derfor enig i at det ikke er noe behov så langt for å tilføye nye roller, eller for å omorganisere rollene. 
 
-#### Prosjektmetodikk og organisering 
+### Prosjektmetodikk og organisering 
 
 Den største forskjellen med hvordan vi har strukturert arbeidet denne gangen fra sist er at vi har tatt i bruk code with me i IntelliJ. Dette er noe vi ikke har hatt behov for tidligere ettersom at alle medlemmene av gruppen har klart å løse de oppgavene de har blitt tildelt mer eller mindre individuelt. Det som gjorde at vi bestemte oss for å bruke code with me nå var for å prøve å muliggjøre multiplayer over local area network. Lazar og Henriette har derfor parprogrammert sammen ved hjelp av code with me og deres samarbeid har ført til at gruppen har gjort store fremskritt med multiplayer.
 
@@ -34,12 +34,12 @@ Videre så ønsker vi å tilføye her at vi enda er fornøyd med vårt valg om �
 - Noe som er sentralt for Kanban er å ha et godt project board, dette vil si at project boardet til enhver tid skal være oppdatert og at det skal være lett for de forskjellige medlemmene av gruppen å se hvilken oppgaver som er startet på, hva som skal gjøres videre, og hva som er fullført. Vårt project board har gjort det enkelt for gruppen å få en rask og god oversikt over status på prosjektet.
 - Regelen om at ingen skal ha mer enn 3 oppgaver samtidig har ført til at alle har vært komfortable med mengden arbeid de har blitt tildelt. 
 
-#### Gruppedynamikk og kommunikasjon 
+### Gruppedynamikk og kommunikasjon 
 
 Utenom vårt faste møtepunkt på onsdagene i seminaret så setter vi opp møter ved behov.
 Vi har fremdeles 100% oppmøte noe som er en god indikasjon på at alle medlemmene viser interesse og initiativ for prosjektet. Under møtene går praten lett og vi opplever at alle får kommet til med sine innspill om det som diskuteres. Utenom møtene så holder vi kontakt på discord. Vi opplever at gruppen fungerer godt i lag, men vi har litt bekymring for at vi må bli enda flinkere til å kommunisere hvordan hvert enkelt medlem jobber med prosjektet. Dette er hovedsakelig fordi medlemmene i større grad har jobbet individuelt med oppgavene sine enn sammen. Vi kommer tilbake til dette punktet i retrospektiv og forbedringspotensiale. 
 
-#### Retrospektiv og forbedringspotensiale 
+### Retrospektiv og forbedringspotensiale 
 
 Forbedringspunktene vår fra forrige gang var som følger:
 1. Holde project board oppdatert til enhver tid, og ikke bare rett før innlevering
@@ -53,7 +53,7 @@ Selv om vi har forbedret oss fra sist innlevering til denne så har vi enda litt
 
 Videre så er det verdt å nevne at vår evne til å planlegge prioritet av nye arbeidsoppgaver har vært noe dårligere sammenlignet med hvordan vi gjorde dette før forrige innlevering. Dette er kanskje naturlig med tanke på at vi ikke har hatt MVP å forholde oss til og fordi vi i starten brukte en del tid på opprydning av koden. Vi ser derfor at vi har et klart forbedringspotensiale her og ønsker å planlegge dette grundigere neste gang. Det har vært klart for alle medlemmene hva de skal gjøre, men det har ikke blitt diskutert noen deadline for de ulike oppgavene eller hvordan de skal prioriteres. Det er snakk om å løse dette ved å legge inn oppgavene i project board med prioritet for å synliggjøre hva som bør gjøres først.
 
-#### Forbedringspunkter fra retrospektiv 
+### Forbedringspunkter fra retrospektiv 
 - Skrive javadoc til koden slik at det blir lettere for medlemmene av teamet å sette seg inn i andre sin kode
 - Som nevnt ovenfor trekker vi den konklusjonen at det ved enkelte funksjonaliteter kan være lurt med parprogrammering. Dette gir en bedre informasjonsflyt mellom paret og effektivisere arbeidet. Funksjonen av parprogrammering vil også være med på å gi koden en bedre struktur, da den samlede kunnskapen om de ulike funksjonene blir større som et par.
 - Strukturere arbeidsoppgavene våre etter prioritet slik at alle til en hver tid vet hva som er viktigst å få gjennomført først.
@@ -72,6 +72,6 @@ Ny funksjonalitet vi har lagt til:
 
 Det som var av høyeste prioritet til denne innleveringen var ikke ny funksjonalitet, men opprydding og debugging av koden. Vi har derfor brukt en god del tid på forbedre allerede implementert kode før vi la til ny kode. Det var derfor ikke før de største bugsene ble fjernet at vi satt igang med å legge til ny funksjonalitet. 
 
-#### Commits
+### Commits
 Henriette har denne gangen ikke committed like mye som de andre medlemmene av teamet noe som kan forklares ved at hun og Lazar har jobbet sammen ved hjelp av code with me. Det har jobbet sammen i Lazar sitt prosjekt noe som har ført til at Lazar har pushet arbeidet som de har gjort sammen.
 
