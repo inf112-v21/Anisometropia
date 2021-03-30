@@ -3,28 +3,9 @@ package assets;
 import actor.Player;
 import map.GameMap;
 
-public class ConveyorBelts {
-    public static final int
-            yConveyorBeltID_Down      = 50, yConveyorBeltID_Right     = 52, yConveyorBeltID_Up      = 49, yConveyorBeltID_Left     = 51,
-            yConveyorBeltID_DownRight = 40, yConveyorBeltID_RightUp   = 42, yConveyorBeltID_UpLeft  = 34, yConveyorBeltID_LeftDown = 33,
-            yConveyorBeltID_DownLeft  = 44, yConveyorBeltID_RightDown = 36, yConveyorBeltID_UpRight = 35, yConveyorBeltID_LeftUp   = 43,
-            bConveyorBeltID_Down      = 21, bConveyorBeltID_Right     = 14, bConveyorBeltID_Up      = 13, bConveyorBeltID_Left     = 22,
-            bConveyorBeltID_DownRight = 25, bConveyorBeltID_RightUp   = 26, bConveyorBeltID_UpRight = 19, bConveyorBeltID_LeftUp   = 27,
-            bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpLeft  = 18, bConveyorBeltID_LeftDown = 17;
-
-    //runConveyorBelt checks if a player stands on a conveyorBelt and if he does he returns the tileID
-    //and uses the tileID to figure out in what direction the player is to move.
-
-
-    /**
-     * @param player Move the player in a given location
-     * @param gameMap checks if a player stands on a conveyorBeltTile
-     *
-     * This function will move the player in given location:
-     *      once if the ConveyorBelt is Yellow
-     *      twice if the ConveyorBelt is Blue
-     */
-    public void isPlayerOnConveyorBelt(Player player, GameMap gameMap) {
+public class ConveyorBelts extends MovingAssets {
+    @Override
+    public void movePlayer(Player player, GameMap gameMap) {
         if (gameMap.isThereYellowConveyorOnThisPosition(player.getX(), player.getY())) {
             int yConveyorID = gameMap.getAssetLayerID(player.getX(), player.getY());
             yConveyorBelt(yConveyorID, player);
@@ -36,7 +17,6 @@ public class ConveyorBelts {
             }
         }
     }
-
 
     /**
      * @param yConveyorID - ID to a given tile
@@ -155,4 +135,6 @@ public class ConveyorBelts {
                 throw new IllegalStateException("Unexpected bConveyorID: " + bConveyorID + " x: " + player.getX() + " y: " + player.getY());
         }
     }
+
+
 }

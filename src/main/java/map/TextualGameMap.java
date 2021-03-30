@@ -98,5 +98,8 @@ public class TextualGameMap extends GameMap {
         return wall;
     }
 
+    @Override
+    public boolean isThereGearOnThisPosition(int x, int y) {return false; }
+
 }
 

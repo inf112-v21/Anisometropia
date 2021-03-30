@@ -2,6 +2,7 @@ package map;
 
 import actor.Player;
 import assets.ConveyorBelts;
+import assets.Gear;
 import assets.Wall;
 import assets.Laser;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -168,13 +169,22 @@ public class GraphicalGameMap extends GameMap {
                     (tileID == Wall.wallUpLeft)   || (tileID == Wall.wallUpRight) ||
                     (tileID == Wall.wallDownLeft) || (tileID == Wall.wallDownRight);
         }
-
         return false;
     }
 
     @Override
     public Wall getWall() {
         return wall;
+    }
+
+    @Override
+    public boolean isThereGearOnThisPosition(int x, int y) {
+        if (assetLayer.getCell(x, y) != null){
+            int tileID = getAssetLayerID(x, y);
+
+            return (tileID == Gear.gearRotatingLeft) || (tileID == Gear.gearRotatingRight);
+        }
+        return false;
     }
 
     public int getAssetLayerID(int x, int y) {

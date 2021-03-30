@@ -2,6 +2,7 @@ package logic;
 
 import actor.Player;
 import assets.ConveyorBelts;
+import assets.Gear;
 import assets.Laser;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
@@ -17,6 +18,7 @@ public class GameLogic {
     PlayerQueue playerQueue;
     ConveyorBelts conveyorBelts;
     Laser laser;
+    Gear gear;
     DeckOfProgramCards deckOfProgramCards;
 
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
@@ -36,6 +38,7 @@ public class GameLogic {
         this.playerQueue = playerQueue;
         conveyorBelts = new ConveyorBelts();
         laser = new Laser();
+        gear = new Gear();
         deckOfProgramCards = new DeckOfProgramCards();
         dealProgramCards();
     }
@@ -107,8 +110,10 @@ public class GameLogic {
 
     public void endOfTurnCheck() {
         for (Player player : playerQueue.getPlayerQueue()) {
-            conveyorBelts.isPlayerOnConveyorBelt(player, gameMap);
-            laser.isPlayerHitByLaserBeam(player, gameMap);
+            conveyorBelts.movePlayer(player, gameMap);
+            gear.movePlayer(player, gameMap);
+            laser.damagePlayer(player, gameMap);
+
 
             if (checkLoss(player.getX(), player.getY())) {
                 if(!player.isDead) {
