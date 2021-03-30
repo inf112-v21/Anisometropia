@@ -19,43 +19,43 @@ public class Wall {
         if (gameMap.isThereWallOnThisPosition(x+dx, y+dy)) {
             int wallID = gameMap.getAssetLayerID(x + dx, y + dy);
             switch (wallID) {
-                case (Wall.wallLeft):
-                case (Wall.laserWallLeft):
-                case (Wall.doubleLaserWallLeft):
+                case (wallLeft):
+                case (laserWallLeft):
+                case (doubleLaserWallLeft):
                     if (dx == 1 && dy == 0) return false;
                     break;
 
-                case (Wall.wallRight):
-                case (Wall.laserWallRight):
-                case (Wall.doubleLaserWallRight):
+                case (wallRight):
+                case (laserWallRight):
+                case (doubleLaserWallRight):
                     if (dx == -1 && dy == 0) return false;
                     break;
 
-                case (Wall.wallDown):
-                case (Wall.laserWallDown):
-                case (Wall.doubleLaserWallDown):
+                case (wallDown):
+                case (laserWallDown):
+                case (doubleLaserWallDown):
                     if (dx == 0 && dy == 1) return false;
                     break;
 
-                case (Wall.wallUp):
-                case (Wall.laserWallUp):
-                case (Wall.doubleLaserWallUp):
+                case (wallUp):
+                case (laserWallUp):
+                case (doubleLaserWallUp):
                     if (dx == 0 && dy == -1) return false;
                     break;
 
-                case (Wall.wallUpLeft):
+                case (wallUpLeft):
                     if ((dx == 0 && dy == -1) || (dx == 1 && dy == 0)) return false;
                     break;
 
-                case (Wall.wallUpRight):
+                case (wallUpRight):
                     if ((dx == 0 && dy == -1) || (dx == -1 && dy == 0)) return false;
                     break;
 
-                case (Wall.wallDownLeft):
+                case (wallDownLeft):
                     if ((dx == 0 && dy == 1) || (dx == 1 && dy == 0)) return false;
                     break;
 
-                case (Wall.wallDownRight):
+                case (wallDownRight):
                     if ((dx == 0 && dy == 1) || (dx == -1 && dy == 0)) return false;
                     break;
 
@@ -71,43 +71,43 @@ public class Wall {
         if (gameMap.isThereWallOnThisPosition(x, y)) {
             int wallID = gameMap.getAssetLayerID(x, y);
             switch (wallID) {
-                case (Wall.wallLeft):
-                case (Wall.laserWallLeft):
-                case (Wall.doubleLaserWallLeft):
+                case (wallLeft):
+                case (laserWallLeft):
+                case (doubleLaserWallLeft):
                     if (dx == -1 && dy == 0) return false;
                     break;
 
-                case (Wall.wallRight):
-                case (Wall.laserWallRight):
-                case (Wall.doubleLaserWallRight):
+                case (wallRight):
+                case (laserWallRight):
+                case (doubleLaserWallRight):
                     if (dx == 1 && dy == 0) return false;
                     break;
 
-                case (Wall.wallDown):
+                case (wallDown):
                 case (Wall.laserWallDown):
                 case (Wall.doubleLaserWallDown):
                     if (dx == 0 && dy == -1) return false;
                     break;
 
-                case (Wall.wallUp):
-                case (Wall.laserWallUp):
-                case (Wall.doubleLaserWallUp):
+                case (wallUp):
+                case (laserWallUp):
+                case (doubleLaserWallUp):
                     if (dx == 0 && dy == 1) return false;
                     break;
 
-                case (Wall.wallDownRight):
+                case (wallDownRight):
                     if ((dx == 0 && dy == -1) || (dx == 1 && dy == 0)) return false;
                     break;
 
-                case (Wall.wallDownLeft):
+                case (wallDownLeft):
                     if ((dx == 0 && dy == -1) || (dx == -1 && dy == 0)) return false;
                     break;
 
-                case (Wall.wallUpRight):
+                case (wallUpRight):
                     if ((dx == 0 && dy == 1) || (dx == 1 && dy == 0)) return false;
                     break;
 
-                case (Wall.wallUpLeft):
+                case (wallUpLeft):
                     if ((dx == 0 && dy == 1) || (dx == -1 && dy == 0)) return false;
                     break;
 
