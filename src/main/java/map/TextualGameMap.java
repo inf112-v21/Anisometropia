@@ -101,5 +101,8 @@ public class TextualGameMap extends GameMap {
     @Override
     public boolean isThereGearOnThisPosition(int x, int y) {return false; }
 
+    @Override
+    public boolean isThereRepairStationOnThisPosition(int x, int y) {return false; }
+
 }
 

@@ -1,10 +1,7 @@
 package map;
 
 import actor.Player;
-import assets.ConveyorBelts;
-import assets.Gear;
-import assets.Wall;
-import assets.Laser;
+import assets.*;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -121,9 +118,9 @@ public class GraphicalGameMap extends GameMap {
     public boolean isThereLaserBeamsOnThisPosition(int x, int y){
         if (laserLayer.getCell(x, y) != null){
             int tileID = getLaserLayerID(x,y);
-            return  (tileID == Laser.laserBeamHorizontal )     || (tileID == Laser.laserBeamVertical)      ||
-                    (tileID == Laser.doubleLaserBeamHorizontal)|| (tileID == Laser.doubleLaserBeamVertical)||
-                    (tileID == Laser.laserBeamCrossing)        || (tileID == Laser.doubleLaserBeamCrossing);
+            return  (tileID == DamageAssets.laserBeamHorizontal )     || (tileID == DamageAssets.laserBeamVertical)      ||
+                    (tileID == DamageAssets.doubleLaserBeamHorizontal)|| (tileID == DamageAssets.doubleLaserBeamVertical)||
+                    (tileID == DamageAssets.laserBeamCrossing)        || (tileID == DamageAssets.doubleLaserBeamCrossing);
         }
 
         return false;
@@ -132,12 +129,12 @@ public class GraphicalGameMap extends GameMap {
     public boolean isThereYellowConveyorOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
-            return  (tileID == ConveyorBelts.yConveyorBeltID_Down) || (tileID == ConveyorBelts.yConveyorBeltID_Left) ||
-                    (tileID == ConveyorBelts.yConveyorBeltID_Up)   || (tileID == ConveyorBelts.yConveyorBeltID_Right)||
-                    (tileID == ConveyorBelts.yConveyorBeltID_DownLeft) || (tileID == ConveyorBelts.yConveyorBeltID_DownRight) ||
-                    (tileID == ConveyorBelts.yConveyorBeltID_LeftDown) || (tileID == ConveyorBelts.yConveyorBeltID_LeftUp) ||
-                    (tileID == ConveyorBelts.yConveyorBeltID_RightDown) || (tileID == ConveyorBelts.yConveyorBeltID_RightUp) ||
-                    (tileID == ConveyorBelts.yConveyorBeltID_UpLeft) || (tileID == ConveyorBelts.yConveyorBeltID_UpRight);
+            return  (tileID == MovingAssets.yConveyorBeltID_Down) || (tileID == MovingAssets.yConveyorBeltID_Left) ||
+                    (tileID == MovingAssets.yConveyorBeltID_Up)   || (tileID == MovingAssets.yConveyorBeltID_Right)||
+                    (tileID == MovingAssets.yConveyorBeltID_DownLeft) || (tileID == MovingAssets.yConveyorBeltID_DownRight) ||
+                    (tileID == MovingAssets.yConveyorBeltID_LeftDown) || (tileID == MovingAssets.yConveyorBeltID_LeftUp) ||
+                    (tileID == MovingAssets.yConveyorBeltID_RightDown) || (tileID == MovingAssets.yConveyorBeltID_RightUp) ||
+                    (tileID == MovingAssets.yConveyorBeltID_UpLeft) || (tileID == MovingAssets.yConveyorBeltID_UpRight);
         }
         return false;
     }
@@ -146,12 +143,12 @@ public class GraphicalGameMap extends GameMap {
     public boolean isThereBlueConveyorOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x,y) != null){
             int tileID =getAssetLayerID(x, y);
-            return  (tileID == ConveyorBelts.bConveyorBeltID_Down) || (tileID == ConveyorBelts.bConveyorBeltID_Left) ||
-                    (tileID == ConveyorBelts.bConveyorBeltID_Up)   || (tileID == ConveyorBelts.bConveyorBeltID_Right)||
-                    (tileID == ConveyorBelts.bConveyorBeltID_DownLeft) || (tileID == ConveyorBelts.bConveyorBeltID_DownRight) ||
-                    (tileID == ConveyorBelts.bConveyorBeltID_LeftDown) || (tileID == ConveyorBelts.bConveyorBeltID_LeftUp) ||
-                    (tileID == ConveyorBelts.bConveyorBeltID_RightDown) || (tileID == ConveyorBelts.bConveyorBeltID_RightUp) ||
-                    (tileID == ConveyorBelts.bConveyorBeltID_UpLeft) || (tileID == ConveyorBelts.bConveyorBeltID_UpRight);
+            return  (tileID == MovingAssets.bConveyorBeltID_Down) || (tileID == MovingAssets.bConveyorBeltID_Left) ||
+                    (tileID == MovingAssets.bConveyorBeltID_Up)   || (tileID == MovingAssets.bConveyorBeltID_Right)||
+                    (tileID == MovingAssets.bConveyorBeltID_DownLeft) || (tileID == MovingAssets.bConveyorBeltID_DownRight) ||
+                    (tileID == MovingAssets.bConveyorBeltID_LeftDown) || (tileID == MovingAssets.bConveyorBeltID_LeftUp) ||
+                    (tileID == MovingAssets.bConveyorBeltID_RightDown) || (tileID == MovingAssets.bConveyorBeltID_RightUp) ||
+                    (tileID == MovingAssets.bConveyorBeltID_UpLeft) || (tileID == MovingAssets.bConveyorBeltID_UpRight);
         }
         return false;
     }
@@ -182,7 +179,17 @@ public class GraphicalGameMap extends GameMap {
         if (assetLayer.getCell(x, y) != null){
             int tileID = getAssetLayerID(x, y);
 
-            return (tileID == Gear.gearRotatingLeft) || (tileID == Gear.gearRotatingRight);
+            return (tileID == MovingAssets.gearRotatingLeft) || (tileID == MovingAssets.gearRotatingRight);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isThereRepairStationOnThisPosition(int x, int y) {
+        if (assetLayer.getCell(x, y) != null){
+            int tileID = getAssetLayerID(x, y);
+
+            return (tileID == DamageAssets.wrench) || (tileID == DamageAssets.doubleWrench);
         }
         return false;
     }

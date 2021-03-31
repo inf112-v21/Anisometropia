@@ -3,17 +3,10 @@ package assets;
 import actor.Player;
 import map.GameMap;
 
-public class Laser {
-    public static final int
-            laserBeamHorizontal = 39, laserBeamVertical = 47, laserBeamCrossing =40,
-            doubleLaserBeamHorizontal = 102, doubleLaserBeamVertical = 103, doubleLaserBeamCrossing = 101;
-    /**
-     * @param player Damages the player\
-     * @param gameMap checks if a player stands om a tile that is to damage the player\
-     *                If the player stands on a tile that is to damage the player, the player should be updated\
-     *                with the damageTokens corresponding to damage taken\
-     */
-    public void damagePlayer(Player player, GameMap gameMap) {
+public class Laser extends DamageAssets {
+
+    @Override
+    public void updatePlayersHealth(Player player, GameMap gameMap) {
         if (gameMap.isThereLaserBeamsOnThisPosition(player.getX(), player.getY())) {
             int laserID = gameMap.getLaserLayerID(player.getX(), player.getY());
             getLaserBeam(laserID, player);

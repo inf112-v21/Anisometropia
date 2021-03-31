@@ -30,7 +30,9 @@ public abstract class GameMap {
 
     public abstract boolean isThereWallOnThisPosition(int x, int y);
 
-    public abstract Wall getWall();
-
     public abstract boolean isThereGearOnThisPosition(int x, int y);
+
+    public abstract boolean isThereRepairStationOnThisPosition(int x,int y);
+
+    public abstract Wall getWall();
 }
