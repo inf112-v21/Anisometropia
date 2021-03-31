@@ -5,7 +5,7 @@ import map.GameMap;
 
 public class ConveyorBelts extends MovingAssets {
     @Override
-    public void movePlayer(Player player, GameMap gameMap) {
+    public void playerIsToMove(Player player, GameMap gameMap) {
         if (gameMap.isThereYellowConveyorOnThisPosition(player.getX(), player.getY())) {
             int yConveyorID = gameMap.getAssetLayerID(player.getX(), player.getY());
             yConveyorBelt(yConveyorID, player);
@@ -73,6 +73,7 @@ public class ConveyorBelts extends MovingAssets {
                 player.rotate(1);
                 player.move(0, -1);
                 break;
+
             default:
                 throw new IllegalStateException("Unexpected yConveyorID: " + yConveyorID + " x: " + player.getX() + " y: " + player.getY());
         }

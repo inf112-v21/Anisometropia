@@ -18,10 +18,10 @@ public abstract class MovingAssets {
     /**
      *@param player  Move the player in a given location
      *@param gameMap checks if a player stands on a tile that is to move the player
-     *               this function will move and rotate player in given location.
-     *               once if the ConveyorBelt is Yellow
-     *               twice if it's blue
-     *               rotate once if a gear
+     *this function will move and rotate player in given location.
+     *once if the ConveyorBelt is Yellow
+     *twice if it's blue
+     *rotate once if a gear
      */
-    public abstract void movePlayer(Player player, GameMap gameMap);
+    public abstract void playerIsToMove(Player player, GameMap gameMap);
 }

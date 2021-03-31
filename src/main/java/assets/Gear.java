@@ -5,12 +5,13 @@ import map.GameMap;
 
 public class Gear extends MovingAssets {
     @Override
-    public void movePlayer(Player player, GameMap gameMap) {
+    public void playerIsToMove(Player player, GameMap gameMap) {
         if (gameMap.isThereGearOnThisPosition(player.getX(), player.getY())) {
             int gearID = gameMap.getAssetLayerID(player.getX(), player.getY());
             gear(gearID, player);
         }
     }
+
 
     public void gear(int gearID, Player player){
         switch (gearID){
