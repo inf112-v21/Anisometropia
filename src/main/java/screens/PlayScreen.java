@@ -49,8 +49,6 @@ public class PlayScreen extends AbstractScreen implements InputProcessor {
         gameLogic = new GameLogic(gameMap, playerQueue);
 
         controlScreen = new ControlScreen(gameLogic);
-
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -95,7 +93,7 @@ public class PlayScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override

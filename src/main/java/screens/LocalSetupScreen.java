@@ -126,7 +126,6 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         font = new BitmapFont();
         font.getData().setScale(1.8f);
         font.setColor(Color.BLACK);
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -332,6 +331,11 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     @Override
+    public void show() {
+        Gdx.input.setInputProcessor(this);
+    }
+
+    @Override
     public void dispose() {
         font.dispose();
         localSetupTexture.dispose();
@@ -349,11 +353,6 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void hide() {
-
-    }
-
-    @Override
-    public void show() {
 
     }
 

@@ -12,8 +12,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import launcher.GameApplication;
 
-import java.io.IOException;
-
 public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     SpriteBatch batch;
     OrthographicCamera camera;
@@ -22,14 +20,21 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     TextureRegion[][] onNetSetupRegionBy256, onNetSetupRegionBy128, onNetSetupRegionBy32, onNetSetupRegionBy64, multiPlayerButtons;
     TextureRegion start, back, startJumbled, backJumbled, hostBtnTexture, hostBtnOnTexture, hostBtnOffTexture;
     TextureRegion joinBtnTexture, joinBtnOnTexture, joinBtnOffTexture, sendBtnTexture, receiveBtnTexture;
+    TextureRegion editLocalhostTexture, editLocalhostInactiveTexture, editPortTexture, editPortInactiveTexture;
 
-    GameButton startBtn, backBtn, hostButton, joinButton, sendBtn, receiveBtn;
+    GameButton startBtn, backBtn, hostButton, joinButton, sendBtn, receiveBtn, editLocalHostBtn, editPortBtn;
     BitmapFont font;
 
     int[] colElemPos = { 192, 260, 520, 580, 614, 758, 790, 840 };
     int[] rowElemPos = { 576, 512, 448, 384, 320, 256, 192, 128 };
 
     public static boolean isHost;
+    public static boolean connected; // TODO: will probably be replaced by another boolean/function
+
+    private int editorIndex = -1;
+    private final int numberOfInputEditors = 3;
+    StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + amount of local players
+
     private String status = "STATUS: waiting...";
     private String receiverString = "not started...";
 
@@ -57,6 +62,11 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         sendBtnTexture = multiPlayerButtons[3][0];
         receiveBtnTexture = multiPlayerButtons[3][1];
 
+        editLocalhostTexture = onNetSetupRegionBy256[13][0];
+        editLocalhostInactiveTexture = onNetSetupRegionBy256[14][0];
+        editPortTexture = onNetSetupRegionBy256[13][0];
+        editPortInactiveTexture = onNetSetupRegionBy256[14][0];
+
         start = onNetSetupRegionBy128[6][0];
         startJumbled = onNetSetupRegionBy128[12][0];
         back = onNetSetupRegionBy128[6][1];
@@ -68,12 +78,18 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         joinButton = new GameButton(1200, 700,85,85,true, joinBtnTexture);
         sendBtn = new GameButton(200,500, 85,85, false, sendBtnTexture);
         receiveBtn = new GameButton(200, 400,85,85,false, receiveBtnTexture);
+        editLocalHostBtn = new GameButton(1100, 640,256,32,false, receiveBtnTexture);
+        editPortBtn = new GameButton(1100, 600,256,32,false, receiveBtnTexture);
 
+        for (int i = 0; i < numberOfInputEditors; i++) {
+            allStringBuilders[i] = new StringBuilder();
+        }
+        allStringBuilders[0] = new StringBuilder("localhost");
+        allStringBuilders[1] = new StringBuilder("59999");
 
         font = new BitmapFont();
         font.getData().setScale(1.8f);
         font.setColor(Color.BLACK);
-        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -91,6 +107,17 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         batch.draw(sendBtn.getTexture(), sendBtn.getX(), sendBtn.getY(), sendBtn.getWidth(), sendBtn.getHeight());
         batch.draw(receiveBtn.getTexture(), receiveBtn.getX(), receiveBtn.getY(), receiveBtn.getWidth(), receiveBtn.getHeight());
 
+        if (editorIndex == 0) editLocalHostBtn.setTexture(editLocalhostTexture);
+        else editLocalHostBtn.setTexture(editLocalhostInactiveTexture);
+
+        if (editorIndex == 1) editPortBtn.setTexture(editPortTexture);
+        else editPortBtn.setTexture(editPortInactiveTexture);
+
+        batch.draw(editLocalHostBtn.getTexture(), editLocalHostBtn.getX(), editLocalHostBtn.getY(), editLocalHostBtn.getWidth(), editLocalHostBtn.getHeight());
+        font.draw(batch, allStringBuilders[0].toString(),  editLocalHostBtn.getX()+8,  editLocalHostBtn.getY()+26);
+        batch.draw(editPortBtn.getTexture(), editPortBtn.getX(), editPortBtn.getY(), editPortBtn.getWidth(), editPortBtn.getHeight());
+        font.draw(batch, allStringBuilders[1].toString(),  editPortBtn.getX()+8,  editPortBtn.getY()+26);
+
         batch.end();
     }
 
@@ -105,20 +132,28 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         ifHoveredMakeStartButtonBlueAndJumbled(mousePosition);
 
         if (Gdx.input.justTouched()) {
-//            System.out.println("Mouse position: (" + Math.round(mousePosition.x) + ", " + Math.round(mousePosition.y) + ")");
-
             if(joinButton.isMouseOnButton(mousePosition)) joinButtonHasBeenClicked();
             if(hostButton.isMouseOnButton(mousePosition)) hostButtonHasBeenClicked();
             if(sendBtn.isMouseOnButton(mousePosition)) sendButtonHasBeenClicked();
             if(receiveBtn.isMouseOnButton(mousePosition)) receiveButtonHasBeenClicked();
+
+            editorIndex = indexOfInputEditorUnderMousePosition(mousePosition);
 
             if(backBtn.isMouseOnButton(mousePosition)) backButtonClicked();
             if(startBtn.isMouseOnButton(mousePosition)) startButtonClicked();
         }
     }
 
-    private void sendButtonHasBeenClicked() {
+    private int indexOfInputEditorUnderMousePosition(Vector3 mousePosition) {
+        if (editLocalHostBtn.isMouseOnButton(mousePosition)) {
+            return 0;
+        } else if (editPortBtn.isMouseOnButton(mousePosition)) {
+            return 1;
+        }
+        return -1;
+    }
 
+    private void sendButtonHasBeenClicked() {
     }
 
     private void receiveButtonHasBeenClicked() {
@@ -178,7 +213,20 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public boolean keyTyped(char c) {
-
+        if (!connected) {
+            if (editorIndex != -1) {
+                if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
+                    if (allStringBuilders[editorIndex].length() > 0)
+                        allStringBuilders[editorIndex].replace(allStringBuilders[editorIndex].length() - 1, allStringBuilders[editorIndex].length(), "");
+                } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+                    editorIndex = -1;
+                } else if (allStringBuilders[editorIndex].length() < 12) {
+                    allStringBuilders[editorIndex].append(c);
+                }
+            }
+        } else {
+            // TODO: what happens after connected = true (player selection setup)
+        }
         return false;
     }
 
@@ -188,6 +236,11 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     private void backButtonClicked() {
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.MENU);
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -208,11 +261,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void hide() {
-
-    }
-
-    @Override
-    public void show() {
 
     }
 

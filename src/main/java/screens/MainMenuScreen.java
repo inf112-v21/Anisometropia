@@ -64,7 +64,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         framesMenuBackground[8] = menuBackGroundRegionBy1440[8][0];
         framesMenuBackground[9] = menuBackGroundRegionBy1440[9][0];
 
-        animBackground = new Animation<>(7f/60f, framesMenuBackground);
+        animBackground = new Animation<>(7f / 60f, framesMenuBackground);
 
         playOnNet = mainMenuRegionBy256[0][0];
         playLocal = mainMenuRegionBy256[1][0];
@@ -77,8 +77,8 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         speakerOnBlue = mainMenuRegionBy32[18][0];
         speakerOffBlue = mainMenuRegionBy32[18][1];
 
-        playLocalBtn = new GameButton(462, 500, 512,64, true, playLocal);
-        playOnNetBtn = new GameButton(462, 400, 512,64, true, playOnNet);
+        playLocalBtn = new GameButton(462, 500, 512, 64, true, playLocal);
+        playOnNetBtn = new GameButton(462, 400, 512, 64, true, playOnNet);
         quitBtn = new GameButton(618, 300, 224, 64, true, quit);
         speaker = new GameButton(1312, 720, 64, 64, true, speakerOn);
 
@@ -94,7 +94,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         framesRightArrow[8] = mainMenuRegionBy64[18][1];
         framesRightArrow[9] = mainMenuRegionBy64[17][3];
 
-        animRightArrow = new Animation<>(5f/60f, framesRightArrow);
+        animRightArrow = new Animation<>(5f / 60f, framesRightArrow);
 
         framesLeftArrow = new TextureRegion[10];
         framesLeftArrow[0] = mainMenuRegionBy64[19][3];
@@ -108,9 +108,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         framesLeftArrow[8] = mainMenuRegionBy64[20][3];
         framesLeftArrow[9] = mainMenuRegionBy64[19][1];
 
-        animLeftArrow = new Animation<>(5f/60f, framesLeftArrow);
-
-        Gdx.input.setInputProcessor(this);
+        animLeftArrow = new Animation<>(5f / 60f, framesLeftArrow);
     }
 
     @Override
@@ -128,7 +126,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         gameApplication.getSpriteBatch().draw(currentBackgroundFrame,0, 0, 1440f, 832f);
 
         ifHoveredDrawArrowsAroundPlayLocalButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
-//        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame); // multiplayer not yet implemented
+        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame); // multiplayer not yet implemented
         ifHoveredDrawArrowsAroundQuitButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
         ifHoveredMakeSpeakerButtonBlue(mousePosition);
 
@@ -151,7 +149,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
 //            System.out.println("STANDARD: (" + Math.round(mousePosition.x) + ", " + Math.round(mousePosition.y) + ")");
 
             if (playLocalBtn.isMouseOnButton(mousePosition)) playLocalButtonHasBeenClicked();
-//            if (playOnNetBtn.isMouseOnButton(mousePosition)) playOnNetButtonHasBeenClicked(); // multiplayer not yet implemented
+            if (playOnNetBtn.isMouseOnButton(mousePosition)) playOnNetButtonHasBeenClicked(); // multiplayer not yet implemented
             if (quitBtn.isMouseOnButton(mousePosition)) quitHasBeenClicked();
             if (speaker.isMouseOnButton(mousePosition)) speakerButtonHasBeenClicked();
 
@@ -224,6 +222,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(this);
         if (musicPlaying) menuMusic.play(); // commented out while doing work on game (easier to debug)
     }
 
