@@ -25,12 +25,12 @@ public class GameScreenManager {
         setScreen(STATE.MENU);
 
         // USE THIS FOR SKIPPING MENUS, AND IMMEDIATELY START A GAME WITH 2 PLAYERS
-//        GraphicalGameMap gameMap = new GraphicalGameMap();
-//        PlayerQueue playerQueue = new PlayerQueue();
-//        playerQueue.add(new Player((int) gameMap.getSpawnPoint(0).getX(), (int) gameMap.getSpawnPoint(0).getY(), "PL1", gameMap, 0));
-//        playerQueue.add(new Player((int) gameMap.getSpawnPoint(1).getX(), (int) gameMap.getSpawnPoint(1).getY(), "PL2", gameMap, 1));
-//        initPlayScreen(gameMap, playerQueue);
-//        setScreen(GameScreenManager.STATE.PLAY);
+        GraphicalGameMap gameMap = new GraphicalGameMap();
+        PlayerQueue playerQueue = new PlayerQueue();
+        playerQueue.add(new Player((int) gameMap.getSpawnPoint(0).getX(), (int) gameMap.getSpawnPoint(0).getY(), "PL1", gameMap, 0));
+        playerQueue.add(new Player((int) gameMap.getSpawnPoint(1).getX(), (int) gameMap.getSpawnPoint(1).getY(), "PL2", gameMap, 1));
+        initPlayScreen(gameMap, playerQueue);
+        setScreen(GameScreenManager.STATE.PLAY);
         // *** END *** USE THIS FOR SKIPPING MENUS *** END ***
     }
 

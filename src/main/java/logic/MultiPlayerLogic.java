@@ -4,7 +4,6 @@ import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import p2p.Multiplayer;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,7 +12,9 @@ public class MultiPlayerLogic {
     public Multiplayer mp;
     public boolean firstTurn;
 
-    public MultiPlayerLogic() { }
+    public MultiPlayerLogic(GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
+    }
 
     /**
      * Checks if a multiplayer object has been created, if so, then there is a connection.
@@ -30,12 +31,8 @@ public class MultiPlayerLogic {
      * @throws IOException
      */
     public void runMultiPlayer() throws IOException {
-        if(firstTurn == true)
-            sendCards();
-        else {
-            sendCards();
-            receiveCards();
-        }
+        sendCards();
+        receiveCards();
     }
 
     /**

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class GameLogic {
 
-    MultiPlayerLogic multiPlayerLogic;
+    public MultiPlayerLogic multiPlayerLogic;
     GameMap gameMap;
     PlayerQueue playerQueue;
     DeckOfProgramCards deckOfProgramCards;
@@ -35,7 +35,7 @@ public class GameLogic {
     public static String gameMessage;
 
     public GameLogic(GameMap gameMap, PlayerQueue playerQueue) {
-        multiPlayerLogic = new MultiPlayerLogic();
+        multiPlayerLogic = new MultiPlayerLogic(this);
         this.gameMap = gameMap;
         this.playerQueue = playerQueue;
         conveyorBelts = new ConveyorBelts();
@@ -73,6 +73,7 @@ public class GameLogic {
      */
     public void finishCardSelectionTurn(ArrayList<ProgramCard> chosenCards) throws IOException {
         if(multiPlayerLogic.isConnected()) {
+            System.out.println("connected");
             getCurrentPlayer().setChosenProgramCards(chosenCards);
             multiPlayerLogic.runMultiPlayer();
         }

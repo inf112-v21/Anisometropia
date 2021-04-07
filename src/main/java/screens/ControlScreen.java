@@ -286,8 +286,8 @@ public class ControlScreen extends InputAdapter {
 
     private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
-            multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
-            Thread mpThread = new Thread(multiPlayerLogic.mp);
+            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
+            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
             mpThread.start();
             hostButton.setActive(false);
             joinButton.setActive(false);
@@ -296,9 +296,9 @@ public class ControlScreen extends InputAdapter {
 
     private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
-            multiPlayerLogic.firstTurn = false;
-            multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE);
-            Thread mpThread = new Thread(multiPlayerLogic.mp);
+            gameLogic.multiPlayerLogic.firstTurn = false;
+            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE);
+            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
             mpThread.start();
             hostButton.setActive(false);
             joinButton.setActive(false);
