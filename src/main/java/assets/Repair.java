@@ -9,7 +9,6 @@ public class Repair extends DamageAssets {
         if (gameMap.isThereRepairStationOnThisPosition(player.getX(), player.getY())) {
             int wrenchID = gameMap.getAssetLayerID(player.getX(), player.getY());
             repairSite(wrenchID, player);
-            System.out.println("HP is updated" + "Current damage to player: " + player.playerName + " is: " + player.getDmgTokens());
         }
     }
 
@@ -26,6 +25,6 @@ public class Repair extends DamageAssets {
                 if(player.getDmgTokens()>0) {
                     player.updateDamageTokens(-1);
                 }
-            }
         }
+    }
 }
