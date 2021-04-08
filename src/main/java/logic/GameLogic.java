@@ -75,6 +75,13 @@ public class GameLogic {
         if(multiPlayerLogic.isConnected()) {
             System.out.println("connected");
             getCurrentPlayer().setChosenProgramCards(chosenCards);
+            String currentPlayerCards = "";
+
+            for(ProgramCard currentPlayerCard : getCurrentPlayer().getChosenProgramCards()) {
+                currentPlayerCards += currentPlayerCard.getCardType();
+            }
+
+            System.out.println("Chosen cards of current player " + currentPlayerCards);
             multiPlayerLogic.runMultiPlayer();
         }
 

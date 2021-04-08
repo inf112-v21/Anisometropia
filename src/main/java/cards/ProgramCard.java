@@ -6,7 +6,7 @@ import actor.Player;
  * Contains methods and variables that pertain to program cards.
  */
 public class ProgramCard {
-    int cardType;
+    public int cardType;
     public int amountToMoveOrRotate;
     boolean isMovementCard; // Denotes whether card affects movement or direction.
 

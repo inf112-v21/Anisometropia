@@ -43,19 +43,20 @@ public class MultiPlayerLogic {
         firstTurn = false;
         DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
         String toSend = "";
-        for(int i = 0; i <= 6; i++) {
-            for(ProgramCard playerCard : gameLogic.getCurrentPlayer().getChosenProgramCards()) {
+        for(ProgramCard playerCard : gameLogic.getCurrentPlayer().getChosenProgramCards()) {
+            for(int i = 0; i <= 6; i++) {
                 if(deckOfProgramCards.uniqueCards.get(i).getCardType() == playerCard.getCardType()) {
                     toSend += playerCard.getCardType();
                 }
             }
         }
+
         System.out.println("I am sending " + toSend);
         mp.send(toSend);
     }
 
     /**
-     * Method for receiving the cards that the other players chosen cards
+     * Method for receiving the other players chosen cards
      * @throws IOException
      */
     private void receiveCards() throws IOException {
@@ -69,6 +70,11 @@ public class MultiPlayerLogic {
         gameLogic.getCurrentPlayer().setChosenProgramCards(chosenCards);
         gameLogic.getPlayerQueue().next();
 
-        System.out.println("I am receiving " + chosenCards);
+        String receivedCards = "";
+        for(ProgramCard card : chosenCards) {
+           receivedCards += card.getCardType();
+        }
+
+        System.out.println("I am receiving " + receivedCards);
     }
 }
