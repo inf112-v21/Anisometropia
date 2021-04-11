@@ -26,4 +26,25 @@ public class ProgramCard {
     }
 
     public int getCardType() { return cardType; }
+
+    public String toString() {
+        switch (cardType) {
+            case 0:
+                return "Move 1";
+            case 1:
+                return "Move 2";
+            case 2:
+                return "Move 3";
+            case 3:
+                return "Back up";
+            case 4:
+                return "Rotate left";
+            case 5:
+                return "Rotate right";
+            case 6:
+                return "U-turn";
+            default:
+                return "Unexpected value: " + cardType;
+        }
+    }
 }

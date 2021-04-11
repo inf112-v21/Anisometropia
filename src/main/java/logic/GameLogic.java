@@ -86,7 +86,7 @@ public class GameLogic {
         }
 
         else  {
-            getCurrentPlayer().setChosenProgramCards(chosenCards);
+            if(!getCurrentPlayer().isAi()) getCurrentPlayer().setChosenProgramCards(chosenCards);
         }
     }
 

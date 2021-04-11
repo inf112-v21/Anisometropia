@@ -4,6 +4,8 @@ package map;
 import actor.Player;
 import assets.Wall;
 
+import java.awt.*;
+
 public abstract class GameMap {
 
     public abstract boolean isThereFlagHere(int x, int y);
@@ -35,4 +37,6 @@ public abstract class GameMap {
     public abstract boolean isThereRepairStationOnThisPosition(int x,int y);
 
     public abstract Wall getWall();
+
+    public abstract Point getFlagPosition(int flagNumber);
 }

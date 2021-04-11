@@ -166,7 +166,17 @@ public class ControlScreen extends InputAdapter {
         batch.draw(joinButton.getTexture(),joinButton.getX(),joinButton.getY(),joinButton.getWidth(),joinButton.getHeight());
         batch.draw(powerDownButton.getTexture(), powerDownButton.getX(), powerDownButton.getY(),powerDownButton.getWidth(),powerDownButton.getHeight());
 
-        if(!cardExecutionInProgress) drawCardsOfCurrentPlayer(batch);
+        if(!cardExecutionInProgress){
+            if (gameLogic.getCurrentPlayer().isAi()) {
+                System.out.println("current player is ai");
+                gameLogic.getCurrentPlayer().startCardDecisionWithAI();
+                acceptButton.setActive(true);
+                acceptButtonHasBeenClicked();
+            } else {
+                drawCardsOfCurrentPlayer(batch);
+            }
+        }
+
         drawCurrentPlayerName(batch);
         drawDamageTokenPositionIndicators(batch);
         drawDamageTokensOfCurrentPlayer(batch);

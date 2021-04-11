@@ -21,6 +21,7 @@ public class Player implements IPlayer {
     public ArrayList<ProgramCard> lockedProgramCards;
     public String playerName;
     private final int characterID;
+    private final boolean isAi;
 
     public Player(int x, int y, String playerName, GameMap gameMap, int characterID) {
         this.x = this.spawnX = x;
@@ -33,7 +34,25 @@ public class Player implements IPlayer {
         lifeTokens = 3;
         flagsReached = new boolean[4];
         lockedProgramCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));
+
+        isAi = false;
     }
+
+    public Player(int x, int y, String playerName, GameMap gameMap, int characterID, boolean isAi) {
+        this.x = this.spawnX = x;
+        this.y = this.spawnY = y;
+        this.playerName = playerName;
+        this.direction = 0; // Initially faces NORTH
+        this.gameMap = gameMap;
+        this.characterID = characterID;
+        dmgTokens = 0;
+        lifeTokens = 3;
+        flagsReached = new boolean[4];
+        lockedProgramCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));
+
+        this.isAi = isAi;
+    }
+
 
     public int getX() {
         return x;
@@ -208,4 +227,13 @@ public class Player implements IPlayer {
     public int getCharacterID() {
         return characterID;
     }
+
+    public boolean isAi() {
+        return isAi;
+    }
+
+    public void startCardDecisionWithAI() {
+        System.out.println("not an AI");
+    }
+
 }

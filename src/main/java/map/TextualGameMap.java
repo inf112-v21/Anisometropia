@@ -3,9 +3,13 @@ package map;
 import actor.Player;
 import assets.Wall;
 
+import java.awt.*;
 import java.util.Arrays;
 
 public class TextualGameMap extends GameMap {
+
+    final int FLAG_1_ID = 55;
+    Point[] flagPositions;
 
     int width;
     int height;
@@ -27,6 +31,7 @@ public class TextualGameMap extends GameMap {
         this.gridArray[5][5] = 6;  // Hole
         this.gridArray[2][2] = 38; // Lasers
 
+        flagPositions[0] = new Point(3,3);
     }
 
     public void setPlayerPosition(int x, int y, Player player) {
@@ -94,8 +99,11 @@ public class TextualGameMap extends GameMap {
     }
 
     public Wall getWall() {
-        Wall wall = null;
-        return wall;
+        return null;
+    }
+
+    public Point getFlagPosition(int flagNumber) {
+        return flagPositions[flagNumber];
     }
 
     @Override
@@ -103,6 +111,8 @@ public class TextualGameMap extends GameMap {
 
     @Override
     public boolean isThereRepairStationOnThisPosition(int x, int y) {return false; }
+
+
 
 }
 
