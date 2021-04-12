@@ -63,4 +63,5 @@ Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to
 å prosessere turen til spilleren.
 
 Dersom en spiller har lite skade og så trykker R-(Respawn) vil spillet starte på nytt, men spilleren
-vil få antall kort tilsvarende skaden som ble tatt før respawn. (Bug av lav prioritet).
+vil få antall kort tilsvarende skaden som ble tatt før respawn. Spiller vil ikke få nye kort ved
+respawn (Bug av lav prioritet).
