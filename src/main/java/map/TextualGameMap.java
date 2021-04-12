@@ -121,6 +121,10 @@ public class TextualGameMap extends GameMap {
         return false;
     }
 
+    @Override
+    public boolean isTherePusherOnThisPosition(int x, int y) {
+        return false;
+    }
 
 
 }

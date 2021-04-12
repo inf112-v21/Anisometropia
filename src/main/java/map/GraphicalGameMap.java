@@ -196,6 +196,16 @@ public class GraphicalGameMap extends GameMap {
     }
 
     @Override
+    public boolean isTherePusherOnThisPosition(int x, int y) {
+        if (assetLayer.getCell(x, y) != null){
+            int tileID = getAssetLayerID(x, y);
+            return  (tileID == MovingAssets.pusherDown) || (tileID == MovingAssets.pusherLeft) ||
+                    (tileID == MovingAssets.pusherUp) || (tileID == MovingAssets.pusherRight);
+        }
+        return false;
+    }
+
+    @Override
     public boolean isTherePlayerOnThisPosition(int x, int y){
         if (playerLayer.getCell(x, y) != null){
             return true;

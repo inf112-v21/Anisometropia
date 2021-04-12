@@ -14,6 +14,7 @@ public abstract class MovingAssets {
             bConveyorBeltID_DownLeft  = 28, bConveyorBeltID_RightDown = 20, bConveyorBeltID_UpLeft  = 18, bConveyorBeltID_LeftDown = 17;
     public static final int //Gear
             gearRotatingLeft = 53, gearRotatingRight = 54;
+    public static final int pusherDown = 1, pusherLeft = 2, pusherUp=3, pusherRight=4;
 
     /**
      *@param player  Move the player in a given location

@@ -21,6 +21,7 @@ public class GameLogic {
     Gear gear;
     Repair repair;
     Flag flag;
+    Pusher pusher;
 
     public static boolean gameOver = false;
     public static boolean cardExecutionInProgress = false;
@@ -39,6 +40,7 @@ public class GameLogic {
         gear = new Gear();
         repair = new Repair();
         flag = new Flag();
+        pusher = new Pusher();
         deckOfProgramCards = new DeckOfProgramCards();
         dealProgramCards();
     }
@@ -115,9 +117,11 @@ public class GameLogic {
 
     public void endOfTurnCheck() {
         for (Player player : playerQueue.getPlayerQueue()) {
+            //moving assets:
             conveyorBelts.playerIsToMove(player, gameMap);
             gear.playerIsToMove(player, gameMap);
-
+            pusher.playerIsToMove(player, gameMap);
+            //repair assets:
             laser.updatePlayersHealth(player, gameMap);
             repair.updatePlayersHealth(player, gameMap);
 

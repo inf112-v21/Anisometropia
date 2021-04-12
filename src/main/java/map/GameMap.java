@@ -38,6 +38,8 @@ public abstract class GameMap {
 
     public abstract boolean isThereRepairStationOnThisPosition(int x,int y);
 
+    public abstract boolean isTherePusherOnThisPosition(int x, int y);
+
     public abstract Wall getWall();
 
     public abstract Point getFlagPosition(int flagNumber);

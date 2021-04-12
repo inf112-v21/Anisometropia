@@ -94,7 +94,8 @@ public class Player implements IPlayer {
             return false;
         }
 
-        if (gameMap.isThereWallOnThisPosition(this.getX() + dx, this.getY() + dy)) {
+        if (gameMap.isThereWallOnThisPosition(this.getX() + dx, this.getY() + dy) ||
+                gameMap.isTherePusherOnThisPosition(this.getX() + dx, this.getY() + dy)) {
             if (!gameMap.getWall().checkIntoWall(this.getX(), this.getY(), dx, dy)) {
                 wallIntoPositionBlocked = true;
             }
