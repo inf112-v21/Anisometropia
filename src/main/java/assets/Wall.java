@@ -73,30 +73,34 @@ public class Wall {
 
 
     public boolean checkOutOfWall(int x, int y, int dx, int dy) {
-        if (gameMap.isThereWallOnThisPosition(x, y)) {
+        if (gameMap.isThereWallOnThisPosition(x, y) || gameMap.isTherePusherOnThisPosition(x, y)) {
             int wallID = gameMap.getAssetLayerID(x, y);
             switch (wallID) {
                 case (wallLeft):
                 case (laserWallLeft):
                 case (doubleLaserWallLeft):
+                case (MovingAssets.pusherRight):
                     if (dx == -1 && dy == 0) return false;
                     break;
 
                 case (wallRight):
                 case (laserWallRight):
                 case (doubleLaserWallRight):
+                case (MovingAssets.pusherLeft):
                     if (dx == 1 && dy == 0) return false;
                     break;
 
                 case (wallDown):
-                case (Wall.laserWallDown):
-                case (Wall.doubleLaserWallDown):
+                case (laserWallDown):
+                case (doubleLaserWallDown):
+                case (MovingAssets.pusherUp):
                     if (dx == 0 && dy == -1) return false;
                     break;
 
                 case (wallUp):
                 case (laserWallUp):
                 case (doubleLaserWallUp):
+                case (MovingAssets.pusherDown):
                     if (dx == 0 && dy == 1) return false;
                     break;
 

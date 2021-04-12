@@ -82,16 +82,15 @@ public class Player implements IPlayer {
 
     public boolean canMove(int dx, int dy) {
         if(isPlayerDead()) return false;
+        if (playersCollides(dx, dy)) return false;
+
         boolean wallOutOfPositionBlocked = false;
         boolean wallIntoPositionBlocked = false;
-        if (gameMap.isThereWallOnThisPosition(this.getX(), this.getY())) {
+        if (gameMap.isThereWallOnThisPosition(this.getX(), this.getY()) ||
+                gameMap.isTherePusherOnThisPosition(this.getX(), this.getY())) {
             if (!gameMap.getWall().checkOutOfWall(this.getX(), this.getY(), dx, dy)) {
                 wallOutOfPositionBlocked = true;
             }
-        }
-
-        if (playersCollides(dx, dy)){
-            return false;
         }
 
         if (gameMap.isThereWallOnThisPosition(this.getX() + dx, this.getY() + dy) ||
