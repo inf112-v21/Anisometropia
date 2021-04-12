@@ -16,7 +16,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
     GameApplication gameApplication;
     OrthographicCamera camera;
     Music menuMusic;
-    boolean musicPlaying = true;
+    boolean musicPlaying = false;
 
     float elapsedTime;
     Texture menuBackground;

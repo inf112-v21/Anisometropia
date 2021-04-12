@@ -324,7 +324,6 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
             if(isAi[i]) playerQueue.add(new AIPlayer((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
             else playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
             spawnIncrementer++;
-
         }
         gameApplication.gameScreenManager.initPlayScreen(gameMap, playerQueue);
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);

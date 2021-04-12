@@ -5,6 +5,8 @@ import com.badlogic.gdx.Screen;
 import launcher.GameApplication;
 import org.lwjgl.opengl.GL20;
 
+import java.io.IOException;
+
 public abstract class AbstractScreen implements Screen {
 
     protected final launcher.GameApplication GameApplication;

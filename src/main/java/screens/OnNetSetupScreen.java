@@ -1,5 +1,7 @@
 package screens;
 
+import actor.AIPlayer;
+import actor.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
@@ -11,6 +13,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import launcher.GameApplication;
+import logic.MultiPlayerLogic;
+import logic.PlayerQueue;
+import map.GraphicalGameMap;
+import p2p.Multiplayer;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     SpriteBatch batch;
@@ -28,6 +37,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     int[] colElemPos = { 192, 260, 520, 580, 614, 758, 790, 840 };
     int[] rowElemPos = { 576, 512, 448, 384, 320, 256, 192, 128 };
 
+    private Multiplayer mp;
     public static boolean isHost;
     public static boolean connected; // TODO: will probably be replaced by another boolean/function
 
@@ -159,15 +169,23 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private void receiveButtonHasBeenClicked() {
     }
 
+    /**
+     * Sets up a new connection as host.
+     */
     private void hostButtonHasBeenClicked() {
         if (hostButton.isActive) {
+            try {
+                mp = new Multiplayer(Boolean.TRUE);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Thread mpThread = new Thread(mp);
+            mpThread.start();
 
             setHost(true);
-            status = "STATUS: I am now HOST";
 
             sendBtn.setActive(true);
             receiveBtn.setActive(true);
-
             hostButton.setActive(false);
             hostButton.setTexture(hostBtnOnTexture);
             joinButton.setActive(false);
@@ -175,16 +193,39 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         }
     }
 
+    /**
+     * Connects to host. When connection is formed, waits for host to start the game.
+     * TODO: Avoid crashing when no host is available.
+     */
     private void joinButtonHasBeenClicked() {
         if (joinButton.isActive) {
+            try {
+                mp = new Multiplayer(Boolean.FALSE);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Thread mpThread = new Thread(mp);
+            mpThread.start();
 
             setHost(false);
-            status = "STATUS: I am now JOINING";
 
             joinButton.setActive(false);
             joinButton.setTexture(joinBtnOnTexture);
             hostButton.setActive(false);
             hostButton.setTexture(hostBtnOffTexture);
+
+            while (!mp.isConnected()) {
+                try {
+                    TimeUnit.MILLISECONDS.sleep(100);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+            try {
+                if (mp.receive().equals("start")) startButtonClicked();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -207,9 +248,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     public static void setHost(boolean i){
         isHost = i;
     }
-    public static boolean isHost(){
-        return isHost;
-    }
 
     @Override
     public boolean keyTyped(char c) {
@@ -217,7 +255,9 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             if (editorIndex != -1) {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
                     if (allStringBuilders[editorIndex].length() > 0)
-                        allStringBuilders[editorIndex].replace(allStringBuilders[editorIndex].length() - 1, allStringBuilders[editorIndex].length(), "");
+                        allStringBuilders[editorIndex].replace(
+                                allStringBuilders[editorIndex].length() - 1, allStringBuilders[editorIndex].length(),
+                                "");
                 } else if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                     editorIndex = -1;
                 } else if (allStringBuilders[editorIndex].length() < 12) {
@@ -230,8 +270,36 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         return false;
     }
 
+    /**
+     * When host clicks start button, clients are signaled to do the same.
+     * Player ID's are requested and sent. The game is initiated.
+     * TODO: Only activate button for host.
+     */
     private void startButtonClicked() {
-        System.out.println("START button clicked!");
+        if (isHost) {
+            try {
+                mp.send("start");
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+            mp.receiveIDRequest();
+        }
+        else {
+            int id = mp.requestPlayerID();
+            System.out.println(id);
+        }
+
+        GraphicalGameMap gameMap = new GraphicalGameMap();
+        PlayerQueue playerQueue = new PlayerQueue();
+        int spawnIncrementer = 0;
+        // TODO: Add number of players equal to players in the lobby.
+        for (int i = 0; i < 2; i++) {
+            playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
+                    (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
+            spawnIncrementer++;
+        }
+        gameApplication.gameScreenManager.initPlayScreen(gameMap, playerQueue);
+        gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);
     }
 
     private void backButtonClicked() {

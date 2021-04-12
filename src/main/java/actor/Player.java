@@ -22,6 +22,7 @@ public class Player implements IPlayer {
     public String playerName;
     private final int characterID;
     private final boolean isAi;
+    public boolean isLocal;
 
     public Player(int x, int y, String playerName, GameMap gameMap, int characterID) {
         this.x = this.spawnX = x;

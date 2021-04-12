@@ -24,7 +24,6 @@ import static logic.GameLogic.gameOver;
 
 public class ControlScreen extends InputAdapter {
     GameLogic gameLogic;
-    MultiPlayerLogic multiPlayerLogic;
 
     //Variables used to draw objects on the map
     private final SpriteBatch batch;

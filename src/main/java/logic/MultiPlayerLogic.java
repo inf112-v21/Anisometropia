@@ -21,7 +21,7 @@ public class MultiPlayerLogic {
      * @return True or False
      */
     public boolean isConnected() {
-        return mp!=null;
+        return mp != null;
     }
 
     /**
@@ -63,7 +63,7 @@ public class MultiPlayerLogic {
         DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
         String toReceive = mp.receive();
         ArrayList<ProgramCard> chosenCards = new ArrayList<>();
-        for (int i = 0; i < toReceive.length(); i++) {
+        for (int i = 0; i < 5; i++) {
             int cardID = Character.getNumericValue(toReceive.charAt(i));
             chosenCards.add(deckOfProgramCards.uniqueCards.get(cardID));
         }
