@@ -7,7 +7,7 @@ import java.util.Collections;
 
 public class Player implements IPlayer {
     GameMap gameMap;
-    int x, y, spawnX, spawnY;
+    public int x, y, spawnX, spawnY;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     int dmgTokens;
     int lifeTokens;
@@ -64,24 +64,39 @@ public class Player implements IPlayer {
         return y;
     }
 
+
+    //TODO: if a player moves: dx = 1 and dy = 0, we want player2 to move dx= -1 and dy=0 when they collide
+    private boolean playersCollides(int dx, int dy){
+        if (gameMap.isTherePlayerOnThisPosition(x+dx, y+dy)){
+            //System.out.println("players collide");
+            return true;
+        }
+        return false;
+    }
+
     public void move(int dx, int dy) {
         if (canMove(dx, dy)) {
             gameMap.setToNull(x, y);
             gameMap.setPlayerPosition(x += dx, y += dy, this);
+
         }
     }
 
     public boolean canMove(int dx, int dy) {
         if(isPlayerDead()) return false;
+        if (playersCollides(dx, dy)) return false;
+
         boolean wallOutOfPositionBlocked = false;
         boolean wallIntoPositionBlocked = false;
-        if (gameMap.isThereWallOnThisPosition(this.getX(), this.getY())) {
+        if (gameMap.isThereWallOnThisPosition(this.getX(), this.getY()) ||
+                gameMap.isTherePusherOnThisPosition(this.getX(), this.getY())) {
             if (!gameMap.getWall().checkOutOfWall(this.getX(), this.getY(), dx, dy)) {
                 wallOutOfPositionBlocked = true;
             }
         }
 
-        if (gameMap.isThereWallOnThisPosition(this.getX() + dx, this.getY() + dy)) {
+        if (gameMap.isThereWallOnThisPosition(this.getX() + dx, this.getY() + dy) ||
+                gameMap.isTherePusherOnThisPosition(this.getX() + dx, this.getY() + dy)) {
             if (!gameMap.getWall().checkIntoWall(this.getX(), this.getY(), dx, dy)) {
                 wallIntoPositionBlocked = true;
             }
@@ -210,6 +225,23 @@ public class Player implements IPlayer {
     public void playerDies() {
         isDead = true;
         updateLifeTokens();
+    }
+
+    /**
+     * changes checkpoint to player.
+     */
+    public void setNewCheckpoint(){
+        spawnX = x;
+        spawnY = y;
+    }
+
+    /**
+     * Player is to draw an option card that gives the player new physics
+     * (shooting lasers)
+     * TODO: Implement optionCards and give new physics to player.
+     */
+    public void drawOptionCard(){
+        System.out.println("player draws option card");
     }
 
     public boolean isPlayerDead() {

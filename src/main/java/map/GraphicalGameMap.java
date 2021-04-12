@@ -195,6 +195,24 @@ public class GraphicalGameMap extends GameMap {
         return false;
     }
 
+    @Override
+    public boolean isTherePusherOnThisPosition(int x, int y) {
+        if (assetLayer.getCell(x, y) != null){
+            int tileID = getAssetLayerID(x, y);
+            return  (tileID == MovingAssets.pusherDown) || (tileID == MovingAssets.pusherLeft) ||
+                    (tileID == MovingAssets.pusherUp) || (tileID == MovingAssets.pusherRight);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean isTherePlayerOnThisPosition(int x, int y){
+        if (playerLayer.getCell(x, y) != null){
+            return true;
+        }
+        return false;
+    }
+
     public int getAssetLayerID(int x, int y) {
         return assetLayer.getCell(x, y).getTile().getId();
     }
@@ -202,6 +220,8 @@ public class GraphicalGameMap extends GameMap {
     public int getLaserLayerID(int x, int y){
         return laserLayer.getCell(x, y).getTile().getId();
     }
+
+    public int getPlayerLayerID(int x, int y){return playerLayer.getCell(x, y).getTile().getId();}
 
     public void setPlayerPosition(int x, int y, Player player) {
         TiledMapTileLayer.Cell cellToBeDisplayed = playerCells[player.getCharacterID()][0];

@@ -9,6 +9,7 @@ public class Repair extends DamageAssets {
         if (gameMap.isThereRepairStationOnThisPosition(player.getX(), player.getY())) {
             int wrenchID = gameMap.getAssetLayerID(player.getX(), player.getY());
             repairSite(wrenchID, player);
+            player.setNewCheckpoint();
         }
     }
 
@@ -24,6 +25,7 @@ public class Repair extends DamageAssets {
             case (doubleWrench):
                 if(player.getDmgTokens()>0) {
                     player.updateDamageTokens(-1);
+                    player.drawOptionCard();
                 }
         }
     }
