@@ -7,7 +7,7 @@ import java.util.Collections;
 
 public class Player implements IPlayer {
     GameMap gameMap;
-    int x, y, spawnX, spawnY;
+    public int x, y, spawnX, spawnY;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     int dmgTokens;
     int lifeTokens;
@@ -208,6 +208,11 @@ public class Player implements IPlayer {
     public void playerDies() {
         isDead = true;
         updateLifeTokens();
+    }
+
+    public void setNewCheckpoint(){
+        this.spawnX = this.getX();
+        this.spawnY = this.getY();
     }
 
     public boolean isPlayerDead() {

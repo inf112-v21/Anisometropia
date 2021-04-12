@@ -1,10 +1,7 @@
 package logic;
 
 import actor.Player;
-import assets.ConveyorBelts;
-import assets.Gear;
-import assets.Laser;
-import assets.Repair;
+import assets.*;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import map.GameMap;
@@ -23,8 +20,7 @@ public class GameLogic {
     Laser laser;
     Gear gear;
     Repair repair;
-
-    final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
+    Flag flag;
 
     public static boolean gameOver = false;
     public static boolean cardExecutionInProgress = false;
@@ -42,6 +38,7 @@ public class GameLogic {
         laser = new Laser();
         gear = new Gear();
         repair = new Repair();
+        flag = new Flag();
         deckOfProgramCards = new DeckOfProgramCards();
         dealProgramCards();
     }
@@ -52,10 +49,7 @@ public class GameLogic {
                 gameMap.setPlayerPosition(player.getX(), player.getY(), player);
             }
             for (Player player : playerQueue.getPlayerQueue()) {
-                if (gameMap.isThereFlagHere(player.getX(), player.getY())) {
-                    int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
-                    registerFlag(tileID, player);
-                }
+                flag.updateFlag(player, gameMap);
             }
         }
     }
@@ -183,19 +177,6 @@ public class GameLogic {
                 player.respawn();
                 player.isPoweredDown = false;
             }
-        }
-    }
-
-    public void registerFlag (int tileID, Player player) {
-        switch (tileID) {
-            case (FLAG_1_ID): player.flagsReached[0] = true;
-                break;
-            case (FLAG_2_ID): if (player.flagsReached[0]) player.flagsReached[1] = true;
-                break;
-            case (FLAG_3_ID): if (player.flagsReached[1]) player.flagsReached[2] = true;
-                break;
-            case (FLAG_4_ID): if (player.flagsReached[2]) player.flagsReached[3] = true;
-                break;
         }
     }
 
