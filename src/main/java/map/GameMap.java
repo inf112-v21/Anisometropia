@@ -26,6 +26,8 @@ public abstract class GameMap {
 
     public abstract void setToNull(int x, int y);
 
+    public abstract boolean isTherePlayerOnThisPosition(int x, int y);
+
     public abstract boolean isThereYellowConveyorOnThisPosition(int x, int y);
 
     public abstract boolean isThereBlueConveyorOnThisPosition(int x, int y);

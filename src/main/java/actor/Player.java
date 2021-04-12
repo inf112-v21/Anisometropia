@@ -62,10 +62,21 @@ public class Player implements IPlayer {
         return y;
     }
 
+
+    //TODO: if a player moves: dx = 1 and dy = 0, we want player2 to move dx= -1 and dy=0 when they collide
+    private boolean playersCollides(int dx, int dy){
+        if (gameMap.isTherePlayerOnThisPosition(x+dx, y+dy)){
+            //System.out.println("players collide");
+            return true;
+        }
+        return false;
+    }
+
     public void move(int dx, int dy) {
         if (canMove(dx, dy)) {
             gameMap.setToNull(x, y);
             gameMap.setPlayerPosition(x += dx, y += dy, this);
+
         }
     }
 
@@ -77,6 +88,10 @@ public class Player implements IPlayer {
             if (!gameMap.getWall().checkOutOfWall(this.getX(), this.getY(), dx, dy)) {
                 wallOutOfPositionBlocked = true;
             }
+        }
+
+        if (playersCollides(dx, dy)){
+            return false;
         }
 
         if (gameMap.isThereWallOnThisPosition(this.getX() + dx, this.getY() + dy)) {

@@ -98,6 +98,11 @@ public class TextualGameMap extends GameMap {
         return false;
     }
 
+    @Override
+    public boolean isTherePlayerOnThisPosition(int x, int y){
+        return false;
+    }
+
     public Wall getWall() {
         return null;
     }
@@ -107,10 +112,14 @@ public class TextualGameMap extends GameMap {
     }
 
     @Override
-    public boolean isThereGearOnThisPosition(int x, int y) {return false; }
+    public boolean isThereGearOnThisPosition(int x, int y) {
+        return false;
+    }
 
     @Override
-    public boolean isThereRepairStationOnThisPosition(int x, int y) {return false; }
+    public boolean isThereRepairStationOnThisPosition(int x, int y) {
+        return false;
+    }
 
 
 
