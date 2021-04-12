@@ -210,9 +210,21 @@ public class Player implements IPlayer {
         updateLifeTokens();
     }
 
+    /**
+     * changes checkpoint to player.
+     */
     public void setNewCheckpoint(){
         spawnX = x;
         spawnY = y;
+    }
+
+    /**
+     * Player is to draw an option card that gives the player new physics
+     * (shooting lasers)
+     * TODO: Implement optionCards and give new physics to player.
+     */
+    public void drawOptionCard(){
+        System.out.println("player draws option card");
     }
 
     public boolean isPlayerDead() {

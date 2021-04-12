@@ -6,6 +6,12 @@ import map.GameMap;
 public class Flag {
     final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
 
+    /**
+     * If there is a flag on players position, playerReachedNewFlag is called.
+     * Checks if there is a flag on Players position.
+     * A player needs to visit the flag in order 1 - 4 and cant skip flags
+     * When player has visited a flag, a new spawn location is given in case of death.
+     */
     public void updateFlag(Player player, GameMap gameMap){
         if (gameMap.isThereFlagHere(player.getX(), player.getY())) {
             int tileID = gameMap.getAssetLayerID(player.getX(), player.getY());
@@ -27,13 +33,19 @@ public class Flag {
                 }
                 break;
             case (FLAG_3_ID):
-                if (player.flagsReached[1]) player.flagsReached[2] = true;
-                player.setNewCheckpoint();
+                if (player.flagsReached[1]){
+                    player.flagsReached[2] = true;
+                    player.setNewCheckpoint();
+                }
                 break;
             case (FLAG_4_ID):
-                if (player.flagsReached[2]) player.flagsReached[3] = true;
-                player.setNewCheckpoint();
+                if (player.flagsReached[2]){
+                    player.flagsReached[3] = true;
+                    player.setNewCheckpoint();
+                }
                 break;
         }
     }
+
+    
 }

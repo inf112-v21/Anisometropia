@@ -25,6 +25,7 @@ public class Repair extends DamageAssets {
             case (doubleWrench):
                 if(player.getDmgTokens()>0) {
                     player.updateDamageTokens(-1);
+                    player.drawOptionCard();
                 }
         }
     }
