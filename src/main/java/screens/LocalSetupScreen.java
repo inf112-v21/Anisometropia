@@ -1,5 +1,6 @@
 package screens;
 
+import actor.AIPlayer;
 import actor.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -249,8 +250,10 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
                 }
             }else{
                 if(isAi[i]){
+                    isAi[i] = true;
                     plOrAiButtons[i].setTexture(aiSelected);
                 } else {
+                    isAi[i] = false;
                     plOrAiButtons[i].setTexture(plSelected);
                 }
             }
@@ -318,7 +321,8 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         PlayerQueue playerQueue = new PlayerQueue();
         int spawnIncrementer = 0;
         for (int i = 0; i < playersAdded; i++) {
-            playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
+            if(isAi[i]) playerQueue.add(new AIPlayer((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
+            else playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
             spawnIncrementer++;
 
         }

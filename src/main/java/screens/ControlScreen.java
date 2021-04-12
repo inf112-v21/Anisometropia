@@ -168,7 +168,6 @@ public class ControlScreen extends InputAdapter {
 
         if(!cardExecutionInProgress){
             if (gameLogic.getCurrentPlayer().isAi()) {
-                System.out.println("current player is ai");
                 gameLogic.getCurrentPlayer().startCardDecisionWithAI();
                 acceptButton.setActive(true);
                 acceptButtonHasBeenClicked();

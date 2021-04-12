@@ -23,7 +23,7 @@ public class GraphicalGameMap extends GameMap {
     TiledMapTileLayer boardLayer, laserLayer, assetLayer, playerLayer;
 
     final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
-    final int FLAG_ID_1 = 54, FLAG_ID_2 = 62, FLAG_ID_3 =  70, FLAG_ID_4 = 78;
+    final int FLAG_ID_1 = 55, FLAG_ID_2 = 63, FLAG_ID_3 =  71, FLAG_ID_4 = 79;
 
     Point[] spawnPositions = new Point[8];
     Point[] flagPositions = new Point[4];
