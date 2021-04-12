@@ -11,6 +11,8 @@ public class MultiPlayerLogic {
     GameLogic gameLogic;
     public Multiplayer mp;
     public boolean firstTurn;
+    public int numPlayers;
+    public int playerID; // Which index in PlayerQueue this session controls.
 
     public MultiPlayerLogic(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
@@ -76,5 +78,36 @@ public class MultiPlayerLogic {
         }
 
         System.out.println("I am receiving " + receivedCards);
+    }
+
+    /**
+     * Client requests its designated player ID from host.
+     * @return playerID
+     */
+    public int requestPlayerID() throws IOException {
+        mp.send("id");
+        String assignedID = mp.receive();
+        return playerID = Integer.parseInt(assignedID);
+    }
+
+    /**
+     * Assigns and sends player ID to client.
+     */
+    public void receiveIDRequest() throws IOException {
+        String toReceive = mp.receive();
+        if (toReceive.equals("id")) {
+            mp.send(Integer.toString(numPlayers));
+            numPlayers++;
+        }
+    }
+
+    /**
+     * Prepares variables to be used for assigning player IDs.
+     */
+    public void initializeID() {
+        if (mp.isHosting()) {
+            numPlayers = 1;
+            playerID = 0;
+        }
     }
 }

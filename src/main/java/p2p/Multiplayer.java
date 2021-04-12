@@ -13,18 +13,12 @@ public class Multiplayer implements Runnable {
     private String buffer = ""; // to store the received string
     public Boolean hosting;
     private Boolean connected = false;
-    private int numPlayers;
-    public int playerID;
 
     /**
     @param host True if hosting, false if joining an already opened connection.
      */
     public Multiplayer(Boolean host) throws IOException {
         hosting = host;
-        if (hosting) {
-            numPlayers = 1;
-            playerID = 0;
-        }
     }
 
     /**
@@ -66,35 +60,7 @@ public class Multiplayer implements Runnable {
 
     public Boolean isConnected() { return connected; }
 
-    /**
-     * Client requests its designated player ID from host.
-     * @return playerID
-     */
-    public int requestPlayerID() {
-        try {
-            send("id");
-            String assignedID = receive();
-            return playerID = Integer.parseInt(assignedID);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    /**
-     * Assigns and sends player ID to client.
-     */
-    public void receiveIDRequest() {
-        try {
-            String toReceive = receive();
-            if (toReceive.equals("id")) {
-                send(Integer.toString(numPlayers));
-                numPlayers++;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    public Boolean isHosting() { return hosting; }
 
     @Override
     public void run() {

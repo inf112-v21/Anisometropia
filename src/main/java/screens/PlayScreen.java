@@ -30,7 +30,7 @@ public class PlayScreen extends AbstractScreen implements InputProcessor {
     GameLogic gameLogic;
     ControlScreen controlScreen;
 
-    public PlayScreen(GameApplication gameApplication, GraphicalGameMap gameMap, PlayerQueue playerQueue) {
+    public PlayScreen(GameApplication gameApplication, GraphicalGameMap gameMap, GameLogic gameLogic) {
         super(gameApplication);
         this.gameApplication = gameApplication;
         batch = gameApplication.spriteBatch;
@@ -46,7 +46,7 @@ public class PlayScreen extends AbstractScreen implements InputProcessor {
         controlCamera.update();
 
         this.gameMap = gameMap;
-        gameLogic = new GameLogic(gameMap, playerQueue);
+        this.gameLogic = gameLogic;
 
         controlScreen = new ControlScreen(gameLogic);
     }

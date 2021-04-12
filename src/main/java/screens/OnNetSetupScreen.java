@@ -13,8 +13,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import launcher.GameApplication;
+import logic.GameLogic;
 import logic.MultiPlayerLogic;
 import logic.PlayerQueue;
+import map.GameMap;
 import map.GraphicalGameMap;
 import p2p.Multiplayer;
 
@@ -37,7 +39,9 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     int[] colElemPos = { 192, 260, 520, 580, 614, 758, 790, 840 };
     int[] rowElemPos = { 576, 512, 448, 384, 320, 256, 192, 128 };
 
-    private Multiplayer mp;
+    private GraphicalGameMap gameMap;
+    private PlayerQueue playerQueue;
+    private GameLogic gameLogic;
     public static boolean isHost;
     public static boolean connected; // TODO: will probably be replaced by another boolean/function
 
@@ -100,6 +104,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         font = new BitmapFont();
         font.getData().setScale(1.8f);
         font.setColor(Color.BLACK);
+
+        gameMap = new GraphicalGameMap();
+        playerQueue = new PlayerQueue();
+        gameLogic = new GameLogic(gameMap, playerQueue);
     }
 
     @Override
@@ -132,7 +140,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     @Override
-    public void update(float delta) {
+    public void update(float delta) throws IOException {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.MENU);
         }
@@ -172,17 +180,15 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     /**
      * Sets up a new connection as host.
      */
-    private void hostButtonHasBeenClicked() {
+    private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
-            try {
-                mp = new Multiplayer(Boolean.TRUE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Thread mpThread = new Thread(mp);
+            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
+            gameLogic.multiPlayerLogic.initializeID();
+            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
             mpThread.start();
 
             setHost(true);
+            status = "STATUS: I am now HOST";
 
             sendBtn.setActive(true);
             receiveBtn.setActive(true);
@@ -197,36 +203,74 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      * Connects to host. When connection is formed, waits for host to start the game.
      * TODO: Avoid crashing when no host is available.
      */
-    private void joinButtonHasBeenClicked() {
+    private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
-            try {
-                mp = new Multiplayer(Boolean.FALSE);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Thread mpThread = new Thread(mp);
+            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE);
+            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
             mpThread.start();
 
             setHost(false);
+            status = "STATUS: I am now JOINING";
 
             joinButton.setActive(false);
             joinButton.setTexture(joinBtnOnTexture);
             hostButton.setActive(false);
             hostButton.setTexture(hostBtnOffTexture);
 
-            while (!mp.isConnected()) {
+            while (!gameLogic.multiPlayerLogic.mp.isConnected()) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(100);
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                 }
             }
-            try {
-                if (mp.receive().equals("start")) startButtonClicked();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            String startMessage = gameLogic.multiPlayerLogic.mp.receive();
+            if (startMessage.startsWith("start")) startButtonClicked();
         }
+    }
+
+    /**
+     * When host clicks start button, clients are signaled to do the same.
+     * Player IDs are requested and sent. The game is initiated.
+     * TODO: Only activate button for host.
+     * TODO: Support three or more players.
+     */
+    private void startButtonClicked() throws IOException {
+        int playerID = 0;
+        int numberOfPlayers;
+        if (isHost) {
+            gameLogic.multiPlayerLogic.mp.send("start");
+
+            // Repeat this to support three or more players, possibly?
+            // Need to find way to learn to stop listening for new ID requests.
+            gameLogic.multiPlayerLogic.receiveIDRequest();
+
+            numberOfPlayers = gameLogic.multiPlayerLogic.numPlayers;
+            gameLogic.multiPlayerLogic.mp.send(Integer.toString(numberOfPlayers));
+        }
+        else {
+            playerID = gameLogic.multiPlayerLogic.requestPlayerID();
+            numberOfPlayers = Integer.parseInt(gameLogic.multiPlayerLogic.mp.receive());
+        }
+
+        int spawnIncrementer = 0;
+        // Store your designated player instance as local to you, all other players non-local.
+        for (int i = 0; i < numberOfPlayers; i++) {
+            if (playerID == i) {
+                playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
+                        (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, true, i));
+            }
+            else {
+                playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
+                        (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, false, i));
+            }
+            spawnIncrementer++;
+        }
+
+        gameLogic.setPlayerQueue(playerQueue);
+        gameLogic.dealProgramCards();
+        gameApplication.gameScreenManager.initPlayScreen(gameMap, gameLogic);
+        gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);
     }
 
     private void ifHoveredMakeStartButtonBlueAndJumbled(Vector3 mousePosition) {
@@ -268,38 +312,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             // TODO: what happens after connected = true (player selection setup)
         }
         return false;
-    }
-
-    /**
-     * When host clicks start button, clients are signaled to do the same.
-     * Player ID's are requested and sent. The game is initiated.
-     * TODO: Only activate button for host.
-     */
-    private void startButtonClicked() {
-        if (isHost) {
-            try {
-                mp.send("start");
-            } catch (IOException e){
-                e.printStackTrace();
-            }
-            mp.receiveIDRequest();
-        }
-        else {
-            int id = mp.requestPlayerID();
-            System.out.println(id);
-        }
-
-        GraphicalGameMap gameMap = new GraphicalGameMap();
-        PlayerQueue playerQueue = new PlayerQueue();
-        int spawnIncrementer = 0;
-        // TODO: Add number of players equal to players in the lobby.
-        for (int i = 0; i < 2; i++) {
-            playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
-                    (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
-            spawnIncrementer++;
-        }
-        gameApplication.gameScreenManager.initPlayScreen(gameMap, playerQueue);
-        gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);
     }
 
     private void backButtonClicked() {

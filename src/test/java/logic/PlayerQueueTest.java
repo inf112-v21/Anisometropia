@@ -11,8 +11,8 @@ public class PlayerQueueTest {
     public void test2PlayerQueue() {
         TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
         PlayerQueue playerQueue = new PlayerQueue();
-        Player player1 = new Player(1,1,"player1", simpleGameMap, 0);
-        Player player2 = new Player(2,1,"player2", simpleGameMap, 1);
+        Player player1 = new Player(1,1,"player1", simpleGameMap, true, 0);
+        Player player2 = new Player(2,1,"player2", simpleGameMap, true, 1);
         playerQueue.add(player1);
         playerQueue.add(player2);
         GameLogic gameLogic = new GameLogic(simpleGameMap, playerQueue);

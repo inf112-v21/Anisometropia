@@ -8,6 +8,7 @@ import assets.Repair;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import map.GameMap;
+import map.GraphicalGameMap;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -84,7 +85,6 @@ public class GameLogic {
             System.out.println("Chosen cards of current player " + currentPlayerCards);
             multiPlayerLogic.runMultiPlayer();
         }
-
         else  {
             if(!getCurrentPlayer().isAi()) getCurrentPlayer().setChosenProgramCards(chosenCards);
         }
@@ -218,13 +218,13 @@ public class GameLogic {
         return gameMap.isThereHoleOnThisPosition(x, y);
     }
 
-    public Player getCurrentPlayer() {
-        return playerQueue.getCurrentPlayer();
-    }
+    public Player getCurrentPlayer() { return playerQueue.getCurrentPlayer(); }
 
     public Player getLastPlayer() {
         return playerQueue.getLastPlayer();
     }
+
+    public void setPlayerQueue(PlayerQueue pQueue) { playerQueue = pQueue; }
 
     public PlayerQueue getPlayerQueue() {
         return playerQueue;

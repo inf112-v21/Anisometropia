@@ -3,6 +3,7 @@ package screens;
 import actor.AIPlayer;
 import actor.Player;
 import launcher.GameApplication;
+import logic.GameLogic;
 import logic.PlayerQueue;
 import map.GraphicalGameMap;
 
@@ -56,8 +57,8 @@ public class GameScreenManager {
         gameApplication.setScreen(gameScreens.get(nextScreen));
     }
 
-    public void initPlayScreen(GraphicalGameMap gameMap, PlayerQueue playerQueue) {
-        playScreen = new PlayScreen(gameApplication, gameMap, playerQueue);
+    public void initPlayScreen(GraphicalGameMap gameMap, GameLogic gameLogic) {
+        playScreen = new PlayScreen(gameApplication, gameMap, gameLogic);
         this.gameScreens.put(STATE.PLAY, playScreen);
     }
 

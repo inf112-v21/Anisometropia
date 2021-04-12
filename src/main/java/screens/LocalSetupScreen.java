@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import launcher.GameApplication;
+import logic.GameLogic;
 import logic.PlayerQueue;
 import map.GraphicalGameMap;
 
@@ -322,10 +323,11 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         int spawnIncrementer = 0;
         for (int i = 0; i < playersAdded; i++) {
             if(isAi[i]) playerQueue.add(new AIPlayer((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
-            else playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
+            else playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, true, i));
             spawnIncrementer++;
         }
-        gameApplication.gameScreenManager.initPlayScreen(gameMap, playerQueue);
+        GameLogic gameLogic = new GameLogic(gameMap, playerQueue);
+        gameApplication.gameScreenManager.initPlayScreen(gameMap, gameLogic);
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);
     }
 
