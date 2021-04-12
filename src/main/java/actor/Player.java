@@ -211,8 +211,8 @@ public class Player implements IPlayer {
     }
 
     public void setNewCheckpoint(){
-        this.spawnX = this.getX();
-        this.spawnY = this.getY();
+        spawnX = x;
+        spawnY = y;
     }
 
     public boolean isPlayerDead() {

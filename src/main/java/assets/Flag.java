@@ -13,6 +13,7 @@ public class Flag {
         }
     }
 
+    //Player cant set a checkpoint on flag_(n+1) if flag_(n) hasn't been visited.
     public void playerReachedNewFlag (int tileID, Player player) {
         switch (tileID) {
             case (FLAG_1_ID):
@@ -20,8 +21,10 @@ public class Flag {
                 player.setNewCheckpoint();
                 break;
             case (FLAG_2_ID):
-                if (player.flagsReached[0]) player.flagsReached[1] = true;
-                player.setNewCheckpoint();
+                if (player.flagsReached[0]){
+                    player.flagsReached[1] = true;
+                    player.setNewCheckpoint();
+                }
                 break;
             case (FLAG_3_ID):
                 if (player.flagsReached[1]) player.flagsReached[2] = true;
