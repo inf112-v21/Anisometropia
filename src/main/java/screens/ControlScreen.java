@@ -257,7 +257,7 @@ public class ControlScreen extends InputAdapter {
         numCardsChosen = 0;
     }
 
-    private void acceptButtonHasBeenClicked() throws IOException {
+    public void acceptButtonHasBeenClicked() throws IOException {
         if (acceptButton.isActive) {
             acceptButton.setActive(false);
             acceptButton.setTexture(acceptTextureUnavailable);
@@ -266,7 +266,7 @@ public class ControlScreen extends InputAdapter {
 
             gameLogic.finishCardSelectionTurn(chosenCards);
 
-            if(!gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) return;
+            if(gameLogic.multiPlayerLogic.isConnected() && !gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) return;
 
             if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
                 progressButton.setActive(true);
@@ -295,27 +295,6 @@ public class ControlScreen extends InputAdapter {
     private void powerDownButtonHasBeenClicked() {
         gameLogic.getCurrentPlayer().announcePowerDown();
     }
-
-//    private void hostButtonHasBeenClicked() throws IOException {
-//        if (hostButton.isActive) {
-//            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
-//            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
-//            mpThread.start();
-//            hostButton.setActive(false);
-//            joinButton.setActive(false);
-//        }
-//    }
-//
-//    private void joinButtonHasBeenClicked() throws IOException {
-//        if (joinButton.isActive) {
-//            gameLogic.multiPlayerLogic.firstTurn = false;
-//            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE);
-//            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
-//            mpThread.start();
-//            hostButton.setActive(false);
-//            joinButton.setActive(false);
-//        }
-//    }
 
     /**
      * Draws all cards dealt to the current player.

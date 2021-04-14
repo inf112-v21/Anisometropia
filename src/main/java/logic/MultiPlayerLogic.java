@@ -29,21 +29,10 @@ public class MultiPlayerLogic {
     }
 
     /**
-     * Will run the multiplayer by using sendCards and receiveCards.
-     * If it is the first turn of the game then player 1 should only send it´s own cards
-     * because there are currently no cards to be received from the other players.
-     * @throws IOException
-     */
-    public void runMultiPlayer() throws IOException {
-//        sendCards();
-//        receiveCards();
-    }
-
-    /**
      * Method for sending the current players chosen cards
      * @throws IOException
      */
-    public void sendCards() throws IOException {
+    public void sendCards() {
         firstTurn = false;
         DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
         String toSend = "";
@@ -90,9 +79,6 @@ public class MultiPlayerLogic {
         playersReady.set(indexOfPlayerToChange, true);
         gameLogic.getPlayerQueue().getPlayerQueue().get(indexOfPlayerToChange).setChosenProgramCards(chosenCards);
 
-//        gameLogic.getCurrentPlayer().setChosenProgramCards(chosenCards);
-//        gameLogic.getPlayerQueue().next();
-
         String receivedCards = "";
         for(ProgramCard card : chosenCards) {
            receivedCards += card.getCardType();
@@ -109,5 +95,9 @@ public class MultiPlayerLogic {
             numPlayers = 1;
             OnNetSetupScreen.playerID = 0;
         }
+    }
+
+    public GameLogic getGameLogic() {
+        return gameLogic;
     }
 }
