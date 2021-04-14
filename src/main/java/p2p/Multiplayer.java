@@ -22,11 +22,14 @@ public class Multiplayer implements Runnable {
     PrintWriter out;
     private String toSend = "";
 
+    private OnNetSetupScreen onNetSetupScreen;
+
     /**
     @param host True if hosting, false if joining an already opened connection.
      */
-    public Multiplayer(Boolean host) throws IOException {
+    public Multiplayer(Boolean host, OnNetSetupScreen onNetSetupScreen) throws IOException {
         hosting = host;
+        this.onNetSetupScreen = onNetSetupScreen;
     }
 
     /**
@@ -156,6 +159,10 @@ public class Multiplayer implements Runnable {
                 break;
             case "AMOUNT_PLAYERS_REQUEST":
                 send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);
+                break;
+            case "CARD":
+                System.out.println("*** i received a card message!");
+                onNetSetupScreen.getMultiplayerLogic().receiveCards(splitReceived);
                 break;
             default:
                 System.out.println("(!!!) unrecognized message: "+received);

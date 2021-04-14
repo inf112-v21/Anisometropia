@@ -33,8 +33,8 @@ public class MultiPlayerLogic {
      * @throws IOException
      */
     public void runMultiPlayer() throws IOException {
-        sendCards();
-        receiveCards();
+//        sendCards();
+//        receiveCards();
     }
 
     /**
@@ -48,29 +48,40 @@ public class MultiPlayerLogic {
         for(ProgramCard playerCard : gameLogic.getCurrentPlayer().getChosenProgramCards()) {
             for(int i = 0; i <= 6; i++) {
                 if(deckOfProgramCards.uniqueCards.get(i).getCardType() == playerCard.getCardType()) {
-                    toSend += playerCard.getCardType();
+                    toSend += " "+playerCard.getCardType();
                 }
             }
         }
 
         System.out.println("I am sending " + toSend);
-        mp.send(toSend);
+//        mp.send(toSend);
+        mp.setToSend("CARD "+playerID+toSend);
     }
 
     /**
      * Method for receiving the other players chosen cards
      * @throws IOException
      */
-    private void receiveCards() throws IOException {
+    public void receiveCards(String[] messageReceived) throws IOException {
         DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
-        String toReceive = mp.receive();
         ArrayList<ProgramCard> chosenCards = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            int cardID = Character.getNumericValue(toReceive.charAt(i));
-            chosenCards.add(deckOfProgramCards.uniqueCards.get(cardID));
+
+        int[] cards = new int[5];
+        int counter = 0;
+        for (int i = 2; i < messageReceived.length; i++) {
+            cards[counter] = Integer.parseInt(messageReceived[i]);
+            counter++;
         }
-        gameLogic.getCurrentPlayer().setChosenProgramCards(chosenCards);
-        gameLogic.getPlayerQueue().next();
+
+        for (int i = 0; i < 5; i++) {
+            chosenCards.add(deckOfProgramCards.uniqueCards.get(cards[i]));
+        }
+
+        int indexOfPlayerToChange = Integer.parseInt(messageReceived[1]);
+        gameLogic.getPlayerQueue().getPlayerQueue().get(indexOfPlayerToChange).setChosenProgramCards(chosenCards);
+
+//        gameLogic.getCurrentPlayer().setChosenProgramCards(chosenCards);
+//        gameLogic.getPlayerQueue().next();
 
         String receivedCards = "";
         for(ProgramCard card : chosenCards) {

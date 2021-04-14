@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import launcher.GameApplication;
 import logic.GameLogic;
+import logic.MultiPlayerLogic;
 import logic.PlayerQueue;
 import map.GraphicalGameMap;
 import p2p.Multiplayer;
@@ -193,7 +194,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      */
     private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
-            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
+            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE, this);
             gameLogic.multiPlayerLogic.initializeID();
             Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
             mpThread.start();
@@ -216,7 +217,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      */
     private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
-            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE);
+            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE, this);
             Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
             mpThread.start();
 
@@ -310,6 +311,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         }else{
             backBtn.setTexture(back);
         }
+    }
+
+    public MultiPlayerLogic getMultiplayerLogic() {
+        return gameLogic.multiPlayerLogic;
     }
 
     public static void setHost(boolean i){

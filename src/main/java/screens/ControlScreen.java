@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import logic.GameLogic;
 import p2p.Multiplayer;
-import logic.MultiPlayerLogic;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -144,14 +143,14 @@ public class ControlScreen extends InputAdapter {
                         click.y > powerDownButton.getY() && click.y < (powerDownButton.getY() + powerDownButton.getHeight())) {
                     powerDownButtonHasBeenClicked();
                 }
-                if (click.x > joinButton.getX() && click.x < (joinButton.getX() + joinButton.getWidth()) &&
-                        click.y > joinButton.getY() && click.y < (joinButton.getY() + joinButton.getHeight())) {
-                    joinButtonHasBeenClicked();
-                }
-                if (click.x > hostButton.getX() && click.x < (hostButton.getX() + hostButton.getWidth()) &&
-                        click.y > hostButton.getY() && click.y < (hostButton.getY() + hostButton.getHeight())) {
-                    hostButtonHasBeenClicked();
-                }
+//                if (click.x > joinButton.getX() && click.x < (joinButton.getX() + joinButton.getWidth()) &&
+//                        click.y > joinButton.getY() && click.y < (joinButton.getY() + joinButton.getHeight())) {
+//                    joinButtonHasBeenClicked();
+//                }
+//                if (click.x > hostButton.getX() && click.x < (hostButton.getX() + hostButton.getWidth()) &&
+//                        click.y > hostButton.getY() && click.y < (hostButton.getY() + hostButton.getHeight())) {
+//                    hostButtonHasBeenClicked();
+//                }
             }
         }
 
@@ -166,12 +165,15 @@ public class ControlScreen extends InputAdapter {
         batch.draw(powerDownButton.getTexture(), powerDownButton.getX(), powerDownButton.getY(),powerDownButton.getWidth(),powerDownButton.getHeight());
 
         if(!cardExecutionInProgress){
-            if (gameLogic.getCurrentPlayer().isAi()) {
-                gameLogic.getCurrentPlayer().startCardDecisionWithAI();
-                acceptButton.setActive(true);
-                acceptButtonHasBeenClicked();
-            } else {
-                drawCardsOfCurrentPlayer(batch);
+            if (gameLogic.getCurrentPlayer().isLocal) {
+                System.out.println("the current player was local");
+                if (gameLogic.getCurrentPlayer().isAi()) {
+                    gameLogic.getCurrentPlayer().startCardDecisionWithAI();
+                    acceptButton.setActive(true);
+                    acceptButtonHasBeenClicked();
+                } else {
+                    drawCardsOfCurrentPlayer(batch);
+                }
             }
         }
 
@@ -294,26 +296,26 @@ public class ControlScreen extends InputAdapter {
         gameLogic.getCurrentPlayer().announcePowerDown();
     }
 
-    private void hostButtonHasBeenClicked() throws IOException {
-        if (hostButton.isActive) {
-            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
-            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
-            mpThread.start();
-            hostButton.setActive(false);
-            joinButton.setActive(false);
-        }
-    }
-
-    private void joinButtonHasBeenClicked() throws IOException {
-        if (joinButton.isActive) {
-            gameLogic.multiPlayerLogic.firstTurn = false;
-            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE);
-            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
-            mpThread.start();
-            hostButton.setActive(false);
-            joinButton.setActive(false);
-        }
-    }
+//    private void hostButtonHasBeenClicked() throws IOException {
+//        if (hostButton.isActive) {
+//            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE);
+//            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
+//            mpThread.start();
+//            hostButton.setActive(false);
+//            joinButton.setActive(false);
+//        }
+//    }
+//
+//    private void joinButtonHasBeenClicked() throws IOException {
+//        if (joinButton.isActive) {
+//            gameLogic.multiPlayerLogic.firstTurn = false;
+//            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE);
+//            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
+//            mpThread.start();
+//            hostButton.setActive(false);
+//            joinButton.setActive(false);
+//        }
+//    }
 
     /**
      * Draws all cards dealt to the current player.

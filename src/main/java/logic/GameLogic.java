@@ -79,7 +79,7 @@ public class GameLogic {
             }
 
             System.out.println("Chosen cards of current player " + currentPlayerCards);
-            multiPlayerLogic.runMultiPlayer();
+            if(getCurrentPlayer().isLocal) multiPlayerLogic.sendCards();
         }
         else  {
             if(!getCurrentPlayer().isAi()) getCurrentPlayer().setChosenProgramCards(chosenCards);
