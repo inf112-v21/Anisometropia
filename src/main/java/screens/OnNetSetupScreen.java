@@ -46,7 +46,8 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + amount of local players
 
     private String status = "STATUS: waiting...";
-    private String receiverString = "not started...";
+    private String gameReadyStatus = "GAME IS NOT READY TO START";
+    private String getUpdateMessage = "Click RECEIVE-button to get update from server";
 
     public static int playerID = 0;
     public static int numPlayers;
@@ -92,7 +93,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         hostButton = new GameButton(1100,700, 85,85, true, hostBtnTexture);
         joinButton = new GameButton(1200, 700,85,85,true, joinBtnTexture);
         sendBtn = new GameButton(200,500, 85,85, false, sendBtnTexture);
-        receiveBtn = new GameButton(200, 400,85,85,false, receiveBtnTexture);
+        receiveBtn = new GameButton(200, 600,85,85,false, receiveBtnTexture);
         editLocalHostBtn = new GameButton(1100, 640,256,32,false, receiveBtnTexture);
         editPortBtn = new GameButton(1100, 600,256,32,false, receiveBtnTexture);
 
@@ -117,13 +118,21 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         batch.begin();
 
         font.draw(batch, status, 1100, 820);
-        font.draw(batch, receiverString, 600, 400);
+        font.draw(batch, "       Your PlayerID:   "+playerID, 400, 460);
+        font.draw(batch, "Amount of players:   "+numPlayers, 400, 400);
+        if(canStart) {
+            gameReadyStatus = "READY TO START!";
+            startBtn.setActive(true);
+        }
+        if(!isHost) font.draw(batch, gameReadyStatus, 540, 180);
+        if(gameLogic.multiPlayerLogic.isConnected()) font.draw(batch, getUpdateMessage, receiveBtn.getX()+120, receiveBtn.getY()+54);
 
         batch.draw(hostButton.getTexture(),hostButton.getX(),hostButton.getY(),hostButton.getWidth(),hostButton.getHeight());
         batch.draw(joinButton.getTexture(),joinButton.getX(),joinButton.getY(),joinButton.getWidth(),joinButton.getHeight());
         batch.draw(startBtn.getTexture(), startBtn.getX(), startBtn.getY(), startBtn.getWidth(), startBtn.getHeight());
         batch.draw(backBtn.getTexture(), backBtn.getX(), backBtn.getY(), backBtn.getWidth(), backBtn.getHeight());
-        batch.draw(sendBtn.getTexture(), sendBtn.getX(), sendBtn.getY(), sendBtn.getWidth(), sendBtn.getHeight());
+
+//        batch.draw(sendBtn.getTexture(), sendBtn.getX(), sendBtn.getY(), sendBtn.getWidth(), sendBtn.getHeight());
         batch.draw(receiveBtn.getTexture(), receiveBtn.getX(), receiveBtn.getY(), receiveBtn.getWidth(), receiveBtn.getHeight());
 
         if (editorIndex == 0) editLocalHostBtn.setTexture(editLocalhostTexture);
@@ -173,11 +182,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void sendButtonHasBeenClicked() {
-        System.out.println("send button clicked");
-        gameLogic.multiPlayerLogic.mp.setToSend("numPlayers "+numPlayers);
     }
 
     private void receiveButtonHasBeenClicked() {
+        gameLogic.multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
     }
 
     /**
@@ -195,8 +203,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
             startBtn.setActive(true);
             startBtn.setTexture(start);
-            sendBtn.setActive(true);
-            receiveBtn.setActive(true);
             hostButton.setActive(false);
             hostButton.setTexture(hostBtnOnTexture);
             joinButton.setActive(false);
@@ -289,7 +295,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void ifHoveredMakeStartButtonBlueAndJumbled(Vector3 mousePosition) {
-        if (isHost) {
+        if (canStart || isHost) {
             if (startBtn.isMouseOnButton(mousePosition)) {
                 startBtn.setTexture(startJumbled);
             }else{
