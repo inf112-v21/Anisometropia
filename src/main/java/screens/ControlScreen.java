@@ -165,13 +165,11 @@ public class ControlScreen extends InputAdapter {
 
         if(!cardExecutionInProgress){
             if (gameLogic.getCurrentPlayer().isLocal) {
-                System.out.println("the current player was local");
                 if (gameLogic.getCurrentPlayer().isAi()) {
                     gameLogic.getCurrentPlayer().startCardDecisionWithAI();
                     acceptButton.setActive(true);
                     acceptButtonHasBeenClicked();
                 } else {
-                    System.out.println("drawing cards of current player");
                     drawCardsOfCurrentPlayer(batch);
                 }
             }
@@ -268,9 +266,7 @@ public class ControlScreen extends InputAdapter {
 
             gameLogic.finishCardSelectionTurn(chosenCards);
 
-            for (Boolean bool : gameLogic.multiPlayerLogic.playersReady) {
-                if(!bool) return;
-            }
+            if(!gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) return;
 
             if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
                 progressButton.setActive(true);

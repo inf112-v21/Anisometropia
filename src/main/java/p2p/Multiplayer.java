@@ -89,6 +89,7 @@ public class Multiplayer implements Runnable {
     public void run() {
         if (hosting) {
             OnNetSetupScreen.numPlayers = 1;
+            onNetSetupScreen.getMultiplayerLogic().playersReady.add(true);
             try {
                 ss = new ServerSocket(6969);
             } catch (IOException e) {
@@ -156,13 +157,14 @@ public class Multiplayer implements Runnable {
                 break;
             case "AMOUNT_PLAYERS":
                 OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
-                onNetSetupScreen.addToPlayersReady();
+                while(onNetSetupScreen.getMultiplayerLogic().playersReady.size() < Integer.parseInt(splitReceived[1])){
+                    onNetSetupScreen.addToPlayersReady();
+                }
                 break;
             case "AMOUNT_PLAYERS_REQUEST":
                 send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);
                 break;
             case "CARD":
-                System.out.println("*** i received a card message!");
                 onNetSetupScreen.getMultiplayerLogic().receiveCards(splitReceived);
                 onNetSetupScreen.setPlayersReady(Integer.parseInt(splitReceived[1]), true);
                 break;

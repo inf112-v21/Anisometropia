@@ -60,6 +60,13 @@ public class MultiPlayerLogic {
         mp.setToSend("CARD "+playerID+toSend);
     }
 
+    public boolean checkIfAllPlayersReady() {
+        for (Boolean bool : gameLogic.multiPlayerLogic.playersReady) {
+            if(!bool) return false;
+        }
+        return true;
+    }
+
     /**
      * Method for receiving the other players chosen cards
      * @throws IOException
