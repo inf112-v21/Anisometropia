@@ -70,7 +70,7 @@ public class Multiplayer implements Runnable {
     public void receive2() throws IOException {
         if(dataInput.available() > 0) {
             while (in.hasNextLine()) {
-                var line = in.nextLine();
+                String line = in.nextLine();
                 System.out.println("RECEIVED: "+line);
                 handleReceivedMessage(line);
                 if(dataInput.available() == 0) break;
@@ -141,15 +141,24 @@ public class Multiplayer implements Runnable {
         String[] splitReceived = received.split(" ");
         String firstWord = splitReceived[0];
         switch (firstWord) {
-            case "START" -> OnNetSetupScreen.canStart = true;
-            case "ID" -> OnNetSetupScreen.playerID = Integer.parseInt(splitReceived[1]);
-            case "ID_REQUEST" -> {
+            case "START":
+                OnNetSetupScreen.canStart = true;
+                break;
+            case "ID":
+                OnNetSetupScreen.playerID = Integer.parseInt(splitReceived[1]);
+                break;
+            case "ID_REQUEST":
                 send("ID "+OnNetSetupScreen.numPlayers);
                 OnNetSetupScreen.numPlayers++;
-            }
-            case "AMOUNT_PLAYERS" -> OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
-            case "AMOUNT_PLAYERS_REQUEST" -> send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);
-            default -> System.out.println("(!!!) unrecognized message: "+received);
+                break;
+            case "AMOUNT_PLAYERS":
+                OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
+                break;
+            case "AMOUNT_PLAYERS_REQUEST":
+                send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);
+                break;
+            default:
+                System.out.println("(!!!) unrecognized message: "+received);
         }
     }
 }
