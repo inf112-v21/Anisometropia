@@ -5,7 +5,6 @@ import screens.OnNetSetupScreen;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Multiplayer implements Runnable {
@@ -60,17 +59,7 @@ public class Multiplayer implements Runnable {
      * @return returns the received string
      * @throws IOException
      */
-    public String receive() throws IOException {
-        String temp;
-        while (!buffer.equals("")) {
-            buffer = dataInput.readUTF();
-        }
-        temp = buffer;
-        buffer = "";
-        return temp;
-    }
-
-    public void receive2() throws IOException {
+    public void receive() throws IOException {
         if(dataInput.available() > 0) {
             while (in.hasNextLine()) {
                 String line = in.nextLine();
@@ -125,7 +114,7 @@ public class Multiplayer implements Runnable {
 
         while (true) {
             try {
-                receive2();
+                receive();
                 if (!toSend.equals("")) {
                     System.out.println("SENDING: "+toSend);
                     send(toSend);
