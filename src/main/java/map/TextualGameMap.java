@@ -126,6 +126,11 @@ public class TextualGameMap extends GameMap {
         return false;
     }
 
+    @Override
+    public int getPlayerLayerID(int x, int y) {
+        return 0;
+    }
+
 
 }
 

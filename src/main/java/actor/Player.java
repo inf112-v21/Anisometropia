@@ -4,6 +4,7 @@ import cards.ProgramCard;
 import map.GameMap;
 import java.util.ArrayList;
 import java.util.Collections;
+import map.GraphicalGameMap;
 
 public class Player implements IPlayer {
     GameMap gameMap;
@@ -66,9 +67,11 @@ public class Player implements IPlayer {
 
 
     //TODO: if a player moves: dx = 1 and dy = 0, we want player2 to move dx= -1 and dy=0 when they collide
+    //TODO: Player needs a id by number or name. getPlayerLayerID should return different ID for different players.
     private boolean playersCollides(int dx, int dy){
         if (gameMap.isTherePlayerOnThisPosition(x+dx, y+dy)){
-            //System.out.println("players collide");
+            System.out.println("CurrentPlayer: "+ gameMap.getPlayerLayerID(x, y));
+            System.out.println(gameMap.getPlayerLayerID(x+dx, y+dy));
             return true;
         }
         return false;
@@ -84,7 +87,12 @@ public class Player implements IPlayer {
 
     public boolean canMove(int dx, int dy) {
         if(isPlayerDead()) return false;
+
+        //Players collides with each other
         if (playersCollides(dx, dy)) return false;
+
+        //Players can no longer jump over holes
+        if(gameMap.isThereHoleOnThisPosition(x,y)) return false;
 
         boolean wallOutOfPositionBlocked = false;
         boolean wallIntoPositionBlocked = false;
