@@ -1,8 +1,12 @@
 package p2p;
 
+import screens.OnNetSetupScreen;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Locale;
+import java.util.Scanner;
 
 public class Multiplayer implements Runnable {
 
@@ -13,6 +17,10 @@ public class Multiplayer implements Runnable {
     private String buffer = ""; // to store the received string
     public Boolean hosting;
     private Boolean connected = false;
+
+    Scanner in;
+    PrintWriter out;
+    private String toSend = "";
 
     /**
     @param host True if hosting, false if joining an already opened connection.
@@ -37,8 +45,9 @@ public class Multiplayer implements Runnable {
      * @throws IOException
      */
     public void send(String msg) throws IOException {
-        dataOutput.writeUTF(msg);
-        dataOutput.flush();
+//        dataOutput.writeUTF(msg);
+//        dataOutput.flush();
+        out.println(msg);
     }
 
     /**
@@ -50,12 +59,23 @@ public class Multiplayer implements Runnable {
      */
     public String receive() throws IOException {
         String temp;
-        while (buffer.equals("")) {
+        while (!buffer.equals("")) {
             buffer = dataInput.readUTF();
         }
         temp = buffer;
         buffer = "";
         return temp;
+    }
+
+    public void receive2() throws IOException {
+        if(dataInput.available() > 0) {
+            while (in.hasNextLine()) {
+                var line = in.nextLine();
+                System.out.println("RECEIVED: "+line);
+                handleReceivedMessage(line);
+                if(dataInput.available() == 0) break;
+            }
+        }
     }
 
     public Boolean isConnected() { return connected; }
@@ -65,6 +85,7 @@ public class Multiplayer implements Runnable {
     @Override
     public void run() {
         if (hosting) {
+            OnNetSetupScreen.numPlayers = 1;
             try {
                 ss = new ServerSocket(6969);
             } catch (IOException e) {
@@ -85,14 +106,50 @@ public class Multiplayer implements Runnable {
         }
         try {
             dataInput = new DataInputStream(sock.getInputStream());
+            in = new Scanner(dataInput);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         try {
-            dataOutput = new DataOutputStream(sock.getOutputStream());
+//            dataOutput = new DataOutputStream(sock.getOutputStream());
+            out = new PrintWriter(sock.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
         connected = true;
+
+        while (true) {
+            try {
+                receive2();
+                if (!toSend.equals("")) {
+                    System.out.println("SENDING: "+toSend);
+                    send(toSend);
+                    toSend = "";
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void setToSend(String message) {
+        toSend = message;
+    }
+
+    private void handleReceivedMessage(String received) throws IOException {
+        String[] splitReceived = received.split(" ");
+        String firstWord = splitReceived[0];
+        switch (firstWord) {
+            case "START" -> OnNetSetupScreen.canStart = true;
+            case "ID" -> OnNetSetupScreen.playerID = Integer.parseInt(splitReceived[1]);
+            case "ID_REQUEST" -> {
+                send("ID "+OnNetSetupScreen.numPlayers);
+                OnNetSetupScreen.numPlayers++;
+            }
+            case "AMOUNT_PLAYERS" -> OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
+            case "AMOUNT_PLAYERS_REQUEST" -> send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);
+            default -> System.out.println("(!!!) unrecognized message: "+received);
+        }
     }
 }

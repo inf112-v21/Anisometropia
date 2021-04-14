@@ -1,6 +1,5 @@
 package screens;
 
-import actor.AIPlayer;
 import actor.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -14,14 +13,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import launcher.GameApplication;
 import logic.GameLogic;
-import logic.MultiPlayerLogic;
 import logic.PlayerQueue;
-import map.GameMap;
 import map.GraphicalGameMap;
 import p2p.Multiplayer;
 
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     SpriteBatch batch;
@@ -29,7 +25,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     launcher.GameApplication gameApplication;
     Texture onNetSetupTexture;
     TextureRegion[][] onNetSetupRegionBy256, onNetSetupRegionBy128, onNetSetupRegionBy32, onNetSetupRegionBy64, multiPlayerButtons;
-    TextureRegion start, back, startJumbled, backJumbled, hostBtnTexture, hostBtnOnTexture, hostBtnOffTexture;
+    TextureRegion start, back, startInactive, startJumbled, backJumbled, hostBtnTexture, hostBtnOnTexture, hostBtnOffTexture;
     TextureRegion joinBtnTexture, joinBtnOnTexture, joinBtnOffTexture, sendBtnTexture, receiveBtnTexture;
     TextureRegion editLocalhostTexture, editLocalhostInactiveTexture, editPortTexture, editPortInactiveTexture;
 
@@ -51,6 +47,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     private String status = "STATUS: waiting...";
     private String receiverString = "not started...";
+
+    public static int playerID = 0;
+    public static int numPlayers;
+    public static boolean canStart;
 
     public OnNetSetupScreen(GameApplication gameApplication) {
         super(gameApplication);
@@ -82,12 +82,13 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         editPortInactiveTexture = onNetSetupRegionBy256[14][0];
 
         start = onNetSetupRegionBy128[6][0];
+        startInactive = onNetSetupRegionBy128[21][0];
         startJumbled = onNetSetupRegionBy128[12][0];
         back = onNetSetupRegionBy128[6][1];
         backJumbled = onNetSetupRegionBy128[12][1];
 
         backBtn = new GameButton(426, 32, 256, 64, true, back);
-        startBtn = new GameButton(756, 32, 256, 64, true, start);
+        startBtn = new GameButton(756, 32, 256, 64, true, startInactive);
         hostButton = new GameButton(1100,700, 85,85, true, hostBtnTexture);
         joinButton = new GameButton(1200, 700,85,85,true, joinBtnTexture);
         sendBtn = new GameButton(200,500, 85,85, false, sendBtnTexture);
@@ -172,6 +173,8 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void sendButtonHasBeenClicked() {
+        System.out.println("send button clicked");
+        gameLogic.multiPlayerLogic.mp.setToSend("numPlayers "+numPlayers);
     }
 
     private void receiveButtonHasBeenClicked() {
@@ -190,6 +193,8 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             setHost(true);
             status = "STATUS: I am now HOST";
 
+            startBtn.setActive(true);
+            startBtn.setTexture(start);
             sendBtn.setActive(true);
             receiveBtn.setActive(true);
             hostButton.setActive(false);
@@ -217,15 +222,17 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             hostButton.setActive(false);
             hostButton.setTexture(hostBtnOffTexture);
 
-            while (!gameLogic.multiPlayerLogic.mp.isConnected()) {
-                try {
-                    TimeUnit.MILLISECONDS.sleep(100);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
-            String startMessage = gameLogic.multiPlayerLogic.mp.receive();
-            if (startMessage.startsWith("start")) startButtonClicked();
+//            while (!gameLogic.multiPlayerLogic.mp.isConnected()) {
+//                try {
+//                    TimeUnit.MILLISECONDS.sleep(100);
+//                } catch (InterruptedException e) {
+//                    Thread.currentThread().interrupt();
+//                }
+//            }
+//            String startMessage = gameLogic.multiPlayerLogic.mp.receive();
+//            if (startMessage.startsWith("start")) startButtonClicked();
+
+            gameLogic.multiPlayerLogic.mp.setToSend("ID_REQUEST");
         }
     }
 
@@ -235,27 +242,35 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      * TODO: Only activate button for host.
      * TODO: Support three or more players.
      */
-    private void startButtonClicked() throws IOException {
-        int playerID = 0;
-        int numberOfPlayers;
+    public void startButtonClicked() throws IOException {
         if (isHost) {
-            gameLogic.multiPlayerLogic.mp.send("start");
+            int playerID = 0;
+            int numberOfPlayers;
+//            gameLogic.multiPlayerLogic.mp.send("START");
+//
+//            // Repeat this to support three or more players, possibly?
+//            // Need to find way to learn to stop listening for new ID requests.
+//            gameLogic.multiPlayerLogic.receiveIDRequest();
+//
+//            numberOfPlayers = gameLogic.multiPlayerLogic.numPlayers;
+//            gameLogic.multiPlayerLogic.mp.send(Integer.toString(numberOfPlayers));
 
-            // Repeat this to support three or more players, possibly?
-            // Need to find way to learn to stop listening for new ID requests.
-            gameLogic.multiPlayerLogic.receiveIDRequest();
-
-            numberOfPlayers = gameLogic.multiPlayerLogic.numPlayers;
-            gameLogic.multiPlayerLogic.mp.send(Integer.toString(numberOfPlayers));
+            gameLogic.multiPlayerLogic.mp.setToSend("START");
+            startGame();
+        } else {
+//            playerID = gameLogic.multiPlayerLogic.requestPlayerID();
+//            numberOfPlayers = Integer.parseInt(gameLogic.multiPlayerLogic.mp.receive());
+            gameLogic.multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
+            System.out.println("MY PLAYER_ID: "+ playerID); // TODO: make a setter for this, and print out (now there is delay)
+            System.out.println("AMOUNT OF PLAYERS: "+ numPlayers); // TODO: make setter for this, w/printout (currently delay)
+            if(canStart) startGame();
         }
-        else {
-            playerID = gameLogic.multiPlayerLogic.requestPlayerID();
-            numberOfPlayers = Integer.parseInt(gameLogic.multiPlayerLogic.mp.receive());
-        }
+    }
 
+    private void startGame() {
         int spawnIncrementer = 0;
         // Store your designated player instance as local to you, all other players non-local.
-        for (int i = 0; i < numberOfPlayers; i++) {
+        for (int i = 0; i < numPlayers; i++) {
             if (playerID == i) {
                 playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
                         (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, true, i));
@@ -274,10 +289,12 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void ifHoveredMakeStartButtonBlueAndJumbled(Vector3 mousePosition) {
-        if (startBtn.isMouseOnButton(mousePosition)) {
-            startBtn.setTexture(startJumbled);
-        }else{
-            startBtn.setTexture(start);
+        if (isHost) {
+            if (startBtn.isMouseOnButton(mousePosition)) {
+                startBtn.setTexture(startJumbled);
+            }else{
+                startBtn.setTexture(start);
+            }
         }
     }
 

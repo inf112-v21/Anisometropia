@@ -122,11 +122,10 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
         Vector3 mousePosition = camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
         gameApplication.spriteBatch.begin();
-//        gameApplication.getSpriteBatch().draw(menuBackground, 0, 0); // single image, use if animated background too demanding
         gameApplication.getSpriteBatch().draw(currentBackgroundFrame,0, 0, 1440f, 832f);
 
         ifHoveredDrawArrowsAroundPlayLocalButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
-        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame); // multiplayer not yet implemented
+        ifHoveredDrawArrowsAroundPlayOnNetButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
         ifHoveredDrawArrowsAroundQuitButton(mousePosition, currentRightArrowFrame, currentLeftArrowFrame);
         ifHoveredMakeSpeakerButtonBlue(mousePosition);
 
@@ -223,7 +222,7 @@ public class MainMenuScreen extends AbstractScreen implements InputProcessor {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
-        if (musicPlaying) menuMusic.play(); // commented out while doing work on game (easier to debug)
+        if (musicPlaying) menuMusic.play();
     }
 
     @Override

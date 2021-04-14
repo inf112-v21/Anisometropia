@@ -15,52 +15,52 @@ public class AIPlayer extends Player {
 
     @Override
     public void startCardDecisionWithAI() {
-        // *** TIMER START ***
-        System.out.print(playerName+" is thinking...");
-        long startTime = System.nanoTime();
-        // *** TIMER START *** *END*
+//        // *** TIMER START ***
+//        System.out.print(playerName+" is thinking...");
+//        long startTime = System.nanoTime();
+//        // *** TIMER START *** *END*
 
         // TODO: take into account the locked cards (possible to just change "depth" to amountOfLockedCards ??? )
         // TODO: if (dmgTokens > 6) announcePowerDown();
         // TODO: take into account conveyors++++++ (or does this only happen after 5 rounds???)
-//        chooseCardsFromDealtProgramCards();
+        chooseCardsFromDealtProgramCards();
 
 
-        // GETTING THE BEST CARD CHOICES
-        int[] bestChoice = chooseCardsThatWillGetPlayerClosestToNextFlag(x, y, direction, 5, new int[]{-1,-1,-1,-1,-1}, dealtProgramCards);
-
-
-        // *** TIMER STOP ***
-        long endTime   = System.nanoTime();
-        long totalTime = endTime - startTime;
-        System.out.print(" and made a decision after "+totalTime / 1000000000+" seconds!\n");
-        // *** TIMER STOP *** *END*
-
-        // END LOG
-        System.out.print("The AI chose between these cards: ");
-        for (ProgramCard card : dealtProgramCards) {
-            System.out.print(card.getCardType()+", ");
-        }
-        System.out.print("\n and ended up with these choices: ");
-        for (int j = 5; j < bestChoice.length; j++) {
-            if(j == 9) System.out.print(bestChoice[j]+"\n");
-            else System.out.print(bestChoice[j]+", ");
-        }
-        System.out.println("               and the score was: "+bestChoice[0]);
-
-        chosenProgramCards = new ArrayList<>();
-
-        for (int j = 5; j < bestChoice.length; j++) {
-            switch (bestChoice[j]) {
-                case 0: chosenProgramCards.add(new ProgramCard(0, 1, true)); break;
-                case 1: chosenProgramCards.add(new ProgramCard(1, 2, true)); break;
-                case 2: chosenProgramCards.add(new ProgramCard(2, 3, true)); break;
-                case 3: chosenProgramCards.add(new ProgramCard(3, -1, true)); break;
-                case 4: chosenProgramCards.add(new ProgramCard(4, 3, false)); break;
-                case 5: chosenProgramCards.add(new ProgramCard(5, 1, false)); break;
-                case 6: chosenProgramCards.add(new ProgramCard(6, 2, false)); break;
-            }
-        }
+//        // GETTING THE BEST CARD CHOICES
+//        int[] bestChoice = chooseCardsThatWillGetPlayerClosestToNextFlag(x, y, direction, 5, new int[]{-1,-1,-1,-1,-1}, dealtProgramCards);
+//
+//
+//        // *** TIMER STOP ***
+//        long endTime   = System.nanoTime();
+//        long totalTime = endTime - startTime;
+//        System.out.print(" and made a decision after "+totalTime / 1000000000+" seconds!\n");
+//        // *** TIMER STOP *** *END*
+//
+//        // END LOG
+//        System.out.print("The AI chose between these cards: ");
+//        for (ProgramCard card : dealtProgramCards) {
+//            System.out.print(card.getCardType()+", ");
+//        }
+//        System.out.print("\n and ended up with these choices: ");
+//        for (int j = 5; j < bestChoice.length; j++) {
+//            if(j == 9) System.out.print(bestChoice[j]+"\n");
+//            else System.out.print(bestChoice[j]+", ");
+//        }
+//        System.out.println("               and the score was: "+bestChoice[0]);
+//
+//        chosenProgramCards = new ArrayList<>();
+//
+//        for (int j = 5; j < bestChoice.length; j++) {
+//            switch (bestChoice[j]) {
+//                case 0: chosenProgramCards.add(new ProgramCard(0, 1, true)); break;
+//                case 1: chosenProgramCards.add(new ProgramCard(1, 2, true)); break;
+//                case 2: chosenProgramCards.add(new ProgramCard(2, 3, true)); break;
+//                case 3: chosenProgramCards.add(new ProgramCard(3, -1, true)); break;
+//                case 4: chosenProgramCards.add(new ProgramCard(4, 3, false)); break;
+//                case 5: chosenProgramCards.add(new ProgramCard(5, 1, false)); break;
+//                case 6: chosenProgramCards.add(new ProgramCard(6, 2, false)); break;
+//            }
+//        }
     }
 
     public int[] chooseCardsThatWillGetPlayerClosestToNextFlag(int x, int y, int dir, int depth, int[] choices, ArrayList<ProgramCard> cards) {
