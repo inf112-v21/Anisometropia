@@ -172,9 +172,11 @@ public class ControlScreen extends InputAdapter {
                     acceptButton.setActive(true);
                     acceptButtonHasBeenClicked();
                 } else {
+                    System.out.println("drawing cards of current player");
                     drawCardsOfCurrentPlayer(batch);
                 }
-            }
+            }else
+                gameLogic.getPlayerQueue().next();
         }
 
         drawCurrentPlayerName(batch);
