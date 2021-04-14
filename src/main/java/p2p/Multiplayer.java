@@ -156,6 +156,7 @@ public class Multiplayer implements Runnable {
                 break;
             case "AMOUNT_PLAYERS":
                 OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
+                onNetSetupScreen.addToPlayersReady();
                 break;
             case "AMOUNT_PLAYERS_REQUEST":
                 send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);
@@ -163,6 +164,7 @@ public class Multiplayer implements Runnable {
             case "CARD":
                 System.out.println("*** i received a card message!");
                 onNetSetupScreen.getMultiplayerLogic().receiveCards(splitReceived);
+                onNetSetupScreen.setPlayersReady(Integer.parseInt(splitReceived[1]), true);
                 break;
             default:
                 System.out.println("(!!!) unrecognized message: "+received);

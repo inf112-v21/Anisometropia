@@ -12,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import logic.GameLogic;
-import p2p.Multiplayer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -175,8 +174,8 @@ public class ControlScreen extends InputAdapter {
                     System.out.println("drawing cards of current player");
                     drawCardsOfCurrentPlayer(batch);
                 }
-            }else
-                gameLogic.getPlayerQueue().next();
+            }
+            else gameLogic.getPlayerQueue().next();
         }
 
         drawCurrentPlayerName(batch);
@@ -269,6 +268,9 @@ public class ControlScreen extends InputAdapter {
 
             gameLogic.finishCardSelectionTurn(chosenCards);
 
+            for (Boolean bool : gameLogic.multiPlayerLogic.playersReady) {
+                if(!bool) return;
+            }
 
             if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
                 progressButton.setActive(true);

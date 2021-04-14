@@ -19,6 +19,7 @@ import map.GraphicalGameMap;
 import p2p.Multiplayer;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     SpriteBatch batch;
@@ -274,7 +275,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         }
     }
 
-    private void startGame() {
+    public void startGame() {
         int spawnIncrementer = 0;
         // Store your designated player instance as local to you, all other players non-local.
         for (int i = 0; i < numPlayers; i++) {
@@ -319,6 +320,18 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     public static void setHost(boolean i){
         isHost = i;
+    }
+
+    public ArrayList<Boolean> getPlayersReady() {
+        return getMultiplayerLogic().playersReady;
+    }
+
+    public void setPlayersReady(int index, boolean bool) {
+        getMultiplayerLogic().playersReady.set(index, bool);
+    }
+
+    public void addToPlayersReady() {
+        getMultiplayerLogic().playersReady.add(false);
     }
 
     @Override

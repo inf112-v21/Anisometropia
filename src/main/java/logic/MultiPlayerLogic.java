@@ -14,6 +14,8 @@ public class MultiPlayerLogic {
     public int numPlayers;
     public int playerID; // Which index in PlayerQueue this session controls.
 
+    public ArrayList<Boolean> playersReady = new ArrayList<>();
+
     public MultiPlayerLogic(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
     }
@@ -78,6 +80,8 @@ public class MultiPlayerLogic {
         }
 
         int indexOfPlayerToChange = Integer.parseInt(messageReceived[1]);
+
+        playersReady.set(indexOfPlayerToChange, true);
         gameLogic.getPlayerQueue().getPlayerQueue().get(indexOfPlayerToChange).setChosenProgramCards(chosenCards);
 
 //        gameLogic.getCurrentPlayer().setChosenProgramCards(chosenCards);
