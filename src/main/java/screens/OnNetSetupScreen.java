@@ -120,7 +120,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         font.draw(batch, status, 1100, 820);
         font.draw(batch, "       Your PlayerID:   "+playerID, 400, 460);
         font.draw(batch, "Amount of players:   "+numPlayers, 400, 400);
-        if(canStart) {
+        if(canStart && numPlayers != 0) {
             gameReadyStatus = "READY TO START!";
             startBtn.setActive(true);
         }
@@ -269,7 +269,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             gameLogic.multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
             System.out.println("MY PLAYER_ID: "+ playerID); // TODO: make a setter for this, and print out (now there is delay)
             System.out.println("AMOUNT OF PLAYERS: "+ numPlayers); // TODO: make setter for this, w/printout (currently delay)
-            if(canStart) startGame();
+            if(canStart && numPlayers != 0) startGame();
         }
     }
 
