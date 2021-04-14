@@ -143,12 +143,13 @@ public class Multiplayer implements Runnable {
             case "ID_REQUEST":
                 send("ID "+OnNetSetupScreen.numPlayers);
                 OnNetSetupScreen.numPlayers++;
+                onNetSetupScreen.addToPlayersReady();
+                System.out.println("playersReady is now size: "+onNetSetupScreen.getMultiplayerLogic().playersReady.size());
                 break;
             case "AMOUNT_PLAYERS":
                 OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
-                while(onNetSetupScreen.getMultiplayerLogic().playersReady.size() < Integer.parseInt(splitReceived[1])){
-                    onNetSetupScreen.addToPlayersReady();
-                }
+                onNetSetupScreen.addToPlayersReady();
+                System.out.println("playersReady is now size: "+onNetSetupScreen.getMultiplayerLogic().playersReady.size());
                 break;
             case "AMOUNT_PLAYERS_REQUEST":
                 send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);

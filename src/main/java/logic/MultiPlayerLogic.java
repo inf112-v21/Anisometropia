@@ -3,6 +3,7 @@ package logic;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import p2p.Multiplayer;
+import screens.OnNetSetupScreen;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +13,6 @@ public class MultiPlayerLogic {
     public Multiplayer mp;
     public boolean firstTurn;
     public int numPlayers;
-    public int playerID; // Which index in PlayerQueue this session controls.
 
     public ArrayList<Boolean> playersReady = new ArrayList<>();
 
@@ -55,9 +55,8 @@ public class MultiPlayerLogic {
             }
         }
 
-        System.out.println("I am sending " + toSend);
-//        mp.send(toSend);
-        mp.setToSend("CARD "+playerID+toSend);
+        System.out.println("I am sending " + OnNetSetupScreen.playerID+toSend);
+        mp.setToSend("CARD "+OnNetSetupScreen.playerID+toSend);
     }
 
     public boolean checkIfAllPlayersReady() {
@@ -108,7 +107,7 @@ public class MultiPlayerLogic {
     public void initializeID() {
         if (mp.isHosting()) {
             numPlayers = 1;
-            playerID = 0;
+            OnNetSetupScreen.playerID = 0;
         }
     }
 }
