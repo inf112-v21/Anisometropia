@@ -230,16 +230,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             hostButton.setActive(false);
             hostButton.setTexture(hostBtnOffTexture);
 
-//            while (!gameLogic.multiPlayerLogic.mp.isConnected()) {
-//                try {
-//                    TimeUnit.MILLISECONDS.sleep(100);
-//                } catch (InterruptedException e) {
-//                    Thread.currentThread().interrupt();
-//                }
-//            }
-//            String startMessage = gameLogic.multiPlayerLogic.mp.receive();
-//            if (startMessage.startsWith("start")) startButtonClicked();
-
             gameLogic.multiPlayerLogic.mp.setToSend("ID_REQUEST");
         }
     }
@@ -254,20 +244,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         if (isHost) {
             int playerID = 0;
             int numberOfPlayers;
-//            gameLogic.multiPlayerLogic.mp.send("START");
-//
-//            // Repeat this to support three or more players, possibly?
-//            // Need to find way to learn to stop listening for new ID requests.
-//            gameLogic.multiPlayerLogic.receiveIDRequest();
-//
-//            numberOfPlayers = gameLogic.multiPlayerLogic.numPlayers;
-//            gameLogic.multiPlayerLogic.mp.send(Integer.toString(numberOfPlayers));
 
             gameLogic.multiPlayerLogic.mp.setToSend("START");
             startGame();
         } else {
-//            playerID = gameLogic.multiPlayerLogic.requestPlayerID();
-//            numberOfPlayers = Integer.parseInt(gameLogic.multiPlayerLogic.mp.receive());
             gameLogic.multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
             System.out.println("MY PLAYER_ID: "+ playerID); // TODO: make a setter for this, and print out (now there is delay)
             System.out.println("AMOUNT OF PLAYERS: "+ numPlayers); // TODO: make setter for this, w/printout (currently delay)

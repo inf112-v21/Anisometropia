@@ -143,14 +143,6 @@ public class ControlScreen extends InputAdapter {
                         click.y > powerDownButton.getY() && click.y < (powerDownButton.getY() + powerDownButton.getHeight())) {
                     powerDownButtonHasBeenClicked();
                 }
-//                if (click.x > joinButton.getX() && click.x < (joinButton.getX() + joinButton.getWidth()) &&
-//                        click.y > joinButton.getY() && click.y < (joinButton.getY() + joinButton.getHeight())) {
-//                    joinButtonHasBeenClicked();
-//                }
-//                if (click.x > hostButton.getX() && click.x < (hostButton.getX() + hostButton.getWidth()) &&
-//                        click.y > hostButton.getY() && click.y < (hostButton.getY() + hostButton.getHeight())) {
-//                    hostButtonHasBeenClicked();
-//                }
             }
         }
 
