@@ -41,7 +41,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private PlayerQueue playerQueue;
     private GameLogic gameLogic;
     public static boolean isHost;
-    public static boolean connected; // TODO: will probably be replaced by another boolean/function
 
     private int editorIndex = -1;
     private final int numberOfInputEditors = 3;
@@ -331,7 +330,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public boolean keyTyped(char c) {
-        if (!connected) {
+        if (!gameLogic.multiPlayerLogic.isConnected()) {
             if (editorIndex != -1) {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
                     if (allStringBuilders[editorIndex].length() > 0)
@@ -361,11 +360,13 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void dispose() {
-        try {
-            gameLogic.multiPlayerLogic.mp.disconnect();
-        } catch (IOException ignored) {
+        if (gameLogic.multiPlayerLogic.isConnected()) {
+            gameLogic.multiPlayerLogic.mp.connected = false;
+            try {
+                gameLogic.multiPlayerLogic.mp.disconnect();
+            } catch (IOException ignored) {
+            }
         }
-        gameLogic.multiPlayerLogic.mp.connected = false;
         font.dispose();
         onNetSetupTexture.dispose();
     }
