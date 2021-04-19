@@ -1,7 +1,6 @@
 package actor;
 
 import cards.ProgramCard;
-import logic.GameLogic;
 import logic.PlayerQueue;
 import map.GameMap;
 
@@ -71,21 +70,71 @@ public class Player implements IPlayer {
         return y;
     }
 
+    public Player getPlayerByPos(int x, int y){
+        for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++) {
+            Player playerByPos = playerQueue.getPlayerQueue().get(i);
+            if (playerByPos.getX() == x && playerByPos.getY() == y){
+                return playerByPos;
+            }
+        }
+        return null;
+    }
 
-    //TODO: if a player moves: dx = 1 and dy = 0, we want player2 to move dx= -1 and dy=0 when they collide
-    //TODO: Player needs a id by number or name. getPlayerLayerID should return different ID for different players.
-    public void playersCollides(int dx, int dy){
-        for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++){
-            Player pushedPlayer = playerQueue.getPlayerQueue().get(i);
-            if (pushedPlayer.getX() == (x + dx) && pushedPlayer.getY() == (y + dy)){
-                if (pushedPlayer.canMove(dx,dy) == false){
-                    move(-dx, -dy);
-                }else {pushedPlayer.move(dx,dy);}
+    public void playerShootsLaser(){
+//-------------if Player faces NORTH or SOUTH----------
+        if (getDirection() == 0){
+            for (int i = y+1; i < gameMap.getHeight(); i++ ){
+                if (gameMap.isTherePlayerOnThisPosition(x, i)){
+                    getPlayerByPos(x, i).updateDamageTokens(1);
+                    System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
+                }
+            }
+        }
+        if (getDirection() == 2 ) {
+            for (int i = y-1; i > 0; i-- ){ //height = 0
+                if (gameMap.isTherePlayerOnThisPosition(x,i)){
+                    getPlayerByPos(x,i).updateDamageTokens(1);
+                    System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
+                }
+            }
+        }
+//-------------if Player faces WEST or EAST------------
+        if (getDirection() == 1 ) {
+            for (int i = x+1; i < gameMap.getWidth(); i++ ){ //height = 0
+                if (gameMap.isTherePlayerOnThisPosition(i,y)){
+                    getPlayerByPos(i,y).updateDamageTokens(1);
+                    System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
+                }
+            }
+        }
+        if (getDirection() == 3 ) {
+            for (int i = x-1; i > 0; i-- ){ //height = 0
+                if (gameMap.isTherePlayerOnThisPosition(i,y)){
+                    getPlayerByPos(i,y).updateDamageTokens(1);
+                    System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
+                }
             }
         }
     }
 
 
+    /**
+     * @param dx
+     * @param dy
+     * if current player(1) collides with a player(2), this player(2) is to be moved in the same direction as
+     * the player moves.
+     * Called in canMove.
+     */
+    public void playersCollides(int dx, int dy){
+        for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++){
+            Player pushedPlayer = playerQueue.getPlayerQueue().get(i);
+            if (pushedPlayer.getX() == (x + dx) && pushedPlayer.getY() == (y + dy)){
+                if (!pushedPlayer.canMove(dx, dy)){
+                    move(-dx, -dy);
+                }else {pushedPlayer.move(dx,dy);}
+            }
+        }
+    }
 
     public void move(int dx, int dy) {
         if (canMove(dx, dy)) {

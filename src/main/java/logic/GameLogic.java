@@ -148,6 +148,9 @@ public class GameLogic {
         initiateAnnouncedPowerDowns();
         respawnPlayersIfPossible();
         checkIfOnlyOnePlayerLeft();
+        for (Player player : playerQueue.getPlayerQueue()){
+            player.playerShootsLaser();
+        }
         if (multiPlayerLogic.isConnected()) multiPlayerLogic.setPlayersNotReady();
     }
 
