@@ -45,9 +45,11 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     private int editorIndex = -1;
     private final int numberOfInputEditors = 3;
-    StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + amount of local players
+    StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
 
     private String status = "STATUS: waiting...";
+    private String ipLabel = "IP:";
+    private String portLabel = "PORT:";
     private String gameReadyStatus = "GAME IS NOT READY TO START";
     private String getUpdateMessage = "Click RECEIVE-button to get update from server";
 
@@ -120,6 +122,8 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         batch.begin();
 
         font.draw(batch, status, 1100, 820);
+        font.draw(batch, ipLabel, editLocalHostBtn.getX()-36, editLocalHostBtn.getY()+26);
+        font.draw(batch, portLabel, editPortBtn.getX()-86, editPortBtn.getY()+26);
         font.draw(batch, "       Your PlayerID:   "+playerID, 400, 460);
         font.draw(batch, "Amount of players:   "+numPlayers, 400, 400);
         if(canStart && numPlayers != 0) {
@@ -313,6 +317,14 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     public void addToPlayersReady() {
         getMultiplayerLogic().playersReady.add(false);
+    }
+
+    public String getIPAddress() {
+        return allStringBuilders[0].toString();
+    }
+
+    public int getPort() {
+        return Integer.parseInt(allStringBuilders[1].toString());
     }
 
     @Override

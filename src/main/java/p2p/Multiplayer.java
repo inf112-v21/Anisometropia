@@ -76,10 +76,9 @@ public class Multiplayer implements Runnable {
     public void run() {
         if (hosting) {
             OnNetSetupScreen.numPlayers = 1;
-//            onNetSetupScreen.getMultiplayerLogic().playersReady.add(true);
             onNetSetupScreen.addToPlayersReady();
             try {
-                ss = new ServerSocket(6969);
+                ss = new ServerSocket(onNetSetupScreen.getPort());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -91,7 +90,7 @@ public class Multiplayer implements Runnable {
         }
         else {
             try {
-                sock = new Socket("localhost", 6969);
+                sock = new Socket(onNetSetupScreen.getIPAddress(), onNetSetupScreen.getPort());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -104,7 +103,6 @@ public class Multiplayer implements Runnable {
             e.printStackTrace();
         }
         try {
-//            dataOutput = new DataOutputStream(sock.getOutputStream());
             dataOutput = new PrintWriter(sock.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
