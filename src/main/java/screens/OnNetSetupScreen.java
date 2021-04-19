@@ -30,8 +30,9 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     TextureRegion start, back, startInactive, startJumbled, backJumbled, hostBtnTexture, hostBtnOnTexture, hostBtnOffTexture;
     TextureRegion joinBtnTexture, joinBtnOnTexture, joinBtnOffTexture, sendBtnTexture, receiveBtnTexture;
     TextureRegion editLocalhostTexture, editLocalhostInactiveTexture, editPortTexture, editPortInactiveTexture;
+    TextureRegion editPlayerNameTexture, editPlayerNameInactiveTexture;
 
-    GameButton startBtn, backBtn, hostButton, joinButton, sendBtn, receiveBtn, editLocalHostBtn, editPortBtn;
+    GameButton startBtn, backBtn, hostButton, joinButton, sendBtn, receiveBtn, editLocalHostBtn, editPortBtn, editPlayerNameBtn;
     BitmapFont font;
 
     int[] colElemPos = { 192, 260, 520, 580, 614, 758, 790, 840 };
@@ -45,10 +46,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private int editorIndex = -1;
     private final int numberOfInputEditors = 3;
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
-
-    private String ipLabel = "IP:";
-    private String portLabel = "PORT:";
-    private String gameReadyStatus = "GAME IS NOT READY TO START";
 
     public static int playerID = 0;
     public static int numPlayers;
@@ -84,6 +81,8 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         editLocalhostInactiveTexture = onNetSetupRegionBy256[14][0];
         editPortTexture = onNetSetupRegionBy256[13][0];
         editPortInactiveTexture = onNetSetupRegionBy256[14][0];
+        editPlayerNameTexture = onNetSetupRegionBy256[13][0];
+        editPlayerNameInactiveTexture = onNetSetupRegionBy256[14][0];
 
         start = onNetSetupRegionBy128[6][0];
         startInactive = onNetSetupRegionBy128[21][0];
@@ -97,14 +96,16 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         joinButton = new GameButton(1200, 700,85,85,true, joinBtnTexture);
         sendBtn = new GameButton(200,500, 85,85, false, sendBtnTexture);
         receiveBtn = new GameButton(200, 600,85,85,false, receiveBtnTexture);
-        editLocalHostBtn = new GameButton(1100, 640,256,32,false, receiveBtnTexture);
-        editPortBtn = new GameButton(1100, 600,256,32,false, receiveBtnTexture);
+        editLocalHostBtn = new GameButton(1100, 640,256,32,false, editLocalhostInactiveTexture);
+        editPortBtn = new GameButton(1100, 600,256,32,false, editPortInactiveTexture);
+        editPlayerNameBtn = new GameButton(640, 500,256,32,false, editPlayerNameInactiveTexture);
 
         for (int i = 0; i < numberOfInputEditors; i++) {
             allStringBuilders[i] = new StringBuilder();
         }
         allStringBuilders[0] = new StringBuilder("localhost");
         allStringBuilders[1] = new StringBuilder("59999");
+        allStringBuilders[2] = new StringBuilder("name");
 
         font = new BitmapFont();
         font.getData().setScale(1.8f);
@@ -120,31 +121,28 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         super.render(delta);
         batch.begin();
 
-        font.draw(batch, ipLabel, editLocalHostBtn.getX()-36, editLocalHostBtn.getY()+26);
-        font.draw(batch, portLabel, editPortBtn.getX()-86, editPortBtn.getY()+26);
+        font.draw(batch, "IP: ", editLocalHostBtn.getX()-36, editLocalHostBtn.getY()+26);
+        font.draw(batch, "PORT", editPortBtn.getX()-86, editPortBtn.getY()+26);
+        font.draw(batch, "Your player name: ", editPlayerNameBtn.getX()-232, editPlayerNameBtn.getY()+26);
         font.draw(batch, "       Your PlayerID:   "+playerID, 400, 460);
         font.draw(batch, "Amount of players:   "+numPlayers, 400, 400);
         if(canStart && numPlayers != 0) {
-            gameReadyStatus = "READY TO START!";
             startBtn.setActive(true);
         }
-        if(!isHost) font.draw(batch, gameReadyStatus, 540, 180);
 
         batch.draw(hostButton.getTexture(),hostButton.getX(),hostButton.getY(),hostButton.getWidth(),hostButton.getHeight());
         batch.draw(joinButton.getTexture(),joinButton.getX(),joinButton.getY(),joinButton.getWidth(),joinButton.getHeight());
         batch.draw(startBtn.getTexture(), startBtn.getX(), startBtn.getY(), startBtn.getWidth(), startBtn.getHeight());
         batch.draw(backBtn.getTexture(), backBtn.getX(), backBtn.getY(), backBtn.getWidth(), backBtn.getHeight());
 
-        if (editorIndex == 0) editLocalHostBtn.setTexture(editLocalhostTexture);
-        else editLocalHostBtn.setTexture(editLocalhostInactiveTexture);
-
-        if (editorIndex == 1) editPortBtn.setTexture(editPortTexture);
-        else editPortBtn.setTexture(editPortInactiveTexture);
+        setEditorIndex(editorIndex);
 
         batch.draw(editLocalHostBtn.getTexture(), editLocalHostBtn.getX(), editLocalHostBtn.getY(), editLocalHostBtn.getWidth(), editLocalHostBtn.getHeight());
         font.draw(batch, allStringBuilders[0].toString(),  editLocalHostBtn.getX()+8,  editLocalHostBtn.getY()+26);
         batch.draw(editPortBtn.getTexture(), editPortBtn.getX(), editPortBtn.getY(), editPortBtn.getWidth(), editPortBtn.getHeight());
         font.draw(batch, allStringBuilders[1].toString(),  editPortBtn.getX()+8,  editPortBtn.getY()+26);
+        batch.draw(editPlayerNameBtn.getTexture(), editPlayerNameBtn.getX(), editPlayerNameBtn.getY(), editPlayerNameBtn.getWidth(), editPlayerNameBtn.getHeight());
+        font.draw(batch, allStringBuilders[2].toString(),  editPlayerNameBtn.getX()+8,  editPlayerNameBtn.getY()+26);
 
         batch.end();
     }
@@ -177,6 +175,8 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             return 0;
         } else if (editPortBtn.isMouseOnButton(mousePosition)) {
             return 1;
+        } else if (editPlayerNameBtn.isMouseOnButton(mousePosition)) {
+            return 2;
         }
         return -1;
     }
@@ -257,7 +257,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         for (int i = 0; i < numPlayers; i++) {
             if (playerID == i) {
                 playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
-                        (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, true, i));
+                        (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[2].toString(), gameMap, true, i));
             }
             else {
                 playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
@@ -320,6 +320,15 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     public int getPort() {
         return Integer.parseInt(allStringBuilders[1].toString());
+    }
+
+    private void setEditorIndex(int index){
+        if (index == 0) editLocalHostBtn.setTexture(editLocalhostTexture);
+        else editLocalHostBtn.setTexture(editLocalhostInactiveTexture);
+        if (index == 1) editPortBtn.setTexture(editPortTexture);
+        else editPortBtn.setTexture(editPortInactiveTexture);
+        if (index == 2) editPlayerNameBtn.setTexture(editPlayerNameTexture);
+        else editPlayerNameBtn.setTexture(editPlayerNameInactiveTexture);
     }
 
     @Override
