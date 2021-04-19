@@ -76,12 +76,15 @@ public class Player implements IPlayer {
     //TODO: Player needs a id by number or name. getPlayerLayerID should return different ID for different players.
     public void playersCollides(int dx, int dy){
         for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++){
-            Player currentPlayer = playerQueue.getPlayerQueue().get(i);
-            if (currentPlayer.getX() == (x + dx) && currentPlayer.getY() == (y + dy)){
-                currentPlayer.move(dx , dy);
+            Player pushedPlayer = playerQueue.getPlayerQueue().get(i);
+            if (pushedPlayer.getX() == (x + dx) && pushedPlayer.getY() == (y + dy)){
+                if (pushedPlayer.canMove(dx,dy) == false){
+                    move(-dx, -dy);
+                }else {pushedPlayer.move(dx,dy);}
             }
         }
     }
+
 
 
     public void move(int dx, int dy) {
