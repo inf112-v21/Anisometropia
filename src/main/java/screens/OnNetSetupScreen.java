@@ -134,9 +134,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         batch.draw(startBtn.getTexture(), startBtn.getX(), startBtn.getY(), startBtn.getWidth(), startBtn.getHeight());
         batch.draw(backBtn.getTexture(), backBtn.getX(), backBtn.getY(), backBtn.getWidth(), backBtn.getHeight());
 
-//        batch.draw(sendBtn.getTexture(), sendBtn.getX(), sendBtn.getY(), sendBtn.getWidth(), sendBtn.getHeight());
-        batch.draw(receiveBtn.getTexture(), receiveBtn.getX(), receiveBtn.getY(), receiveBtn.getWidth(), receiveBtn.getHeight());
-
         if (editorIndex == 0) editLocalHostBtn.setTexture(editLocalhostTexture);
         else editLocalHostBtn.setTexture(editLocalhostInactiveTexture);
 

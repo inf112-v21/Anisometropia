@@ -3,7 +3,6 @@ package p2p;
 import screens.OnNetSetupScreen;
 
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
@@ -15,13 +14,11 @@ public class Multiplayer implements Runnable {
     private ServerSocket ss;
     private Socket sock;
     private DataInputStream dataInput;
-    private DataOutputStream dataOutput;
-    private String buffer = ""; // to store the received string
     public Boolean hosting;
     private Boolean connected = false;
 
     Scanner in;
-    PrintWriter out;
+    PrintWriter dataOutput;
     private String toSend = "";
 
     private OnNetSetupScreen onNetSetupScreen;
@@ -50,9 +47,7 @@ public class Multiplayer implements Runnable {
      * @throws IOException
      */
     public void send(String msg) throws IOException {
-//        dataOutput.writeUTF(msg);
-//        dataOutput.flush();
-        out.println(msg);
+        dataOutput.println(msg);
     }
 
     /**
@@ -110,7 +105,7 @@ public class Multiplayer implements Runnable {
         }
         try {
 //            dataOutput = new DataOutputStream(sock.getOutputStream());
-            out = new PrintWriter(sock.getOutputStream(), true);
+            dataOutput = new PrintWriter(sock.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
