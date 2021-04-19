@@ -361,6 +361,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void dispose() {
+        try {
+            gameLogic.multiPlayerLogic.mp.disconnect();
+        } catch (IOException ignored) {
+        }
         gameLogic.multiPlayerLogic.mp.connected = false;
         font.dispose();
         onNetSetupTexture.dispose();

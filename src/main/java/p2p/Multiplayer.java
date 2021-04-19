@@ -37,7 +37,8 @@ public class Multiplayer implements Runnable {
      */
     public void disconnect() throws IOException {
         // TODO: Server socket should also be closed for the server!
-        sock.close();
+        if(hosting && ss != null) ss.close();
+        if(sock != null) sock.close();
         dataInput.close();
         dataOutput.close();
     }
@@ -98,7 +99,6 @@ public class Multiplayer implements Runnable {
         try {
             dataInput = new DataInputStream(sock.getInputStream());
             in = new Scanner(dataInput);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
