@@ -22,8 +22,12 @@ public class GraphicalGameMap extends GameMap {
     OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     TiledMapTileLayer boardLayer, laserLayer, assetLayer, playerLayer;
 
-    final int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
-    final int FLAG_ID_1 = 55, FLAG_ID_2 = 63, FLAG_ID_3 =  71, FLAG_ID_4 = 79;
+    private int Hole_YellowBoarder = 91 , Hole_Black = 92, Hole_grey = 6, Hole_Fire1 = 89, Hole_Fire2 = 90, Hole_YellowBoarder1 = 105,
+                Hole_YellowBoarder2 = 106, Hole_YellowBoarder3 = 107, Hole_YellowBoarder4 = 108, Hole_YellowBoarder5 = 109,
+                Hole_YellowBoarder6 = 110, Hole_YellowBoarder7 = 113, Hole_YellowBoarder8 = 114, Hole_YellowBoarder9 = 115,
+                Hole_YellowBoarder10 = 116, Hole_YellowBoarder11 = 117, Hole_YellowBoarder12 = 118;
+    
+    private int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
 
     Point[] spawnPositions = new Point[8];
     Point[] flagPositions = new Point[4];
@@ -103,7 +107,8 @@ public class GraphicalGameMap extends GameMap {
     public boolean isThereFlagHere(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
-            return (tileID == 55) || (tileID == 63) || (tileID == 71) || (tileID == 79);
+            return (tileID == Flag.FLAG_1_ID) || (tileID == Flag.FLAG_2_ID) ||
+                    (tileID == Flag.FLAG_3_ID) || (tileID == Flag.FLAG_4_ID);
         }
         return false;
     }
@@ -111,7 +116,8 @@ public class GraphicalGameMap extends GameMap {
     public boolean isThereHoleOnThisPosition(int x, int y) {
         if (assetLayer.getCell(x, y) != null) {
             int tileID = getAssetLayerID(x, y);
-            return (tileID == 91) || (tileID == 92) || (tileID == 6);
+            return (tileID == Hole_Black) || (tileID == Hole_Fire1) || (tileID == Hole_Fire2) ||
+                    (tileID == Hole_grey) || (tileID == Hole_YellowBoarder);
         }
         return false;
     }
@@ -207,10 +213,7 @@ public class GraphicalGameMap extends GameMap {
 
     @Override
     public boolean isTherePlayerOnThisPosition(int x, int y){
-        if (playerLayer.getCell(x, y) != null){
-            return true;
-        }
-        return false;
+        return playerLayer.getCell(x, y) != null;
     }
 
     public int getAssetLayerID(int x, int y) {
@@ -221,7 +224,9 @@ public class GraphicalGameMap extends GameMap {
         return laserLayer.getCell(x, y).getTile().getId();
     }
 
-    public int getPlayerLayerID(int x, int y){return playerLayer.getCell(x, y).getTile().getId();}
+    public int getPlayerLayerID(int x, int y){
+        return playerLayer.getCell(x, y).getTile().getId();
+    }
 
     public void setPlayerPosition(int x, int y, Player player) {
         TiledMapTileLayer.Cell cellToBeDisplayed = playerCells[player.getCharacterID()][0];
@@ -297,16 +302,16 @@ public class GraphicalGameMap extends GameMap {
         for (int width = 0; width < getWidth(); width++) {
             for (int height = 0; height < getHeight(); height++) {
                 if (assetLayer.getCell(width, height) != null) {
-                    if (getAssetLayerID(width, height) == (FLAG_ID_1)) {
+                    if (getAssetLayerID(width, height) == (Flag.FLAG_1_ID)) {
                         flagPositions[0] = new Point(width, height);
                     }
-                    if (getAssetLayerID(width, height) == (FLAG_ID_2)) {
+                    if (getAssetLayerID(width, height) == (Flag.FLAG_2_ID)) {
                         flagPositions[1] = new Point(width, height);
                     }
-                    if (getAssetLayerID(width, height) == (FLAG_ID_3)) {
+                    if (getAssetLayerID(width, height) == (Flag.FLAG_3_ID)) {
                         flagPositions[2] = new Point(width, height);
                     }
-                    if (getAssetLayerID(width, height) == (FLAG_ID_4)) {
+                    if (getAssetLayerID(width, height) == (Flag.FLAG_4_ID)) {
                         flagPositions[3] = new Point(width, height);
                     }
                 }
