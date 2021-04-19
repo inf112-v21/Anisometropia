@@ -60,4 +60,8 @@ public class PlayerQueue {
             return playerList.get(queueIndex);
         }
     }
+
+    public void setCurrentPlayerToFirstInQueue() {
+        turnCounter = 0;
+    }
 }

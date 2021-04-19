@@ -16,6 +16,7 @@ import logic.GameLogic;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.TimeUnit;
 
 import static logic.GameLogic.cardExecutionInProgress;
 import static logic.GameLogic.gameOver;
@@ -266,15 +267,27 @@ public class ControlScreen extends InputAdapter {
 
             gameLogic.finishCardSelectionTurn(chosenCards);
 
-            if(gameLogic.multiPlayerLogic.isConnected() && !gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) return;
-
-            if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
+            if (gameLogic.multiPlayerLogic.isConnected()) {
+                while (!gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) {
+                    try {
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 progressButton.setActive(true);
                 progressButton.setTexture(progressTexture);
-                gameLogic.getPlayerQueue().next();
                 cardExecutionInProgress = true;
-            } else {
-                gameLogic.getPlayerQueue().next();
+            }
+            else {
+                if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
+                    progressButton.setActive(true);
+                    progressButton.setTexture(progressTexture);
+                    gameLogic.getPlayerQueue().next();
+                    cardExecutionInProgress = true;
+                } else {
+                    gameLogic.getPlayerQueue().next();
+                }
             }
             initializeCards();
         }

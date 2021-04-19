@@ -44,15 +44,22 @@ public class MultiPlayerLogic {
             }
         }
 
+        playersReady.set(OnNetSetupScreen.playerID, true);
         System.out.println("I am sending " + OnNetSetupScreen.playerID+toSend);
         mp.setToSend("CARD "+OnNetSetupScreen.playerID+toSend);
     }
 
     public boolean checkIfAllPlayersReady() {
-        for (Boolean bool : gameLogic.multiPlayerLogic.playersReady) {
+        for (Boolean bool : playersReady) {
             if(!bool) return false;
         }
         return true;
+    }
+
+    public void setPlayersNotReady() {
+        for (int i = 0; i < playersReady.size(); i++) {
+            playersReady.set(i, false);
+        }
     }
 
     /**
@@ -100,4 +107,5 @@ public class MultiPlayerLogic {
     public GameLogic getGameLogic() {
         return gameLogic;
     }
+
 }

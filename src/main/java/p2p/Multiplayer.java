@@ -81,7 +81,8 @@ public class Multiplayer implements Runnable {
     public void run() {
         if (hosting) {
             OnNetSetupScreen.numPlayers = 1;
-            onNetSetupScreen.getMultiplayerLogic().playersReady.add(true);
+//            onNetSetupScreen.getMultiplayerLogic().playersReady.add(true);
+            onNetSetupScreen.addToPlayersReady();
             try {
                 ss = new ServerSocket(6969);
             } catch (IOException e) {

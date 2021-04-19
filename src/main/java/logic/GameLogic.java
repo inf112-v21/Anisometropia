@@ -80,6 +80,7 @@ public class GameLogic {
 
             System.out.println("Chosen cards of current player " + currentPlayerCards);
             if(getCurrentPlayer().isLocal) multiPlayerLogic.sendCards();
+            playerQueue.setCurrentPlayerToFirstInQueue();
         }
         else  {
             if(!getCurrentPlayer().isAi()) getCurrentPlayer().setChosenProgramCards(chosenCards);
@@ -147,6 +148,7 @@ public class GameLogic {
         initiateAnnouncedPowerDowns();
         respawnPlayersIfPossible();
         checkIfOnlyOnePlayerLeft();
+        if (multiPlayerLogic.isConnected()) multiPlayerLogic.setPlayersNotReady();
     }
 
     private void checkIfOnlyOnePlayerLeft() {
