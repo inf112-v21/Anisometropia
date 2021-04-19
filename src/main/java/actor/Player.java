@@ -80,10 +80,14 @@ public class Player implements IPlayer {
         return null;
     }
 
+    //TODO: now lasers wont pass through any "wall"-tile even though it is to. Tell them which tiles they'r supposed to pass.
     public void playerShootsLaser(){
 //-------------if Player faces NORTH or SOUTH----------
         if (getDirection() == 0){
             for (int i = y+1; i < gameMap.getHeight(); i++ ){
+                if (gameMap.isThereWallOnThisPosition(x,i)){
+                    break;
+                }
                 if (gameMap.isTherePlayerOnThisPosition(x, i)){
                     getPlayerByPos(x, i).updateDamageTokens(1);
                     System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
@@ -92,26 +96,35 @@ public class Player implements IPlayer {
         }
         if (getDirection() == 2 ) {
             for (int i = y-1; i > 0; i-- ){ //height = 0
+                if (gameMap.isThereWallOnThisPosition(x,i)){
+                    break;
+                }
                 if (gameMap.isTherePlayerOnThisPosition(x,i)){
                     getPlayerByPos(x,i).updateDamageTokens(1);
-                    System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
+                    System.out.println(playerName + " damages " + getPlayerByPos(x,i).playerName + " with his laser");
                 }
             }
         }
 //-------------if Player faces WEST or EAST------------
         if (getDirection() == 1 ) {
             for (int i = x+1; i < gameMap.getWidth(); i++ ){ //height = 0
+                if (gameMap.isThereWallOnThisPosition(i,y)){
+                    break;
+                }
                 if (gameMap.isTherePlayerOnThisPosition(i,y)){
                     getPlayerByPos(i,y).updateDamageTokens(1);
-                    System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
+                    System.out.println(playerName + " damages " + getPlayerByPos(i,y).playerName + " with his laser");
                 }
             }
         }
         if (getDirection() == 3 ) {
             for (int i = x-1; i > 0; i-- ){ //height = 0
+                if (gameMap.isThereWallOnThisPosition(i,y)){
+                    break;
+                }
                 if (gameMap.isTherePlayerOnThisPosition(i,y)){
                     getPlayerByPos(i,y).updateDamageTokens(1);
-                    System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
+                    System.out.println(playerName + "damages" + getPlayerByPos(i, y).playerName + " with his laser");
                 }
             }
         }
