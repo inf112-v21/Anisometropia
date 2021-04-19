@@ -270,6 +270,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             spawnIncrementer++;
         }
 
+        for (Player player : playerQueue.getPlayerQueue() ) {
+            player.setPlayerQueue(playerQueue);
+        }
+
         gameLogic.setPlayerQueue(playerQueue);
         gameLogic.dealProgramCards();
         gameApplication.gameScreenManager.initPlayScreen(gameMap, gameLogic);
