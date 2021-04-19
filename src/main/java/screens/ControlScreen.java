@@ -51,6 +51,8 @@ public class ControlScreen extends InputAdapter {
 
     GameButton acceptButton, progressButton, borderButton, hostButton, joinButton, powerDownButton;
 
+    public static boolean waitingForOtherPlayersToSendCard = false;
+
     public ControlScreen(GameLogic gameLogic) {
         batch = new SpriteBatch();
 
@@ -157,7 +159,12 @@ public class ControlScreen extends InputAdapter {
         batch.draw(powerDownButton.getTexture(), powerDownButton.getX(), powerDownButton.getY(),powerDownButton.getWidth(),powerDownButton.getHeight());
 
         if(!cardExecutionInProgress){
-            if (gameLogic.getCurrentPlayer().isLocal) {
+            if (waitingForOtherPlayersToSendCard) {
+                if (gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) {
+                    waitingForOtherPlayersToSendCard = false;
+                    makeClickToProgressAvailable();
+                }
+            }else if (gameLogic.getCurrentPlayer().isLocal) {
                 if (gameLogic.getCurrentPlayer().isAi()) {
                     gameLogic.getCurrentPlayer().startCardDecisionWithAI();
                     acceptButton.setActive(true);
@@ -260,29 +267,27 @@ public class ControlScreen extends InputAdapter {
             gameLogic.finishCardSelectionTurn(chosenCards);
 
             if (gameLogic.multiPlayerLogic.isConnected()) {
-                while (!gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) {
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                progressButton.setActive(true);
-                progressButton.setTexture(progressTexture);
-                cardExecutionInProgress = true;
-            }
-            else {
-                if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()){
-                    progressButton.setActive(true);
-                    progressButton.setTexture(progressTexture);
-                    gameLogic.getPlayerQueue().next();
-                    cardExecutionInProgress = true;
+                if (!gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) {
+                    System.out.println("setting waitingForOtherPlayers to true!");
+                    waitingForOtherPlayersToSendCard = true;
+                    return;
                 } else {
-                    gameLogic.getPlayerQueue().next();
+                    makeClickToProgressAvailable();
                 }
+            } else if (gameLogic.getCurrentPlayer() == gameLogic.getLastPlayer()) {
+                makeClickToProgressAvailable();
+            } else {
+                gameLogic.getPlayerQueue().next();
             }
             initializeCards();
         }
+    }
+
+    private void makeClickToProgressAvailable() {
+        progressButton.setActive(true);
+        progressButton.setTexture(progressTexture);
+        gameLogic.getPlayerQueue().next();
+        cardExecutionInProgress = true;
     }
 
     private void progressButtonHasBeenClicked() {
