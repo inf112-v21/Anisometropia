@@ -46,11 +46,9 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private final int numberOfInputEditors = 3;
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
 
-    private String status = "STATUS: waiting...";
     private String ipLabel = "IP:";
     private String portLabel = "PORT:";
     private String gameReadyStatus = "GAME IS NOT READY TO START";
-    private String getUpdateMessage = "Click RECEIVE-button to get update from server";
 
     public static int playerID = 0;
     public static int numPlayers;
@@ -122,7 +120,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         super.render(delta);
         batch.begin();
 
-        font.draw(batch, status, 1100, 820);
         font.draw(batch, ipLabel, editLocalHostBtn.getX()-36, editLocalHostBtn.getY()+26);
         font.draw(batch, portLabel, editPortBtn.getX()-86, editPortBtn.getY()+26);
         font.draw(batch, "       Your PlayerID:   "+playerID, 400, 460);
@@ -132,7 +129,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             startBtn.setActive(true);
         }
         if(!isHost) font.draw(batch, gameReadyStatus, 540, 180);
-        if(gameLogic.multiPlayerLogic.isConnected()) font.draw(batch, getUpdateMessage, receiveBtn.getX()+120, receiveBtn.getY()+54);
 
         batch.draw(hostButton.getTexture(),hostButton.getX(),hostButton.getY(),hostButton.getWidth(),hostButton.getHeight());
         batch.draw(joinButton.getTexture(),joinButton.getX(),joinButton.getY(),joinButton.getWidth(),joinButton.getHeight());
@@ -203,7 +199,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             mpThread.start();
 
             setHost(true);
-            status = "STATUS: I am now HOST";
 
             startBtn.setActive(true);
             startBtn.setTexture(start);
@@ -225,7 +220,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             mpThread.start();
 
             setHost(false);
-            status = "STATUS: I am now JOINING";
 
             joinButton.setActive(false);
             joinButton.setTexture(joinBtnOnTexture);
@@ -249,7 +243,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
             gameLogic.multiPlayerLogic.mp.setToSend("START");
             startGame();
-        } else {
+        } else if (gameLogic.multiPlayerLogic.isConnected()){
             gameLogic.multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
             System.out.println("MY PLAYER_ID: "+ playerID); // TODO: make a setter for this, and print out (now there is delay)
             System.out.println("AMOUNT OF PLAYERS: "+ numPlayers); // TODO: make setter for this, w/printout (currently delay)
