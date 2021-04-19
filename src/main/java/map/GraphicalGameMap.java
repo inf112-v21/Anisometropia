@@ -26,7 +26,7 @@ public class GraphicalGameMap extends GameMap {
                 Hole_YellowBoarder2 = 106, Hole_YellowBoarder3 = 107, Hole_YellowBoarder4 = 108, Hole_YellowBoarder5 = 109,
                 Hole_YellowBoarder6 = 110, Hole_YellowBoarder7 = 113, Hole_YellowBoarder8 = 114, Hole_YellowBoarder9 = 115,
                 Hole_YellowBoarder10 = 116, Hole_YellowBoarder11 = 117, Hole_YellowBoarder12 = 118;
-    
+
     private int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
 
     Point[] spawnPositions = new Point[8];

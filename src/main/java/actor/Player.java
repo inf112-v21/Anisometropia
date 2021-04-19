@@ -1,13 +1,16 @@
 package actor;
 
 import cards.ProgramCard;
+import logic.GameLogic;
+import logic.PlayerQueue;
 import map.GameMap;
+
 import java.util.ArrayList;
 import java.util.Collections;
-import map.GraphicalGameMap;
 
 public class Player implements IPlayer {
     GameMap gameMap;
+    PlayerQueue playerQueue;
     public int x, y, spawnX, spawnY;
     int direction; // 0 denotes NORTH, 1 denotes EAST, 2 denotes SOUTH, 3 denotes WEST
     int dmgTokens;
@@ -55,6 +58,9 @@ public class Player implements IPlayer {
 
         this.isAi = isAi;
     }
+    public void setPlayerQueue(PlayerQueue playerQueue){
+        this.playerQueue = playerQueue;
+    }
 
 
     public int getX() {
@@ -68,32 +74,40 @@ public class Player implements IPlayer {
 
     //TODO: if a player moves: dx = 1 and dy = 0, we want player2 to move dx= -1 and dy=0 when they collide
     //TODO: Player needs a id by number or name. getPlayerLayerID should return different ID for different players.
-    private boolean playersCollides(int dx, int dy){
-        if (gameMap.isTherePlayerOnThisPosition(x+dx, y+dy)){
-            System.out.println("CurrentPlayer: "+ gameMap.getPlayerLayerID(x, y));
-            System.out.println(gameMap.getPlayerLayerID(x+dx, y+dy));
-            return true;
+    public void playersCollides(int dx, int dy){
+        for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++){
+            Player currentPlayer = playerQueue.getPlayerQueue().get(i);
+            if (currentPlayer.getX() == (x + dx) && currentPlayer.getY() == (y + dy)){
+                currentPlayer.move(dx , dy);
+            }
         }
-        return false;
     }
+
 
     public void move(int dx, int dy) {
         if (canMove(dx, dy)) {
             gameMap.setToNull(x, y);
             gameMap.setPlayerPosition(x += dx, y += dy, this);
-
         }
     }
 
     public boolean canMove(int dx, int dy) {
-        if(isPlayerDead()) return false;
+        //Player cant move if he's dead
+        if(isPlayerDead()) {
+            return false;
+        }
 
         //Players collides with each other
-        if (playersCollides(dx, dy)) return false;
+        if (gameMap.isTherePlayerOnThisPosition(x+dx,y+dy)){
+            playersCollides(dx, dy);
+        }
 
-        //Players can no longer jump over holes
-        if(gameMap.isThereHoleOnThisPosition(x,y)) return false;
+        //Players can't jump over holes
+        if(gameMap.isThereHoleOnThisPosition(x,y)){
+            return false;
+        }
 
+        //Player can't walk through walls
         boolean wallOutOfPositionBlocked = false;
         boolean wallIntoPositionBlocked = false;
         if (gameMap.isThereWallOnThisPosition(this.getX(), this.getY()) ||
@@ -126,7 +140,6 @@ public class Player implements IPlayer {
             if (isPlayerDead()) break;
         }
     }
-
     public void moveByDirection(int desiredDirection){
         switch(desiredDirection) {
             case 0:

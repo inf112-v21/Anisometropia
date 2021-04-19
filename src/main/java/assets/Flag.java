@@ -4,7 +4,7 @@ import actor.Player;
 import map.GameMap;
 
 public class Flag {
-    final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
+    public static final int FLAG_1_ID = 55, FLAG_2_ID = 63, FLAG_3_ID = 71, FLAG_4_ID = 79;
 
     /**
      * If there is a flag on players position, playerReachedNewFlag is called.
