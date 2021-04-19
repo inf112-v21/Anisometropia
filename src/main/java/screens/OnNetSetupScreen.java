@@ -261,7 +261,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             }
             else {
                 playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
-                        (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, false, i));
+                        (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), "PL "+(i+1), gameMap, false, i));
             }
             spawnIncrementer++;
         }
