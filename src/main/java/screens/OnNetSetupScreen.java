@@ -57,6 +57,8 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     public static int numPlayers;
     public static boolean canStart;
 
+    public Thread mpThread;
+
     public OnNetSetupScreen(GameApplication gameApplication) {
         super(gameApplication);
         this.gameApplication = gameApplication;
@@ -220,7 +222,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
             gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE, this);
-            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
+            mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
             mpThread.start();
 
             setHost(false);
@@ -359,6 +361,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void dispose() {
+        gameLogic.multiPlayerLogic.mp.connected = false;
         font.dispose();
         onNetSetupTexture.dispose();
     }

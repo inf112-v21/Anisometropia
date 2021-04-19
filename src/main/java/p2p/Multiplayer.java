@@ -15,7 +15,7 @@ public class Multiplayer implements Runnable {
     private Socket sock;
     private DataInputStream dataInput;
     public Boolean hosting;
-    private Boolean connected = false;
+    public Boolean connected = false;
 
     Scanner in;
     PrintWriter dataOutput;
@@ -109,7 +109,7 @@ public class Multiplayer implements Runnable {
         }
         connected = true;
 
-        while (true) {
+        while (connected) {
             try {
                 receive();
                 if (!toSend.equals("")) {
