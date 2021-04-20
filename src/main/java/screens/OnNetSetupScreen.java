@@ -34,7 +34,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     TextureRegion editPlayerNameTexture, editPlayerNameInactiveTexture;
     TextureRegion selectMap, mapChangeLeftTexture, mapChangeRightTexture ,mapChangeLeftHoveredTexture, mapChangeRightHoveredTexture;;
 
-    GameButton startBtn, backBtn, hostButton, joinButton, sendBtn, receiveBtn, editLocalHostBtn, editPortBtn, editPlayerNameBtn;
+    GameButton startBtn, backBtn, hostButton, joinButton, editLocalHostBtn, editPortBtn, editPlayerNameBtn;
     GameButton mapChangeLeft, mapChangeRight;
     BitmapFont font;
 
@@ -80,8 +80,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         joinBtnTexture = multiPlayerButtons[0][1];
         joinBtnOffTexture = multiPlayerButtons[1][1];
         joinBtnOnTexture = multiPlayerButtons[2][1];
-        sendBtnTexture = multiPlayerButtons[3][0];
-        receiveBtnTexture = multiPlayerButtons[3][1];
 
         editLocalhostTexture = onNetSetupRegionBy256[13][0];
         editLocalhostInactiveTexture = onNetSetupRegionBy256[14][0];
@@ -100,8 +98,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         startBtn = new GameButton(756, 32, 256, 64, true, startInactive);
         hostButton = new GameButton(1100,700, 85,85, true, hostBtnTexture);
         joinButton = new GameButton(1200, 700,85,85,true, joinBtnTexture);
-        sendBtn = new GameButton(200,500, 85,85, false, sendBtnTexture);
-        receiveBtn = new GameButton(200, 600,85,85,false, receiveBtnTexture);
         editLocalHostBtn = new GameButton(1100, 640,256,32,false, editLocalhostInactiveTexture);
         editPortBtn = new GameButton(1100, 600,256,32,false, editPortInactiveTexture);
         editPlayerNameBtn = new GameButton(640, 500,256,32,false, editPlayerNameInactiveTexture);
@@ -184,8 +180,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         if (Gdx.input.justTouched()) {
             if(joinButton.isMouseOnButton(mousePosition)) joinButtonHasBeenClicked();
             if(hostButton.isMouseOnButton(mousePosition)) hostButtonHasBeenClicked();
-            if(sendBtn.isMouseOnButton(mousePosition)) sendButtonHasBeenClicked();
-            if(receiveBtn.isMouseOnButton(mousePosition)) receiveButtonHasBeenClicked();
 
             if (!isHost && !isClient) {
                 if (mapChangeLeft.isMouseOnButton(mousePosition)) mapSelector.mapChangeLeftClicked();
@@ -208,13 +202,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             return 2;
         }
         return -1;
-    }
-
-    private void sendButtonHasBeenClicked() {
-    }
-
-    private void receiveButtonHasBeenClicked() {
-        multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
     }
 
     /**
@@ -254,7 +241,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             mpThread = new Thread(multiPlayerLogic.mp);
             mpThread.start();
 
-//            setHost(false);
             isClient = true;
 
             mapChangeLeft.setTexture(onNetSetupRegionBy32[21][4]);
@@ -264,7 +250,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             hostButton.setActive(false);
             hostButton.setTexture(hostBtnOffTexture);
 
-            multiPlayerLogic.mp.setToSend("ID_REQUEST");
+            multiPlayerLogic.mp.setToSend("INITIAL_ID_REQUEST");
         }
     }
 
@@ -278,7 +264,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             multiPlayerLogic.mp.setToSend("START");
             startGame();
         } else if (multiPlayerLogic.isConnected()){
-            multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
             if(canStart && numPlayers != 0) startGame();
         }
     }

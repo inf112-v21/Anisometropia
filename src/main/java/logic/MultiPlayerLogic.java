@@ -30,7 +30,6 @@ public class MultiPlayerLogic {
 
     /**
      * Method for sending the current players chosen cards
-     * @throws IOException
      */
     public void sendCards() {
         firstTurn = false;
@@ -45,7 +44,6 @@ public class MultiPlayerLogic {
         }
 
         playersReady.set(OnNetSetupScreen.playerID, true);
-        System.out.println("I am sending " + OnNetSetupScreen.playerID+toSend);
         mp.setToSend("CARD "+OnNetSetupScreen.playerID+toSend);
     }
 
@@ -64,9 +62,8 @@ public class MultiPlayerLogic {
 
     /**
      * Method for receiving the other players chosen cards
-     * @throws IOException
      */
-    public void receiveCards(String[] messageReceived) throws IOException {
+    public void receiveCards(String[] messageReceived) {
         DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
         ArrayList<ProgramCard> chosenCards = new ArrayList<>();
 
@@ -85,13 +82,6 @@ public class MultiPlayerLogic {
 
         playersReady.set(indexOfPlayerToChange, true);
         gameLogic.getPlayerQueue().getPlayerQueue().get(indexOfPlayerToChange).setChosenProgramCards(chosenCards);
-
-        String receivedCards = "";
-        for(ProgramCard card : chosenCards) {
-           receivedCards += card.getCardType();
-        }
-
-        System.out.println("I am receiving " + receivedCards);
     }
 
     /**

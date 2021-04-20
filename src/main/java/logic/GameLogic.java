@@ -82,17 +82,10 @@ public class GameLogic {
      * Saves player's chosen cards and ends the turn.
      * @param chosenCards cards player has chosen.
      */
-    public void finishCardSelectionTurn(ArrayList<ProgramCard> chosenCards) throws IOException {
+    public void finishCardSelectionTurn(ArrayList<ProgramCard> chosenCards) {
         if(multiPlayerLogic != null && multiPlayerLogic.isConnected()) {
-            System.out.println("connected");
             getCurrentPlayer().setChosenProgramCards(chosenCards);
-            String currentPlayerCards = "";
 
-            for(ProgramCard currentPlayerCard : getCurrentPlayer().getChosenProgramCards()) {
-                currentPlayerCards += currentPlayerCard.getCardType();
-            }
-
-            System.out.println("Chosen cards of current player " + currentPlayerCards);
             if(getCurrentPlayer().isLocal) multiPlayerLogic.sendCards();
             playerQueue.setCurrentPlayerToFirstInQueue();
         }
