@@ -42,7 +42,7 @@ public class GraphicalGameMap extends GameMap {
     Wall wall;
 
     public GraphicalGameMap(String map) {
-        tiledMap = new TmxMapLoader().load(map);
+        tiledMap = new TmxMapLoader().load(map+".tmx");
         orthogonalTiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, PIXEL_SCALE_FOR_ASSETS  / ASSETS_IMAGE_SIZE);
 
         boardLayer = (TiledMapTileLayer) tiledMap.getLayers().get("BoardLayer");

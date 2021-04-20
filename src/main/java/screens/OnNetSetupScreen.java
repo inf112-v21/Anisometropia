@@ -48,7 +48,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private int editorIndex = -1;
     private final int numberOfInputEditors = 3;
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
-    private String[] maps = new String[]{"gameboard2.tmx", "crashSite.tmx"};
+    private String[] maps = new String[]{"gameboard2", "crashSite"};
     private int currentMapIndex = 0;
     private String currentMap = maps[currentMapIndex];
 
@@ -124,7 +124,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         font.getData().setScale(1.8f);
         font.setColor(Color.BLACK);
 
-        gameMap = new GraphicalGameMap("gameboard2.tmx");
+        gameMap = new GraphicalGameMap("gameboard2");
         playerQueue = new PlayerQueue();
         gameLogic = new GameLogic(gameMap, playerQueue);
     }
@@ -359,7 +359,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         getMultiplayerLogic().playersReady.set(index, bool);
     }
 
-    public void addToPlayersReady() {
+    public void addUnreadyPlayerToPlayerReadyList() {
         getMultiplayerLogic().playersReady.add(false);
     }
 

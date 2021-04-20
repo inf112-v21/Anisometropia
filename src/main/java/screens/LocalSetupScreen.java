@@ -42,7 +42,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     int playersAdded = 1;
     boolean[] isAi = new boolean[maxPlayers];
     private StringBuilder[] allStringBuilders = new StringBuilder[maxPlayers];
-    private String[] maps = new String[]{"gameboard2.tmx", "crashSite.tmx"};
+    private String[] maps = new String[]{"gameboard2", "crashSite"};
     private int currentMapIndex = 0;
     private String currentMap = maps[currentMapIndex];
 

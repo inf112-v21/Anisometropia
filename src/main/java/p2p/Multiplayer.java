@@ -77,7 +77,7 @@ public class Multiplayer implements Runnable {
     public void run() {
         if (hosting) {
             OnNetSetupScreen.numPlayers = 1;
-            onNetSetupScreen.addToPlayersReady();
+            onNetSetupScreen.addUnreadyPlayerToPlayerReadyList();
             try {
                 ss = new ServerSocket(onNetSetupScreen.getPort());
             } catch (IOException e) {
@@ -140,12 +140,12 @@ public class Multiplayer implements Runnable {
             case "ID_REQUEST":
                 send("ID "+OnNetSetupScreen.numPlayers);
                 OnNetSetupScreen.numPlayers++;
-                onNetSetupScreen.addToPlayersReady();
+                onNetSetupScreen.addUnreadyPlayerToPlayerReadyList();
                 System.out.println("playersReady is now size: "+onNetSetupScreen.getMultiplayerLogic().playersReady.size());
                 break;
             case "AMOUNT_PLAYERS":
                 OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
-                onNetSetupScreen.addToPlayersReady();
+                onNetSetupScreen.addUnreadyPlayerToPlayerReadyList();
                 System.out.println("playersReady is now size: "+onNetSetupScreen.getMultiplayerLogic().playersReady.size());
                 break;
             case "AMOUNT_PLAYERS_REQUEST":
