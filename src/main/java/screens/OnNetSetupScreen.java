@@ -31,8 +31,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     TextureRegion joinBtnTexture, joinBtnOnTexture, joinBtnOffTexture, sendBtnTexture, receiveBtnTexture;
     TextureRegion editLocalhostTexture, editLocalhostInactiveTexture, editPortTexture, editPortInactiveTexture;
     TextureRegion editPlayerNameTexture, editPlayerNameInactiveTexture;
+    TextureRegion selectMap, mapChangeLeftTexture, mapChangeRightTexture ,mapChangeLeftHoveredTexture, mapChangeRightHoveredTexture;;
 
     GameButton startBtn, backBtn, hostButton, joinButton, sendBtn, receiveBtn, editLocalHostBtn, editPortBtn, editPlayerNameBtn;
+    GameButton mapChangeLeft, mapChangeRight;
     BitmapFont font;
 
     int[] colElemPos = { 192, 260, 520, 580, 614, 758, 790, 840 };
@@ -46,6 +48,9 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private int editorIndex = -1;
     private final int numberOfInputEditors = 3;
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
+    private String[] maps = new String[]{"gameboard2.tmx", "crashSite.tmx"};
+    private int currentMapIndex = 0;
+    private String currentMap = maps[currentMapIndex];
 
     public static int playerID = 0;
     public static int numPlayers;
@@ -100,6 +105,14 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         editPortBtn = new GameButton(1100, 600,256,32,false, editPortInactiveTexture);
         editPlayerNameBtn = new GameButton(640, 500,256,32,false, editPlayerNameInactiveTexture);
 
+        selectMap = onNetSetupRegionBy256[11][0];
+        mapChangeLeftTexture = onNetSetupRegionBy32[10][0];
+        mapChangeRightTexture = onNetSetupRegionBy32[10][1];
+        mapChangeLeftHoveredTexture = onNetSetupRegionBy32[10][4];
+        mapChangeRightHoveredTexture = onNetSetupRegionBy32[10][5];
+        mapChangeLeft = new GameButton(colElemPos[1]+300, rowElemPos[1]+200, 32, 32, true, mapChangeLeftTexture);
+        mapChangeRight = new GameButton(colElemPos[1]+600, rowElemPos[1]+200, 32, 32, true, mapChangeRightTexture);
+
         for (int i = 0; i < numberOfInputEditors; i++) {
             allStringBuilders[i] = new StringBuilder();
         }
@@ -111,7 +124,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         font.getData().setScale(1.8f);
         font.setColor(Color.BLACK);
 
-        gameMap = new GraphicalGameMap();
+        gameMap = new GraphicalGameMap("gameboard2.tmx");
         playerQueue = new PlayerQueue();
         gameLogic = new GameLogic(gameMap, playerQueue);
     }
@@ -135,6 +148,13 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         batch.draw(startBtn.getTexture(), startBtn.getX(), startBtn.getY(), startBtn.getWidth(), startBtn.getHeight());
         batch.draw(backBtn.getTexture(), backBtn.getX(), backBtn.getY(), backBtn.getWidth(), backBtn.getHeight());
 
+        if (isHost) {
+            batch.draw(selectMap, colElemPos[1], rowElemPos[1]+200, selectMap.getRegionWidth(), selectMap.getRegionHeight());
+            batch.draw(mapChangeLeft.getTexture(), mapChangeLeft.getX(), mapChangeLeft.getY(), mapChangeLeft.getWidth(), mapChangeLeft.getHeight());
+            batch.draw(mapChangeRight.getTexture(), mapChangeRight.getX(),  mapChangeRight.getY(), mapChangeRight.getWidth(), mapChangeRight.getHeight());
+            font.draw(batch, currentMap, mapChangeLeft.getX()+52, mapChangeLeft.getY()+28);
+        }
+
         setEditorIndex(editorIndex);
 
         batch.draw(editLocalHostBtn.getTexture(), editLocalHostBtn.getX(), editLocalHostBtn.getY(), editLocalHostBtn.getWidth(), editLocalHostBtn.getHeight());
@@ -156,6 +176,12 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
         ifHoveredMakeBackButtonBlueAndJumbled(mousePosition);
         ifHoveredMakeStartButtonBlueAndJumbled(mousePosition);
+        if (isHost) {
+            ifHoveredMakeMapChangeLeftBlue(mousePosition);
+            ifHoveredMakeMapChangeRightBlue(mousePosition);
+        }
+
+
 
         if (Gdx.input.justTouched()) {
             if(joinButton.isMouseOnButton(mousePosition)) joinButtonHasBeenClicked();
@@ -163,6 +189,11 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             if(sendBtn.isMouseOnButton(mousePosition)) sendButtonHasBeenClicked();
             if(receiveBtn.isMouseOnButton(mousePosition)) receiveButtonHasBeenClicked();
 
+            if (isHost) {
+                if(mapChangeLeft.isMouseOnButton(mousePosition)) mapChangeLeftClicked();
+                if(mapChangeRight.isMouseOnButton(mousePosition)) mapChangeRightClicked();
+            }
+            
             editorIndex = indexOfInputEditorUnderMousePosition(mousePosition);
 
             if(backBtn.isMouseOnButton(mousePosition)) backButtonClicked();
@@ -268,6 +299,30 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         gameLogic.dealProgramCards();
         gameApplication.gameScreenManager.initPlayScreen(gameMap, gameLogic);
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);
+    }
+
+    private void mapChangeRightClicked() {
+        currentMap = maps[Math.floorMod(++currentMapIndex, maps.length)];
+    }
+
+    private void mapChangeLeftClicked() {
+        currentMap = maps[Math.floorMod(--currentMapIndex, maps.length)];
+    }
+
+    private void ifHoveredMakeMapChangeLeftBlue(Vector3 mousePosition) {
+        if (mapChangeLeft.isMouseOnButton(mousePosition)) {
+            mapChangeLeft.setTexture(mapChangeLeftHoveredTexture);
+        }else{
+            mapChangeLeft.setTexture(mapChangeLeftTexture);
+        }
+    }
+
+    private void ifHoveredMakeMapChangeRightBlue(Vector3 mousePosition) {
+        if (mapChangeRight.isMouseOnButton(mousePosition)) {
+            mapChangeRight.setTexture(mapChangeRightHoveredTexture);
+        }else{
+            mapChangeRight.setTexture(mapChangeRightTexture);
+        }
     }
 
     private void ifHoveredMakeStartButtonBlueAndJumbled(Vector3 mousePosition) {

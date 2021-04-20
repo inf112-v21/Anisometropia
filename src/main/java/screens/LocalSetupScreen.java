@@ -27,16 +27,10 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     TextureRegion[][] localSetupRegionBy256, localSetupRegionBy128, localSetupRegionBy32, localSetupRegionBy64;
     TextureRegion selectMap, add, addHovered, remove, removeHovered, start, back, startJumbled, backJumbled;
     TextureRegion plSelected, plSelectedHovered, aiSelected, aiSelectedHovered, scrollLeft, scrollRight, moveUp, moveDown;
-    TextureRegion nameEditSquareActive, nameEditSquareInactive;
+    TextureRegion nameEditSquareActive, nameEditSquareInactive, mapChangeLeftTexture, mapChangeRightTexture,mapChangeLeftHoveredTexture, mapChangeRightHoveredTexture;
 
-    GameButton startBtn, backBtn, addBtn;
-    GameButton[] removeButtons;
-    GameButton[] scrollLeftButtons;
-    GameButton[] scrollRightButtons;
-    GameButton[] moveUpButtons;
-    GameButton[] moveDownButtons;
-    GameButton[] editNameButtons;
-    GameButton[] plOrAiButtons;
+    GameButton startBtn, backBtn, addBtn, mapChangeLeft, mapChangeRight;
+    GameButton[] removeButtons, scrollLeftButtons, scrollRightButtons, moveUpButtons, moveDownButtons, editNameButtons, plOrAiButtons;
 
     TextureRegion[] numbers;
     TextureRegion[] characters;
@@ -47,7 +41,10 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     int maxPlayers = 4;
     int playersAdded = 1;
     boolean[] isAi = new boolean[maxPlayers];
-    StringBuilder[] allStringBuilders = new StringBuilder[maxPlayers];
+    private StringBuilder[] allStringBuilders = new StringBuilder[maxPlayers];
+    private String[] maps = new String[]{"gameboard2.tmx", "crashSite.tmx"};
+    private int currentMapIndex = 0;
+    private String currentMap = maps[currentMapIndex];
 
     int[] colElemPos = { 192, 260, 520, 580, 614, 758, 790, 840 };
     int[] rowElemPos = { 576, 512, 448, 384, 320, 256, 192, 128 };
@@ -68,6 +65,10 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         localSetupRegionBy32 = TextureRegion.split(localSetupTexture, 32, 32);
         localSetupRegionBy64 = TextureRegion.split(localSetupTexture, 64, 32);
         selectMap = localSetupRegionBy256[11][0];
+        mapChangeLeftTexture = localSetupRegionBy32[10][0];
+        mapChangeRightTexture = localSetupRegionBy32[10][1];
+        mapChangeLeftHoveredTexture = localSetupRegionBy32[10][4];
+        mapChangeRightHoveredTexture = localSetupRegionBy32[10][5];
         add = localSetupRegionBy128[5][1];
         addHovered =  localSetupRegionBy128[15][1];
         remove = localSetupRegionBy128[5][0];
@@ -78,10 +79,12 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         backJumbled = localSetupRegionBy128[12][1];
         nameEditSquareActive = localSetupRegionBy256[13][0];
         nameEditSquareInactive = localSetupRegionBy256[14][0];
-        scrollLeft = localSetupRegionBy32[10][0];
-        scrollRight = localSetupRegionBy32[10][1];
-        moveUp = localSetupRegionBy32[10][2];
-        moveDown = localSetupRegionBy32[10][3];
+
+        scrollLeft = localSetupRegionBy32[21][4];
+
+        scrollRight = localSetupRegionBy32[21][5];
+        moveUp = localSetupRegionBy32[21][6];
+        moveDown = localSetupRegionBy32[21][7];
         plSelected = localSetupRegionBy128[8][0];
         aiSelected = localSetupRegionBy128[8][1];
         plSelectedHovered = localSetupRegionBy128[7][0];
@@ -94,6 +97,8 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         moveDownButtons = new GameButton[maxPlayers];
         editNameButtons = new GameButton[maxPlayers];
         plOrAiButtons = new GameButton[maxPlayers];
+        mapChangeLeft = new GameButton(colElemPos[1]+300, rowElemPos[1]+200, 32, 32, true, mapChangeLeftTexture);
+        mapChangeRight = new GameButton(colElemPos[1]+600, rowElemPos[1]+200, 32, 32, true, mapChangeRightTexture);
 
         numbers = new TextureRegion[maxPlayers];
         for (int i = 0; i < maxPlayers; i++) {
@@ -135,6 +140,9 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         super.render(delta);
         batch.begin();
         batch.draw(selectMap, colElemPos[1], rowElemPos[1]+200, selectMap.getRegionWidth(), selectMap.getRegionHeight());
+        batch.draw(mapChangeLeft.getTexture(), mapChangeLeft.getX(), mapChangeLeft.getY(), mapChangeLeft.getWidth(), mapChangeLeft.getHeight());
+        batch.draw(mapChangeRight.getTexture(), mapChangeRight.getX(),  mapChangeRight.getY(), mapChangeRight.getWidth(), mapChangeRight.getHeight());
+        font.draw(batch, currentMap, mapChangeLeft.getX()+52, mapChangeLeft.getY()+28);
 
         for (int i = 0; i < playersAdded; i++) {
             showAddedPlayerRows(batch, i);
@@ -163,6 +171,8 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         ifHoveredMakeAddButtonBlue(mousePosition);
         ifHoveredMakeAiSelectorBlue(mousePosition);
         ifHoveredMakeRemoveButtonBlue(mousePosition);
+        ifHoveredMakeMapChangeLeftBlue(mousePosition);
+        ifHoveredMakeMapChangeRightBlue(mousePosition);
 
 
         if (Gdx.input.justTouched()) {
@@ -171,6 +181,8 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
             if(backBtn.isMouseOnButton(mousePosition)) backButtonClicked();
             if(startBtn.isMouseOnButton(mousePosition)) startButtonClicked();
+            if(mapChangeLeft.isMouseOnButton(mousePosition)) mapChangeLeftClicked();
+            if(mapChangeRight.isMouseOnButton(mousePosition)) mapChangeRightClicked();
 
             ifClickedSwitchPlayerOrAiStatus(mousePosition);
             ifClickedRemoveAddedPlayer(mousePosition);
@@ -231,6 +243,14 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         }
     }
 
+    private void mapChangeRightClicked() {
+        currentMap = maps[Math.floorMod(++currentMapIndex, maps.length)];
+    }
+
+    private void mapChangeLeftClicked() {
+        currentMap = maps[Math.floorMod(--currentMapIndex, maps.length)];
+    }
+
     private void ifHoveredMakeRemoveButtonBlue(Vector3 mousePosition) {
         for (int i = 1; i < playersAdded; i++) {
             if(removeButtons[i].isMouseOnButton(mousePosition)) {
@@ -238,6 +258,22 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
             }else{
                 removeButtons[i].setTexture(remove);
             }
+        }
+    }
+
+    private void ifHoveredMakeMapChangeLeftBlue(Vector3 mousePosition) {
+        if (mapChangeLeft.isMouseOnButton(mousePosition)) {
+            mapChangeLeft.setTexture(mapChangeLeftHoveredTexture);
+        }else{
+            mapChangeLeft.setTexture(mapChangeLeftTexture);
+        }
+    }
+
+    private void ifHoveredMakeMapChangeRightBlue(Vector3 mousePosition) {
+        if (mapChangeRight.isMouseOnButton(mousePosition)) {
+            mapChangeRight.setTexture(mapChangeRightHoveredTexture);
+        }else{
+            mapChangeRight.setTexture(mapChangeRightTexture);
         }
     }
 
@@ -318,7 +354,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void startButtonClicked() {
-        GraphicalGameMap gameMap = new GraphicalGameMap();
+        GraphicalGameMap gameMap = new GraphicalGameMap(currentMap);
         PlayerQueue playerQueue = new PlayerQueue();
         int spawnIncrementer = 0;
         for (int i = 0; i < playersAdded; i++) {
