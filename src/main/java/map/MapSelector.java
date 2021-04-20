@@ -1,7 +1,7 @@
 package map;
 
 public class MapSelector {
-    private String[] maps = new String[]{"Chaos", "CrashSite", "TestBoard"}; //add new maps as they're made
+    private String[] maps = new String[]{"Chaos", "CrashSite", "RaceTrack", "TestBoard"}; //add new maps as they're made
     private int currentMapIndex = 0;
     private String currentMap = maps[currentMapIndex];
 
