@@ -133,6 +133,11 @@ public class GameLogic {
             //repair assets:
             laser.updatePlayersHealth(player, gameMap);
             repair.updatePlayersHealth(player, gameMap);
+            if (player.myUpgrades.contains("repairAtDoubleSpeed")){
+                repair.updatePlayersHealth(player,gameMap);
+                System.out.println("you restored 2 Health Points");
+            }
+
 
 
             if (checkLoss(player.getX(), player.getY())) {
@@ -158,6 +163,7 @@ public class GameLogic {
         checkIfOnlyOnePlayerLeft();
         for (Player player : playerQueue.getPlayerQueue()){
             player.playerShootsLaser();
+            player.upgrades();
         }
         if (multiPlayerLogic != null && multiPlayerLogic.isConnected()) multiPlayerLogic.setPlayersNotReady();
     }

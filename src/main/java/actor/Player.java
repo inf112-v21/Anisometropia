@@ -4,8 +4,7 @@ import cards.ProgramCard;
 import logic.PlayerQueue;
 import map.GameMap;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class Player implements IPlayer {
     GameMap gameMap;
@@ -19,6 +18,7 @@ public class Player implements IPlayer {
     public boolean[] flagsReached;
     public boolean isPoweredDown = false;
     public boolean hasAnnouncedPowerDown = false;
+    public List myUpgrades = new ArrayList();
     public ArrayList<ProgramCard> dealtProgramCards;
     public ArrayList<ProgramCard> chosenProgramCards;
     public ArrayList<ProgramCard> lockedProgramCards;
@@ -37,6 +37,7 @@ public class Player implements IPlayer {
         this.characterID = characterID;
         dmgTokens = 0;
         lifeTokens = 3;
+
         flagsReached = new boolean[4];
         lockedProgramCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));
 
@@ -81,13 +82,32 @@ public class Player implements IPlayer {
         return null;
     }
 
+    public void upgrades(){
+        if (myUpgrades.contains("doubleLaser")){
+            playerShootsLaser();
+        }
+        if (myUpgrades.contains("shootBehind")){
+            rotate(2);
+            playerShootsLaser();
+            rotate(2);
+        }
+        if (myUpgrades.contains("sideLasers")){
+            rotate(1);
+            playerShootsLaser();
+            rotate(2);
+            playerShootsLaser();
+            rotate(1);
+        }
+        
+    }
+
     //TODO: now lasers wont pass through any "wall"-tile even though it is to. Tell them which tiles they'r supposed to pass.
     public void playerShootsLaser(){
 //-------------if Player faces NORTH or SOUTH----------
         if (getDirection() == 0){ //NORTH
             for (int i = 0 ; y + i < gameMap.getHeight(); i++ ){
                 if (!gameMap.getWall().checkIntoWall(x,y+i,0, 1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, 1)){
-                    System.out.println("0 Laser Blocked by wall");
+                    System.out.println(playerName + "'s laser is blocked by NORTH wall");
                     break;
                 }else if (i != 0 && gameMap.isTherePlayerOnThisPosition(x, y + i)){
                     getPlayerByPos(x, y + i ).updateDamageTokens(1);
@@ -98,7 +118,7 @@ public class Player implements IPlayer {
         if (getDirection() == 2 ) {//SOUTH
             for (int i = 0; y + i > 0; i-- ){ //height = 0
                 if (!gameMap.getWall().checkIntoWall(x,y+i,0, -1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, -1)){
-                    System.out.println("2 Laser Blocked by wall");
+                    System.out.println(playerName + "'s laser is blocked by SOUTH wall");
                     break;
                 }else if (i !=0 && gameMap.isTherePlayerOnThisPosition(x,y + i)){
                     getPlayerByPos(x, y + i).updateDamageTokens(1);
@@ -110,7 +130,7 @@ public class Player implements IPlayer {
         if (getDirection() == 1 ) {//EAST
             for (int i = 0; x + i < gameMap.getWidth(); i++ ){ //height = 0
                 if (!gameMap.getWall().checkIntoWall(x+i,y,1, 0) || !gameMap.getWall().checkOutOfWall(x+i,y,1, 0)){
-                    System.out.println("1 Laser Blocked by wall");
+                    System.out.println(playerName + "'s laser is blocked by EAST wall");
                     break;
                 } else if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
                     getPlayerByPos(x+i,y).updateDamageTokens(1);
@@ -121,7 +141,7 @@ public class Player implements IPlayer {
         if (getDirection() == 3 ) {//WEST
             for (int i = 0; x + i > 0; i-- ){ //height = 0
                 if (!gameMap.getWall().checkIntoWall(x+i,y,-1, 0) || !gameMap.getWall().checkOutOfWall(x+i,y,-1, 0)){
-                    System.out.println("3 Laser Blocked by wall");
+                    System.out.println(playerName + "'s laser is blocked by WEST wall");
                     break;
                 }
                 if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
@@ -331,7 +351,16 @@ public class Player implements IPlayer {
      * TODO: Implement optionCards and give new physics to player.
      */
     public void drawOptionCard(){
-        System.out.println("player draws option card");
+        List<String> drawOptionCard = Arrays.asList("doubleLaser", "shootBehind", "sideLasers", "repairAtDoubleSpeed");
+        Collections.shuffle(drawOptionCard);
+        for (int i = 0; i < drawOptionCard.size(); i++) {
+            if (!myUpgrades.contains(drawOptionCard.get(i))){
+                myUpgrades.add(drawOptionCard.get(i));
+                System.out.println("You just got an upgrade: " + drawOptionCard.get(i));
+                break;
+            }
+        }
+        System.out.println("Here is all your upgrades: " + myUpgrades);
     }
 
     public boolean isPlayerDead() {
