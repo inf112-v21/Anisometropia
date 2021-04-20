@@ -1,5 +1,6 @@
 package actor;
 
+import assets.Wall;
 import cards.ProgramCard;
 import logic.PlayerQueue;
 import map.GameMap;
@@ -72,9 +73,10 @@ public class Player implements IPlayer {
     }
 
     public Player getPlayerByPos(int x, int y){
-        for (Player player : playerQueue.getPlayerQueue()) {
-            if (player.getX() == x && player.getY() == y){
-                return player;
+        for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++) {
+            Player playerByPos = playerQueue.getPlayerQueue().get(i);
+            if (playerByPos.getX() == x && playerByPos.getY() == y){
+                return playerByPos;
             }
         }
         return null;
@@ -84,47 +86,48 @@ public class Player implements IPlayer {
     public void playerShootsLaser(){
 //-------------if Player faces NORTH or SOUTH----------
         if (getDirection() == 0){
-            for (int i = y+1; i < gameMap.getHeight(); i++ ){
-                if (gameMap.isThereWallOnThisPosition(x,i)){
+            for (int i = 0 ; y + i < gameMap.getHeight(); i++ ){
+                if (!gameMap.getWall().checkIntoWall(x,y+i,0, 1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, 1)){
+                    System.out.println("0 Laser Blocked by wall");
                     break;
-                }
-                if (gameMap.isTherePlayerOnThisPosition(x, i)){
-                    getPlayerByPos(x, i).updateDamageTokens(1);
-                    System.out.println(playerName + "damages" + getPlayerByPos(x,i).playerName + " with his laser");
+                }else if (i != 0 && gameMap.isTherePlayerOnThisPosition(x, y + i)){
+                    getPlayerByPos(x, y + i ).updateDamageTokens(1);
+                    System.out.println(playerName + " damages " + getPlayerByPos(x,y + i).playerName + " with his laser ");
                 }
             }
         }
         if (getDirection() == 2 ) {
-            for (int i = y-1; i > 0; i-- ){ //height = 0
-                if (gameMap.isThereWallOnThisPosition(x,i)){
+            for (int i = 0; y + i > 0; i-- ){ //height = 0
+                if (!gameMap.getWall().checkIntoWall(x,y+i,0, -1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, -1)){
+                    System.out.println("2 Laser Blocked by wall");
                     break;
-                }
-                if (gameMap.isTherePlayerOnThisPosition(x,i)){
-                    getPlayerByPos(x,i).updateDamageTokens(1);
-                    System.out.println(playerName + " damages " + getPlayerByPos(x,i).playerName + " with his laser");
+                }else if (i !=0 && gameMap.isTherePlayerOnThisPosition(x,y + i)){
+                    getPlayerByPos(x, y + i).updateDamageTokens(1);
+                    System.out.println(playerName + " damages " + getPlayerByPos(x,y + i).playerName + " with his laser");
                 }
             }
         }
-//-------------if Player faces WEST or EAST------------
+// -------------if Player faces WEST or EAST------------
         if (getDirection() == 1 ) {
-            for (int i = x+1; i < gameMap.getWidth(); i++ ){ //height = 0
-                if (gameMap.isThereWallOnThisPosition(i,y)){
+            for (int i = 0; x + i < gameMap.getWidth(); i++ ){ //height = 0
+                if (!gameMap.getWall().checkIntoWall(x+i,y,1, 0) || !gameMap.getWall().checkOutOfWall(x+i,y,1, 0)){
+                    System.out.println("1 Laser Blocked by wall");
                     break;
-                }
-                if (gameMap.isTherePlayerOnThisPosition(i,y)){
-                    getPlayerByPos(i,y).updateDamageTokens(1);
-                    System.out.println(playerName + " damages " + getPlayerByPos(i,y).playerName + " with his laser");
+                } else if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
+                    getPlayerByPos(x+i,y).updateDamageTokens(1);
+                    System.out.println(playerName + " damages " + getPlayerByPos(x+i,y).playerName + " with his laser");
                 }
             }
         }
         if (getDirection() == 3 ) {
-            for (int i = x-1; i > 0; i-- ){ //height = 0
-                if (gameMap.isThereWallOnThisPosition(i,y)){
+            for (int i = 0; x + i > 0; i-- ){ //height = 0
+                if (!gameMap.getWall().checkIntoWall(x+i,y,-1, 0) || !gameMap.getWall().checkOutOfWall(x+i,y,-1, 0)){
+                    System.out.println("3 Laser Blocked by wall");
                     break;
                 }
-                if (gameMap.isTherePlayerOnThisPosition(i,y)){
-                    getPlayerByPos(i,y).updateDamageTokens(1);
-                    System.out.println(playerName + "damages" + getPlayerByPos(i, y).playerName + " with his laser");
+                if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
+                    getPlayerByPos(x+i,y).updateDamageTokens(1);
+                    System.out.println(playerName + "damages" + getPlayerByPos(x+i, y).playerName + " with his laser");
                 }
             }
         }
@@ -139,12 +142,15 @@ public class Player implements IPlayer {
      * @param dy distance to move in y direction
      */
     public void playersCollides(int dx, int dy){
-        for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++){
+        for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++) {
             Player pushedPlayer = playerQueue.getPlayerQueue().get(i);
-            if (pushedPlayer.getX() == (x + dx) && pushedPlayer.getY() == (y + dy)){
-                if (!pushedPlayer.canMove(dx, dy)){
+
+            if (pushedPlayer.getX() == (x + dx) && pushedPlayer.getY() == (y + dy)) {
+                if (pushedPlayer.canMove(dx, dy)) {
+                    pushedPlayer.move(dx, dy);
+                } else {
                     move(-dx, -dy);
-                }else {pushedPlayer.move(dx,dy);}
+                }
             }
         }
     }
@@ -164,6 +170,7 @@ public class Player implements IPlayer {
 
         //Players collides with each other
         if (gameMap.isTherePlayerOnThisPosition(x+dx,y+dy)){
+            System.out.println(playerName + ": another player on position dx: " + dx + " dy: " +dy);
             playersCollides(dx, dy);
         }
 
