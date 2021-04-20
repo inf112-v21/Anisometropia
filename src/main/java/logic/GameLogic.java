@@ -5,6 +5,7 @@ import assets.*;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import map.GameMap;
+import map.GraphicalGameMap;
 import screens.OnNetSetupScreen;
 
 import java.io.IOException;
@@ -33,7 +34,21 @@ public class GameLogic {
     public static String gameMessage;
 
     public GameLogic(GameMap gameMap, PlayerQueue playerQueue) {
-        multiPlayerLogic = new MultiPlayerLogic(this);
+//        multiPlayerLogic = new MultiPlayerLogic();
+        this.gameMap = gameMap;
+        this.playerQueue = playerQueue;
+        conveyorBelts = new ConveyorBelts();
+        laser = new Laser();
+        gear = new Gear();
+        repair = new Repair();
+        flag = new Flag();
+        pusher = new Pusher();
+        deckOfProgramCards = new DeckOfProgramCards();
+        dealProgramCards();
+    }
+
+    public GameLogic(GameMap gameMap, PlayerQueue playerQueue, MultiPlayerLogic multiPlayerLogic) {
+        this.multiPlayerLogic = multiPlayerLogic;
         this.gameMap = gameMap;
         this.playerQueue = playerQueue;
         conveyorBelts = new ConveyorBelts();
@@ -69,16 +84,9 @@ public class GameLogic {
      * @param chosenCards cards player has chosen.
      */
     public void finishCardSelectionTurn(ArrayList<ProgramCard> chosenCards) {
-        if(multiPlayerLogic.isConnected()) {
-            System.out.println("connected");
+        if(multiPlayerLogic != null && multiPlayerLogic.isConnected()) {
             getCurrentPlayer().setChosenProgramCards(chosenCards);
-            String currentPlayerCards = "";
 
-            for(ProgramCard currentPlayerCard : getCurrentPlayer().getChosenProgramCards()) {
-                currentPlayerCards += currentPlayerCard.getCardType();
-            }
-
-            System.out.println("Chosen cards of current player " + currentPlayerCards);
             if(getCurrentPlayer().isLocal) multiPlayerLogic.sendCards();
             playerQueue.setCurrentPlayer(0);
         }
@@ -151,7 +159,7 @@ public class GameLogic {
         for (Player player : playerQueue.getPlayerQueue()){
             player.playerShootsLaser();
         }
-        if (multiPlayerLogic.isConnected()) multiPlayerLogic.setPlayersNotReady();
+        if (multiPlayerLogic != null && multiPlayerLogic.isConnected()) multiPlayerLogic.setPlayersNotReady();
     }
 
     private void checkIfOnlyOnePlayerLeft() {

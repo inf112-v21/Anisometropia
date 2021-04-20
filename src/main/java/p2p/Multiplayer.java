@@ -131,24 +131,32 @@ public class Multiplayer implements Runnable {
         String firstWord = splitReceived[0];
         switch (firstWord) {
             case "START":
+                send("MAP_UPDATE_BEFORE_START_REQUEST");
+                break;
+            case "MAP_UPDATE_BEFORE_START":
+                onNetSetupScreen.setCurrentMap(splitReceived[1]);
+                send("AMOUNT_PLAYERS_BEFORE_START_REQUEST");
+                break;
+            case "MAP_UPDATE_BEFORE_START_REQUEST":
+                send("MAP_UPDATE_BEFORE_START "+onNetSetupScreen.getCurrentMap());
+                break;
+            case "AMOUNT_PLAYERS_BEFORE_START":
+                OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
+                while (onNetSetupScreen.getPlayersReady().size() < (OnNetSetupScreen.numPlayers)) {
+                    onNetSetupScreen.addUnreadyPlayerToPlayerReadyList();
+                }
                 OnNetSetupScreen.canStart = true;
                 break;
-            case "ID":
+            case "AMOUNT_PLAYERS_BEFORE_START_REQUEST":
+                send("AMOUNT_PLAYERS_BEFORE_START "+OnNetSetupScreen.numPlayers);
+                break;
+            case "INITIAL_ID":
                 OnNetSetupScreen.playerID = Integer.parseInt(splitReceived[1]);
                 break;
-            case "ID_REQUEST":
-                send("ID "+OnNetSetupScreen.numPlayers);
+            case "INITIAL_ID_REQUEST":
+                send("INITIAL_ID "+OnNetSetupScreen.numPlayers);
                 OnNetSetupScreen.numPlayers++;
                 onNetSetupScreen.addUnreadyPlayerToPlayerReadyList();
-                System.out.println("playersReady is now size: "+onNetSetupScreen.getMultiplayerLogic().playersReady.size());
-                break;
-            case "AMOUNT_PLAYERS":
-                OnNetSetupScreen.numPlayers = Integer.parseInt(splitReceived[1]);
-                onNetSetupScreen.addUnreadyPlayerToPlayerReadyList();
-                System.out.println("playersReady is now size: "+onNetSetupScreen.getMultiplayerLogic().playersReady.size());
-                break;
-            case "AMOUNT_PLAYERS_REQUEST":
-                send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);
                 break;
             case "CARD":
                 onNetSetupScreen.getMultiplayerLogic().receiveCards(splitReceived);

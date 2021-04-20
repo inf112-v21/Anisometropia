@@ -267,7 +267,7 @@ public class ControlScreen extends InputAdapter {
 
             gameLogic.finishCardSelectionTurn(chosenCards);
 
-            if (gameLogic.multiPlayerLogic.isConnected()) {
+            if (gameLogic.multiPlayerLogic != null && gameLogic.multiPlayerLogic.isConnected()) {
                 if (!gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) {
                     waitingForOtherPlayersToSendCard = true;
                 } else {

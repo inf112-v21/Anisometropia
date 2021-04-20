@@ -16,6 +16,7 @@ import launcher.GameApplication;
 import logic.GameLogic;
 import logic.PlayerQueue;
 import map.GraphicalGameMap;
+import map.MapSelector;
 
 public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
@@ -42,9 +43,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     int playersAdded = 1;
     boolean[] isAi = new boolean[maxPlayers];
     private StringBuilder[] allStringBuilders = new StringBuilder[maxPlayers];
-    private String[] maps = new String[]{"gameboard2", "crashSite"};
-    private int currentMapIndex = 0;
-    private String currentMap = maps[currentMapIndex];
+    private MapSelector mapSelector = new MapSelector();
 
     int[] colElemPos = { 192, 260, 520, 580, 614, 758, 790, 840 };
     int[] rowElemPos = { 576, 512, 448, 384, 320, 256, 192, 128 };
@@ -79,9 +78,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         backJumbled = localSetupRegionBy128[12][1];
         nameEditSquareActive = localSetupRegionBy256[13][0];
         nameEditSquareInactive = localSetupRegionBy256[14][0];
-
         scrollLeft = localSetupRegionBy32[21][4];
-
         scrollRight = localSetupRegionBy32[21][5];
         moveUp = localSetupRegionBy32[21][6];
         moveDown = localSetupRegionBy32[21][7];
@@ -142,7 +139,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         batch.draw(selectMap, colElemPos[1], rowElemPos[1]+200, selectMap.getRegionWidth(), selectMap.getRegionHeight());
         batch.draw(mapChangeLeft.getTexture(), mapChangeLeft.getX(), mapChangeLeft.getY(), mapChangeLeft.getWidth(), mapChangeLeft.getHeight());
         batch.draw(mapChangeRight.getTexture(), mapChangeRight.getX(),  mapChangeRight.getY(), mapChangeRight.getWidth(), mapChangeRight.getHeight());
-        font.draw(batch, currentMap, mapChangeLeft.getX()+52, mapChangeLeft.getY()+28);
+        font.draw(batch, mapSelector.getCurrentMap(), mapChangeLeft.getX()+52, mapChangeLeft.getY()+28);
 
         for (int i = 0; i < playersAdded; i++) {
             showAddedPlayerRows(batch, i);
@@ -181,8 +178,8 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
 
             if(backBtn.isMouseOnButton(mousePosition)) backButtonClicked();
             if(startBtn.isMouseOnButton(mousePosition)) startButtonClicked();
-            if(mapChangeLeft.isMouseOnButton(mousePosition)) mapChangeLeftClicked();
-            if(mapChangeRight.isMouseOnButton(mousePosition)) mapChangeRightClicked();
+            if(mapChangeLeft.isMouseOnButton(mousePosition)) mapSelector.mapChangeLeftClicked();
+            if(mapChangeRight.isMouseOnButton(mousePosition)) mapSelector.mapChangeRightClicked();
 
             ifClickedSwitchPlayerOrAiStatus(mousePosition);
             ifClickedRemoveAddedPlayer(mousePosition);
@@ -241,14 +238,6 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
                 break;
             }
         }
-    }
-
-    private void mapChangeRightClicked() {
-        currentMap = maps[Math.floorMod(++currentMapIndex, maps.length)];
-    }
-
-    private void mapChangeLeftClicked() {
-        currentMap = maps[Math.floorMod(--currentMapIndex, maps.length)];
     }
 
     private void ifHoveredMakeRemoveButtonBlue(Vector3 mousePosition) {
@@ -354,7 +343,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void startButtonClicked() {
-        GraphicalGameMap gameMap = new GraphicalGameMap(currentMap);
+        GraphicalGameMap gameMap = new GraphicalGameMap(mapSelector.getCurrentMap());
         PlayerQueue playerQueue = new PlayerQueue();
         int spawnIncrementer = 0;
         for (int i = 0; i < playersAdded; i++) {

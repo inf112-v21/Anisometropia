@@ -4,6 +4,7 @@ import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import p2p.Multiplayer;
 import screens.OnNetSetupScreen;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,8 +15,8 @@ public class MultiPlayerLogic {
     public int numPlayers;
     public ArrayList<Boolean> playersReady = new ArrayList<>();
 
-    public MultiPlayerLogic(GameLogic gameLogic) {
-        this.gameLogic = gameLogic;
+    public MultiPlayerLogic() {
+
     }
 
     /**
@@ -42,8 +43,7 @@ public class MultiPlayerLogic {
         }
 
         playersReady.set(OnNetSetupScreen.playerID, true);
-        System.out.println("I am sending " + OnNetSetupScreen.playerID+toSend);
-        mp.setToSend("CARD " + OnNetSetupScreen.playerID+toSend);
+        mp.setToSend("CARD "+OnNetSetupScreen.playerID+toSend);
     }
 
     public boolean checkIfAllPlayersReady() {
@@ -82,13 +82,6 @@ public class MultiPlayerLogic {
 
         playersReady.set(indexOfPlayerToChange, true);
         gameLogic.getPlayerQueue().getPlayerQueue().get(indexOfPlayerToChange).setChosenProgramCards(chosenCards);
-
-        String receivedCards = "";
-        for(ProgramCard card : chosenCards) {
-           receivedCards += card.getCardType();
-        }
-
-        System.out.println("I am receiving " + receivedCards);
     }
 
     /**
@@ -121,4 +114,7 @@ public class MultiPlayerLogic {
         return gameLogic;
     }
 
+    public void setGameLogic(GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
+    }
 }
