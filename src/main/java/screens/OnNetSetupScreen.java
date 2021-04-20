@@ -16,6 +16,7 @@ import logic.GameLogic;
 import logic.MultiPlayerLogic;
 import logic.PlayerQueue;
 import map.GraphicalGameMap;
+import map.MapSelector;
 import p2p.Multiplayer;
 
 import java.io.IOException;
@@ -49,9 +50,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private int editorIndex = -1;
     private final int numberOfInputEditors = 3;
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
-    private String[] maps = new String[]{"Chaos", "CrashSite"};
-    private int currentMapIndex = 0;
-    public String currentMap = maps[currentMapIndex];
+    private MapSelector mapSelector = new MapSelector();
 
     public static int playerID = 0;
     public static int numPlayers;
@@ -154,7 +153,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         batch.draw(selectMap, colElemPos[1], rowElemPos[1]+200, selectMap.getRegionWidth(), selectMap.getRegionHeight());
         batch.draw(mapChangeLeft.getTexture(), mapChangeLeft.getX(), mapChangeLeft.getY(), mapChangeLeft.getWidth(), mapChangeLeft.getHeight());
         batch.draw(mapChangeRight.getTexture(), mapChangeRight.getX(),  mapChangeRight.getY(), mapChangeRight.getWidth(), mapChangeRight.getHeight());
-        font.draw(batch, currentMap, mapChangeLeft.getX()+52, mapChangeLeft.getY()+28);
+        font.draw(batch, mapSelector.getCurrentMap(), mapChangeLeft.getX()+52, mapChangeLeft.getY()+28);
 
         setEditorIndex(editorIndex);
 
@@ -189,8 +188,8 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             if(receiveBtn.isMouseOnButton(mousePosition)) receiveButtonHasBeenClicked();
 
             if (!isHost && !isClient) {
-                if (mapChangeLeft.isMouseOnButton(mousePosition)) mapChangeLeftClicked();
-                if (mapChangeRight.isMouseOnButton(mousePosition)) mapChangeRightClicked();
+                if (mapChangeLeft.isMouseOnButton(mousePosition)) mapSelector.mapChangeLeftClicked();
+                if (mapChangeRight.isMouseOnButton(mousePosition)) mapSelector.mapChangeRightClicked();
             }
 
             editorIndex = indexOfInputEditorUnderMousePosition(mousePosition);
@@ -223,7 +222,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      */
     private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
-            gameMap = new GraphicalGameMap(currentMap);
+            gameMap = new GraphicalGameMap(mapSelector.getCurrentMap());
             playerQueue = new PlayerQueue();
             gameLogic = new GameLogic(gameMap, playerQueue, multiPlayerLogic);
             multiPlayerLogic.setGameLogic(gameLogic);
@@ -286,7 +285,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     public void startGame() {
         if (isClient) {
-            gameMap = new GraphicalGameMap(currentMap);
+            gameMap = new GraphicalGameMap(mapSelector.getCurrentMap());
             playerQueue = new PlayerQueue();
             gameLogic = new GameLogic(gameMap, playerQueue, multiPlayerLogic);
             multiPlayerLogic.setGameLogic(gameLogic);
@@ -313,14 +312,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         gameLogic.dealProgramCards();
         gameApplication.gameScreenManager.initPlayScreen(gameMap, gameLogic);
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.PLAY);
-    }
-
-    private void mapChangeRightClicked() {
-        if(!isHost && !isClient) currentMap = maps[Math.floorMod(++currentMapIndex, maps.length)];
-    }
-
-    private void mapChangeLeftClicked() {
-        if(!isHost && !isClient) currentMap = maps[Math.floorMod(--currentMapIndex, maps.length)];
     }
 
     private void ifHoveredMakeMapChangeLeftBlue(Vector3 mousePosition) {
@@ -420,11 +411,11 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     public String getCurrentMap() {
-        return currentMap;
+        return mapSelector.getCurrentMap();
     }
 
     public void setCurrentMap(String map) {
-        currentMap = map;
+        mapSelector.setCurrentMap(map);
     }
 
     @Override
