@@ -1,6 +1,5 @@
 package actor;
 
-import assets.Wall;
 import cards.ProgramCard;
 import logic.PlayerQueue;
 import map.GameMap;
@@ -85,7 +84,7 @@ public class Player implements IPlayer {
     //TODO: now lasers wont pass through any "wall"-tile even though it is to. Tell them which tiles they'r supposed to pass.
     public void playerShootsLaser(){
 //-------------if Player faces NORTH or SOUTH----------
-        if (getDirection() == 0){
+        if (getDirection() == 0){ //NORTH
             for (int i = 0 ; y + i < gameMap.getHeight(); i++ ){
                 if (!gameMap.getWall().checkIntoWall(x,y+i,0, 1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, 1)){
                     System.out.println("0 Laser Blocked by wall");
@@ -96,7 +95,7 @@ public class Player implements IPlayer {
                 }
             }
         }
-        if (getDirection() == 2 ) {
+        if (getDirection() == 2 ) {//SOUTH
             for (int i = 0; y + i > 0; i-- ){ //height = 0
                 if (!gameMap.getWall().checkIntoWall(x,y+i,0, -1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, -1)){
                     System.out.println("2 Laser Blocked by wall");
@@ -108,7 +107,7 @@ public class Player implements IPlayer {
             }
         }
 // -------------if Player faces WEST or EAST------------
-        if (getDirection() == 1 ) {
+        if (getDirection() == 1 ) {//EAST
             for (int i = 0; x + i < gameMap.getWidth(); i++ ){ //height = 0
                 if (!gameMap.getWall().checkIntoWall(x+i,y,1, 0) || !gameMap.getWall().checkOutOfWall(x+i,y,1, 0)){
                     System.out.println("1 Laser Blocked by wall");
@@ -119,7 +118,7 @@ public class Player implements IPlayer {
                 }
             }
         }
-        if (getDirection() == 3 ) {
+        if (getDirection() == 3 ) {//WEST
             for (int i = 0; x + i > 0; i-- ){ //height = 0
                 if (!gameMap.getWall().checkIntoWall(x+i,y,-1, 0) || !gameMap.getWall().checkOutOfWall(x+i,y,-1, 0)){
                     System.out.println("3 Laser Blocked by wall");
@@ -148,8 +147,6 @@ public class Player implements IPlayer {
             if (pushedPlayer.getX() == (x + dx) && pushedPlayer.getY() == (y + dy)) {
                 if (pushedPlayer.canMove(dx, dy)) {
                     pushedPlayer.move(dx, dy);
-                } else {
-                    move(-dx, -dy);
                 }
             }
         }
@@ -166,12 +163,6 @@ public class Player implements IPlayer {
         //Player cant move if he's dead
         if(isPlayerDead()) {
             return false;
-        }
-
-        //Players collides with each other
-        if (gameMap.isTherePlayerOnThisPosition(x+dx,y+dy)){
-            System.out.println(playerName + ": another player on position dx: " + dx + " dy: " +dy);
-            playersCollides(dx, dy);
         }
 
         //Players can't jump over holes
@@ -197,6 +188,12 @@ public class Player implements IPlayer {
         }
         if(wallIntoPositionBlocked || wallOutOfPositionBlocked){
             return false;
+        }else {
+            //players can collide aslong as there is no walls on the given position.
+            if (gameMap.isTherePlayerOnThisPosition(x+dx,y+dy)){
+                System.out.println(playerName + ": another player on this position (" + (x + dx) + ", "+(y +dy)+")");
+                playersCollides(dx, dy);
+            }
         }
         return (x + dx >= 0 && x + dx < gameMap.getWidth()) && (y + dy >= 0 && y + dy < gameMap.getHeight());
     }
