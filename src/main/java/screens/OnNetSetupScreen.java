@@ -49,7 +49,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private int editorIndex = -1;
     private final int numberOfInputEditors = 3;
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
-    private String[] maps = new String[]{"gameboard2", "crashSite"};
+    private String[] maps = new String[]{"Chaos", "CrashSite"};
     private int currentMapIndex = 0;
     public String currentMap = maps[currentMapIndex];
 
