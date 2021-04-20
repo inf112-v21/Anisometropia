@@ -71,10 +71,9 @@ public class Player implements IPlayer {
     }
 
     public Player getPlayerByPos(int x, int y){
-        for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++) {
-            Player playerByPos = playerQueue.getPlayerQueue().get(i);
-            if (playerByPos.getX() == x && playerByPos.getY() == y){
-                return playerByPos;
+        for (Player player : playerQueue.getPlayerQueue()) {
+            if (player.getX() == x && player.getY() == y){
+                return player;
             }
         }
         return null;

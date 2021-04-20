@@ -233,20 +233,14 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     /**
      * When host clicks start button, clients are signaled to do the same.
      * Player IDs are requested and sent. The game is initiated.
-     * TODO: Only activate button for host.
      * TODO: Support three or more players.
      */
-    public void startButtonClicked() throws IOException {
+    public void startButtonClicked() {
         if (isHost) {
-            int playerID = 0;
-            int numberOfPlayers;
-
             gameLogic.multiPlayerLogic.mp.setToSend("START");
             startGame();
         } else if (gameLogic.multiPlayerLogic.isConnected()){
             gameLogic.multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
-            System.out.println("MY PLAYER_ID: "+ playerID); // TODO: make a setter for this, and print out (now there is delay)
-            System.out.println("AMOUNT OF PLAYERS: "+ numPlayers); // TODO: make setter for this, w/printout (currently delay)
             if(canStart && numPlayers != 0) startGame();
         }
     }

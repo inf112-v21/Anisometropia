@@ -267,9 +267,7 @@ public class ControlScreen extends InputAdapter {
 
             if (gameLogic.multiPlayerLogic.isConnected()) {
                 if (!gameLogic.multiPlayerLogic.checkIfAllPlayersReady()) {
-                    System.out.println("setting waitingForOtherPlayers to true!");
                     waitingForOtherPlayersToSendCard = true;
-                    return;
                 } else {
                     makeClickToProgressAvailable();
                 }
