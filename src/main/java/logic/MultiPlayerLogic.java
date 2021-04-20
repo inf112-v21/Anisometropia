@@ -16,8 +16,8 @@ public class MultiPlayerLogic {
 
     public ArrayList<Boolean> playersReady = new ArrayList<>();
 
-    public MultiPlayerLogic(GameLogic gameLogic) {
-        this.gameLogic = gameLogic;
+    public MultiPlayerLogic() {
+
     }
 
     /**
@@ -108,4 +108,7 @@ public class MultiPlayerLogic {
         return gameLogic;
     }
 
+    public void setGameLogic(GameLogic gameLogic) {
+        this.gameLogic = gameLogic;
+    }
 }

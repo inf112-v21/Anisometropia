@@ -150,10 +150,19 @@ public class Multiplayer implements Runnable {
                 break;
             case "AMOUNT_PLAYERS_REQUEST":
                 send("AMOUNT_PLAYERS "+OnNetSetupScreen.numPlayers);
+                send("MAP "+onNetSetupScreen.getCurrentMap());
                 break;
             case "CARD":
                 onNetSetupScreen.getMultiplayerLogic().receiveCards(splitReceived);
                 onNetSetupScreen.setPlayersReady(Integer.parseInt(splitReceived[1]), true);
+                break;
+            case "MAP":
+                System.out.println("setting currentMap to: "+splitReceived[1]);
+                onNetSetupScreen.setCurrentMap(splitReceived[1]);
+                break;
+            case "MAP_REQUEST":
+                System.out.println("sending: "+onNetSetupScreen.getCurrentMap());
+                send("MAP "+onNetSetupScreen.getCurrentMap());
                 break;
             default:
                 System.out.println("(!!!) unrecognized message: "+received);

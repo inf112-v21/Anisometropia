@@ -44,18 +44,20 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private PlayerQueue playerQueue;
     private GameLogic gameLogic;
     public static boolean isHost;
+    public static boolean isClient;
 
     private int editorIndex = -1;
     private final int numberOfInputEditors = 3;
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
     private String[] maps = new String[]{"gameboard2", "crashSite"};
     private int currentMapIndex = 0;
-    private String currentMap = maps[currentMapIndex];
+    public String currentMap = maps[currentMapIndex];
 
     public static int playerID = 0;
     public static int numPlayers;
     public static boolean canStart;
 
+    MultiPlayerLogic multiPlayerLogic;
     public Thread mpThread;
 
     public OnNetSetupScreen(GameApplication gameApplication) {
@@ -124,9 +126,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         font.getData().setScale(1.8f);
         font.setColor(Color.BLACK);
 
-        gameMap = new GraphicalGameMap("gameboard2");
-        playerQueue = new PlayerQueue();
-        gameLogic = new GameLogic(gameMap, playerQueue);
+        multiPlayerLogic = new MultiPlayerLogic();
+//        gameMap = new GraphicalGameMap("gameboard2");
+//        playerQueue = new PlayerQueue();
+//        gameLogic = new GameLogic(gameMap, playerQueue);
     }
 
     @Override
@@ -148,12 +151,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         batch.draw(startBtn.getTexture(), startBtn.getX(), startBtn.getY(), startBtn.getWidth(), startBtn.getHeight());
         batch.draw(backBtn.getTexture(), backBtn.getX(), backBtn.getY(), backBtn.getWidth(), backBtn.getHeight());
 
-        if (isHost) {
-            batch.draw(selectMap, colElemPos[1], rowElemPos[1]+200, selectMap.getRegionWidth(), selectMap.getRegionHeight());
-            batch.draw(mapChangeLeft.getTexture(), mapChangeLeft.getX(), mapChangeLeft.getY(), mapChangeLeft.getWidth(), mapChangeLeft.getHeight());
-            batch.draw(mapChangeRight.getTexture(), mapChangeRight.getX(),  mapChangeRight.getY(), mapChangeRight.getWidth(), mapChangeRight.getHeight());
-            font.draw(batch, currentMap, mapChangeLeft.getX()+52, mapChangeLeft.getY()+28);
-        }
+        batch.draw(selectMap, colElemPos[1], rowElemPos[1]+200, selectMap.getRegionWidth(), selectMap.getRegionHeight());
+        batch.draw(mapChangeLeft.getTexture(), mapChangeLeft.getX(), mapChangeLeft.getY(), mapChangeLeft.getWidth(), mapChangeLeft.getHeight());
+        batch.draw(mapChangeRight.getTexture(), mapChangeRight.getX(),  mapChangeRight.getY(), mapChangeRight.getWidth(), mapChangeRight.getHeight());
+        font.draw(batch, currentMap, mapChangeLeft.getX()+52, mapChangeLeft.getY()+28);
 
         setEditorIndex(editorIndex);
 
@@ -176,12 +177,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
         ifHoveredMakeBackButtonBlueAndJumbled(mousePosition);
         ifHoveredMakeStartButtonBlueAndJumbled(mousePosition);
-        if (isHost) {
+        if (!isHost && !isClient) {
             ifHoveredMakeMapChangeLeftBlue(mousePosition);
             ifHoveredMakeMapChangeRightBlue(mousePosition);
         }
-
-
 
         if (Gdx.input.justTouched()) {
             if(joinButton.isMouseOnButton(mousePosition)) joinButtonHasBeenClicked();
@@ -189,11 +188,11 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             if(sendBtn.isMouseOnButton(mousePosition)) sendButtonHasBeenClicked();
             if(receiveBtn.isMouseOnButton(mousePosition)) receiveButtonHasBeenClicked();
 
-            if (isHost) {
-                if(mapChangeLeft.isMouseOnButton(mousePosition)) mapChangeLeftClicked();
-                if(mapChangeRight.isMouseOnButton(mousePosition)) mapChangeRightClicked();
+            if (!isHost && !isClient) {
+                if (mapChangeLeft.isMouseOnButton(mousePosition)) mapChangeLeftClicked();
+                if (mapChangeRight.isMouseOnButton(mousePosition)) mapChangeRightClicked();
             }
-            
+
             editorIndex = indexOfInputEditorUnderMousePosition(mousePosition);
 
             if(backBtn.isMouseOnButton(mousePosition)) backButtonClicked();
@@ -216,7 +215,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void receiveButtonHasBeenClicked() {
-        gameLogic.multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
+        multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
     }
 
     /**
@@ -224,13 +223,19 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      */
     private void hostButtonHasBeenClicked() throws IOException {
         if (hostButton.isActive) {
-            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE, this);
-            gameLogic.multiPlayerLogic.initializeID();
-            Thread mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
+            gameMap = new GraphicalGameMap(currentMap);
+            playerQueue = new PlayerQueue();
+            gameLogic = new GameLogic(gameMap, playerQueue, multiPlayerLogic);
+            multiPlayerLogic.setGameLogic(gameLogic);
+            multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE, this);
+            multiPlayerLogic.initializeID();
+            Thread mpThread = new Thread(multiPlayerLogic.mp);
             mpThread.start();
 
             setHost(true);
 
+            mapChangeLeft.setTexture(onNetSetupRegionBy32[21][4]);
+            mapChangeRight.setTexture(onNetSetupRegionBy32[21][5]);
             startBtn.setActive(true);
             startBtn.setTexture(start);
             hostButton.setActive(false);
@@ -246,18 +251,21 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      */
     private void joinButtonHasBeenClicked() throws IOException {
         if (joinButton.isActive) {
-            gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE, this);
-            mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
+            multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE, this);
+            mpThread = new Thread(multiPlayerLogic.mp);
             mpThread.start();
 
-            setHost(false);
+//            setHost(false);
+            isClient = true;
 
+            mapChangeLeft.setTexture(onNetSetupRegionBy32[21][4]);
+            mapChangeRight.setTexture(onNetSetupRegionBy32[21][5]);
             joinButton.setActive(false);
             joinButton.setTexture(joinBtnOnTexture);
             hostButton.setActive(false);
             hostButton.setTexture(hostBtnOffTexture);
 
-            gameLogic.multiPlayerLogic.mp.setToSend("ID_REQUEST");
+            multiPlayerLogic.mp.setToSend("ID_REQUEST");
         }
     }
 
@@ -268,15 +276,21 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      */
     public void startButtonClicked() {
         if (isHost) {
-            gameLogic.multiPlayerLogic.mp.setToSend("START");
+            multiPlayerLogic.mp.setToSend("START");
             startGame();
-        } else if (gameLogic.multiPlayerLogic.isConnected()){
-            gameLogic.multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
+        } else if (multiPlayerLogic.isConnected()){
+            multiPlayerLogic.mp.setToSend("AMOUNT_PLAYERS_REQUEST");
             if(canStart && numPlayers != 0) startGame();
         }
     }
 
     public void startGame() {
+        if (isClient) {
+            gameMap = new GraphicalGameMap(currentMap);
+            playerQueue = new PlayerQueue();
+            gameLogic = new GameLogic(gameMap, playerQueue, multiPlayerLogic);
+            multiPlayerLogic.setGameLogic(gameLogic);
+        }
         int spawnIncrementer = 0;
         // Store your designated player instance as local to you, all other players non-local.
         for (int i = 0; i < numPlayers; i++) {
@@ -302,11 +316,11 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     private void mapChangeRightClicked() {
-        currentMap = maps[Math.floorMod(++currentMapIndex, maps.length)];
+        if(!isHost && !isClient) currentMap = maps[Math.floorMod(++currentMapIndex, maps.length)];
     }
 
     private void mapChangeLeftClicked() {
-        currentMap = maps[Math.floorMod(--currentMapIndex, maps.length)];
+        if(!isHost && !isClient) currentMap = maps[Math.floorMod(--currentMapIndex, maps.length)];
     }
 
     private void ifHoveredMakeMapChangeLeftBlue(Vector3 mousePosition) {
@@ -344,7 +358,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     public MultiPlayerLogic getMultiplayerLogic() {
-        return gameLogic.multiPlayerLogic;
+        return multiPlayerLogic;
     }
 
     public static void setHost(boolean i){
@@ -352,15 +366,15 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     public ArrayList<Boolean> getPlayersReady() {
-        return getMultiplayerLogic().playersReady;
+        return multiPlayerLogic.playersReady;
     }
 
     public void setPlayersReady(int index, boolean bool) {
-        getMultiplayerLogic().playersReady.set(index, bool);
+        multiPlayerLogic.playersReady.set(index, bool);
     }
 
     public void addUnreadyPlayerToPlayerReadyList() {
-        getMultiplayerLogic().playersReady.add(false);
+        multiPlayerLogic.playersReady.add(false);
     }
 
     public String getIPAddress() {
@@ -382,7 +396,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public boolean keyTyped(char c) {
-        if (!gameLogic.multiPlayerLogic.isConnected()) {
+        if (!multiPlayerLogic.isConnected()) {
             if (editorIndex != -1) {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE)) {
                     if (allStringBuilders[editorIndex].length() > 0)
@@ -405,6 +419,14 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.MENU);
     }
 
+    public String getCurrentMap() {
+        return currentMap;
+    }
+
+    public void setCurrentMap(String map) {
+        currentMap = map;
+    }
+
     @Override
     public void show() {
         Gdx.input.setInputProcessor(this);
@@ -412,10 +434,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     @Override
     public void dispose() {
-        if (gameLogic.multiPlayerLogic.isConnected()) {
-            gameLogic.multiPlayerLogic.mp.connected = false;
+        if (multiPlayerLogic.isConnected()) {
+            multiPlayerLogic.mp.connected = false;
             try {
-                gameLogic.multiPlayerLogic.mp.disconnect();
+                multiPlayerLogic.mp.disconnect();
             } catch (IOException ignored) {
             }
         }

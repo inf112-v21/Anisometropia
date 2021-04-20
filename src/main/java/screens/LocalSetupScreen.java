@@ -79,9 +79,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         backJumbled = localSetupRegionBy128[12][1];
         nameEditSquareActive = localSetupRegionBy256[13][0];
         nameEditSquareInactive = localSetupRegionBy256[14][0];
-
         scrollLeft = localSetupRegionBy32[21][4];
-
         scrollRight = localSetupRegionBy32[21][5];
         moveUp = localSetupRegionBy32[21][6];
         moveDown = localSetupRegionBy32[21][7];
