@@ -31,7 +31,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     TextureRegion joinBtnTexture, joinBtnOnTexture, joinBtnOffTexture, sendBtnTexture, receiveBtnTexture;
     TextureRegion editLocalhostTexture, editLocalhostInactiveTexture, editPortTexture, editPortInactiveTexture;
     TextureRegion editPlayerNameTexture, editPlayerNameInactiveTexture;
-    TextureRegion selectMap, mapChangeLeftTexture, mapChangeRightTexture ,mapChangeLeftHoveredTexture, mapChangeRightHoveredTexture;;
+    TextureRegion selectMap, mapChangeLeftTexture, mapChangeRightTexture ,mapChangeLeftHoveredTexture, mapChangeRightHoveredTexture;
 
     GameButton startBtn, backBtn, hostButton, joinButton, sendBtn, receiveBtn, editLocalHostBtn, editPortBtn, editPlayerNameBtn;
     GameButton mapChangeLeft, mapChangeRight;
@@ -168,7 +168,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     }
 
     @Override
-    public void update(float delta) throws IOException {
+    public void update(float delta) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
             gameApplication.gameScreenManager.setScreen(GameScreenManager.STATE.MENU);
         }
@@ -222,7 +222,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     /**
      * Sets up a new connection as host.
      */
-    private void hostButtonHasBeenClicked() throws IOException {
+    private void hostButtonHasBeenClicked() {
         if (hostButton.isActive) {
             gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.TRUE, this);
             gameLogic.multiPlayerLogic.initializeID();
@@ -244,7 +244,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
      * Connects to host. When connection is formed, waits for host to start the game.
      * TODO: Avoid crashing when no host is available.
      */
-    private void joinButtonHasBeenClicked() throws IOException {
+    private void joinButtonHasBeenClicked() {
         if (joinButton.isActive) {
             gameLogic.multiPlayerLogic.mp = new Multiplayer(Boolean.FALSE, this);
             mpThread = new Thread(gameLogic.multiPlayerLogic.mp);
@@ -395,8 +395,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
                     allStringBuilders[editorIndex].append(c);
                 }
             }
-        } else {
-            // TODO: what happens after connected = true (player selection setup)
         }
         return false;
     }

@@ -5,7 +5,7 @@ import assets.*;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import map.GameMap;
-import map.GraphicalGameMap;
+import screens.OnNetSetupScreen;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class GameLogic {
     GameMap gameMap;
     PlayerQueue playerQueue;
     DeckOfProgramCards deckOfProgramCards;
-    //From assets
+    // From assets
     ConveyorBelts conveyorBelts;
     Laser laser;
     Gear gear;
@@ -68,7 +68,7 @@ public class GameLogic {
      * Saves player's chosen cards and ends the turn.
      * @param chosenCards cards player has chosen.
      */
-    public void finishCardSelectionTurn(ArrayList<ProgramCard> chosenCards) throws IOException {
+    public void finishCardSelectionTurn(ArrayList<ProgramCard> chosenCards) {
         if(multiPlayerLogic.isConnected()) {
             System.out.println("connected");
             getCurrentPlayer().setChosenProgramCards(chosenCards);
@@ -80,7 +80,7 @@ public class GameLogic {
 
             System.out.println("Chosen cards of current player " + currentPlayerCards);
             if(getCurrentPlayer().isLocal) multiPlayerLogic.sendCards();
-            playerQueue.setCurrentPlayerToFirstInQueue();
+            playerQueue.setCurrentPlayer(0);
         }
         else  {
             if(!getCurrentPlayer().isAi()) getCurrentPlayer().setChosenProgramCards(chosenCards);
@@ -91,7 +91,7 @@ public class GameLogic {
      * Executes chosen cards for players, one card at a time (and updates counter)
      */
     public void executeCard() {
-        if (!getCurrentPlayer().isDead) {
+        if (!getCurrentPlayer().isDead || !getCurrentPlayer().isPoweredDown) {
             getCurrentPlayer().getChosenProgramCards().get(currentCardExecutionNumber).executeProgram(getCurrentPlayer());
         }
 
@@ -169,6 +169,11 @@ public class GameLogic {
         }
     }
 
+    public void announcePowerDown() {
+        getCurrentPlayer().announcePowerDown();
+        if (multiPlayerLogic.isConnected()) multiPlayerLogic.sendPowerDown();
+    }
+
     private void initiateAnnouncedPowerDowns() {
         for (Player player : playerQueue.getPlayerQueue()) {
             player.isPoweredDown = false;
@@ -220,4 +225,5 @@ public class GameLogic {
         return playerQueue;
     }
 
+    public Player getLocalPlayer() { return playerQueue.getPlayerQueue().get(OnNetSetupScreen.playerID); }
 }

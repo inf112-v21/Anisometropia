@@ -4,7 +4,6 @@ import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import p2p.Multiplayer;
 import screens.OnNetSetupScreen;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -13,7 +12,6 @@ public class MultiPlayerLogic {
     public Multiplayer mp;
     public boolean firstTurn;
     public int numPlayers;
-
     public ArrayList<Boolean> playersReady = new ArrayList<>();
 
     public MultiPlayerLogic(GameLogic gameLogic) {
@@ -30,7 +28,6 @@ public class MultiPlayerLogic {
 
     /**
      * Method for sending the current players chosen cards
-     * @throws IOException
      */
     public void sendCards() {
         firstTurn = false;
@@ -46,7 +43,7 @@ public class MultiPlayerLogic {
 
         playersReady.set(OnNetSetupScreen.playerID, true);
         System.out.println("I am sending " + OnNetSetupScreen.playerID+toSend);
-        mp.setToSend("CARD "+OnNetSetupScreen.playerID+toSend);
+        mp.setToSend("CARD " + OnNetSetupScreen.playerID+toSend);
     }
 
     public boolean checkIfAllPlayersReady() {
@@ -58,15 +55,15 @@ public class MultiPlayerLogic {
 
     public void setPlayersNotReady() {
         for (int i = 0; i < playersReady.size(); i++) {
+            if (gameLogic.getPlayerQueue().getPlayerQueue().get(i).isPoweredDown) continue;
             playersReady.set(i, false);
         }
     }
 
     /**
      * Method for receiving the other players chosen cards
-     * @throws IOException
      */
-    public void receiveCards(String[] messageReceived) throws IOException {
+    public void receiveCards(String[] messageReceived) {
         DeckOfProgramCards deckOfProgramCards = new DeckOfProgramCards();
         ArrayList<ProgramCard> chosenCards = new ArrayList<>();
 
@@ -92,6 +89,22 @@ public class MultiPlayerLogic {
         }
 
         System.out.println("I am receiving " + receivedCards);
+    }
+
+    /**
+     * Sends message that player is intending to power down next round.
+     */
+    public void sendPowerDown() {
+        mp.setToSend("POWER_DOWN " + OnNetSetupScreen.playerID);
+    }
+
+    /**
+     * Receives message of player's intention to power down next round.
+     * @param messageReceived contains playerID of relevant player.
+     */
+    public void receivePowerDown(String[] messageReceived) {
+        int playerToPowerDown = Integer.parseInt(messageReceived[1]);
+        gameLogic.getPlayerQueue().getPlayerQueue().get(playerToPowerDown).announcePowerDown();
     }
 
     /**

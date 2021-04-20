@@ -61,7 +61,12 @@ public class PlayerQueue {
         }
     }
 
-    public void setCurrentPlayerToFirstInQueue() {
-        turnCounter = 0;
+    /**
+     * Sets current player using index in playerList.
+     * @param playerIndex given index.
+     */
+    public void setCurrentPlayer(int playerIndex) {
+        turnCounter = playerIndex;
+        if (playerList.get(playerIndex).isPoweredDown) setCurrentPlayer(playerIndex + 1);
     }
 }

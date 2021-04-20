@@ -172,6 +172,8 @@ public class ControlScreen extends InputAdapter {
                 } else {
                     drawCardsOfCurrentPlayer(batch);
                 }
+            }else if (gameLogic.getLocalPlayer().isPoweredDown && gameLogic.multiPlayerLogic.isConnected()) {
+                waitingForOtherPlayersToSendCard = true;
             }
             else gameLogic.getPlayerQueue().next();
         }
@@ -257,7 +259,7 @@ public class ControlScreen extends InputAdapter {
         numCardsChosen = 0;
     }
 
-    public void acceptButtonHasBeenClicked() throws IOException {
+    public void acceptButtonHasBeenClicked() {
         if (acceptButton.isActive) {
             acceptButton.setActive(false);
             acceptButton.setTexture(acceptTextureUnavailable);
@@ -283,7 +285,7 @@ public class ControlScreen extends InputAdapter {
     private void makeClickToProgressAvailable() {
         progressButton.setActive(true);
         progressButton.setTexture(progressTexture);
-        gameLogic.getPlayerQueue().next();
+        if (!gameLogic.multiPlayerLogic.isConnected()) gameLogic.getPlayerQueue().next();
         cardExecutionInProgress = true;
     }
 
@@ -300,7 +302,7 @@ public class ControlScreen extends InputAdapter {
     }
 
     private void powerDownButtonHasBeenClicked() {
-        gameLogic.getCurrentPlayer().announcePowerDown();
+        gameLogic.announcePowerDown();
     }
 
     /**

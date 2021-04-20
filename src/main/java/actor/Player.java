@@ -57,6 +57,7 @@ public class Player implements IPlayer {
 
         this.isAi = isAi;
     }
+
     public void setPlayerQueue(PlayerQueue playerQueue){
         this.playerQueue = playerQueue;
     }
@@ -131,11 +132,11 @@ public class Player implements IPlayer {
 
 
     /**
-     * @param dx
-     * @param dy
      * if current player(1) collides with a player(2), this player(2) is to be moved in the same direction as
      * the player moves.
      * Called in canMove.
+     * @param dx distance to move in x direction
+     * @param dy distance to move in y direction
      */
     public void playersCollides(int dx, int dy){
         for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++){
@@ -204,6 +205,7 @@ public class Player implements IPlayer {
             if (isPlayerDead()) break;
         }
     }
+
     public void moveByDirection(int desiredDirection){
         switch(desiredDirection) {
             case 0:
@@ -272,7 +274,6 @@ public class Player implements IPlayer {
         hasAnnouncedPowerDown = true;
     }
 
-    //TODO: the player should wait out one round if powered down.
     public void powerDownRobot() {
         isPoweredDown = true;
         setDmgTokens(0);

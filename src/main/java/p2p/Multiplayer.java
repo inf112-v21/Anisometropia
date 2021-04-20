@@ -26,14 +26,14 @@ public class Multiplayer implements Runnable {
     /**
     @param host True if hosting, false if joining an already opened connection.
      */
-    public Multiplayer(Boolean host, OnNetSetupScreen onNetSetupScreen) throws IOException {
+    public Multiplayer(Boolean host, OnNetSetupScreen onNetSetupScreen) {
         hosting = host;
         this.onNetSetupScreen = onNetSetupScreen;
     }
 
     /**
      * Call me when the game is finished
-     * @throws IOException
+     * @throws IOException e
      */
     public void disconnect() throws IOException {
         // TODO: Server socket should also be closed for the server!
@@ -45,7 +45,7 @@ public class Multiplayer implements Runnable {
 
     /**
      * @param msg Message to send as a string
-     * @throws IOException
+     * @throws IOException e
      */
     public void send(String msg) throws IOException {
         dataOutput.println(msg);
@@ -55,8 +55,7 @@ public class Multiplayer implements Runnable {
      * Actively listens for another machine to send a message.
      * Only receives 1 message (string), to receive multiple messages,
      * call again or create a loop.
-     * @return returns the received string
-     * @throws IOException
+     * @throws IOException e
      */
     public void receive() throws IOException {
         if(dataInput.available() > 0) {
@@ -154,6 +153,9 @@ public class Multiplayer implements Runnable {
             case "CARD":
                 onNetSetupScreen.getMultiplayerLogic().receiveCards(splitReceived);
                 onNetSetupScreen.setPlayersReady(Integer.parseInt(splitReceived[1]), true);
+                break;
+            case "POWER_DOWN":
+                onNetSetupScreen.getMultiplayerLogic().receivePowerDown(splitReceived);
                 break;
             default:
                 System.out.println("(!!!) unrecognized message: "+received);
