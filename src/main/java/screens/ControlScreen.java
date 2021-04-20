@@ -285,7 +285,7 @@ public class ControlScreen extends InputAdapter {
     private void makeClickToProgressAvailable() {
         progressButton.setActive(true);
         progressButton.setTexture(progressTexture);
-        if (!gameLogic.multiPlayerLogic.isConnected()) gameLogic.getPlayerQueue().next();
+        if (gameLogic.multiPlayerLogic != null && !gameLogic.multiPlayerLogic.isConnected()) gameLogic.getPlayerQueue().next();
         cardExecutionInProgress = true;
     }
 
