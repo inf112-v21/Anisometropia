@@ -1,6 +1,7 @@
 package assets;
 
 import actor.Player;
+import com.badlogic.gdx.Game;
 import map.GameMap;
 
 public class Repair extends DamageAssets {
@@ -12,21 +13,24 @@ public class Repair extends DamageAssets {
             player.setNewCheckpoint();
         }
     }
+    public void drawOptionCardIfPossible(Player player, GameMap gameMap){
+        if (gameMap.isThereRepairStationOnThisPosition(player.getX(), player.getY())) {
+            int wrenchID = gameMap.getAssetLayerID(player.getX(), player.getY());
+            if (wrenchID == doubleWrench){
+                player.drawOptionCard();
+            }
+        }
+    }
 
     //TODO when player walks on a doubleWrench Player is to draw an OPTION CARD
     public void repairSite(int wrenchID, Player player){
         switch (wrenchID){
             case (wrench):
+            case (doubleWrench):
                 if(player.getDmgTokens()>0){
                     player.updateDamageTokens(-1);
                 }
                 break;
-
-            case (doubleWrench):
-                if(player.getDmgTokens()>0) {
-                    player.updateDamageTokens(-1);
-                }
-                player.drawOptionCard();
         }
     }
 }
