@@ -34,7 +34,6 @@ public class GameLogic {
     public static String gameMessage;
 
     public GameLogic(GameMap gameMap, PlayerQueue playerQueue) {
-//        multiPlayerLogic = new MultiPlayerLogic();
         this.gameMap = gameMap;
         this.playerQueue = playerQueue;
         conveyorBelts = new ConveyorBelts();
@@ -137,9 +136,7 @@ public class GameLogic {
                 repair.updatePlayersHealth(player,gameMap);
                 System.out.println("you restored 2 Health Points");
             }
-
-
-
+            
             if (checkLoss(player.getX(), player.getY())) {
                 if(!player.isDead) {
                     player.playerDies();
