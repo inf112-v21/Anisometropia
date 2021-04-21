@@ -46,7 +46,7 @@ public class ControlScreen extends InputAdapter {
     BitmapFont smallFont, bigFont;
 
     //Variables used to create buttons
-    TextureRegion[][] gameButtonsSpriteSheet, multiPlayerButtons, powerDownButtonRegion;
+    TextureRegion[][] gameButtonsSpriteSheet, powerDownButtonRegion;
     TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, powerDownButtonTexture;
 
     GameButton acceptButton, progressButton, borderButton, powerDownButton;
@@ -170,8 +170,8 @@ public class ControlScreen extends InputAdapter {
         drawLifeTokensOfCurrentPlayer(batch);
 
         for (int i = 0; i < gameLogic.getPlayerQueue().getPlayerQueue().size(); i++) {
-            smallFont.draw(batch,gameLogic.getPlayerQueue().getPlayerQueue().get(i).playerName,1200, 620-(i*32));
-            if(gameLogic.getPlayerQueue().getPlayerQueue().get(i).equals(gameLogic.getCurrentPlayer())) smallFont.draw(batch,">>>",1130, 620-(i*32));
+            smallFont.draw(batch,gameLogic.getPlayerQueue().getPlayerQueue().get(i).playerName,1170, 500-(i*32));
+            if(gameLogic.getPlayerQueue().getPlayerQueue().get(i).equals(gameLogic.getCurrentPlayer())) smallFont.draw(batch,">>>",1100, 500-(i*32));
         }
 
         if(GameLogic.gameOver) bigFont.draw(batch, GameLogic.gameMessage, 0, 56);
@@ -182,7 +182,7 @@ public class ControlScreen extends InputAdapter {
                 "4. click to progress actions\n" +
                 "\n" +
                 "R:              restart the game\n" +
-                "ESCAPE:  exit", 1100, 200);
+                "ESCAPE:  exit", 1100, 750);
 
         batch.end();
     }
