@@ -74,7 +74,7 @@ public class ControlScreen extends InputAdapter {
         //Creating power down button
         powerDownButtonRegion = TextureRegion.split(new Texture("powerDown.png"),800,800);
         powerDownButtonTexture = powerDownButtonRegion[0][0];
-        powerDownButton = new GameButton(850, -50, 200,200, false, powerDownButtonTexture);
+        powerDownButton = new GameButton(890, -10, 140,140, false, powerDownButtonTexture);
 
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
@@ -321,8 +321,6 @@ public class ControlScreen extends InputAdapter {
             }
         }
     }
-
-
 
     private void drawOptionCardsOfCurrentPlayer(SpriteBatch batch) {
         Player player = gameLogic.getCurrentPlayer();
