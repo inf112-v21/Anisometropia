@@ -165,6 +165,9 @@ public class Multiplayer implements Runnable {
             case "POWER_DOWN":
                 onNetSetupScreen.getMultiplayerLogic().receivePowerDown(splitReceived);
                 break;
+            case "OPTION_CARD":
+                onNetSetupScreen.getMultiplayerLogic().receiveOptionCard(splitReceived);
+                break;
             default:
                 System.out.println("(!!!) unrecognized message: "+received);
         }

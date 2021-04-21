@@ -5,10 +5,8 @@ import assets.*;
 import cards.DeckOfProgramCards;
 import cards.ProgramCard;
 import map.GameMap;
-import map.GraphicalGameMap;
 import screens.OnNetSetupScreen;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameLogic {
@@ -132,7 +130,7 @@ public class GameLogic {
             //repair assets:
             laser.updatePlayersHealth(player, gameMap);
             repair.updatePlayersHealth(player, gameMap);
-            if (player.myUpgrades.contains("repairAtDoubleSpeed")){
+            if (player.myUpgrade.equals("repairAtDoubleSpeed")){
                 System.out.println("You restored 2 Health Points");
                 repair.updatePlayersHealth(player,gameMap);
             }
@@ -158,12 +156,19 @@ public class GameLogic {
         initiateAnnouncedPowerDowns();
         respawnPlayersIfPossible();
         checkIfOnlyOnePlayerLeft();
+        boolean localDrewOptionCard = false;
         for (Player player : playerQueue.getPlayerQueue()){
-            repair.drawOptionCardIfPossible(player,gameMap);
+            if (player.isLocal)
+                if (repair.drawOptionCardIfPossible(player, gameMap))
+                    localDrewOptionCard = true;
             player.playerShootsLaser();
             player.upgradeLasers();
         }
-        if (multiPlayerLogic != null && multiPlayerLogic.isConnected()) multiPlayerLogic.setPlayersNotReady();
+        if (multiPlayerLogic != null && multiPlayerLogic.isConnected()) {
+            multiPlayerLogic.setPlayersNotReady();
+            if (localDrewOptionCard)
+                multiPlayerLogic.sendOptionCard();
+        }
     }
 
     private void checkIfOnlyOnePlayerLeft() {

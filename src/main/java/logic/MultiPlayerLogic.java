@@ -46,20 +46,6 @@ public class MultiPlayerLogic {
         mp.setToSend("CARD "+OnNetSetupScreen.playerID+toSend);
     }
 
-    public boolean checkIfAllPlayersReady() {
-        for (Boolean bool : playersReady) {
-            if(!bool) return false;
-        }
-        return true;
-    }
-
-    public void setPlayersNotReady() {
-        for (int i = 0; i < playersReady.size(); i++) {
-            if (gameLogic.getPlayerQueue().getPlayerQueue().get(i).isPoweredDown) continue;
-            playersReady.set(i, false);
-        }
-    }
-
     /**
      * Method for receiving the other players chosen cards
      */
@@ -101,6 +87,41 @@ public class MultiPlayerLogic {
     }
 
     /**
+     * Sends drawn option card of the local player.
+     */
+    public void sendOptionCard() {
+        mp.setToSend("OPTION_CARD " + OnNetSetupScreen.playerID + " " + gameLogic.getLocalPlayer().getUpgrade());
+    }
+
+    /**
+     * Receives option card along with the player to assign it to.
+     * @param messageReceived of format "playerID <option card>"
+     */
+    public void receiveOptionCard(String[] messageReceived) {
+        int playerToUpgrade = Integer.parseInt(messageReceived[1]);
+        String drawnOptionCard = messageReceived[2];
+        gameLogic.getPlayerQueue().getPlayerQueue().get(playerToUpgrade).setUpgrade(drawnOptionCard);
+    }
+
+    /**
+     * Checks if all players have chosen their desired cards.
+     * @return boolean.
+     */
+    public boolean checkIfAllPlayersReady() {
+        for (Boolean bool : playersReady) {
+            if(!bool) return false;
+        }
+        return true;
+    }
+
+    public void setPlayersNotReady() {
+        for (int i = 0; i < playersReady.size(); i++) {
+            if (gameLogic.getPlayerQueue().getPlayerQueue().get(i).isPoweredDown) continue;
+            playersReady.set(i, false);
+        }
+    }
+
+    /**
      * Prepares variables to be used for assigning player IDs.
      */
     public void initializeID() {
@@ -117,4 +138,5 @@ public class MultiPlayerLogic {
     public void setGameLogic(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
     }
+
 }
