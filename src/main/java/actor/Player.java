@@ -82,7 +82,7 @@ public class Player implements IPlayer {
         return null;
     }
 
-    public void upgrades(){
+    public void upgradeLasers(){
         if (myUpgrades.contains("doubleLaser")){
             playerShootsLaser();
         }

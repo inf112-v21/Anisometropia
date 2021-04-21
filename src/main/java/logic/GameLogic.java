@@ -159,8 +159,9 @@ public class GameLogic {
         respawnPlayersIfPossible();
         checkIfOnlyOnePlayerLeft();
         for (Player player : playerQueue.getPlayerQueue()){
+            player.drawOptionCard();
             player.playerShootsLaser();
-            player.upgrades();
+            player.upgradeLasers();
         }
         if (multiPlayerLogic != null && multiPlayerLogic.isConnected()) multiPlayerLogic.setPlayersNotReady();
     }
