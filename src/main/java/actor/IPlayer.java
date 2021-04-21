@@ -33,14 +33,15 @@ public interface IPlayer {
     Player getPlayerByPos(int x, int y);
 
     /**
-     * Uses any upgrades collected through Option Cards to upgrade a robot's lasers.
+     * If any upgrades to laser - shoots multiple lasers.
+     * Else fires of one laser beam in players faced direction.
      */
-    void upgradeLasers();
+    void playerShootLaser();
 
     /**
-     * Robot shoots a laser that can damage players and be stopped by walls.
+     * Robot shoots a laser based of players direction, that can damage players and be stopped by walls.
      */
-    void playerShootsLaser();
+    void shootLaserBasedOnPlayersDirection();
 
     /**
      * Clears player's shot lasers from the board.

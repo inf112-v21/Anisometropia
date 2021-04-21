@@ -161,9 +161,7 @@ public class GameLogic {
             if (player.isLocal)
                 if (repair.drawOptionCardIfPossible(player, gameMap))
                     localDrewOptionCard = true;
-            player.playerShootsLaser();
-            player.upgradeLasers();
-            player.placeLasers();
+            player.playerShootLaser();
         }
         if (multiPlayerLogic != null && multiPlayerLogic.isConnected()) {
             multiPlayerLogic.setPlayersNotReady();

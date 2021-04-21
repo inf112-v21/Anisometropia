@@ -86,29 +86,31 @@ public class Player implements IPlayer {
         return null;
     }
 
-    public void upgradeLasers(){
+    public void playerShootLaser(){
         if (myUpgrade.equals("doubleLaser")){
-            playerShootsLaser();
+            shootLaserBasedOnPlayersDirection();
         }
         if (myUpgrade.equals("shootBehind")){
             rotate(2);
-            playerShootsLaser();
+            shootLaserBasedOnPlayersDirection();
             rotate(2);
         }
         if (myUpgrade.equals("sideLasers")){
             rotate(1);
-            playerShootsLaser();
+            shootLaserBasedOnPlayersDirection();
             rotate(2);
-            playerShootsLaser();
+            shootLaserBasedOnPlayersDirection();
             rotate(1);
         }
+        shootLaserBasedOnPlayersDirection();
+        placeLasers();
     }
 
     //TODO: now lasers wont pass through any "wall"-tile even though it is to. Tell them which tiles they'r supposed to pass.
-    public void playerShootsLaser(){
+    public void shootLaserBasedOnPlayersDirection(){
 //-------------if Player faces NORTH or SOUTH----------
         if (getDirection() == 0){ //NORTH
-            for (int i = 0 ; y + i < gameMap.getHeight(); i++ ){
+            for (int i = 0 ; y + i < gameMap.getHeight()-1; i++ ){
                 if (i!=0){
                     Point coordinates = new Point(x, y+i);
                     shootingLaserLocationsVertical.add(coordinates);
@@ -143,7 +145,7 @@ public class Player implements IPlayer {
         }
 // -------------if Player faces WEST or EAST------------
         if (getDirection() == 1 ) {//EAST
-            for (int i = 0; x + i < gameMap.getWidth(); i++ ){ //height = 0
+            for (int i = 0; x + i < gameMap.getWidth()-1; i++ ){ //height = 0
 
                 if (i!=0){
                     Point coordinates = new Point(x+i, y);
