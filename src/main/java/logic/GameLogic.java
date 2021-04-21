@@ -182,7 +182,7 @@ public class GameLogic {
 
     public void announcePowerDown() {
         getCurrentPlayer().announcePowerDown();
-        if (multiPlayerLogic.isConnected()) multiPlayerLogic.sendPowerDown();
+        if (multiPlayerLogic != null && multiPlayerLogic.isConnected()) multiPlayerLogic.sendPowerDown();
     }
 
     private void initiateAnnouncedPowerDowns() {
