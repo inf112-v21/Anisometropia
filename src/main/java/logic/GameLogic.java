@@ -134,11 +134,7 @@ public class GameLogic {
             //repair assets:
             laser.updatePlayersHealth(player, gameMap);
             repair.updatePlayersHealth(player, gameMap);
-            if (player.myUpgrade.equals("repairAtDoubleSpeed")){
-                System.out.println("You restored 2 Health Points");
-                repair.updatePlayersHealth(player,gameMap);
-            }
-            //player.clearPlayerShootLaserBoard();
+
             if (checkLoss(player.getX(), player.getY())) {
                 if(!player.isDead) {
                     player.playerDies();
