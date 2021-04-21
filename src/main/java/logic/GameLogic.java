@@ -90,6 +90,9 @@ public class GameLogic {
         else  {
             if(!getCurrentPlayer().isAi()) getCurrentPlayer().setChosenProgramCards(chosenCards);
         }
+        for (Player player: playerQueue.getPlayerQueue()){
+            player.clearPlayerShootLaserBoard();
+        }
     }
 
     /**
@@ -134,7 +137,7 @@ public class GameLogic {
                 System.out.println("You restored 2 Health Points");
                 repair.updatePlayersHealth(player,gameMap);
             }
-            player.clearPlayerShootLaserBoard();
+            //player.clearPlayerShootLaserBoard();
             if (checkLoss(player.getX(), player.getY())) {
                 if(!player.isDead) {
                     player.playerDies();
