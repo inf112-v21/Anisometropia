@@ -20,7 +20,7 @@ import static screens.PlayScreen.PIXEL_SCALE_FOR_ASSETS;
 public class GraphicalGameMap extends GameMap {
     TiledMap tiledMap;
     OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
-    TiledMapTileLayer boardLayer, laserLayer, assetLayer, playerLayer;
+    TiledMapTileLayer boardLayer, laserLayer, assetLayer, playerLayer, playerShootLaser;
 
     private int Hole_YellowBoarder = 91 , Hole_Black = 92, Hole_grey = 6, Hole_Fire1 = 89, Hole_Fire2 = 90, Hole_YellowBoarder1 = 105,
                 Hole_YellowBoarder2 = 106, Hole_YellowBoarder3 = 107, Hole_YellowBoarder4 = 108, Hole_YellowBoarder5 = 109,
@@ -49,6 +49,7 @@ public class GraphicalGameMap extends GameMap {
         playerLayer = (TiledMapTileLayer) tiledMap.getLayers().get("PlayerLayer");
         assetLayer = (TiledMapTileLayer) tiledMap.getLayers().get("AssetLayer");
         laserLayer = (TiledMapTileLayer) tiledMap.getLayers().get("LaserLayer");
+        playerShootLaser = (TiledMapTileLayer) tiledMap.getLayers().get("PlayerShootLaser");
 
         playerImages  = TextureRegion.split(new Texture("charactersSpriteSheet300.png"), 300, 300);
 

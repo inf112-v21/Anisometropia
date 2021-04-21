@@ -120,7 +120,6 @@ public class Wall {
                     if ((dx == 0 && dy == 1) || (dx == -1 && dy == 0)) return false;
                     break;
 
-
                 default:
                     throw new IllegalStateException("Unexpected wallID: " +wallID+ " x: " +x+ " y: " +y);
             }

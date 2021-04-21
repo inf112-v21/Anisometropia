@@ -159,7 +159,7 @@ public class GameLogic {
         respawnPlayersIfPossible();
         checkIfOnlyOnePlayerLeft();
         for (Player player : playerQueue.getPlayerQueue()){
-            player.drawOptionCard();
+            repair.drawOptionCardIfPossible(player,gameMap);
             player.playerShootsLaser();
             player.upgradeLasers();
         }
