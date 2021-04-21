@@ -55,10 +55,6 @@ java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 
 
 ## Kjente feil (bugs)
-Dersom spiller1 og spiller2 står i samme rute (vil ikke være mulig senere i spillet når vi får 
-lagt til collision med andre players) og spiller1 flytter seg, mens spiller2 står stille
-vil ikke spiller2 vises før den har flytter seg igjen.
-
 Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to progress" for
 å prosessere turen til spilleren.
 
