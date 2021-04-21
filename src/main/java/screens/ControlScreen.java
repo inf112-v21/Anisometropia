@@ -51,6 +51,7 @@ public class ControlScreen extends InputAdapter {
 
     GameButton acceptButton, progressButton, borderButton, powerDownButton;
 
+
     public static boolean waitingForOtherPlayersToSendCard = false;
 
     public ControlScreen(GameLogic gameLogic) {
