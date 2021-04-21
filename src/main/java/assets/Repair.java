@@ -13,13 +13,15 @@ public class Repair extends DamageAssets {
             player.setNewCheckpoint();
         }
     }
-    public void drawOptionCardIfPossible(Player player, GameMap gameMap){
+    public boolean drawOptionCardIfPossible(Player player, GameMap gameMap){
         if (gameMap.isThereRepairStationOnThisPosition(player.getX(), player.getY())) {
             int wrenchID = gameMap.getAssetLayerID(player.getX(), player.getY());
             if (wrenchID == doubleWrench){
                 player.drawOptionCard();
+                return true;
             }
         }
+        return false;
     }
 
     //TODO when player walks on a doubleWrench Player is to draw an OPTION CARD

@@ -21,7 +21,7 @@ public class Player implements IPlayer {
     public boolean[] flagsReached;
     public boolean isPoweredDown = false;
     public boolean hasAnnouncedPowerDown = false;
-    public List myUpgrades = new ArrayList();
+    public String myUpgrade = "";
     public ArrayList<ProgramCard> dealtProgramCards;
     public ArrayList<ProgramCard> chosenProgramCards;
     public ArrayList<ProgramCard> lockedProgramCards;
@@ -87,15 +87,15 @@ public class Player implements IPlayer {
     }
 
     public void upgradeLasers(){
-        if (myUpgrades.contains("doubleLaser")){
+        if (myUpgrade.equals("doubleLaser")){
             playerShootsLaser();
         }
-        if (myUpgrades.contains("shootBehind")){
+        if (myUpgrade.equals("shootBehind")){
             rotate(2);
             playerShootsLaser();
             rotate(2);
         }
-        if (myUpgrades.contains("sideLasers")){
+        if (myUpgrade.equals("sideLasers")){
             rotate(1);
             playerShootsLaser();
             rotate(2);
@@ -369,10 +369,13 @@ public class Player implements IPlayer {
     public void drawOptionCard(){
         List<String> drawOptionCard = Arrays.asList("doubleLaser", "shootBehind", "sideLasers", "repairAtDoubleSpeed");
         Collections.shuffle(drawOptionCard);
-        myUpgrades.clear();
-        myUpgrades.add(drawOptionCard.get(0));
-        System.out.println("Here is your upgrade: " + myUpgrades);
+        myUpgrade = drawOptionCard.get(0);
+        System.out.println("Here is your upgrade: " + myUpgrade);
     }
+
+    public void setUpgrade(String upgrade) { myUpgrade = upgrade; }
+
+    public String getUpgrade() { return myUpgrade; }
 
     public boolean isPlayerDead() {
         return isDead;
