@@ -32,7 +32,9 @@ public class GraphicalGameMap extends GameMap {
     Point[] spawnPositions = new Point[8];
     Point[] flagPositions = new Point[4];
 
-    TextureRegion[][] playerImages;
+    TextureRegion[][] playerImages, laserImages;
+    TiledMapTileLayer.Cell laserHorizontal = new TiledMapTileLayer.Cell();
+    TiledMapTileLayer.Cell laserVertical = new TiledMapTileLayer.Cell();
     TiledMapTileLayer.Cell[]player1Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player2Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player3Cells = new TiledMapTileLayer.Cell[6];
@@ -52,6 +54,10 @@ public class GraphicalGameMap extends GameMap {
         playerShootLaser = (TiledMapTileLayer) tiledMap.getLayers().get("PlayerShootLaser");
 
         playerImages  = TextureRegion.split(new Texture("charactersSpriteSheet300.png"), 300, 300);
+
+        laserImages = TextureRegion.split(new Texture("tiles.png"), 300,300 );
+        laserHorizontal = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(laserImages[4][6]));
+        laserVertical = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(laserImages[5][6]));
 
         player1Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][1])); // north
         player1Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1])); // east
@@ -121,6 +127,16 @@ public class GraphicalGameMap extends GameMap {
                     (tileID == Hole_grey) || (tileID == Hole_YellowBoarder);
         }
         return false;
+    }
+
+    public TiledMapTileLayer.Cell getLaserCell(int i){
+        switch (i){
+            case (0):
+                return laserHorizontal;
+            case (1):
+                return laserVertical;
+        }
+        return null;
     }
 
     public boolean isThereLaserBeamsOnThisPosition(int x, int y){

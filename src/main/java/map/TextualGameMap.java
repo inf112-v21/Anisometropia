@@ -2,6 +2,7 @@ package map;
 
 import actor.Player;
 import assets.Wall;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.awt.*;
 import java.util.Arrays;
@@ -44,6 +45,16 @@ public class TextualGameMap extends GameMap {
 
     public int getValue(int y, int x) {
         return this.gridArray[y][x];
+    }
+
+    @Override
+    public TiledMapTileLayer.Cell getLaserCell(int i) {
+        return null;
+    }
+
+    @Override
+    public void setCell(int x, int y, String layer, TiledMapTileLayer.Cell cell) {
+
     }
 
     public boolean isThereFlagHere(int x, int y) {
