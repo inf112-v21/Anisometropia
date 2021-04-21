@@ -166,6 +166,7 @@ public class Player implements IPlayer {
 
     public ArrayList<Point> getShootingLaserLocations() {
         return shootingLaserLocations;
+
     }
 
     /**
