@@ -10,6 +10,7 @@ import java.awt.*;
 public abstract class GameMap {
 
     public abstract TiledMapTileLayer.Cell getLaserCell(int i);
+
     public abstract void setCell(int x, int y, String layer, TiledMapTileLayer.Cell cell);
 
     public abstract boolean isThereFlagHere(int x, int y);
