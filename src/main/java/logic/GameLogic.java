@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class GameLogic {
 
     public MultiPlayerLogic multiPlayerLogic;
+    public Object player;
     GameMap gameMap;
     PlayerQueue playerQueue;
     DeckOfProgramCards deckOfProgramCards;

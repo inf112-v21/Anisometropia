@@ -31,6 +31,8 @@ public class ControlScreen extends InputAdapter {
     private final Texture damageTokenPositionIndicator;
     private final ArrayList<Texture> programCardTextures = new ArrayList<>();
     private final ArrayList<Texture> dealtProgramCardTextures = new ArrayList<>();
+    private final ArrayList<Texture> optionCardTextures = new ArrayList<>();
+    private final Texture deckOfOptionCardsTexture;
 
     private final float cardWidth = 64, cardHeight = 64;
 
@@ -48,7 +50,6 @@ public class ControlScreen extends InputAdapter {
     //Variables used to create buttons
     TextureRegion[][] gameButtonsSpriteSheet, powerDownButtonRegion;
     TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, powerDownButtonTexture;
-
     GameButton acceptButton, progressButton, borderButton, powerDownButton;
 
     public static boolean waitingForOtherPlayersToSendCard = false;
@@ -90,6 +91,11 @@ public class ControlScreen extends InputAdapter {
         programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/RotateLeft.png")));
         programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/RotateRight.png")));
         programCardTextures.add(new Texture(Gdx.files.internal("ProgramCardAssets/UTurn.png")));
+
+        optionCardTextures.add(new Texture(Gdx.files.internal("optionCards/shootBehind.png")));
+        optionCardTextures.add(new Texture(Gdx.files.internal("optionCards/doubleLaser.png")));
+
+        deckOfOptionCardsTexture = new Texture(Gdx.files.internal("optionCards/deckOfOptionCards.png"));
 
         initializeCards();
 
@@ -168,6 +174,8 @@ public class ControlScreen extends InputAdapter {
         drawDamageTokenPositionIndicators(batch);
         drawDamageTokensOfCurrentPlayer(batch);
         drawLifeTokensOfCurrentPlayer(batch);
+
+        drawOptionCardsOfCurrentPlayer(batch);
 
         for (int i = 0; i < gameLogic.getPlayerQueue().getPlayerQueue().size(); i++) {
             smallFont.draw(batch,gameLogic.getPlayerQueue().getPlayerQueue().get(i).playerName,1170, 500-(i*32));
@@ -312,6 +320,23 @@ public class ControlScreen extends InputAdapter {
                 batch.draw(damageToken,choiceDeckOffset+12+(i*64), -24, 40,40); // to indicate that the card is locked
             }
         }
+    }
+
+
+
+    private void drawOptionCardsOfCurrentPlayer(SpriteBatch batch) {
+        Player player = gameLogic.getCurrentPlayer();
+        Texture optionCardToDraw;
+        if (player.upgrades.size() == 0) {
+            batch.draw(deckOfOptionCardsTexture, 1070, 0, 320, 220);
+        }
+        for(String optionCard : player.upgrades) {
+            for(Texture optionCardTexture : optionCardTextures)
+                if(player.getUpgrade() == optionCard) {
+                    optionCardToDraw = optionCardTexture;
+                    batch.draw(optionCardToDraw, 1070, 0, 320, 220);
+              }
+         }
     }
 
     private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {

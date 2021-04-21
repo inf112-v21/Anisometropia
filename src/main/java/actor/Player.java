@@ -30,6 +30,7 @@ public class Player implements IPlayer {
     public boolean isLocal;
     private ArrayList<Point> shootingLaserLocationsVertical = new ArrayList<>();
     private ArrayList<Point> shootingLaserLocationsHorizontal = new ArrayList<>();
+    public ArrayList<String> upgrades = new ArrayList<>();
 
     public Player(int x, int y, String playerName, GameMap gameMap, boolean isLocal, int characterID) {
         this.x = this.spawnX = x;
@@ -361,9 +362,10 @@ public class Player implements IPlayer {
     }
 
     public void drawOptionCard(){
-        List<String> drawOptionCard = Arrays.asList("doubleLaser", "shootBehind", "sideLasers", "repairAtDoubleSpeed");
-        Collections.shuffle(drawOptionCard);
-        myUpgrade = drawOptionCard.get(0);
+        upgrades.add("doubleLaser");
+        upgrades.add("shootBehind");
+        Collections.shuffle(upgrades);
+        myUpgrade = upgrades.get(0);
         System.out.println("Here is your upgrade: " + myUpgrade);
     }
 
