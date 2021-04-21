@@ -353,14 +353,11 @@ public class Player implements IPlayer {
     public void drawOptionCard(){
         List<String> drawOptionCard = Arrays.asList("doubleLaser", "shootBehind", "sideLasers", "repairAtDoubleSpeed");
         Collections.shuffle(drawOptionCard);
-        for (int i = 0; i < drawOptionCard.size(); i++) {
-            if (!myUpgrades.contains(drawOptionCard.get(i))){
-                myUpgrades.add(drawOptionCard.get(i));
-                System.out.println("You just got an upgrade: " + drawOptionCard.get(i));
-                break;
-            }
+        while (myUpgrades.size()>0) {
+            myUpgrades.remove(0);
         }
-        System.out.println("Here is all your upgrades: " + myUpgrades);
+        myUpgrades.add(drawOptionCard.get(0));
+        System.out.println("Here is your upgrade: " + myUpgrades);
     }
 
     public boolean isPlayerDead() {

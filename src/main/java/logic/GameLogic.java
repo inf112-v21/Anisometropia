@@ -133,8 +133,8 @@ public class GameLogic {
             laser.updatePlayersHealth(player, gameMap);
             repair.updatePlayersHealth(player, gameMap);
             if (player.myUpgrades.contains("repairAtDoubleSpeed")){
+                System.out.println("You restored 2 Health Points");
                 repair.updatePlayersHealth(player,gameMap);
-                System.out.println("you restored 2 Health Points");
             }
             
             if (checkLoss(player.getX(), player.getY())) {
