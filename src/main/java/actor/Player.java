@@ -4,7 +4,10 @@ import cards.ProgramCard;
 import logic.PlayerQueue;
 import map.GameMap;
 
+import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.*;
+import java.util.List;
 
 public class Player implements IPlayer {
     GameMap gameMap;
@@ -26,6 +29,7 @@ public class Player implements IPlayer {
     private final int characterID;
     private final boolean isAi;
     public boolean isLocal;
+    private ArrayList<Point> shootingLaserLocations = new ArrayList<>();
 
     public Player(int x, int y, String playerName, GameMap gameMap, boolean isLocal, int characterID) {
         this.x = this.spawnX = x;
@@ -98,7 +102,6 @@ public class Player implements IPlayer {
             playerShootsLaser();
             rotate(1);
         }
-        
     }
 
     //TODO: now lasers wont pass through any "wall"-tile even though it is to. Tell them which tiles they'r supposed to pass.
@@ -111,6 +114,7 @@ public class Player implements IPlayer {
                     break;
                 }else if (i != 0 && gameMap.isTherePlayerOnThisPosition(x, y + i)){
                     getPlayerByPos(x, y + i ).updateDamageTokens(1);
+                    setShootingLaserLocations(x,y+i);
                     System.out.println(playerName + " damages " + getPlayerByPos(x,y + i).playerName + " with his laser ");
                 }
             }
@@ -121,6 +125,7 @@ public class Player implements IPlayer {
                     System.out.println(playerName + "'s laser is blocked by SOUTH wall");
                     break;
                 }else if (i !=0 && gameMap.isTherePlayerOnThisPosition(x,y + i)){
+                    setShootingLaserLocations(x,y+i);
                     getPlayerByPos(x, y + i).updateDamageTokens(1);
                     System.out.println(playerName + " damages " + getPlayerByPos(x,y + i).playerName + " with his laser");
                 }
@@ -133,6 +138,7 @@ public class Player implements IPlayer {
                     System.out.println(playerName + "'s laser is blocked by EAST wall");
                     break;
                 } else if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
+                    setShootingLaserLocations(x+1,y);
                     getPlayerByPos(x+i,y).updateDamageTokens(1);
                     System.out.println(playerName + " damages " + getPlayerByPos(x+i,y).playerName + " with his laser");
                 }
@@ -146,12 +152,21 @@ public class Player implements IPlayer {
                 }
                 if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
                     getPlayerByPos(x+i,y).updateDamageTokens(1);
+                    setShootingLaserLocations(x+1,y);
                     System.out.println(playerName + "damages" + getPlayerByPos(x+i, y).playerName + " with his laser");
                 }
             }
         }
     }
 
+    public void setShootingLaserLocations(int x, int y) {
+        Point coordinates = new Point(x, y);
+        shootingLaserLocations.add(coordinates);
+    }
+
+    public ArrayList<Point> getShootingLaserLocations() {
+        return shootingLaserLocations;
+    }
 
     /**
      * if current player(1) collides with a player(2), this player(2) is to be moved in the same direction as
