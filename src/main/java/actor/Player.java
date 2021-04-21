@@ -29,7 +29,8 @@ public class Player implements IPlayer {
     private final int characterID;
     private final boolean isAi;
     public boolean isLocal;
-    private ArrayList<Point> shootingLaserLocations = new ArrayList<>();
+    private ArrayList<Point> shootingLaserLocationsVertical = new ArrayList<>();
+    private ArrayList<Point> shootingLaserLocationsHorizontal = new ArrayList<>();
 
     public Player(int x, int y, String playerName, GameMap gameMap, boolean isLocal, int characterID) {
         this.x = this.spawnX = x;
@@ -112,9 +113,13 @@ public class Player implements IPlayer {
                 if (!gameMap.getWall().checkIntoWall(x,y+i,0, 1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, 1)){
                     System.out.println(playerName + "'s laser is blocked by NORTH wall");
                     break;
-                }else if (i != 0 && gameMap.isTherePlayerOnThisPosition(x, y + i)){
+                }
+                if (i!=0){
+                    Point coordinates = new Point(x, y+i);
+                    shootingLaserLocationsVertical.add(coordinates);
+                }
+                if (i != 0 && gameMap.isTherePlayerOnThisPosition(x, y + i)){
                     getPlayerByPos(x, y + i ).updateDamageTokens(1);
-                    setShootingLaserLocations(x,y+i);
                     System.out.println(playerName + " damages " + getPlayerByPos(x,y + i).playerName + " with his laser ");
                 }
             }
@@ -124,11 +129,16 @@ public class Player implements IPlayer {
                 if (!gameMap.getWall().checkIntoWall(x,y+i,0, -1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, -1)){
                     System.out.println(playerName + "'s laser is blocked by SOUTH wall");
                     break;
-                }else if (i !=0 && gameMap.isTherePlayerOnThisPosition(x,y + i)){
-                    setShootingLaserLocations(x,y+i);
+                }
+                if (i!=0){
+                    Point coordinates = new Point(x, y+i);
+                    shootingLaserLocationsVertical.add(coordinates);
+                }
+                if (i !=0 && gameMap.isTherePlayerOnThisPosition(x,y + i)){
                     getPlayerByPos(x, y + i).updateDamageTokens(1);
                     System.out.println(playerName + " damages " + getPlayerByPos(x,y + i).playerName + " with his laser");
                 }
+
             }
         }
 // -------------if Player faces WEST or EAST------------
@@ -137,8 +147,12 @@ public class Player implements IPlayer {
                 if (!gameMap.getWall().checkIntoWall(x+i,y,1, 0) || !gameMap.getWall().checkOutOfWall(x+i,y,1, 0)){
                     System.out.println(playerName + "'s laser is blocked by EAST wall");
                     break;
-                } else if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
-                    setShootingLaserLocations(x+1,y);
+                }
+                if (i!=0){
+                    Point coordinates = new Point(x+i, y);
+                    shootingLaserLocationsHorizontal.add(coordinates);
+                }
+                if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
                     getPlayerByPos(x+i,y).updateDamageTokens(1);
                     System.out.println(playerName + " damages " + getPlayerByPos(x+i,y).playerName + " with his laser");
                 }
@@ -150,24 +164,47 @@ public class Player implements IPlayer {
                     System.out.println(playerName + "'s laser is blocked by WEST wall");
                     break;
                 }
+                if (i!=0){
+                    Point coordinates = new Point(x+i, y);
+                    shootingLaserLocationsHorizontal.add(coordinates);
+                }
                 if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
                     getPlayerByPos(x+i,y).updateDamageTokens(1);
-                    setShootingLaserLocations(x+1,y);
                     System.out.println(playerName + "damages" + getPlayerByPos(x+i, y).playerName + " with his laser");
                 }
             }
         }
     }
 
-    public void setShootingLaserLocations(int x, int y) {
-        Point coordinates = new Point(x, y);
-        shootingLaserLocations.add(coordinates);
+    public void clearPlayerShootLaserBoard(){
+        if (shootingLaserLocationsVertical.size() > 0 || shootingLaserLocationsHorizontal.size() > 0) {
+            for (int i = 0; i < shootingLaserLocationsHorizontal.size(); i++) {
+                gameMap.setCell(shootingLaserLocationsHorizontal.get(i).x, shootingLaserLocationsHorizontal.get(i).y, "PlayerShootLaser", null);
+            }
+            for (int i = 0; i < shootingLaserLocationsVertical.size(); i++) {
+                gameMap.setCell(shootingLaserLocationsVertical.get(i).x, shootingLaserLocationsVertical.get(i).y, "PlayerShootLaser", null);
+            }
+        }
+        shootingLaserLocationsHorizontal.clear();
+        shootingLaserLocationsVertical.clear();
     }
 
-    public ArrayList<Point> getShootingLaserLocations() {
-        return shootingLaserLocations;
+    public void placeLasers(){
+        for (int i = 0; i < shootingLaserLocationsHorizontal.size(); i++) {
+            gameMap.setCell(shootingLaserLocationsHorizontal.get(i).x, shootingLaserLocationsHorizontal.get(i).y ,"PlayerShootLaser", gameMap.getLaserCell(0));
+        }
+        for (int i = 0; i < shootingLaserLocationsVertical.size(); i++) {
+            gameMap.setCell(shootingLaserLocationsVertical.get(i).x, shootingLaserLocationsVertical.get(i).y ,"PlayerShootLaser", gameMap.getLaserCell(1));
+        }
     }
 
+    /**
+     * if current player(1) collides with a player(2), this player(2) is to be moved in the same direction as
+     * the player moves.
+     * Called in canMove.
+     * @param dx distance to move in x direction
+     * @param dy distance to move in y direction
+     */
     public void playersCollides(int dx, int dy){
         for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++) {
             Player pushedPlayer = playerQueue.getPlayerQueue().get(i);
@@ -320,17 +357,6 @@ public class Player implements IPlayer {
         }
     }
 
-    public void drawOptionCard(){
-        List<String> drawOptionCard = Arrays.asList("doubleLaser", "shootBehind", "sideLasers", "repairAtDoubleSpeed");
-        Collections.shuffle(drawOptionCard);
-        myUpgrade = drawOptionCard.get(0);
-        System.out.println("Here is your upgrade: " + myUpgrade);
-    }
-
-    public void setUpgrade(String upgrade) { myUpgrade = upgrade; }
-
-    public String getUpgrade() { return myUpgrade; }
-
     public void setDealtProgramCards(ArrayList<ProgramCard> dealtCards) { dealtProgramCards = dealtCards; }
 
     public void setChosenProgramCards(ArrayList<ProgramCard> chosenCards) {
@@ -356,10 +382,29 @@ public class Player implements IPlayer {
         updateLifeTokens();
     }
 
+    /**
+     * changes checkpoint to player.
+     */
     public void setNewCheckpoint(){
         spawnX = x;
         spawnY = y;
     }
+
+    /**
+     * Player is to draw an option card that gives the player new physics
+     * (shooting lasers)
+     * TODO: Implement optionCards and give new physics to player.
+     */
+    public void drawOptionCard(){
+        List<String> drawOptionCard = Arrays.asList("doubleLaser", "shootBehind", "sideLasers", "repairAtDoubleSpeed");
+        Collections.shuffle(drawOptionCard);
+        myUpgrade = drawOptionCard.get(0);
+        System.out.println("Here is your upgrade: " + myUpgrade);
+    }
+
+    public void setUpgrade(String upgrade) { myUpgrade = upgrade; }
+
+    public String getUpgrade() { return myUpgrade; }
 
     public boolean isPlayerDead() {
         return isDead;
@@ -369,7 +414,7 @@ public class Player implements IPlayer {
         isVictorious = true;
     }
 
-    public boolean hasReachedAllFlags() {
+    public boolean hasWon() {
         return(flagsReached[3]);
     }
 

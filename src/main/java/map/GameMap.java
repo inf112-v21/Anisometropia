@@ -3,10 +3,14 @@ package map;
 
 import actor.Player;
 import assets.Wall;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
 import java.awt.*;
 
 public abstract class GameMap {
+
+    public abstract TiledMapTileLayer.Cell getLaserCell(int i);
+    public abstract void setCell(int x, int y, String layer, TiledMapTileLayer.Cell cell);
 
     public abstract boolean isThereFlagHere(int x, int y);
 

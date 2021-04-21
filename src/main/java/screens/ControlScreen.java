@@ -46,10 +46,10 @@ public class ControlScreen extends InputAdapter {
     BitmapFont smallFont, bigFont;
 
     //Variables used to create buttons
-    TextureRegion[][] gameButtonsSpriteSheet, multiPlayerButtons, powerDownButtonRegion;
-    TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, hostButtonTexture, joinButtonTexture,powerDownButtonTexture;
+    TextureRegion[][] gameButtonsSpriteSheet, powerDownButtonRegion;
+    TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, powerDownButtonTexture;
 
-    GameButton acceptButton, progressButton, borderButton, hostButton, joinButton, powerDownButton;
+    GameButton acceptButton, progressButton, borderButton, powerDownButton;
 
     public static boolean waitingForOtherPlayersToSendCard = false;
 
@@ -70,11 +70,6 @@ public class ControlScreen extends InputAdapter {
         borderTextureUnavailable = gameButtonsSpriteSheet[2][0];
         borderTexture = gameButtonsSpriteSheet[2][1];
 
-        //Creating buttons needed to establish a connection to enable multiplayer
-        multiPlayerButtons = TextureRegion.split(new Texture("multiPlayerButtons.png"), 400,400);
-        hostButtonTexture = multiPlayerButtons[0][0];
-        joinButtonTexture = multiPlayerButtons[0][1];
-
         //Creating power down button
         powerDownButtonRegion = TextureRegion.split(new Texture("powerDown.png"),800,800);
         powerDownButtonTexture = powerDownButtonRegion[0][0];
@@ -83,13 +78,6 @@ public class ControlScreen extends InputAdapter {
         acceptButton = new GameButton(584, 0, 128, 128, false, acceptTextureUnavailable);
         progressButton = new GameButton(732, 0, 128, 128, false, progressTextureUnavailable);
         borderButton = new GameButton(88,-16,400,128, false, borderTextureUnavailable);
-
-        /*
-          If the host button is pressed then this should call the MultiPlayer constructor and establish a connection.
-          The join button is used for other players to connect to that server.
-         */
-        hostButton = new GameButton(1100,700, 85,85, true, hostButtonTexture);
-        joinButton = new GameButton(1200, 700,85,85,true, joinButtonTexture);
 
         damageToken = new Texture(Gdx.files.internal("damageToken.png"));
         lifeToken = new Texture(Gdx.files.internal("lifeToken.png"));
@@ -154,8 +142,6 @@ public class ControlScreen extends InputAdapter {
         batch.draw(acceptButton.getTexture(), acceptButton.getX(), acceptButton.getY(), acceptButton.getWidth(), acceptButton.getHeight());
         batch.draw(progressButton.getTexture(), progressButton.getX(), progressButton.getY(), progressButton.getWidth(), progressButton.getHeight());
         batch.draw(borderButton.getTexture(), borderButton.getX(), borderButton.getY(), borderButton.getWidth(), borderButton.getHeight());
-        batch.draw(hostButton.getTexture(),hostButton.getX(),hostButton.getY(),hostButton.getWidth(),hostButton.getHeight());
-        batch.draw(joinButton.getTexture(),joinButton.getX(),joinButton.getY(),joinButton.getWidth(),joinButton.getHeight());
         batch.draw(powerDownButton.getTexture(), powerDownButton.getX(), powerDownButton.getY(),powerDownButton.getWidth(),powerDownButton.getHeight());
 
         if(!cardExecutionInProgress){
@@ -184,8 +170,8 @@ public class ControlScreen extends InputAdapter {
         drawLifeTokensOfCurrentPlayer(batch);
 
         for (int i = 0; i < gameLogic.getPlayerQueue().getPlayerQueue().size(); i++) {
-            smallFont.draw(batch,gameLogic.getPlayerQueue().getPlayerQueue().get(i).playerName,1200, 620-(i*32));
-            if(gameLogic.getPlayerQueue().getPlayerQueue().get(i).equals(gameLogic.getCurrentPlayer())) smallFont.draw(batch,">>>",1130, 620-(i*32));
+            smallFont.draw(batch,gameLogic.getPlayerQueue().getPlayerQueue().get(i).playerName,1170, 500-(i*32));
+            if(gameLogic.getPlayerQueue().getPlayerQueue().get(i).equals(gameLogic.getCurrentPlayer())) smallFont.draw(batch,">>>",1100, 500-(i*32));
         }
 
         if(GameLogic.gameOver) bigFont.draw(batch, GameLogic.gameMessage, 0, 56);
@@ -196,7 +182,7 @@ public class ControlScreen extends InputAdapter {
                 "4. click to progress actions\n" +
                 "\n" +
                 "R:              restart the game\n" +
-                "ESCAPE:  exit", 1100, 200);
+                "ESCAPE:  exit", 1100, 750);
 
         batch.end();
     }
@@ -354,8 +340,6 @@ public class ControlScreen extends InputAdapter {
         damageTokenPositionIndicator.dispose();
         damageToken.dispose();
         powerDownButtonTexture.getTexture().dispose();
-        joinButtonTexture.getTexture().dispose();
-        hostButtonTexture.getTexture().dispose();
         acceptTexture.getTexture().dispose();
         acceptTextureUnavailable.getTexture().dispose();
         progressTexture.getTexture().dispose();

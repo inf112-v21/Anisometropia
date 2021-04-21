@@ -134,7 +134,7 @@ public class GameLogic {
                 System.out.println("You restored 2 Health Points");
                 repair.updatePlayersHealth(player,gameMap);
             }
-            
+            player.clearPlayerShootLaserBoard();
             if (checkLoss(player.getX(), player.getY())) {
                 if(!player.isDead) {
                     player.playerDies();
@@ -163,6 +163,7 @@ public class GameLogic {
                     localDrewOptionCard = true;
             player.playerShootsLaser();
             player.upgradeLasers();
+            player.placeLasers();
         }
         if (multiPlayerLogic != null && multiPlayerLogic.isConnected()) {
             multiPlayerLogic.setPlayersNotReady();
