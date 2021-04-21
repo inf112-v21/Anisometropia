@@ -223,7 +223,7 @@ public class GameLogic {
     }
 
     public boolean checkWin(Player player) {
-        return player.hasWon();
+        return player.hasReachedAllFlags();
     }
 
     public boolean checkLoss(int x, int y) {

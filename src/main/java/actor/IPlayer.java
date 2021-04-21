@@ -1,22 +1,67 @@
 package actor;
 
 import cards.ProgramCard;
+import logic.PlayerQueue;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public interface IPlayer {
 
     /**
-     *
+     * Will set the player queue.
+     * @param playerQueue The queue to set.
+     */
+    void setPlayerQueue(PlayerQueue playerQueue);
+
+    /**
      * @return the x position of the player
      */
     int getX();
 
     /**
-     *
      * @return the y position of the player
      */
     int getY();
+
+    /**
+     * Inspects given coordinates and looks for any players positioned there.
+     * @param x x coordinate to inspect
+     * @param y y coordinate to inspect
+     * @return player found, otherwise null.
+     */
+    Player getPlayerByPos(int x, int y);
+
+    /**
+     * Uses any upgrades collected through Option Cards to upgrade a robot's lasers.
+     */
+    void upgradeLasers();
+
+    /**
+     * Robot shoots a laser that can damage players and be stopped by walls.
+     */
+    void playerShootsLaser();
+
+    /**
+     * Adds coordinates to a list containing the tiles on a laser's trajectory.
+     * @param x x coordinate of tile.
+     * @param y y coordinate of tile.
+     */
+    void setShootingLaserLocations(int x, int y);
+
+    /**
+     * @return list of coordinates a laser passes through.
+     */
+    ArrayList<Point> getShootingLaserLocations();
+
+    /**
+     * If current player(1) collides with a player(2), this player(2) is to be moved in the same direction as
+     * the player moves.
+     * Called in canMove.
+     * @param dx distance to move in x direction
+     * @param dy distance to move in y direction
+     */
+    void playersCollides(int dx, int dy);
 
     /**
      * Moves the player in a given direction if that move is possible.
@@ -58,7 +103,7 @@ public interface IPlayer {
 
     /**
      * Will set the amount of life tokens that a player has.
-     * @param tokens
+     * @param tokens number of tokens.
      */
     void setLifeTokens(int tokens);
 
@@ -87,7 +132,7 @@ public interface IPlayer {
 
     /**
      * Will set the amount of damage tokens that a player has.
-     * @param tokens
+     * @param tokens number of tokens
      */
     void setDmgTokens(int tokens);
 
@@ -110,6 +155,10 @@ public interface IPlayer {
      */
     void checkIfPlayerTooDamaged();
 
+    /**
+     * Stores player's decision to power down their robot the following round.
+     */
+    void announcePowerDown();
 
     /**
      * Will power down the robot. When a robot is powered down it´s damage tokens is reset but the
@@ -121,6 +170,22 @@ public interface IPlayer {
      * Inserts locked cards into list of chosen cards.
      */
     void lockCards();
+
+    /**
+     * Player is to draw an option card that gives the player new abilities.
+     */
+    void drawOptionCard();
+
+    /**
+     * Updates the player's upgrade.
+     * @param upgrade to use.
+     */
+    void setUpgrade(String upgrade);
+
+    /**
+     * @return player's current upgrade
+     */
+    String getUpgrade();
 
     /**
      * Will set the dealt program cards the player was given for one round.
@@ -147,7 +212,6 @@ public interface IPlayer {
      */
     ArrayList<ProgramCard> getChosenProgramCards();
 
-
     /**
      * Sets Boolean isDead to false
      */
@@ -157,6 +221,11 @@ public interface IPlayer {
      * Sets Boolean isDead to true and calls updateLifeTokens to remove one life token from the player that died.
      */
     void playerDies();
+
+    /**
+     * Changes checkpoint to player's current position.
+     */
+    void setNewCheckpoint();
 
     /**
      * Checks if the player is dead or alive.
@@ -172,6 +241,26 @@ public interface IPlayer {
     /**
      * @return If the player has visited all the flags then true else false
      */
-    boolean hasWon();
+    boolean hasReachedAllFlags();
+
+    /**
+     * @return whether player has won the game or not
+     */
+    boolean getVictorious();
+
+    /**
+     * @return ID of player's character graphic.
+     */
+    int getCharacterID();
+
+    /**
+     * @return whether Player is AI or human-controlled.
+     */
+    boolean isAi();
+
+    /**
+     * Prints a message to the command line.
+     */
+    void startCardDecisionWithAI();
 
 }
