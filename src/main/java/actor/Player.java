@@ -5,7 +5,6 @@ import logic.PlayerQueue;
 import map.GameMap;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.List;
 
@@ -67,7 +66,6 @@ public class Player implements IPlayer {
     public void setPlayerQueue(PlayerQueue playerQueue){
         this.playerQueue = playerQueue;
     }
-
 
     public int getX() {
         return x;
@@ -205,7 +203,7 @@ public class Player implements IPlayer {
      * @param dx distance to move in x direction
      * @param dy distance to move in y direction
      */
-    public void playersCollides(int dx, int dy){
+    public void playersCollide(int dx, int dy){
         for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++) {
             Player pushedPlayer = playerQueue.getPlayerQueue().get(i);
 
@@ -254,10 +252,10 @@ public class Player implements IPlayer {
         if(wallIntoPositionBlocked || wallOutOfPositionBlocked){
             return false;
         }else {
-            //players can collide aslong as there is no walls on the given position.
+            // Players can collide as long as there are no walls on the given position.
             if (gameMap.isTherePlayerOnThisPosition(x+dx,y+dy)){
                 System.out.println(playerName + ": another player on this position (" + (x + dx) + ", "+(y +dy)+")");
-                playersCollides(dx, dy);
+                playersCollide(dx, dy);
             }
         }
         return (x + dx >= 0 && x + dx < gameMap.getWidth()) && (y + dy >= 0 && y + dy < gameMap.getHeight());
@@ -357,6 +355,17 @@ public class Player implements IPlayer {
         }
     }
 
+    public void drawOptionCard(){
+        List<String> drawOptionCard = Arrays.asList("doubleLaser", "shootBehind", "sideLasers", "repairAtDoubleSpeed");
+        Collections.shuffle(drawOptionCard);
+        myUpgrade = drawOptionCard.get(0);
+        System.out.println("Here is your upgrade: " + myUpgrade);
+    }
+
+    public void setUpgrade(String upgrade) { myUpgrade = upgrade; }
+
+    public String getUpgrade() { return myUpgrade; }
+
     public void setDealtProgramCards(ArrayList<ProgramCard> dealtCards) { dealtProgramCards = dealtCards; }
 
     public void setChosenProgramCards(ArrayList<ProgramCard> chosenCards) {
@@ -390,22 +399,6 @@ public class Player implements IPlayer {
         spawnY = y;
     }
 
-    /**
-     * Player is to draw an option card that gives the player new physics
-     * (shooting lasers)
-     * TODO: Implement optionCards and give new physics to player.
-     */
-    public void drawOptionCard(){
-        List<String> drawOptionCard = Arrays.asList("doubleLaser", "shootBehind", "sideLasers", "repairAtDoubleSpeed");
-        Collections.shuffle(drawOptionCard);
-        myUpgrade = drawOptionCard.get(0);
-        System.out.println("Here is your upgrade: " + myUpgrade);
-    }
-
-    public void setUpgrade(String upgrade) { myUpgrade = upgrade; }
-
-    public String getUpgrade() { return myUpgrade; }
-
     public boolean isPlayerDead() {
         return isDead;
     }
@@ -414,9 +407,7 @@ public class Player implements IPlayer {
         isVictorious = true;
     }
 
-    public boolean hasWon() {
-        return(flagsReached[3]);
-    }
+    public boolean hasReachedAllFlags() { return flagsReached[3]; }
 
     public boolean getVictorious() { return isVictorious; }
 

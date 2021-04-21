@@ -43,16 +43,14 @@ public interface IPlayer {
     void playerShootsLaser();
 
     /**
-     * Adds coordinates to a list containing the tiles on a laser's trajectory.
-     * @param x x coordinate of tile.
-     * @param y y coordinate of tile.
+     * Clears player's shot lasers from the board.
      */
-    void setShootingLaserLocations(int x, int y);
+    void clearPlayerShootLaserBoard();
 
     /**
-     * @return list of coordinates a laser passes through.
+     * Shows lasers on the board.
      */
-    ArrayList<Point> getShootingLaserLocations();
+    void placeLasers();
 
     /**
      * If current player(1) collides with a player(2), this player(2) is to be moved in the same direction as
@@ -61,7 +59,7 @@ public interface IPlayer {
      * @param dx distance to move in x direction
      * @param dy distance to move in y direction
      */
-    void playersCollides(int dx, int dy);
+    void playersCollide(int dx, int dy);
 
     /**
      * Moves the player in a given direction if that move is possible.
