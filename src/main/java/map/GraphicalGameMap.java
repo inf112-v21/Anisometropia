@@ -32,9 +32,11 @@ public class GraphicalGameMap extends GameMap {
     Point[] spawnPositions = new Point[8];
     Point[] flagPositions = new Point[4];
 
-    TextureRegion[][] playerImages, laserImages;
-    TiledMapTileLayer.Cell laserHorizontal = new TiledMapTileLayer.Cell();
-    TiledMapTileLayer.Cell laserVertical = new TiledMapTileLayer.Cell();
+    TextureRegion[][] playerImages, tileImages;
+    TiledMapTileLayer.Cell laserHorizontal;
+    TiledMapTileLayer.Cell doubleLaserHorizontal;
+    TiledMapTileLayer.Cell laserVertical;
+    TiledMapTileLayer.Cell doubleLaserVertical;
     TiledMapTileLayer.Cell[]player1Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player2Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player3Cells = new TiledMapTileLayer.Cell[6];
@@ -54,10 +56,12 @@ public class GraphicalGameMap extends GameMap {
         playerShootLaser = (TiledMapTileLayer) tiledMap.getLayers().get("PlayerShootLaser");
 
         playerImages  = TextureRegion.split(new Texture("charactersSpriteSheet300.png"), 300, 300);
+        tileImages = TextureRegion.split(new Texture("tiles.png"), 300,300 );
 
-        laserImages = TextureRegion.split(new Texture("tiles.png"), 300,300 );
-        laserHorizontal = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(laserImages[4][6]));
-        laserVertical = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(laserImages[5][6]));
+        laserHorizontal = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(tileImages[4][6]));
+        doubleLaserHorizontal = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(tileImages[12][6]));
+        laserVertical = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(tileImages[5][6]));
+        doubleLaserVertical = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(tileImages[12][5]));
 
         player1Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][1])); // north
         player1Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1])); // east
@@ -134,7 +138,12 @@ public class GraphicalGameMap extends GameMap {
             case (0):
                 return laserHorizontal;
             case (1):
+                return doubleLaserHorizontal;
+            case (2):
                 return laserVertical;
+            case(3):
+                return doubleLaserVertical;
+
         }
         return null;
     }

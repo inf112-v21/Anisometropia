@@ -103,7 +103,6 @@ public class Player implements IPlayer {
             rotate(1);
         }
         shootLaserBasedOnPlayersDirection();
-        placeLasers();
     }
 
     //TODO: now lasers wont pass through any "wall"-tile even though it is to. Tell them which tiles they'r supposed to pass.
@@ -195,12 +194,17 @@ public class Player implements IPlayer {
     }
 
     public void placeLasers(){
-        for (int i = 0; i < shootingLaserLocationsHorizontal.size(); i++) {
-            gameMap.setCell(shootingLaserLocationsHorizontal.get(i).x, shootingLaserLocationsHorizontal.get(i).y ,"PlayerShootLaser", gameMap.getLaserCell(0));
+        int horizontal = 0;
+        int vertical = 2;
+        if (myUpgrade.equals("doubleLaser")){
+            horizontal = 1;
+            vertical = 3;
         }
-
+        for (int i = 0; i < shootingLaserLocationsHorizontal.size(); i++) {
+            gameMap.setCell(shootingLaserLocationsHorizontal.get(i).x, shootingLaserLocationsHorizontal.get(i).y ,"PlayerShootLaser", gameMap.getLaserCell(horizontal));
+        }
         for (int i = 0; i < shootingLaserLocationsVertical.size(); i++) {
-            gameMap.setCell(shootingLaserLocationsVertical.get(i).x, shootingLaserLocationsVertical.get(i).y ,"PlayerShootLaser", gameMap.getLaserCell(1));
+            gameMap.setCell(shootingLaserLocationsVertical.get(i).x, shootingLaserLocationsVertical.get(i).y ,"PlayerShootLaser", gameMap.getLaserCell(vertical));
         }
     }
 
