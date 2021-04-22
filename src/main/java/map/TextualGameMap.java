@@ -30,7 +30,8 @@ public class TextualGameMap extends GameMap {
 
         this.gridArray[3][3] = 55; // Flag_1_ID
         this.gridArray[5][5] = 6;  // Hole
-        this.gridArray[2][2] = 38; // Lasers
+        this.gridArray[2][2] = 39; // Lasers - Horizontal
+        this.gridArray[1][7] = Wall.wallDown; //wall
 
         flagPositions[0] = new Point(3,3);
         flagPositions[1] = new Point(width-1,height-1);

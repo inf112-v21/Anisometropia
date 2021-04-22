@@ -48,7 +48,7 @@ public class Player implements IPlayer {
 
         upgrades.add("doubleLaser");
         upgrades.add("shootBehind");
-        //upgrades.add("respawnWith0Damage");
+        upgrades.add("respawnWithZeroDamage");
 
         isAi = false;
     }
@@ -67,7 +67,7 @@ public class Player implements IPlayer {
 
         upgrades.add("doubleLaser");
         upgrades.add("shootBehind");
-        //upgrades.add("respawnWith0Damage");
+        upgrades.add("respawnWithZeroDamage");
 
         this.isAi = isAi;
     }
@@ -222,6 +222,8 @@ public class Player implements IPlayer {
             if (pushedPlayer.getX() == (x + dx) && pushedPlayer.getY() == (y + dy)) {
                 if (pushedPlayer.canMove(dx, dy)) {
                     pushedPlayer.move(dx, dy);
+                }else {
+                    move(-dx,-dy);
                 }
             }
         }
@@ -321,7 +323,9 @@ public class Player implements IPlayer {
     public void respawn() {
         if (checkIfPlayerCanRespawn()) {
             gameMap.setToNull(x, y);
-            setDmgTokens(2);
+            if (myUpgrade.equals("respawnWithZeroDamage")){
+                setDmgTokens(0);
+            }else {setDmgTokens(2);}
             this.x = spawnX;
             this.y = spawnY;
             this.direction = 0;
