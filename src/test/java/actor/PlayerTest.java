@@ -1,11 +1,7 @@
 package actor;
 
-import actor.Player;
-import logic.GameLogic;
-import logic.PlayerQueue;
 import map.TextualGameMap;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import static org.junit.Assert.*;
 

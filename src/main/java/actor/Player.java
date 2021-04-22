@@ -367,7 +367,7 @@ public class Player implements IPlayer {
         }
     }
 
-    public void drawOptionCard(){
+    public void drawOptionCard() {
         upgrades.add("doubleLaser");
         upgrades.add("shootBehind");
         Collections.shuffle(upgrades);

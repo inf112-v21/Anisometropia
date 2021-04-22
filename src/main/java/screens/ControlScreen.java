@@ -48,8 +48,10 @@ public class ControlScreen extends InputAdapter {
     BitmapFont smallFont, bigFont;
 
     //Variables used to create buttons
-    TextureRegion[][] gameButtonsSpriteSheet, powerDownButtonRegion;
-    TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable, powerDownButtonTexture;
+    TextureRegion[][] gameButtonsSpriteSheet, powerDownButtonRegion, powerDownButtonActivatedRegion;
+    TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable,
+            powerDownButtonTexture, powerDownButtonActivatedTexture;
+
     GameButton acceptButton, progressButton, borderButton, powerDownButton;
 
     public static boolean waitingForOtherPlayersToSendCard = false;
@@ -72,6 +74,9 @@ public class ControlScreen extends InputAdapter {
         borderTexture = gameButtonsSpriteSheet[2][1];
 
         //Creating power down button
+        powerDownButtonActivatedRegion = powerDownButtonRegion = TextureRegion.split(new Texture("powerDownButtonActivated.png"),800,800);
+        powerDownButtonActivatedTexture = powerDownButtonRegion[0][0];
+
         powerDownButtonRegion = TextureRegion.split(new Texture("powerDown.png"),800,800);
         powerDownButtonTexture = powerDownButtonRegion[0][0];
         powerDownButton = new GameButton(890, -10, 140,140, false, powerDownButtonTexture);
@@ -141,6 +146,8 @@ public class ControlScreen extends InputAdapter {
                 }
             }
         }
+
+        activatePowerDownButton();
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -298,6 +305,15 @@ public class ControlScreen extends InputAdapter {
 
     private void powerDownButtonHasBeenClicked() {
         gameLogic.announcePowerDown();
+    }
+
+    private void activatePowerDownButton() {
+        if(gameLogic.getCurrentPlayer().hasAnnouncedPowerDown) {
+            powerDownButton.setTexture(powerDownButtonActivatedTexture);
+        }
+        else {
+            powerDownButton.setTexture(powerDownButtonTexture);
+        }
     }
 
     /**
