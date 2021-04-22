@@ -124,11 +124,9 @@ public class Player implements IPlayer {
                 }
                 if (i != 0 && gameMap.isTherePlayerOnThisPosition(x, y + i)){
                     getPlayerByPos(x, y + i ).updateDamageTokens(1);
-                    System.out.println(playerName + " damages " + getPlayerByPos(x,y + i).playerName + " with his laser ");
                     break;
                 }
                 if (!gameMap.getWall().checkIntoWall(x,y+i,0, 1) || !gameMap.getWall().checkOutOfWall(x,y+i,0, 1)){
-                    System.out.println(playerName + "'s laser is blocked by NORTH wall");
                     break;
                 }
             }
@@ -141,11 +139,9 @@ public class Player implements IPlayer {
                 }
                 if (i !=0 && gameMap.isTherePlayerOnThisPosition(x,y - i)){
                     getPlayerByPos(x, y - i).updateDamageTokens(1);
-                    System.out.println(playerName + " damages " + getPlayerByPos(x,y - i).playerName + " with his laser");
                     break; //A laser wont travel through Players
                 }
                 if (!gameMap.getWall().checkIntoWall(x,y-i,0, -1) || !gameMap.getWall().checkOutOfWall(x,y-i,0, -1)){
-                    System.out.println(playerName + "'s laser is blocked by SOUTH wall");
                     break; //A Laser wont Travel through Walls
                 }
             }
@@ -160,11 +156,9 @@ public class Player implements IPlayer {
                 }
                 if (i != 0 && gameMap.isTherePlayerOnThisPosition(x+i,y)){
                     getPlayerByPos(x+i,y).updateDamageTokens(1);
-                    System.out.println(playerName + " damages " + getPlayerByPos(x+i,y).playerName + " with his laser");
                     break;
                 }
                 if (!gameMap.getWall().checkIntoWall(x+i,y,1, 0) || !gameMap.getWall().checkOutOfWall(x+i,y,1, 0)){
-                    System.out.println(playerName + "'s laser is blocked by EAST wall");
                     break;
                 }
             }
@@ -177,11 +171,9 @@ public class Player implements IPlayer {
                 }
                 if (i != 0 && gameMap.isTherePlayerOnThisPosition(x-i,y)){
                     getPlayerByPos(x-i,y).updateDamageTokens(1);
-                    System.out.println(playerName + "damages" + getPlayerByPos(x-i, y).playerName + " with his laser");
                     break;
                 }
                 if (!gameMap.getWall().checkIntoWall(x-i,y,-1, 0) || !gameMap.getWall().checkOutOfWall(x-i,y,-1, 0)){
-                    System.out.println(playerName + "'s laser is blocked by WEST wall");
                     break;
                 }
             }
@@ -274,7 +266,7 @@ public class Player implements IPlayer {
         }else {
             // Players can collide as long as there are no walls on the given position.
             if (gameMap.isTherePlayerOnThisPosition(x+dx,y+dy)){
-                System.out.println(playerName + ": another player on this position (" + (x + dx) + ", "+(y +dy)+")");
+                //System.out.println(playerName + ": another player on this position (" + (x + dx) + ", "+(y +dy)+")");
                 playersCollide(dx, dy);
             }
         }
