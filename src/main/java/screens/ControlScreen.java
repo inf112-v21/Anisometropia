@@ -98,6 +98,7 @@ public class ControlScreen extends InputAdapter {
 
         optionCardTextures.add(new Texture(Gdx.files.internal("optionCards/doubleLaser.png")));
         optionCardTextures.add(new Texture(Gdx.files.internal("optionCards/shootBehind.png")));
+        optionCardTextures.add(new Texture(Gdx.files.internal("optionCards/respawnWith0Damage.png")));
 
         deckOfOptionCardsTexture = new Texture(Gdx.files.internal("optionCards/deckOfOptionCards.png"));
 
