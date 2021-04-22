@@ -324,6 +324,7 @@ public class Player implements IPlayer {
         if (checkIfPlayerCanRespawn()) {
             gameMap.setToNull(x, y);
             if (myUpgrade.equals("respawnWithZeroDamage")){
+                myUpgrade = "";
                 setDmgTokens(0);
             }else {setDmgTokens(2);}
             this.x = spawnX;

@@ -154,8 +154,6 @@ public class GameLogic {
     public void endOfRoundCheck() {
         endOfTurnCheck();
         initiateAnnouncedPowerDowns();
-        respawnPlayersIfPossible();
-        checkIfOnlyOnePlayerLeft();
         boolean localDrewOptionCard = false;
         for (Player player : playerQueue.getPlayerQueue()){
             if (player.isLocal)
@@ -169,6 +167,9 @@ public class GameLogic {
             if (localDrewOptionCard)
                 multiPlayerLogic.sendOptionCard();
         }
+        //respawning players is the last thin that happens
+        respawnPlayersIfPossible();
+        checkIfOnlyOnePlayerLeft();
     }
 
     private void checkIfOnlyOnePlayerLeft() {
