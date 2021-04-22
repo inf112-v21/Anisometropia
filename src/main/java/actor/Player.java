@@ -367,14 +367,13 @@ public class Player implements IPlayer {
         }
     }
 
-    public String drawOptionCard(){
+    public void drawOptionCard(){
         upgrades.add("doubleLaser");
         upgrades.add("shootBehind");
-        upgrades.add("respawnWith0Damage");
+        //upgrades.add("respawnWith0Damage");
         Collections.shuffle(upgrades);
         myUpgrade = upgrades.get(0);
         System.out.println("Here is your upgrade: " + myUpgrade);
-        return myUpgrade;
     }
 
     public void setUpgrade(String upgrade) { myUpgrade = upgrade; }

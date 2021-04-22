@@ -173,18 +173,7 @@ public interface IPlayer {
      * Player is to draw an option card that gives the player new abilities.
      * @return
      */
-    String drawOptionCard();
-
-    /**
-     * Updates the player's upgrade.
-     * @param upgrade to use.
-     */
-    void setUpgrade(String upgrade);
-
-    /**
-     * @return player's current upgrade
-     */
-    String getUpgrade();
+     void drawOptionCard();
 
     /**
      * Will set the dealt program cards the player was given for one round.
