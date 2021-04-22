@@ -192,13 +192,21 @@ public class GameLogic {
     }
 
     private void initiateAnnouncedPowerDowns() {
+        int numPlayersPoweredDown = 0;
         for (Player player : playerQueue.getPlayerQueue()) {
             player.isPoweredDown = false;
             if (player.hasAnnouncedPowerDown) {
                 player.hasAnnouncedPowerDown = false;
                 if (player == playerQueue.getLastPlayerInQueue()) lastPlayerPoweredDown = true;
                 player.powerDownRobot();
+                numPlayersPoweredDown++;
             }
+        }
+        if (numPlayersPoweredDown == playerQueue.getPlayerQueue().size()) {
+            for (Player player : playerQueue.getPlayerQueue()) {
+                player.isPoweredDown = false;
+            }
+            playerQueue.setCurrentPlayer(0);
         }
     }
 
