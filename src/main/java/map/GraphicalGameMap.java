@@ -27,19 +27,26 @@ public class GraphicalGameMap extends GameMap {
                 Hole_YellowBoarder6 = 110, Hole_YellowBoarder7 = 113, Hole_YellowBoarder8 = 114, Hole_YellowBoarder9 = 115,
                 Hole_YellowBoarder10 = 116, Hole_YellowBoarder11 = 117, Hole_YellowBoarder12 = 118;
 
-    private int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124, StartPosID_5 = 125, StartPosID_6 = 126, StartPosID_7 = 127, StartPosID_8 = 128;
+    private int StartPosID_1 = 121, StartPosID_2 = 122, StartPosID_3 = 123, StartPosID_4 = 124,
+            StartPosID_5 = 129, StartPosID_6 = 130, StartPosID_7 = 131, StartPosID_8 = 132;
 
     Point[] spawnPositions = new Point[8];
     Point[] flagPositions = new Point[4];
 
-    TextureRegion[][] playerImages, laserImages;
-    TiledMapTileLayer.Cell laserHorizontal = new TiledMapTileLayer.Cell();
-    TiledMapTileLayer.Cell laserVertical = new TiledMapTileLayer.Cell();
+    TextureRegion[][] playerImages, tileImages;
+    TiledMapTileLayer.Cell laserHorizontal;
+    TiledMapTileLayer.Cell doubleLaserHorizontal;
+    TiledMapTileLayer.Cell laserVertical;
+    TiledMapTileLayer.Cell doubleLaserVertical;
     TiledMapTileLayer.Cell[]player1Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player2Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player3Cells = new TiledMapTileLayer.Cell[6];
     TiledMapTileLayer.Cell[]player4Cells = new TiledMapTileLayer.Cell[6];
-    TiledMapTileLayer.Cell[][] playerCells = new TiledMapTileLayer.Cell[4][6];
+    TiledMapTileLayer.Cell[]player5Cells = new TiledMapTileLayer.Cell[6];
+    TiledMapTileLayer.Cell[]player6Cells = new TiledMapTileLayer.Cell[6];
+    TiledMapTileLayer.Cell[]player7Cells = new TiledMapTileLayer.Cell[6];
+    TiledMapTileLayer.Cell[]player8Cells = new TiledMapTileLayer.Cell[6];
+    TiledMapTileLayer.Cell[][] playerCells = new TiledMapTileLayer.Cell[8][6];
 
     Wall wall;
 
@@ -54,10 +61,12 @@ public class GraphicalGameMap extends GameMap {
         playerShootLaser = (TiledMapTileLayer) tiledMap.getLayers().get("PlayerShootLaser");
 
         playerImages  = TextureRegion.split(new Texture("charactersSpriteSheet300.png"), 300, 300);
+        tileImages = TextureRegion.split(new Texture("tiles.png"), 300,300 );
 
-        laserImages = TextureRegion.split(new Texture("tiles.png"), 300,300 );
-        laserHorizontal = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(laserImages[4][6]));
-        laserVertical = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(laserImages[5][6]));
+        laserHorizontal = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(tileImages[4][6]));
+        doubleLaserHorizontal = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(tileImages[12][6]));
+        laserVertical = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(tileImages[5][6]));
+        doubleLaserVertical = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(tileImages[12][5]));
 
         player1Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[1][1])); // north
         player1Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[0][1])); // east
@@ -87,10 +96,42 @@ public class GraphicalGameMap extends GameMap {
         player4Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][2])); // won
         player4Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[5][3])); // died
 
+        player5Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[7][1])); // north
+        player5Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[6][1])); // east
+        player5Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[6][0])); // south
+        player5Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[7][0])); // west
+        player5Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[8][0])); // won
+        player5Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[8][1])); // died
+
+        player6Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[7][3])); // north
+        player6Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[6][3])); // east
+        player6Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[6][2])); // south
+        player6Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[7][2])); // west
+        player6Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[8][2])); // won
+        player6Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[8][3])); // died
+
+        player7Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[10][1])); // north
+        player7Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[9][1])); // east
+        player7Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[9][0])); // south
+        player7Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[7][0])); // west
+        player7Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[8][0])); // won
+        player7Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[8][1])); // died
+
+        player8Cells[0] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[10][3])); // north
+        player8Cells[1] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[9][3])); // east
+        player8Cells[2] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[9][2])); // south
+        player8Cells[3] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[7][2])); // west
+        player8Cells[4] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[8][2])); // won
+        player8Cells[5] = new TiledMapTileLayer.Cell().setTile(new StaticTiledMapTile(playerImages[8][3])); // died
+
         playerCells[0] = player1Cells;
         playerCells[1] = player2Cells;
         playerCells[2] = player3Cells;
         playerCells[3] = player4Cells;
+        playerCells[4] = player5Cells;
+        playerCells[5] = player6Cells;
+        playerCells[6] = player7Cells;
+        playerCells[7] = player8Cells;
 
         wall = new Wall(this);
         findSpawnPositions();
@@ -134,7 +175,12 @@ public class GraphicalGameMap extends GameMap {
             case (0):
                 return laserHorizontal;
             case (1):
+                return doubleLaserHorizontal;
+            case (2):
                 return laserVertical;
+            case(3):
+                return doubleLaserVertical;
+
         }
         return null;
     }
