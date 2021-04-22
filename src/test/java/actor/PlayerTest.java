@@ -9,6 +9,7 @@ public class PlayerTest {
 
     TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
     Player player = new Player(1,1,"player", simpleGameMap, true, 0);
+    Player player2 = new Player(3,1, "player2", simpleGameMap, true, 0);
 
     @Test
     public void testPlayerMoveXDirection() {
@@ -173,6 +174,14 @@ public class PlayerTest {
         assertFalse(player.canMove(0,-13));
         assertFalse(player.canMove(13,0));
         assertFalse(player.canMove(-13,0));
+    }
+
+    @Test
+    //Checks if a player draws an existing option card
+    public void testDrawOptionCard(){
+        player.drawOptionCard();
+        assertTrue(player.upgrades.contains(player.getUpgrade()));
+        assertTrue(player.upgrades.size()>0);
     }
 
 }
