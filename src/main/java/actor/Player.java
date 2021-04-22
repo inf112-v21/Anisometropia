@@ -275,7 +275,6 @@ public class Player implements IPlayer {
         }else {
             // Players can collide as long as there are no walls on the given position.
             if (gameMap.isTherePlayerOnThisPosition(x+dx,y+dy)){
-                //System.out.println(playerName + ": another player on this position (" + (x + dx) + ", "+(y +dy)+")");
                 playersCollide(dx, dy);
             }
         }

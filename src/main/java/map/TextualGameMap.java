@@ -41,10 +41,13 @@ public class TextualGameMap extends GameMap {
         this.gridArray[11][11] = MovingAssets.gearRotatingLeft;
         this.gridArray[10][10] = MovingAssets.gearRotatingRight;
         //pushers
-        this.gridArray[11][2] = MovingAssets.pusherDown;
-        this.gridArray[9][2] = MovingAssets.pusherUp;
-        this.gridArray[10][2] = MovingAssets.pusherLeft;
-        this.gridArray[10][4] = MovingAssets.pusherRight;
+        this.gridArray[10][9] = MovingAssets.pusherDown;
+        this.gridArray[10][8] = MovingAssets.pusherUp;
+        this.gridArray[10][7] = MovingAssets.pusherLeft;
+        this.gridArray[10][6] = MovingAssets.pusherRight;
+        //wrench
+        this.gridArray[5][5] = DamageAssets.wrench;
+        this.gridArray[5][6] = DamageAssets.doubleWrench;
 
 
         flagPositions[0] = new Point(3,3);
@@ -147,7 +150,8 @@ public class TextualGameMap extends GameMap {
 
     @Override
     public boolean isThereRepairStationOnThisPosition(int x, int y) {
-        return false;
+        return  (this.gridArray[x][y] == DamageAssets.wrench) ||
+                (this.gridArray[x][y] == DamageAssets.doubleWrench);
     }
 
     @Override
