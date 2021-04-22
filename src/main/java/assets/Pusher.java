@@ -26,6 +26,8 @@ public class Pusher extends MovingAssets{
             case (pusherRight):
                 player.move(1,0);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected pusherID: " +pusherID+ " x: " +player.getX()+ " y: " +player.getY());
         }
     }
 }

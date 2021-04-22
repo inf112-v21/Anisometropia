@@ -22,6 +22,8 @@ public class Gear extends MovingAssets {
             case (gearRotatingRight):
                 player.rotate(1);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected LaserID: " +gearID+ " x: " +player.getX()+ " y: " +player.getY());
         }
     }
 }

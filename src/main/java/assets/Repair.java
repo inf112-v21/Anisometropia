@@ -1,7 +1,6 @@
 package assets;
 
 import actor.Player;
-import com.badlogic.gdx.Game;
 import map.GameMap;
 
 public class Repair extends DamageAssets {
@@ -27,12 +26,14 @@ public class Repair extends DamageAssets {
     //TODO when player walks on a doubleWrench Player is to draw an OPTION CARD
     public void repairSite(int wrenchID, Player player){
         switch (wrenchID){
-            case (wrench):
             case (doubleWrench):
+            case (wrench):
                 if(player.getDmgTokens()>0){
                     player.updateDamageTokens(-1);
                 }
                 break;
+            default:
+                throw new IllegalStateException("Unexpected LaserID: " +wrenchID+ " x: " +player.getX()+ " y: " +player.getY());
         }
     }
 }

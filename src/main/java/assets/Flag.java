@@ -44,6 +44,8 @@ public class Flag {
                     player.setNewCheckpoint();
                 }
                 break;
+            default:
+                throw new IllegalStateException("Unexpected LaserID: " +tileID+ " x: " +player.getX()+ " y: " +player.getY());
         }
     }
 
