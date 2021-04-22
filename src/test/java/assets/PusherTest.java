@@ -12,30 +12,22 @@ public class PusherTest {
     MovingAssets pusher = new Pusher();
     TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
     Player player = new Player(x,y,"player", simpleGameMap, true, 0);
+    Player player2 = new Player(x,y, "player2", simpleGameMap, true, 1);
     //---FROM TEXTUAL GAMEMAP:----
-    //    this.gridArray[11][2] = MovingAssets.pusherDown;
-    //    this.gridArray[9][2] = MovingAssets.pusherUp;
-    //    this.gridArray[10][2] = MovingAssets.pusherLeft;
-    //    this.gridArray[10][4] = MovingAssets.pusherRight;
+    //    this.gridArray[10][9] = MovingAssets.pusherDown;
+    //    this.gridArray[10][8] = MovingAssets.pusherUp;
+    //    this.gridArray[10][7] = MovingAssets.pusherLeft;
+    //    this.gridArray[10][6] = MovingAssets.pusherRight;
 
     @Test
-    public void pusherPushesPlayerDownTest(){
-        player.x = 11; player.y = 2;
+    public void playerIsStandingOnAPusherTest(){
+        player.x = 10; player.y = 9;
         assertTrue(simpleGameMap.isTherePusherOnThisPosition(player.x, player.y));
-    }
-    @Test
-    public void pusherPushesPlayerUpTest(){
-        player.x = 9; player.y = 2;
+        player.x = 10; player.y = 8;
         assertTrue(simpleGameMap.isTherePusherOnThisPosition(player.x, player.y));
-    }
-    @Test
-    public void pusherPushesPlayerLeftTest(){
-        player.x = 10; player.y = 2;
+        player.x = 10; player.y = 7;
         assertTrue(simpleGameMap.isTherePusherOnThisPosition(player.x, player.y));
-    }
-    @Test
-    public void pusherPushesPlayerRightTest(){
-        player.x = 10; player.y = 4;
+        player.x = 10; player.y = 6;
         assertTrue(simpleGameMap.isTherePusherOnThisPosition(player.x, player.y));
     }
 }
