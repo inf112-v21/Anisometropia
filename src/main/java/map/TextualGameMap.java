@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class TextualGameMap extends GameMap {
 
     final int FLAG_1_ID = 55;
-    Point[] flagPositions;
+    Point[] flagPositions = new Point[4];
 
     int width;
     int height;
