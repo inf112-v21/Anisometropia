@@ -46,6 +46,10 @@ public class Player implements IPlayer {
         flagsReached = new boolean[4];
         lockedProgramCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));
 
+        upgrades.add("doubleLaser");
+        upgrades.add("shootBehind");
+        //upgrades.add("respawnWith0Damage");
+
         isAi = false;
     }
 
@@ -60,6 +64,10 @@ public class Player implements IPlayer {
         lifeTokens = 3;
         flagsReached = new boolean[4];
         lockedProgramCards = new ArrayList<>(Collections.nCopies(5, new ProgramCard(0, 0, true)));
+
+        upgrades.add("doubleLaser");
+        upgrades.add("shootBehind");
+        //upgrades.add("respawnWith0Damage");
 
         this.isAi = isAi;
     }
@@ -368,11 +376,8 @@ public class Player implements IPlayer {
     }
 
     public void drawOptionCard(){
-        upgrades.add("doubleLaser");
-        upgrades.add("shootBehind");
-        //upgrades.add("respawnWith0Damage");
-        Collections.shuffle(upgrades);
-        myUpgrade = upgrades.get(0);
+        int randomUpgradeIndex = (int) (Math.random() * upgrades.size());
+        myUpgrade = upgrades.get(randomUpgradeIndex);
         System.out.println("Here is your upgrade: " + myUpgrade);
     }
 

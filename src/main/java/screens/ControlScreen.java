@@ -16,7 +16,6 @@ import logic.GameLogic;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.concurrent.TimeUnit;
 
 import static logic.GameLogic.cardExecutionInProgress;
 import static logic.GameLogic.gameOver;
@@ -340,11 +339,11 @@ public class ControlScreen extends InputAdapter {
 
     private void drawOptionCardsOfCurrentPlayer(SpriteBatch batch) {
         Player player = gameLogic.getCurrentPlayer();
-        if (player.upgrades.size() == 0) {
+        if (player.myUpgrade.equals("")) {
             batch.draw(deckOfOptionCardsTexture, 1070, 0, 320, 220);
         } else {
             for (int i = 0; i < player.upgrades.size(); i++) {
-                if (player.getUpgrade() == player.upgrades.get(i)) {
+                if (player.getUpgrade().equals(player.upgrades.get(i))) {
                     batch.draw(optionCardTextures.get(i), 1070, 0, 320, 220);
                 }
             }
