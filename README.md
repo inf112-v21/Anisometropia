@@ -55,9 +55,6 @@ java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 
 
 ## Kjente feil (bugs)
-Selv om en spiller har falt ned i et hull, må man fortsatt trykke på "click to progress" for
-å prosessere turen til spilleren.
-
 Dersom en spiller har lite skade og så trykker R-(Respawn) vil spillet starte på nytt, men spilleren
 vil få antall kort tilsvarende skaden som ble tatt før respawn. Spiller vil ikke få nye kort ved
 respawn (Bug av lav prioritet).
