@@ -39,7 +39,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
     BitmapFont font;
 
     int editNameIndexActive = -1;
-    int maxPlayers = 4;
+    int maxPlayers = 8;
     int playersAdded = 1;
     boolean[] isAi = new boolean[maxPlayers];
     private StringBuilder[] allStringBuilders = new StringBuilder[maxPlayers];
@@ -102,9 +102,9 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
             numbers[i] = localSetupRegionBy32[9][i];
         }
 
-        characters = new TextureRegion[4]; // TODO: should be "maxPlayers" instead of 4, change when all 8 characters are done!
+        characters = new TextureRegion[maxPlayers];
         for (int i = 0; i < maxPlayers; i++) {
-            characters[i] = localSetupRegionBy32[16][4+i];
+            characters[i] = localSetupRegionBy32[16][i];
         }
 
         for (int i = 0; i < maxPlayers; i++) {
@@ -346,6 +346,7 @@ public class LocalSetupScreen extends AbstractScreen implements InputProcessor {
         GraphicalGameMap gameMap = new GraphicalGameMap(mapSelector.getCurrentMap());
         PlayerQueue playerQueue = new PlayerQueue();
         int spawnIncrementer = 0;
+        System.out.println(gameMap.getSpawnPoint(7));
         for (int i = 0; i < playersAdded; i++) {
             if(isAi[i]) playerQueue.add(new AIPlayer((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, i));
             else playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(), (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), allStringBuilders[i].toString(), gameMap, true, i));
