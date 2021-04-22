@@ -132,6 +132,9 @@ public class ControlScreen extends InputAdapter {
                         borderButton.setTexture(borderTexture);
                     }
                 }
+                if (gameLogic.getCurrentPlayer().isDead) {
+                    progressButtonHasBeenClicked();
+                }
                 if (click.x > acceptButton.getX() && click.x < (acceptButton.getX() + acceptButton.getWidth()) &&
                         click.y > acceptButton.getY() && click.y < (acceptButton.getY() + acceptButton.getHeight())) {
                     acceptButtonHasBeenClicked();
