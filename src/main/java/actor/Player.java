@@ -28,8 +28,8 @@ public class Player implements IPlayer {
     private final boolean isAi;
     public boolean isLocal;
 
-    private ArrayList<Point> shootingLaserLocationsVertical = new ArrayList<>();
-    private ArrayList<Point> shootingLaserLocationsHorizontal = new ArrayList<>();
+    private final ArrayList<Point> shootingLaserLocationsVertical = new ArrayList<>();
+    private final ArrayList<Point> shootingLaserLocationsHorizontal = new ArrayList<>();
     public ArrayList<String> upgrades = new ArrayList<>();
 
     public Player(int x, int y, String playerName, GameMap gameMap, boolean isLocal, int characterID) {
@@ -113,8 +113,11 @@ public class Player implements IPlayer {
         shootLaserBasedOnPlayersDirection();
     }
 
-    //TODO: now lasers wont pass through any "wall"-tile even though it is to. Tell them which tiles they'r supposed to pass.
-    public void shootLaserBasedOnPlayersDirection(){
+
+    /**
+     * Shoots a laser in the direction a player is facing
+     */
+    private void shootLaserBasedOnPlayersDirection(){
 //-------------if Player faces NORTH or SOUTH----------
         if (getDirection() == 0){ //NORTH
             for (int i = 0 ; y + i < gameMap.getHeight(); i++ ){
@@ -215,7 +218,7 @@ public class Player implements IPlayer {
      * @param dx distance to move in x direction
      * @param dy distance to move in y direction
      */
-    public void playersCollide(int dx, int dy){
+    private void playersCollide(int dx, int dy){
         for (int i = 0; i < playerQueue.getPlayerQueue().size(); i++) {
             Player pushedPlayer = playerQueue.getPlayerQueue().get(i);
 

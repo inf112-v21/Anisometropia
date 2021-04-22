@@ -33,14 +33,9 @@ public interface IPlayer {
 
     /**
      * If any upgrades to laser - shoots multiple lasers.
-     * Else fires of one laser beam in players faced direction.
+     * Else shootLaserBasedOnPlayersDirection()
      */
     void playerShootLaser();
-
-    /**
-     * Robot shoots a laser based of players direction, that can damage players and be stopped by walls.
-     */
-    void shootLaserBasedOnPlayersDirection();
 
     /**
      * Clears player's shot lasers from the board.
@@ -52,14 +47,6 @@ public interface IPlayer {
      */
     void placeLasers();
 
-    /**
-     * If current player(1) collides with a player(2), this player(2) is to be moved in the same direction as
-     * the player moves.
-     * Called in canMove.
-     * @param dx distance to move in x direction
-     * @param dy distance to move in y direction
-     */
-    void playersCollide(int dx, int dy);
 
     /**
      * Moves the player in a given direction if that move is possible.
