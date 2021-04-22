@@ -1,5 +1,7 @@
 package actor;
 
+import assets.MovingAssets;
+import assets.Pusher;
 import cards.ProgramCard;
 import logic.PlayerQueue;
 import map.GameMap;
@@ -8,6 +10,7 @@ import java.awt.*;
 import java.util.*;
 
 public class Player implements IPlayer {
+    MovingAssets pusher = new Pusher();
     GameMap gameMap;
     PlayerQueue playerQueue;
     public int x, y, spawnX, spawnY;
@@ -236,6 +239,7 @@ public class Player implements IPlayer {
         if (canMove(dx, dy)) {
             gameMap.setToNull(x, y);
             gameMap.setPlayerPosition(x += dx, y += dy, this);
+            pusher.playerIsToMove(this, gameMap);
         }
     }
 

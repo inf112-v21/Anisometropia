@@ -130,7 +130,6 @@ public class GameLogic {
             //moving assets:
             conveyorBelts.playerIsToMove(player, gameMap);
             gear.playerIsToMove(player, gameMap);
-            pusher.playerIsToMove(player, gameMap);
             //repair assets:
             laser.updatePlayersHealth(player, gameMap);
             repair.updatePlayersHealth(player, gameMap);

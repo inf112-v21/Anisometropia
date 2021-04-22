@@ -1,6 +1,8 @@
 package map;
 
 import actor.Player;
+import assets.DamageAssets;
+import assets.MovingAssets;
 import assets.Wall;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 
@@ -23,6 +25,7 @@ public class TextualGameMap extends GameMap {
         createGrid(gridArray);
     }
 
+
     private void createGrid(int[][] gridArray) {
         for (int[] ints : gridArray) {
             Arrays.fill(ints, 0);
@@ -30,8 +33,19 @@ public class TextualGameMap extends GameMap {
 
         this.gridArray[3][3] = 55; // Flag_1_ID
         this.gridArray[5][5] = 6;  // Hole
-        this.gridArray[2][2] = 39; // Lasers - Horizontal
-        this.gridArray[1][7] = Wall.wallDown; //wall
+        this.gridArray[2][2] = DamageAssets.laserBeamHorizontal;
+        //walls
+        this.gridArray[1][11] =Wall.wallUp;
+        this.gridArray[1][7] = Wall.wallDown;
+        //gears
+        this.gridArray[11][11] = MovingAssets.gearRotatingLeft;
+        this.gridArray[10][10] = MovingAssets.gearRotatingRight;
+        //pushers
+        this.gridArray[11][2] = MovingAssets.pusherDown;
+        this.gridArray[9][2] = MovingAssets.pusherUp;
+        this.gridArray[10][2] = MovingAssets.pusherLeft;
+        this.gridArray[10][4] = MovingAssets.pusherRight;
+
 
         flagPositions[0] = new Point(3,3);
         flagPositions[1] = new Point(width-1,height-1);
@@ -128,7 +142,7 @@ public class TextualGameMap extends GameMap {
 
     @Override
     public boolean isThereGearOnThisPosition(int x, int y) {
-        return false;
+        return (this.gridArray[x][y] == MovingAssets.gearRotatingLeft) || (this.gridArray[x][y] == MovingAssets.gearRotatingRight);
     }
 
     @Override
@@ -138,7 +152,10 @@ public class TextualGameMap extends GameMap {
 
     @Override
     public boolean isTherePusherOnThisPosition(int x, int y) {
-        return false;
+        return  (this.gridArray[x][y] == MovingAssets.pusherDown) ||
+                (this.gridArray[x][y] == MovingAssets.pusherUp) ||
+                (this.gridArray[x][y] == MovingAssets.pusherLeft) ||
+                (this.gridArray[x][y] == MovingAssets.pusherRight);
     }
 
     @Override
