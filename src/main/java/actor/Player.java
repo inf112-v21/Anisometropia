@@ -109,7 +109,7 @@ public class Player implements IPlayer {
     public void shootLaserBasedOnPlayersDirection(){
 //-------------if Player faces NORTH or SOUTH----------
         if (getDirection() == 0){ //NORTH
-            for (int i = 0 ; y + i < gameMap.getHeight()-1; i++ ){
+            for (int i = 0 ; y + i < gameMap.getHeight(); i++ ){
                 if (i!=0){
                     Point coordinates = new Point(x, y+i);
                     shootingLaserLocationsVertical.add(coordinates);
@@ -126,7 +126,7 @@ public class Player implements IPlayer {
             }
         }
         if (getDirection() == 2 ) {//SOUTH
-            for (int i = 0; y - i > 0; i++ ){ //height = 0
+            for (int i = 0; y - i >= 0; i++ ){ //height = 0
                 if (i!=0){
                     Point coordinates = new Point(x, y-i);
                     shootingLaserLocationsVertical.add(coordinates);
@@ -144,7 +144,7 @@ public class Player implements IPlayer {
         }
 // -------------if Player faces WEST or EAST------------
         if (getDirection() == 1 ) {//EAST
-            for (int i = 0; x + i < gameMap.getWidth()-1; i++ ){ //height = 0
+            for (int i = 0; x + i < gameMap.getWidth(); i++ ){ //height = 0
 
                 if (i!=0){
                     Point coordinates = new Point(x+i, y);
@@ -162,7 +162,7 @@ public class Player implements IPlayer {
             }
         }
         if (getDirection() == 3 ) {//WEST
-            for (int i = 0; x - i > 0; i++ ){ //height = 0
+            for (int i = 0; x - i >= 0; i++ ){ //height = 0
                 if (i!=0){
                     Point coordinates = new Point(x-i, y);
                     shootingLaserLocationsHorizontal.add(coordinates);
