@@ -33,6 +33,9 @@ public class TextualGameMap extends GameMap {
         this.gridArray[2][2] = 38; // Lasers
 
         flagPositions[0] = new Point(3,3);
+        flagPositions[1] = new Point(width-1,height-1);
+        flagPositions[2] = new Point(width-1,height-2);
+        flagPositions[3] = new Point(width-2,height-2);
     }
 
     public void setPlayerPosition(int x, int y, Player player) {
