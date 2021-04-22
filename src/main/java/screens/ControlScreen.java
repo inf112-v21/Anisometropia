@@ -349,8 +349,8 @@ public class ControlScreen extends InputAdapter {
                 if(player.getUpgrade() == optionCard) {
                     optionCardToDraw = optionCardTexture;
                     batch.draw(optionCardToDraw, 1070, 0, 320, 220);
-              }
-         }
+                }
+        }
     }
 
     private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {

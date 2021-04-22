@@ -6,7 +6,6 @@ import map.GameMap;
 
 import java.awt.*;
 import java.util.*;
-import java.util.List;
 
 public class Player implements IPlayer {
     GameMap gameMap;
@@ -28,6 +27,7 @@ public class Player implements IPlayer {
     private final int characterID;
     private final boolean isAi;
     public boolean isLocal;
+
     private ArrayList<Point> shootingLaserLocationsVertical = new ArrayList<>();
     private ArrayList<Point> shootingLaserLocationsHorizontal = new ArrayList<>();
     public ArrayList<String> upgrades = new ArrayList<>();
@@ -367,17 +367,21 @@ public class Player implements IPlayer {
         }
     }
 
-    public void drawOptionCard() {
+    public String drawOptionCard(){
         upgrades.add("doubleLaser");
         upgrades.add("shootBehind");
+        upgrades.add("respawnWith0Damage");
         Collections.shuffle(upgrades);
         myUpgrade = upgrades.get(0);
         System.out.println("Here is your upgrade: " + myUpgrade);
+        return myUpgrade;
     }
 
     public void setUpgrade(String upgrade) { myUpgrade = upgrade; }
 
-    public String getUpgrade() { return myUpgrade; }
+    public String getUpgrade() {
+        return myUpgrade;
+    }
 
     public void setDealtProgramCards(ArrayList<ProgramCard> dealtCards) { dealtProgramCards = dealtCards; }
 

@@ -3,7 +3,6 @@ package actor;
 import cards.ProgramCard;
 import logic.PlayerQueue;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public interface IPlayer {
@@ -172,8 +171,9 @@ public interface IPlayer {
 
     /**
      * Player is to draw an option card that gives the player new abilities.
+     * @return
      */
-    void drawOptionCard();
+    String drawOptionCard();
 
     /**
      * Updates the player's upgrade.
