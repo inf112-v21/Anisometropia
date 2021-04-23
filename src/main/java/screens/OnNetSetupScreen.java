@@ -21,6 +21,7 @@ import p2p.Multiplayer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     SpriteBatch batch;
@@ -51,6 +52,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
     private final int numberOfInputEditors = 3;
     StringBuilder[] allStringBuilders = new StringBuilder[numberOfInputEditors]; // localhost + port + local player
     private MapSelector mapSelector = new MapSelector();
+    public HashMap<Integer, String> playerNames = new HashMap<>();
 
     public static int playerID = 0;
     public static int numPlayers;
@@ -284,7 +286,7 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
             }
             else {
                 playerQueue.add(new Player((int) gameMap.getSpawnPoint(spawnIncrementer).getX(),
-                        (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), "PL "+(i+1), gameMap, false, i));
+                        (int) gameMap.getSpawnPoint(spawnIncrementer).getY(), playerNames.get(i), gameMap, false, i));
             }
             spawnIncrementer++;
         }
@@ -399,6 +401,10 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
 
     public void setCurrentMap(String map) {
         mapSelector.setCurrentMap(map);
+    }
+
+    public String getPlayerName(){
+        return allStringBuilders[2].toString();
     }
 
     @Override

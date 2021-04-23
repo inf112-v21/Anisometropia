@@ -205,7 +205,8 @@ public class ControlScreen extends InputAdapter {
                 "4. click to progress actions\n" +
                 "\n" +
                 "R:              restart the game\n" +
-                "ESCAPE:  exit", 1100, 750);
+                "ESCAPE:  exit\n\n" +
+                "_______ PLAYERS ______", 1100, 750);
 
         batch.end();
     }
