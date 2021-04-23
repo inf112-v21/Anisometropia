@@ -56,7 +56,8 @@ java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 ## Kjøring av tester:
 1. For at PlayerTesten skal kunne kjøres, må du først inn i Player.java. 
 2. Bla deretter ned til metoden som heter move på linje 238 og kommenter ut metoden som blir kallt ved navn pusher.playerIsToMove();
-3. NB: Ved utføring av manuelle tester skal IKKE metoden kommenteres ut!
+3. Merk at dette kun gjelder for PlayerTest.java, de andre testene vil kjøre normalt uavhengi av dette.
+4. NB: Ved utføring av manuelle tester skal IKKE metoden kommenteres ut!
 
 
 ## Kjente feil (bugs)
