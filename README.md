@@ -8,24 +8,24 @@ JDK (Java Development Kit) må være installert, evt. JRE (Java Runtime Environm
 
 https://www.oracle.com/java/technologies/javase-jdk16-downloads.html
 
-Last ned RoboRallyVersion3.jar fra:
+Last ned RoboRallyVersion4.jar fra:
 
-https://github.com/inf112-v21/Anisometropia/releases/tag/v3.1 (ligger i "Assets"-listen)
+https://github.com/inf112-v21/Anisometropia/releases/tag/v4 (ligger i "Assets"-listen)
 
 #### _Windows_
 Her kan man være heldig, og få til å kjøre spillet ved å bare dobbeltklikke på .jar-filen.
 
 Fungerer ikke det, kan man åpne et terminal-vindu, navigere til mappen hvor .jar-filen er, og kjøre:
 ```
-java -jar RoboRallyVersion3.jar
+java -jar RoboRallyVersion4.jar
 ```
 Fungerer ikke dette, må man legge til Java som PATH, følg bruksanvisning:
 
 https://java.com/en/download/help/path.html
 
-Naviger så til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
+Naviger så til mappen hvor RoboRallyVersion4.jar ligger, og kjør:
 ```
-java -jar RoboRallyVersion3.jar
+java -jar RoboRallyVersion4.jar
 ```
 #### _Linux_
 Kjør kommandoer:
@@ -33,15 +33,15 @@ Kjør kommandoer:
 sudo apt update
 sudo apt install default-jdk
 ```
-Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
+Naviger til mappen hvor RoboRallyVersion4.jar ligger, og kjør:
 ```
-java -jar RoboRallyVersion3.jar
+java -jar RoboRallyVersion4.jar
 ```
 
 #### _macOS_
-Naviger til mappen hvor RoboRallyVersion3.jar ligger, og kjør:
+Naviger til mappen hvor RoboRallyVersion4.jar ligger, og kjør:
 ```
-java -XstartOnFirstThread -jar RoboRallyVersion3.jar
+java -XstartOnFirstThread -jar RoboRallyVersion4.jar
 ```
 
 ## Hvordan spille spillet:
