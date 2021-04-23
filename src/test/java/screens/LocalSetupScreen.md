@@ -35,7 +35,7 @@ The screen changes, and you are now back to the main menu screen
 
 There should now be 2 players in the playing area
 
-### **Test Scenario:** _Check if possible to remove players"_
+### **Test Scenario:** _Check if possible to remove players_
 
 **Test Steps**
 
@@ -48,7 +48,7 @@ There should now be 2 players in the playing area
 
 There should now only be 1 player in the playing area.
 
-### **Test Scenario:** _Check if possible to give player a name"_
+### **Test Scenario:** _Check if possible to give player a name_
 
 **Test Steps**
 
@@ -61,3 +61,19 @@ There should now only be 1 player in the playing area.
 **Expected Results**
 
 The player should now be named "Santa" (visible on player list on the right).
+
+### **Test Scenario:** _Check if possible to change map_
+
+**Test Steps**
+
+1. run game, and click on "Play Local"
+2. take note of the name of the current map selected to the right of "SELECT MAP" (in between the arrows)
+3. click the arrow that points to the right
+4. the name of the current map should change
+5. click on "START"-button
+
+**Expected Results**
+The game should start with the selected map.
+
+
+
