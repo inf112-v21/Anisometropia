@@ -22,7 +22,6 @@ public class GameLogic {
     Gear gear;
     Repair repair;
     Flag flag;
-    Pusher pusher;
 
     public static boolean gameOver = false;
     public static boolean cardExecutionInProgress = false;
@@ -40,7 +39,6 @@ public class GameLogic {
         gear = new Gear();
         repair = new Repair();
         flag = new Flag();
-        pusher = new Pusher();
         deckOfProgramCards = new DeckOfProgramCards();
         dealProgramCards();
     }
@@ -54,7 +52,6 @@ public class GameLogic {
         gear = new Gear();
         repair = new Repair();
         flag = new Flag();
-        pusher = new Pusher();
         deckOfProgramCards = new DeckOfProgramCards();
         dealProgramCards();
     }
