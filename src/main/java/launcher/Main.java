@@ -15,7 +15,6 @@ public class Main {
         config.setResizable(false);
         config.setWindowedMode(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-//        new Lwjgl3Application(new GameScreen(), config); // old init before menu system was implemented
         new Lwjgl3Application(new GameApplication(), config);
     }
 }
