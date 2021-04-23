@@ -239,6 +239,8 @@ public class Player implements IPlayer {
         if (canMove(dx, dy)) {
             gameMap.setToNull(x, y);
             gameMap.setPlayerPosition(x += dx, y += dy, this);
+
+            //-------COMMENT THIS OUT WHEN RUNNING PLAYER TEST-----
             pusher.playerIsToMove(this, gameMap);
         }
     }

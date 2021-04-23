@@ -116,6 +116,7 @@ public class PlayerTest {
     @Test
     public void movingNorthFacingPlayerForwardThreeTiles() {
         int currentYPos = player.getY();
+        System.out.println(player.getY());
         player.moveForward(3);
         assertEquals(player.getY(), currentYPos + 3);
     }
@@ -170,10 +171,13 @@ public class PlayerTest {
     @Test
     //tests if the player can move out of Bounds
     public void testOutOfBounds() {
-        assertFalse(player.canMove(0,13));
-        assertFalse(player.canMove(0,-13));
-        assertFalse(player.canMove(13,0));
-        assertFalse(player.canMove(-13,0));
+        player.x =0; player.y = 0;
+        assertFalse(player.canMove(0,-1));
+        assertFalse(player.canMove(-1,0));
+        player.x = 11;player.y = 11;
+        assertFalse(player.canMove(0,1));
+        assertFalse(player.canMove(1,0));
+
     }
 
     @Test

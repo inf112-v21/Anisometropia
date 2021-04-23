@@ -2,6 +2,7 @@ package assets;
 
 import actor.Player;
 import map.TextualGameMap;
+import map.TextualGameMapTestAssets;
 import org.junit.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,7 +11,7 @@ public class RepairTest {
     int x = 1;
     int y = 1;
     DamageAssets repairStation = new Repair();
-    TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
+    TextualGameMapTestAssets simpleGameMap = new TextualGameMapTestAssets(12, 12);
     Player player = new Player(x,y,"player", simpleGameMap, true, 0);
     Player player2 = new Player(x,y, "player2", simpleGameMap, true, 1);
 //    this.gridArray[5][5] = DamageAssets.wrench;

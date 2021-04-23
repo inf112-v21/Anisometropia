@@ -53,6 +53,11 @@ java -XstartOnFirstThread -jar RoboRallyVersion3.jar
 
 4. R restarter og setter spillerne tilbake til startposisjon.
 
+## Kjøring av tester:
+1. For at PlayerTesten skal kunne kjøres, må du først inn i Player.java. 
+2. Bla deretter ned til metoden som heter move på linje 238 og kommenter ut metoden som blir kallt ved navn pusher.playerIsToMove();
+3. NB: Ved utføring av manuelle tester skal IKKE metoden kommenteres ut!
+
 
 ## Kjente feil (bugs)
 Dersom en spiller har lite skade og så trykker R-(Respawn) vil spillet starte på nytt, men spilleren

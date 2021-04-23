@@ -9,7 +9,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import java.awt.*;
 import java.util.Arrays;
 
-public class TextualGameMap extends GameMap {
+public class TextualGameMapTestAssets extends GameMap{
 
     final int FLAG_1_ID = 55;
     Point[] flagPositions = new Point[4];
@@ -18,7 +18,7 @@ public class TextualGameMap extends GameMap {
     int height;
     int[][] gridArray;
 
-    public TextualGameMap(int width, int height) {
+    public TextualGameMapTestAssets(int width, int height) {
         this.width = width;
         this.height = height;
         gridArray = new int[height][width];
@@ -31,9 +31,28 @@ public class TextualGameMap extends GameMap {
             Arrays.fill(ints, 0);
         }
 
-        this.gridArray[3][3] = FLAG_1_ID; // Flag_1_ID
+        this.gridArray[3][3] = 55; // Flag_1_ID
         this.gridArray[5][5] = 6;  // Hole
-
+        this.gridArray[2][2] = DamageAssets.laserBeamHorizontal;
+        this.gridArray[2][3] = DamageAssets.laserBeamVertical;
+        this.gridArray[2][4] = DamageAssets.doubleLaserBeamHorizontal;
+        this.gridArray[2][5] = DamageAssets.doubleLaserBeamVertical;
+        this.gridArray[2][6] = DamageAssets.laserBeamCrossing;
+        this.gridArray[2][7] = DamageAssets.doubleLaserBeamCrossing;
+        //walls
+        this.gridArray[1][11] =Wall.wallUp;
+        this.gridArray[1][7] = Wall.wallDown;
+        //gears
+        this.gridArray[11][11] = MovingAssets.gearRotatingLeft;
+        this.gridArray[10][10] = MovingAssets.gearRotatingRight;
+        //pushers
+        this.gridArray[10][9] = MovingAssets.pusherDown;
+        this.gridArray[10][8] = MovingAssets.pusherUp;
+        this.gridArray[10][7] = MovingAssets.pusherLeft;
+        this.gridArray[10][6] = MovingAssets.pusherRight;
+        //wrench
+        this.gridArray[5][5] = DamageAssets.wrench;
+        this.gridArray[5][6] = DamageAssets.doubleWrench;
 
 
         flagPositions[0] = new Point(3,3);
@@ -44,14 +63,6 @@ public class TextualGameMap extends GameMap {
 
     public void setPlayerPosition(int x, int y, Player player) {
         this.gridArray[y][x] = 1;
-    }
-
-    public void setValue(int y, int x, int value) {
-        this.gridArray[y][x] = value;
-    }
-
-    public int getValue(int y, int x) {
-        return this.gridArray[y][x];
     }
 
     @Override
@@ -69,7 +80,7 @@ public class TextualGameMap extends GameMap {
     }
 
     public int getAssetLayerID(int x, int y) {
-        return this.gridArray[y][x];
+        return this.gridArray[y][x]; // returns the general ID, not Flag ID... needs to be fixed
     }
 
     @Override
@@ -79,9 +90,6 @@ public class TextualGameMap extends GameMap {
 
     public boolean isThereHoleOnThisPosition(int x, int y){
         return this.gridArray[y][x] == 6 || this.gridArray[y][x] == 90 || this.gridArray[y][x] == 92;
-    }
-
-    public void update() {
     }
 
     public int getWidth() {
@@ -113,7 +121,12 @@ public class TextualGameMap extends GameMap {
 
     @Override
     public boolean isThereLaserBeamsOnThisPosition(int x, int y) {
-        return false;
+        return  (this.gridArray[y][x] == DamageAssets.laserBeamHorizontal) ||
+                (this.gridArray[y][x] == DamageAssets.laserBeamVertical)||
+                (this.gridArray[y][x] == DamageAssets.doubleLaserBeamHorizontal)||
+                (this.gridArray[y][x] == DamageAssets.doubleLaserBeamVertical)||
+                (this.gridArray[y][x] == DamageAssets.laserBeamCrossing)||
+                (this.gridArray[y][x] == DamageAssets.doubleLaserBeamCrossing);
     }
 
     @Override
@@ -131,17 +144,22 @@ public class TextualGameMap extends GameMap {
 
     @Override
     public boolean isThereGearOnThisPosition(int x, int y) {
-        return false;
+        return (this.gridArray[y][x] == MovingAssets.gearRotatingLeft) ||
+                (this.gridArray[y][x] == MovingAssets.gearRotatingRight);
     }
 
     @Override
     public boolean isThereRepairStationOnThisPosition(int x, int y) {
-        return false;
+        return  (this.gridArray[y][x] == DamageAssets.wrench) ||
+                (this.gridArray[y][x] == DamageAssets.doubleWrench);
     }
 
     @Override
     public boolean isTherePusherOnThisPosition(int x, int y) {
-        return false;
+        return (this.gridArray[y][x] == MovingAssets.pusherDown) ||
+                (this.gridArray[y][x] == MovingAssets.pusherUp) ||
+                (this.gridArray[y][x] == MovingAssets.pusherLeft) ||
+                (this.gridArray[y][x] == MovingAssets.pusherRight);
     }
 
     @Override
@@ -149,4 +167,3 @@ public class TextualGameMap extends GameMap {
         return 0;
     }
 }
-
