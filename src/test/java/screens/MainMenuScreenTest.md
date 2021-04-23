@@ -15,6 +15,24 @@
 1. text goes blue and letters are jumbled when cursor over "PLAY LOCAL"
 2. after clicking, you should be taken to new screen (LocalSetupScreen.java)
 
+### **Test Scenario:** _To check if button "PLAY ON NET" works_
+
+**Test Steps**
+
+1. the main menu will appear when the game is run
+2. move cursor to text that says "PLAY ON NET"
+3. click mouse
+
+* should be repeated with mouse starting from all directions
+
+**Expected Results**
+
+1. text goes blue and letters are jumbled when cursor over "PLAY ON NET"
+2. after clicking, you should be taken to new screen (OnNetSetupScreen.java)
+
+
+
+
 ### **Test Scenario**: _To check if button "QUIT" works_
 
 **Test Steps**
