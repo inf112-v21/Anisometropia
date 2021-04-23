@@ -6,7 +6,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PlayerTest {
-
     TextualGameMap simpleGameMap = new TextualGameMap(12, 12);
     Player player = new Player(1,1,"player", simpleGameMap, true, 0);
     Player player2 = new Player(3,1, "player2", simpleGameMap, true, 0);
@@ -185,7 +184,12 @@ public class PlayerTest {
     public void testDrawOptionCard(){
         player.drawOptionCard();
         assertTrue(player.upgrades.contains(player.getUpgrade()));
-        assertTrue(player.upgrades.size()>0);
+        assertNotSame("", player.getUpgrade());
     }
-
+    @Test
+    public void playerLosesCardRespawnWithZeroDamageAtRespawn(){
+        player.getUpgrade().replace(player.getUpgrade(), "respawnWithZeroDamage");
+        player.respawn();
+        assertEquals("", player.getUpgrade());
+    }
 }
