@@ -13,7 +13,6 @@ public class GameApplication extends Game {
     public void create() {
         spriteBatch = new SpriteBatch();
         gameScreenManager = new GameScreenManager(this);
-//        this.setScreen(new MainMenuScreen(this));
     }
 
     @Override

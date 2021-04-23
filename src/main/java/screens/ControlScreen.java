@@ -169,8 +169,13 @@ public class ControlScreen extends InputAdapter {
             }else if (gameLogic.getCurrentPlayer().isLocal) {
                 if (gameLogic.getCurrentPlayer().isAi()) {
                     gameLogic.getCurrentPlayer().startCardDecisionWithAI();
-                    acceptButton.setActive(true);
-                    acceptButtonHasBeenClicked();
+                    if(gameLogic.getCurrentPlayer().equals(gameLogic.getLastPlayer())) {
+                        makeClickToProgressAvailable();
+                    }
+                    else{
+                        acceptButton.setActive(true);
+                        acceptButtonHasBeenClicked();
+                    }
                 } else {
                     drawCardsOfCurrentPlayer(batch);
                 }

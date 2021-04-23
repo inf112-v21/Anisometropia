@@ -56,12 +56,13 @@ public class Player implements IPlayer {
         isAi = false;
     }
 
-    public Player(int x, int y, String playerName, GameMap gameMap, int characterID, boolean isAi) {
+    public Player(int x, int y, String playerName, GameMap gameMap, boolean isLocal, int characterID, boolean isAi) {
         this.x = this.spawnX = x;
         this.y = this.spawnY = y;
         this.playerName = playerName;
         this.direction = 0; // Initially faces NORTH
         this.gameMap = gameMap;
+        this.isLocal = isLocal;
         this.characterID = characterID;
         dmgTokens = 0;
         lifeTokens = 3;
