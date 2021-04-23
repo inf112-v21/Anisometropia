@@ -44,7 +44,7 @@ public class ControlScreen extends InputAdapter {
     boolean[] isCardChosen = new boolean[9];
     ArrayList<ProgramCard> chosenCards;
     int numCardsChosen;
-    BitmapFont smallFont, bigFont;
+    BitmapFont smallFont, bigFont, infoFont;
 
     //Variables used to create buttons
     TextureRegion[][] gameButtonsSpriteSheet, powerDownButtonRegion, powerDownButtonActivatedRegion;
@@ -63,6 +63,9 @@ public class ControlScreen extends InputAdapter {
         smallFont.getData().setScale(1.5f);
         bigFont = new BitmapFont();
         bigFont.getData().setScale(5f);
+        infoFont =  new BitmapFont();
+        infoFont.setColor(Color.DARK_GRAY);
+        infoFont.getData().setScale(1.5f);
 
         gameButtonsSpriteSheet = TextureRegion.split(new Texture("gamebuttons_spritesheet.png"), 128, 128);
         progressTextureUnavailable = gameButtonsSpriteSheet[0][0];
@@ -199,7 +202,7 @@ public class ControlScreen extends InputAdapter {
 
         if(GameLogic.gameOver) bigFont.draw(batch, GameLogic.gameMessage, 0, 56);
 
-        smallFont.draw(batch,"1. click cards to select/deselect\n" +
+        infoFont.draw(batch,"1. click cards to select/deselect\n" +
                 "2. after choosing 5, accept\n" +
                 "3. next player turn starts\n" +
                 "4. click to progress actions\n" +
