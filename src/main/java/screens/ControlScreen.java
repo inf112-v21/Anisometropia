@@ -23,7 +23,6 @@ import static logic.GameLogic.gameOver;
 public class ControlScreen extends InputAdapter {
     GameLogic gameLogic;
 
-    //Variables used to draw objects on the map
     private final SpriteBatch batch;
     private final Texture damageToken;
     private final Texture lifeToken;
@@ -38,7 +37,6 @@ public class ControlScreen extends InputAdapter {
     float amountToMoveCard = 75;
     int choiceDeckOffset = 128;
 
-    // Variables used to position dealt program cards.
     int[] cardX = new int[9];
     int[] cardY = new int[9];
     boolean[] isCardChosen = new boolean[9];
@@ -46,7 +44,7 @@ public class ControlScreen extends InputAdapter {
     int numCardsChosen;
     BitmapFont smallFont, bigFont, infoFont;
 
-    //Variables used to create buttons
+
     TextureRegion[][] gameButtonsSpriteSheet, powerDownButtonRegion, powerDownButtonActivatedRegion;
     TextureRegion acceptTexture, acceptTextureUnavailable, progressTexture, progressTextureUnavailable, borderTexture, borderTextureUnavailable,
             powerDownButtonTexture, powerDownButtonActivatedTexture;
@@ -75,7 +73,6 @@ public class ControlScreen extends InputAdapter {
         borderTextureUnavailable = gameButtonsSpriteSheet[2][0];
         borderTexture = gameButtonsSpriteSheet[2][1];
 
-        //Creating power down button
         powerDownButtonActivatedRegion = powerDownButtonRegion = TextureRegion.split(new Texture("powerDownButtonActivated.png"),800,800);
         powerDownButtonActivatedTexture = powerDownButtonRegion[0][0];
 
