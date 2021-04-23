@@ -33,9 +33,9 @@ public class ControlScreen extends InputAdapter {
     private final ArrayList<Texture> optionCardTextures = new ArrayList<>();
     private final Texture deckOfOptionCardsTexture;
 
-    private final float cardWidth = 64, cardHeight = 64;
+    private final float cardWidth = 64, cardHeight = 75;
 
-    float amountToMoveCard = 64;
+    float amountToMoveCard = 75;
     int choiceDeckOffset = 128;
 
     // Variables used to position dealt program cards.
@@ -365,13 +365,13 @@ public class ControlScreen extends InputAdapter {
 
     private void drawDamageTokensOfCurrentPlayer(SpriteBatch batch) {
         for (int i = gameLogic.getCurrentPlayer().getDmgTokens(); i > 0; i--) {
-            batch.draw(damageToken, 816-(i*64), 132, 80, 80);
+            batch.draw(damageToken, 816-(i*64), 135, 80, 80);
         }
     }
 
     private void drawDamageTokenPositionIndicators(SpriteBatch batch) {
         for (int i = 10; i > 0; i--) {
-            batch.draw(damageTokenPositionIndicator, 816-(i*64), 132, 80, 80);
+            batch.draw(damageTokenPositionIndicator, 816-(i*64), 135, 80, 80);
         }
     }
 
