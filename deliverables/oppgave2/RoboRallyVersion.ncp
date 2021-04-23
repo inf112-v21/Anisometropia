@@ -27,7 +27,7 @@
         <Name>GameLogic</Name>
         <Access>Public</Access>
         <Location left="486" top="656" />
-        <Size width="162" height="315" />
+        <Size width="162" height="288" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public GameLogic(GameMap gameMap, PlayerQueue playerQueue)</Member>
         <Member type="Method">public void dealRegisterCards()</Member>
@@ -115,8 +115,8 @@
       <Entity type="Interface">
         <Name>IPlayer</Name>
         <Access>Public</Access>
-        <Location left="30" top="656" />
-        <Size width="162" height="311" />
+        <Location left="30" top="671" />
+        <Size width="162" height="298" />
         <Collapsed>False</Collapsed>
         <Member type="Method">void move(int dx, int dy)</Member>
         <Member type="Method">boolean canMove(int dx, int dy)</Member>
@@ -148,21 +148,20 @@
       <Entity type="Class">
         <Name>Multiplayer</Name>
         <Access>Public</Access>
-        <Location left="916" top="780" />
-        <Size width="162" height="183" />
+        <Location left="1176" top="389" />
+        <Size width="162" height="211" />
         <Collapsed>False</Collapsed>
-        <Member type="Constructor">public Multiplayer(Boolean host)</Member>
+        <Member type="Constructor">public Multiplayer(Boolean host, OnNetSetupScreen onNet)</Member>
         <Member type="Method">public void disconnect()</Member>
         <Member type="Method">public void send()</Member>
         <Member type="Method">public void receive()</Member>
-        <Member type="Method">public boolean isConnected()</Member>
-        <Member type="Method">public void run()</Member>
+        <Member type="Method">public void handleReceivedMessage()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>DeckOfProgramCards</Name>
         <Access>Public</Access>
-        <Location left="694" top="656" />
+        <Location left="694" top="621" />
         <Size width="162" height="148" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public DeckOfProgramCards()</Member>
@@ -193,7 +192,7 @@
       <Entity type="Class">
         <Name>GameButton</Name>
         <Access>Public</Access>
-        <Location left="916" top="604" />
+        <Location left="916" top="581" />
         <Size width="162" height="131" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public GameButton(int x, int y, int width, int height, boolean isActive, Texture texture)</Member>
@@ -204,8 +203,8 @@
       <Entity type="Class">
         <Name>ProgramCard</Name>
         <Access>Public</Access>
-        <Location left="694" top="850" />
-        <Size width="162" height="116" />
+        <Location left="694" top="784" />
+        <Size width="162" height="111" />
         <Collapsed>False</Collapsed>
         <Member type="Constructor">public ProgramCard(String graphicLocation, int amountToMoveOrRotate, boolean isMovementCard)</Member>
         <Member type="Method">public void executeProgram()</Member>
@@ -282,11 +281,36 @@
         <Member type="Method">public void checkOutOfWall()</Member>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Class">
+        <Name>MultiPlayerLogic</Name>
+        <Access>Public</Access>
+        <Location left="1176" top="740" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void sendCards()</Member>
+        <Member type="Method">public void receiveCards()</Member>
+        <Member type="Method">public void sendPowerDown()</Member>
+        <Member type="Method">public void receivePowerDown()</Member>
+        <Member type="Method">public void sendOptionCard()</Member>
+        <Member type="Method">public void receiveOptionCard()</Member>
+        <Member type="Method">public void checkIfAllPlayersReady()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>OnNetSetupScreen</Name>
+        <Access>Public</Access>
+        <Location left="1176" top="25" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void hostButtonHasBeenClicked()</Member>
+        <Member type="Method">public void joinButtonHasBeenClicked()</Member>
+        <Member type="Method">public void startButtonClicked()</Member>
+        <Member type="Method">public void startGame()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Dependency" first="2" second="1">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -299,8 +323,6 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="3" second="1">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -313,8 +335,6 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="2" second="6">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -327,8 +347,6 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="6" second="7">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -349,7 +367,7 @@
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>217</X>
-          <Y>802</Y>
+          <Y>817</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Generalization" first="4" second="9">
@@ -377,20 +395,20 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="2" second="11">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>669</X>
-          <Y>758</Y>
+          <Y>715</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>669</X>
-          <Y>758</Y>
+          <Y>715</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="2" second="12">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -403,6 +421,8 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="3" second="14">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -411,34 +431,40 @@
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>881</X>
-          <Y>628</Y>
+          <Y>605</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="2" second="15">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>673</X>
-          <Y>910</Y>
+          <Y>831</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>673</X>
-          <Y>910</Y>
+          <Y>831</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="11" second="15">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>770</X>
-          <Y>836</Y>
+          <Y>801</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>770</X>
-          <Y>813</Y>
+          <Y>747</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="17" second="18">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -467,6 +493,8 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="0" second="17">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
@@ -483,6 +511,8 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="2" second="13">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -495,6 +525,8 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="2" second="21">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -507,8 +539,6 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="9" second="1">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="False">
@@ -517,8 +547,6 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="9" second="7">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -531,8 +559,6 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="21" second="9">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="False">
@@ -541,8 +567,6 @@
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="19" second="14">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -551,12 +575,10 @@
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>941</X>
-          <Y>579</Y>
+          <Y>556</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="20" second="14">
-        <Label>
-        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -565,18 +587,46 @@
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>1031</X>
-          <Y>564</Y>
+          <Y>541</Y>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="18" second="16">
-        <Label>
-        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
           <X>861</X>
           <Y>51</Y>
         </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="23" second="16">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1069</X>
+          <Y>54</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="10" second="23">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="22" second="2">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>673</X>
+          <Y>928</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="22" second="10">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
       </Relationship>
     </Relationships>
   </ProjectItem>

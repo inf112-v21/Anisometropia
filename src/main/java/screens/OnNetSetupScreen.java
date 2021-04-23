@@ -124,9 +124,6 @@ public class OnNetSetupScreen extends AbstractScreen implements InputProcessor {
         font.setColor(Color.BLACK);
 
         multiPlayerLogic = new MultiPlayerLogic();
-//        gameMap = new GraphicalGameMap("gameboard2");
-//        playerQueue = new PlayerQueue();
-//        gameLogic = new GameLogic(gameMap, playerQueue);
     }
 
     @Override
